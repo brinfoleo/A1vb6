@@ -321,7 +321,7 @@ TrtErro:
     dErro = Err.Description
     RegLog "", nErro, dErro & " - SQL:[" & sSQL & "]"
     'RegLog "", nErro, dErro
-      'MsgBox "Erro ao BUSCAR registro.                                   " & _
+      MsgBox "Erro ao BUSCAR registro.                                   " & _
            vbCrLf & vbCrLf & _
            "Erro n.: " & nErro & _
            vbCrLf & vbCrLf & _

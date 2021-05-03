@@ -12,7 +12,7 @@ Public cVersao          As String  'Compilacao da Versao do sistema
 
 
 Public Sub Main()
-    
+    On Error GoTo TrtMainError
     VersaoNFe = "4.00"
     sVersao = App.Major & "." & App.Minor
     cVersao = App.Revision
@@ -121,17 +121,18 @@ Public Sub Main()
 '    End If
    
     MonitoramentoConexao Conectar
-    
-    
+        
     MDIFormA1.Show
-    
-    
-    
+        
 '************************************************************************************
 '    If licencaAtiva = False Then
 '        MDIFormA1.Caption = MDIFormA1.Caption & "    .:: Licença Expirada ::."
 '    End If
 '************************************************************************************
+    Exit Sub
+TrtMainError:
+    RegLog "", Err.Number, Err.Description
+    
 End Sub
 Public Sub FinalizandoSistema()
     On Error GoTo TratErro

@@ -997,7 +997,7 @@ Public Sub cobrLancamentoAutomaticoContasFixas()
     '### 26/03/2012
     '### Objetivo: Lancar automaticamente mes a mes todas as despesas fixas
     '###################################################################################################
-    'On Error GoTo TrtErroCtaFixas
+    On Error GoTo TrtErroCtaFixas
     Dim sSQL        As String
     Dim RstF        As Recordset 'Recordset das despesas Fixas
     Dim Rst         As Recordset 'Recordset das despesas
@@ -1114,7 +1114,8 @@ Public Sub cobrLancamentoAutomaticoContasFixas()
     RstF.Close
     Exit Sub
 TrtErroCtaFixas:
-    MsgBox Err.Description, vbCritical, Err.Number
+    'MsgBox Err.Description, vbCritical, Err.Number
+    RegLog "Error n." & Err.Number, 0, "(cobrLancamentoAutomaticoContasFixas) " & Err.Description
 End Sub
 Public Sub cnab240(DtIni As Date, DtFin As Date, _
                     contaId As Integer, Optional lote As String)

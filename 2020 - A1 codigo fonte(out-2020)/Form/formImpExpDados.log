@@ -1,0 +1,4 @@
+Line 30: Class MSComDlg.CommonDialog of control cd was not a loaded control class.
+Line 62: Class MSComctlLib.ProgressBar of control pb was not a loaded control class.
+Line 93: Class MSComctlLib.Toolbar of control tbMenu was not a loaded control class.
+Line 120: Class MSComctlLib.ImageList of control ImageList1 was not a loaded control class.

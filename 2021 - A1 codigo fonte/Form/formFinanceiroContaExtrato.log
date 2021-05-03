@@ -1,0 +1,6 @@
+Line 65: Class MSFlexGridLib.MSFlexGrid of control msfgExtrato was not a loaded control class.
+Line 130: Class MSComCtl2.DTPicker of control dtpPeriodoFinal was not a loaded control class.
+Line 142: Class MSComCtl2.DTPicker of control dtpPeriodoInicio was not a loaded control class.
+Line 171: Class MSComctlLib.Toolbar of control tbMenu was not a loaded control class.
+Line 198: Class MSComctlLib.ProgressBar of control pb was not a loaded control class.
+Line 209: Class MSComctlLib.ImageList of control ImageList1 was not a loaded control class.

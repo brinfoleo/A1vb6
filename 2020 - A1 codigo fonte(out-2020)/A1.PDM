@@ -1,0 +1,173 @@
+[Root]
+Most Recent Package=Standard Setup Package 1
+
+
+[Package|Standard Setup Package 1|Root]
+SubWizProgID=PDWizard.SetupPkgSubWiz
+BuildFolder=C:\ia1-201808(sem exec)
+
+[Package|Standard Setup Package 1|Configure DAO ISAMs]
+Applicable=No
+
+[Package|Standard Setup Package 1|Configure DAO ODBC]
+JetWorkspace=
+ODBCDirect=
+
+[Package|Standard Setup Package 1|Files Found]
+
+[Package|Standard Setup Package 1|Files Released]
+aunzip32.dll=
+DllInscE32.DLL=
+a1.ini=
+a1.cfg=
+
+[Package|Standard Setup Package 1|Missing Dependency Information]
+C:\WINDOWS\system32\msxml6.dll=
+C:\Users\LabVB6\Desktop\A1_Wartung\codigo fonte\OCX\Buttom.ocx=
+C:\Dropbox\Programas\A1_Wartung\codigo fonte\vbSendMail.dll=
+C:\Program Files\Common Files\System\ado\msado28.tlb=
+C:\Windows\System32\ieframe.dll=
+C:\Dropbox\Programas\A1_Wartung\codigo fonte\AZIP32.DLL=
+C:\Users\leo\Desktop\wartung\codigo fonte\OCX\Buttom.ocx=
+C:\Users\leo\Desktop\wartung\codigo fonte\vbSendMail.dll=
+C:\Users\leo\Desktop\wartung\codigo fonte\AZIP32.DLL=
+
+[Package|Standard Setup Package 1|Out-of-Date Dependency Information]
+C:\WINDOWS\system32\MSCOMCTL.OCX=
+C:\WINDOWS\system32\scrrun.dll=
+
+[Package|Standard Setup Package 1|Files Added]
+
+[Package|Standard Setup Package 1|Files Removed]
+c:\documents and settings\usuario\desktop\a1.exe=
+\\192.168.0.3\servidor\a1\ia1\atualizacao-2015.05\a1.exe=
+c:\users\win7\desktop\atualizações executaveis a1\a1_2017.08.18\a1.exe=
+c:\users\win7\desktop\atualizações executaveis a1\a1_2018.08.01\a1.exe=
+
+[Package|Standard Setup Package 1|Files In Project]
+C:\WINDOWS\system32\msvbvm60.dll=Yes
+C:\WINDOWS\system32\scrrun.dll=Yes
+C:\WINDOWS\system32\msxml6.dll=Yes
+C:\WINDOWS\system32\COMCT332.OCX=Yes
+C:\WINDOWS\system32\MSDATGRD.OCX=Yes
+C:\WINDOWS\system32\MSSTDFMT.DLL=Yes
+C:\WINDOWS\system32\TABCTL32.OCX=Yes
+C:\WINDOWS\system32\MSFLXGRD.OCX=Yes
+C:\WINDOWS\system32\COMDLG32.OCX=Yes
+C:\WINDOWS\system32\MSCHRT20.OCX=Yes
+C:\WINDOWS\system32\MSWINSCK.OCX=Yes
+C:\WINDOWS\system32\MSCOMCTL.OCX=Yes
+C:\WINDOWS\system32\MSCOMCT2.OCX=Yes
+C:\WINDOWS\system32\VB6STKIT.DLL=Yes
+C:\Program Files\Microsoft Visual Studio\VB98\Wizards\PDWizard\Redist\OLEAUT32.DLL=Yes
+C:\Program Files\Microsoft Visual Studio\VB98\Wizards\PDWizard\Redist\OLEPRO32.DLL=Yes
+C:\Program Files\Microsoft Visual Studio\VB98\Wizards\PDWizard\Redist\ASYCFILT.DLL=Yes
+C:\Program Files\Microsoft Visual Studio\VB98\Wizards\PDWizard\Redist\STDOLE2.TLB=Yes
+C:\Program Files\Microsoft Visual Studio\VB98\Wizards\PDWizard\Redist\COMCAT.DLL=Yes
+C:\Windows\System32\ieframe.dll=Yes
+C:\Program Files\Common Files\System\ado\msado28.tlb=Yes
+C:\Program Files\Microsoft Visual Studio\VB98\Wizards\PDWizard\Redist\MSVCRT.DLL=Yes
+C:\Windows\System32\MSDBRPTR.DLL=Yes
+C:\Program Files\Microsoft Visual Studio\VB98\Wizards\PDWizard\SETUP.EXE=Yes
+C:\Program Files\Microsoft Visual Studio\VB98\Wizards\PDWizard\SETUP1.EXE=Yes
+C:\Program Files\Microsoft Visual Studio\VB98\Wizards\PDWizard\ST6UNST.EXE=Yes
+C:\Users\win7\Desktop\Aplicativos Versionados\A1\codigo fonte\AZIP32.DLL=Yes
+C:\Users\win7\Desktop\Aplicativos Versionados\A1\codigo fonte\vbSendMail.dll=Yes
+C:\Users\win7\Desktop\Atualizações executaveis A1\a1_2018.08.01\A1.exe=No
+
+[Package|Standard Setup Package 1|Configure Registry Files]
+Applicable=No
+
+[Package|Standard Setup Package 1|Configure Remote Servers]
+Applicable=No
+
+[Package|Standard Setup Package 1|Install Locations]
+C:\WINDOWS\system32\msvbvm60.dll=$(WinSysPathSysFile)
+C:\Arquivos de programas\Microsoft Visual Studio\VB98\Wizards\PDWizard\Redist\OLEAUT32.DLL=$(WinSysPathSysFile)
+C:\Arquivos de programas\Microsoft Visual Studio\VB98\Wizards\PDWizard\Redist\OLEPRO32.DLL=$(WinSysPathSysFile)
+C:\Arquivos de programas\Microsoft Visual Studio\VB98\Wizards\PDWizard\Redist\ASYCFILT.DLL=$(WinSysPathSysFile)
+C:\Arquivos de programas\Microsoft Visual Studio\VB98\Wizards\PDWizard\Redist\STDOLE2.TLB=$(WinSysPathSysFile)
+C:\Arquivos de programas\Microsoft Visual Studio\VB98\Wizards\PDWizard\Redist\COMCAT.DLL=$(WinSysPathSysFile)
+C:\WINDOWS\system32\DllInscE32.dll=$(AppPath)
+C:\Dropbox\Programas\A1\codigo fonte\AZIP32.DLL=$(WinSysPath)
+C:\WINDOWS\system32\vbSendMail.dll=$(WinSysPath)
+C:\WINDOWS\system32\scrrun.dll=$(WinSysPath)
+C:\Arquivos de programas\Microsoft Visual Studio\VB98\Wizards\PDWizard\Redist\MSVCRT.DLL=$(WinSysPathSysFile)
+C:\WINDOWS\system32\msxml6.dll=$(WinSysPath)
+C:\WINDOWS\system32\COMCT332.OCX=$(WinSysPath)
+C:\WINDOWS\system32\MSDATGRD.OCX=$(WinSysPath)
+C:\WINDOWS\system32\MSSTDFMT.DLL=$(WinSysPath)
+C:\WINDOWS\system32\TABCTL32.OCX=$(WinSysPath)
+C:\WINDOWS\system32\MSFLXGRD.OCX=$(WinSysPath)
+C:\WINDOWS\system32\COMDLG32.OCX=$(WinSysPath)
+C:\WINDOWS\system32\MSCHRT20.OCX=$(WinSysPath)
+C:\WINDOWS\system32\MSWINSCK.OCX=$(WinSysPath)
+C:\WINDOWS\system32\MSCOMCTL.OCX=$(WinSysPath)
+C:\WINDOWS\system32\MSCOMCT2.OCX=$(WinSysPath)
+C:\Arquivos de programas\Microsoft Visual Studio\VB98\Wizards\PDWizard\Redist\MDAC_TYP.EXE=$(AppPath)
+C:\Arquivos de programas\Microsoft Visual Studio\VB98\Wizards\PDWizard\SETUP.EXE=$(AppPath)
+C:\Arquivos de programas\Microsoft Visual Studio\VB98\Wizards\PDWizard\SETUP1.EXE=$(WinPath)
+C:\WINDOWS\system32\VB6STKIT.DLL=$(WinSysPathSysFile)
+C:\Arquivos de programas\Microsoft Visual Studio\VB98\Wizards\PDWizard\ST6UNST.EXE=$(WinPath)
+C:\Dropbox\Programas\A1\codigo fonte\Skin\actskin4.ocx=$(WinSysPath)
+C:\Users\LabVB6\Desktop\a1_11052016\A1.exe=$(AppPath)
+C:\Program Files\Microsoft Visual Studio\VB98\Wizards\PDWizard\Redist\OLEAUT32.DLL=$(WinSysPathSysFile)
+C:\Program Files\Microsoft Visual Studio\VB98\Wizards\PDWizard\Redist\OLEPRO32.DLL=$(WinSysPathSysFile)
+C:\Program Files\Microsoft Visual Studio\VB98\Wizards\PDWizard\Redist\ASYCFILT.DLL=$(WinSysPathSysFile)
+C:\Program Files\Microsoft Visual Studio\VB98\Wizards\PDWizard\Redist\STDOLE2.TLB=$(WinSysPathSysFile)
+C:\Program Files\Microsoft Visual Studio\VB98\Wizards\PDWizard\Redist\COMCAT.DLL=$(WinSysPathSysFile)
+C:\Dropbox\Programas\A1_Wartung\codigo fonte\AZIP32.DLL=$(WinSysPath)
+C:\Windows\System32\ieframe.dll=$(WinSysPath)
+C:\Program Files\Common Files\System\ado\msado28.tlb=$(WinSysPath)
+C:\Dropbox\Programas\A1_Wartung\codigo fonte\vbSendMail.dll=$(WinSysPath)
+C:\Program Files\Microsoft Visual Studio\VB98\Wizards\PDWizard\Redist\MSVCRT.DLL=$(WinSysPathSysFile)
+C:\Windows\System32\MSDBRPTR.DLL=$(WinSysPath)
+C:\Users\LabVB6\Desktop\A1_Wartung\codigo fonte\OCX\Buttom.ocx=$(WinSysPath)
+C:\Program Files\Microsoft Visual Studio\VB98\Wizards\PDWizard\SETUP.EXE=$(AppPath)
+C:\Program Files\Microsoft Visual Studio\VB98\Wizards\PDWizard\SETUP1.EXE=$(WinPath)
+C:\Program Files\Microsoft Visual Studio\VB98\Wizards\PDWizard\ST6UNST.EXE=$(WinPath)
+C:\Users\leo\Desktop\a1-30062016\A1.exe=$(AppPath)
+C:\Users\leo\Desktop\wartung\codigo fonte\AZIP32.DLL=$(WinSysPath)
+C:\Users\leo\Desktop\wartung\codigo fonte\vbSendMail.dll=$(WinSysPath)
+C:\Users\leo\Desktop\wartung\codigo fonte\OCX\Buttom.ocx=$(WinSysPath)
+C:\Users\leo\Desktop\wartung\codigo fonte\A1.cfg=$(AppPath)
+C:\Users\leo\Desktop\wartung\codigo fonte\A1.ini=$(AppPath)
+C:\Users\leo\Desktop\A1.exe=$(AppPath)
+C:\Users\win7\Desktop\Aplicativos Versionados\A1\codigo fonte\AZIP32.DLL=$(WinSysPath)
+C:\Users\win7\Desktop\Aplicativos Versionados\A1\codigo fonte\vbSendMail.dll=$(WinSysPath)
+
+[Package|Standard Setup Package 1|Configure Shared Files]
+Applicable=No
+C:\WINDOWS\system32\DllInscE32.dll=Yes
+C:\Arquivos de programas\Microsoft Visual Studio\VB98\Wizards\PDWizard\Redist\MDAC_TYP.EXE=Yes
+C:\Users\LabVB6\Desktop\a1_11052016\A1.exe=Yes
+C:\Users\leo\Desktop\a1-30062016\A1.exe=Yes
+C:\Users\leo\Desktop\wartung\codigo fonte\A1.cfg=Yes
+C:\Users\leo\Desktop\wartung\codigo fonte\A1.ini=Yes
+C:\Users\leo\Desktop\A1.exe=Yes
+
+[Package|Standard Setup Package 1|Distribution]
+Type=single
+Size=
+Title=A1
+
+[Package|Standard Setup Package 1|IconGroups]
+Group0=A1
+PrivateGroup0=-1
+Parent0=$(Programs)
+
+[Package|Standard Setup Package 1|A1]
+Icon1=A1.exe
+Title1=A1
+StartIn1=$(AppPath)
+Key1=Icon1
+
+[Package|Standard Setup Package 1|Package]
+PackageFolder=C:\ia1-201808(sem exec)
+ProjectFolder=C:\Users\win7\Desktop\Aplicativos Versionados\A1\codigo fonte
+ServerSideCab=
+File1=C:\ia1-201808(sem exec)\setup.exe
+File2=C:\ia1-201808(sem exec)\Setup.Lst
+File3=C:\ia1-201808(sem exec)\A1.CAB
+Handler1=PDWizard.FolderDplySubWiz
+Handler2=PDWizard.WebPostDplySubWiz

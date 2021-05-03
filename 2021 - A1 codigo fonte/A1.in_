@@ -1,0 +1,12 @@
+################################################
+###  27/01/2012                              ###
+### Paramentros do sistema                   ###
+################################################
+# CRECHE VIDA E ARTE
+#nmDatabase = a1_rubber
+#IDEmpresa = 1
+#IDDeposito = 2
+# METAL CENTER
+#nmDatabase = a1_wartung
+IDEmpresa = 1
+IDDeposito = 2

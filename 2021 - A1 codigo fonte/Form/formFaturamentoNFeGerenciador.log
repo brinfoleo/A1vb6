@@ -1,0 +1,7 @@
+Line 227: Class MSComCtl2.DTPicker of control dtpDtInicio was not a loaded control class.
+Line 239: Class MSComCtl2.DTPicker of control dtpDtFinal was not a loaded control class.
+Line 271: Class MSFlexGridLib.MSFlexGrid of control msfgNotas was not a loaded control class.
+Line 285: Class MSComctlLib.Toolbar of control tbMenu was not a loaded control class.
+Line 382: Class MSComDlg.CommonDialog of control cd was not a loaded control class.
+Line 389: Class MSComctlLib.ProgressBar of control pb was not a loaded control class.
+Line 400: Class MSComctlLib.ImageList of control ImageList1 was not a loaded control class.

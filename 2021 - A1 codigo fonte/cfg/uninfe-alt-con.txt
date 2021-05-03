@@ -1,0 +1,14 @@
+PastaXmlEnvio|C:\Unimake\UniNFe\00715214000144\Envio
+PastaXmlRetorno|C:\Unimake\UniNFe\00715214000144\retorno
+PastaXmlEnviado|C:\Unimake\UniNFe\00715214000144\Enviado
+PastaXmlErro|C:\Unimake\UniNFe\00715214000144\Erro
+PastaBackup|C:\Unimake\UniNFe\00715214000144\BKP
+PastaXmlEmLote|C:\Unimake\UniNFe\00715214000144\EnvioEmLote
+PastaValidar|C:\Unimake\UniNFe\00715214000144\Validar
+UnidadeFederativaCodigo|33
+AmbienteCodigo|2
+tpEmis|1
+GravarRetornoTXTNFe|True
+DiretorioSalvarComo|AM
+DiasLimpeza|1
+TempoConsulta|3

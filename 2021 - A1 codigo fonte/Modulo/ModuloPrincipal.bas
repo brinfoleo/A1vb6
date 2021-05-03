@@ -131,7 +131,7 @@ Public Sub Main()
 '************************************************************************************
     Exit Sub
 TrtMainError:
-    RegLog "", Err.Number, Err.Description
+    RegLog "", Err.Number, "(Main) " & Err.Description
     
 End Sub
 Public Sub FinalizandoSistema()

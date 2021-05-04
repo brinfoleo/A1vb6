@@ -2,7 +2,7 @@ VERSION 5.00
 Object = "{5E9E78A0-531B-11CF-91F6-C2863C385E30}#1.0#0"; "MSFLXGRD.OCX"
 Object = "{65E121D4-0C60-11D2-A9FC-0000F8754DA1}#2.0#0"; "MSCHRT20.OCX"
 Object = "{86CF1D34-0C5F-11D2-A9FC-0000F8754DA1}#2.0#0"; "MSCOMCT2.OCX"
-Object = "{831FDD16-0C5C-11D2-A9FC-0000F8754DA1}#2.2#0"; "MSCOMCTL.OCX"
+Object = "{831FDD16-0C5C-11D2-A9FC-0000F8754DA1}#2.2#0"; "mscomctl.ocx"
 Begin VB.Form formFinanceiroContasPRGerenciador 
    Caption         =   "Financeiro - Contas a Pagar e Receber"
    ClientHeight    =   8430
@@ -38,7 +38,7 @@ Begin VB.Form formFinanceiroContasPRGerenciador
             Italic          =   0   'False
             Strikethrough   =   0   'False
          EndProperty
-         Format          =   53542913
+         Format          =   114163713
          CurrentDate     =   40658
       End
       Begin MSFlexGridLib.MSFlexGrid msfgContas 
@@ -319,7 +319,7 @@ Attribute VB_Creatable = False
 Attribute VB_PredeclaredId = True
 Attribute VB_Exposed = False
 Option Explicit
-Dim IdReg       As Integer
+Dim IdReg       As Long
 Dim sSQL        As String
 Dim sSQLExec    As String 'Armazena ultima instrucao sql do filtro
 Dim sDuplTc     As String 'Total Credito
@@ -922,7 +922,7 @@ End Sub
 
 Private Sub ImprimirDocumento()
     Dim docPrint    As String
-    Dim idDoc       As Integer
+    Dim idDoc       As Long
     Dim difDatas        As Integer
     
     If chkAcesso(Me, "i") = False Then

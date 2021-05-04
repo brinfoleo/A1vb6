@@ -1,6 +1,6 @@
 VERSION 5.00
 Object = "{86CF1D34-0C5F-11D2-A9FC-0000F8754DA1}#2.0#0"; "MSCOMCT2.OCX"
-Object = "{831FDD16-0C5C-11D2-A9FC-0000F8754DA1}#2.0#0"; "MSCOMCTL.OCX"
+Object = "{831FDD16-0C5C-11D2-A9FC-0000F8754DA1}#2.2#0"; "mscomctl.ocx"
 Begin VB.Form formFinanceiroContasPRCadastro 
    BorderStyle     =   1  'Fixed Single
    Caption         =   "  "
@@ -63,7 +63,7 @@ Begin VB.Form formFinanceiroContasPRCadastro
          _ExtentX        =   2355
          _ExtentY        =   556
          _Version        =   393216
-         Format          =   101515265
+         Format          =   114163713
          CurrentDate     =   40602
       End
       Begin VB.Label Label25 
@@ -472,7 +472,7 @@ Begin VB.Form formFinanceiroContasPRCadastro
          _ExtentX        =   2355
          _ExtentY        =   556
          _Version        =   393216
-         Format          =   41222145
+         Format          =   114163713
          CurrentDate     =   40557
       End
       Begin VB.Label Label24 
@@ -600,7 +600,7 @@ Begin VB.Form formFinanceiroContasPRCadastro
          _ExtentX        =   2355
          _ExtentY        =   556
          _Version        =   393216
-         Format          =   101842945
+         Format          =   114163713
          CurrentDate     =   40557
       End
       Begin VB.Label Label4 
@@ -821,7 +821,7 @@ Attribute VB_Creatable = False
 Attribute VB_PredeclaredId = True
 Attribute VB_Exposed = False
 Option Explicit
-Dim IdReg           As Integer ' ID do registro
+Dim IdReg           As Long ' ID do registro
 Dim IDSacado        As Integer  'ID do Cliente ou Fornecedor
 Dim strTabela       As String ' Nome da tabela do Contas a Pagar e Receber
 Dim strTabelaSacado As String 'Nome da tabela do sacado transp /Cliente ou Fornecedor
@@ -833,7 +833,7 @@ Private Sub HDQuitacao()
 
 End Sub
 
-Public Sub LoadDocumento(iDoc As Integer)
+Public Sub LoadDocumento(iDoc As Long)
     IdReg = iDoc
     dtpQuitacao.Value = Date
     PesquisarRegistro
@@ -984,7 +984,7 @@ Private Sub PesquisarRegistro()
                     txtVlCobrado.Text = IIf(IsNull(Rst.Fields("VlCobrado")), "0.00", Rst.Fields("VlCobrado"))
                     cboContaQuitacao.Clear
                     If Rst.Fields("idContaQuitacao") <> 0 Or IsNull(Rst.Fields("idContaQuitacao")) = False Then
-                        cboContaQuitacao.AddItem ZE(Rst.Fields("idContaQuitacao"), 3) & " - " & pgDadosConta(Rst.Fields("idContaQuitacao")).Agencia & "/" & pgDadosConta(Rst.Fields("idContaQuitacao")).Conta
+                        cboContaQuitacao.AddItem ZE(Rst.Fields("idContaQuitacao"), 3) & " - " & pgDadosConta(Rst.Fields("idContaQuitacao")).agencia & "/" & pgDadosConta(Rst.Fields("idContaQuitacao")).conta
                         cboContaQuitacao.Text = cboContaQuitacao.List(0)
                     End If
             End If
@@ -995,7 +995,7 @@ Private Sub PesquisarRegistro()
             End If
             If Not IsNull(Rst.Fields("Conta")) And Rst.Fields("Conta") <> 0 Then
                 If Len(Trim(pgDadosConta(Rst.Fields("Conta")).Id)) <> 0 Then
-                    cboConta.AddItem pgDadosConta(Rst.Fields("Conta")).Id & " - " & pgDadosConta(Rst.Fields("Conta")).Agencia & "/" & pgDadosConta(Rst.Fields("Conta")).Conta
+                    cboConta.AddItem pgDadosConta(Rst.Fields("Conta")).Id & " - " & pgDadosConta(Rst.Fields("Conta")).agencia & "/" & pgDadosConta(Rst.Fields("Conta")).conta
                     cboConta.Text = cboConta.List(0)
                 End If
                     

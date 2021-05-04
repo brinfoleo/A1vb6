@@ -1123,14 +1123,14 @@ Public Function chkAcesso(Formulario As Form, TpAcesso As String) As Boolean
         MsgBox "Acesso NEGADO!", vbCritical, "Aviso"
     End If
 End Function
-Public Function ChkNFeTemCCe(chvnfe As String) As Integer
+Public Function ChkNFeTemCCe(chvNFe As String) As Integer
     '###############################################################################
     '### Funcao para checarse existe CC-e e retorna o num. da CC-e
     '###############################################################################
     
     Dim Rst     As Recordset
     Dim sSQL    As String
-    sSQL = "SELECT * FROM FaturamentoNFeCartaCorrecao WHERE chvNFe = '" & chvnfe & "'"
+    sSQL = "SELECT * FROM FaturamentoNFeCartaCorrecao WHERE chvNFe = '" & chvNFe & "'"
     Set Rst = RegistroBuscar(sSQL)
     If Rst.BOF And Rst.EOF Then
             ChkNFeTemCCe = 0
@@ -1144,7 +1144,7 @@ Public Function ChkNFeTemCCe(chvnfe As String) As Integer
 End Function
 Public Sub MovimentarConta(idConta As Integer, _
                            cd As String, _
-                           IdRegDoc As Integer, _
+                           IdRegDoc As Long, _
                            Data As String, _
                            nDoc As String, _
                            tDoc As Integer, _

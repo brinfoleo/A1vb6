@@ -4,7 +4,7 @@ Type CliPosicaoFinanceira
     Pagar      As String
     Pago       As String
 End Type
-Public Sub AtualizarBoleto(idBol As Integer, novaData As String)
+Public Sub AtualizarBoleto(idBol As Long, novaData As String)
     '#################################################################################################
     '### 04/01/2012
     '### Funcao que atualiza os dados na tabela imprime o boleto e volta ao valor anterior
@@ -119,7 +119,7 @@ Private Function cnab240LoteHeader(contaId As Integer, lote As String) As String
     'fd = arqDestino
    
    Dim dvAgCc As String
-   Dim faturaId As Integer
+   Dim faturaId As Long
    faturaId = 0
    dvAgCc = ""
     
@@ -174,7 +174,7 @@ Private Function cnab240LoteHeader(contaId As Integer, lote As String) As String
 
 End Function
 
-Private Function cnab240Q(faturaId As Integer, lote As String) As String
+Private Function cnab240Q(faturaId As Long, lote As String) As String
     '***********************************************************
     '*** Registro Detalhe - Segmento Q (Obrigatorio Remessa) ***
     '***********************************************************
@@ -537,7 +537,7 @@ Function calculo_dv11base7(strNumero As String) As String
             calculo_dv11base7 = str(intDV)
     End Select
     End Function
-Public Sub BoletoBancario(Id As Integer, Optional Visualizar = True)
+Public Sub BoletoBancario(Id As Long, Optional Visualizar = True)
     Dim cBanco As String
     cBanco = pgDadosBanco(PgDadosFinanceiroFatura(Id).IdBanco).Numero
     Select Case cBanco
@@ -554,7 +554,7 @@ Public Sub BoletoBancario(Id As Integer, Optional Visualizar = True)
     'Comando de impressao do boleto
     ImprBoletoBancario Id, Visualizar
 End Sub
-Public Sub BoletoBancario_001(Id As Integer)
+Public Sub BoletoBancario_001(Id As Long)
     '#######################################################################################
     '### Banco do Brasil
     '#######################################################################################
@@ -676,7 +676,7 @@ Public Sub BoletoBancario_001(Id As Integer)
     'ImprBoletoBancario Id ', NossoNumero, LinhaDigitavel, CodigoBarras
     
 End Sub
-Public Sub BoletoBancario_237(Id As Integer)
+Public Sub BoletoBancario_237(Id As Long)
     '#######################################################################################
     '### Banco do Brasdesco - 237
     '### Maio/2015
@@ -797,7 +797,7 @@ Public Sub BoletoBancario_237(Id As Integer)
 End Sub
 
 
-Private Sub BoletoBancario_356(Id As Integer)
+Private Sub BoletoBancario_356(Id As Long)
     MsgBox "Revisar pois os modulos mudarao!", vbCritical, "Aviso"
     '#######################################################################################
     '### Banco Real
@@ -859,7 +859,7 @@ Private Sub BoletoBancario_356(Id As Integer)
     
 End Sub
 
-Private Sub grvDadosBoleto(idBol As Integer, sNN As String, sLD As String, sCB As String)
+Private Sub grvDadosBoleto(idBol As Long, sNN As String, sLD As String, sCB As String)
     Dim vReg(10)    As Variant
     Dim cReg        As Integer
     
@@ -900,7 +900,7 @@ Public Function ClientePosicaoFinanceira(idCliente As Integer) As CliPosicaoFina
     ClientePosicaoFinanceira.Pagar = ChkVal(Pagar, 0, cDecMoeda)
     ClientePosicaoFinanceira.Pago = ChkVal(Pago, 0, cDecMoeda)
 End Function
-Public Function AtualizaCobranca(idDupl As Integer, DtCalculo As String) As CalcTitulo
+Public Function AtualizaCobranca(idDupl As Long, DtCalculo As String) As CalcTitulo
 '#####################################################################
 '### Atualiza a Duplicata para a Dt solicitada
 '#####################################################################
@@ -1268,7 +1268,7 @@ Private Function cnab240ArquivoHeader(contaId As Integer, lote As String) As Str
     
 
 End Function
-Private Function cnab240P(faturaId As Integer, lote As String) As String
+Private Function cnab240P(faturaId As Long, lote As String) As String
     ' RJ, 30.08.2016
     ' Autor: Leonardo Aquino
     '

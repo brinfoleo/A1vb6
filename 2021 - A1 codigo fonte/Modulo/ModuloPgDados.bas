@@ -1658,7 +1658,7 @@ End Function
 'End Function
 
 
-Public Function PgDadosFinanceiroFatura(Id As Integer) As Dados_FinanceiroFatura
+Public Function PgDadosFinanceiroFatura(Id As Long) As Dados_FinanceiroFatura
     'Pega as fatura pertinentes a emissao de documento fiscal
     'Nao ha vinculo com FaturamentoNFE
     On Error GoTo regErro

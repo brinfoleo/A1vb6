@@ -181,7 +181,7 @@ Public Sub impPC(IdReg As Integer)
     
 
 End Sub
-Public Sub impDuplicata(Id As Integer, Optional Visualizar = True)
+Public Sub impDuplicata(Id As Long, Optional Visualizar = True)
     'On Error Resume Next
     Dim Rst     As Recordset
     Dim extTMP  As String
@@ -263,7 +263,7 @@ Public Sub impDuplicata(Id As Integer, Optional Visualizar = True)
 '    rptFatura.Show 1
 
 End Sub
-Public Sub ImprBB_Pre(Id As Integer)
+Public Sub ImprBB_Pre(Id As Long)
     'Impressao de boleto Bancario pre-impresso
     
     If PgDadosFinanceiroFatura(Id).ContaPR <> "R" Then
@@ -430,7 +430,7 @@ Public Sub ImprBB_Pre_Cont(sNFe As String)
        
 End Sub
 
-Public Sub ImprBoletoBancario(Id As Integer, Optional Visualizar = True) ', NossoNumero As String, LinhaDigitavel As String, CodigoBarras As String)
+Public Sub ImprBoletoBancario(Id As Long, Optional Visualizar = True) ', NossoNumero As String, LinhaDigitavel As String, CodigoBarras As String)
     Dim Rst             As Recordset
     Dim sSQL            As String
     

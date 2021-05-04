@@ -2,7 +2,7 @@ VERSION 5.00
 Object = "{BDC217C8-ED16-11CD-956C-0000C04E4C0A}#1.1#0"; "TABCTL32.OCX"
 Object = "{5E9E78A0-531B-11CF-91F6-C2863C385E30}#1.0#0"; "MSFLXGRD.OCX"
 Object = "{86CF1D34-0C5F-11D2-A9FC-0000F8754DA1}#2.0#0"; "MSCOMCT2.OCX"
-Object = "{831FDD16-0C5C-11D2-A9FC-0000F8754DA1}#2.0#0"; "MSCOMCTL.OCX"
+Object = "{831FDD16-0C5C-11D2-A9FC-0000F8754DA1}#2.2#0"; "mscomctl.ocx"
 Begin VB.Form formFaturamentoPV 
    BorderStyle     =   1  'Fixed Single
    Caption         =   "Faturamento - Pré Venda"
@@ -1016,7 +1016,7 @@ Begin VB.Form formFaturamentoPV
          _ExtentX        =   2566
          _ExtentY        =   556
          _Version        =   393216
-         Format          =   122159105
+         Format          =   36700161
          CurrentDate     =   40517
       End
       Begin VB.TextBox txtID 
@@ -2411,7 +2411,7 @@ Private Sub cboVendedor_DropDown()
 End Sub
 
 Private Sub Form_Load()
-
+    On Error GoTo trtErroLoad
     Me.Top = 0
     Me.Left = 0
     LimpForm
@@ -2421,6 +2421,10 @@ Private Sub Form_Load()
     HDFormulario (False)
     HDMenu Me, True
     txtID.Enabled = True
+    Exit Sub
+trtErroLoad:
+    RegLog Err.Number, "", "(FaturamentoPv.Load)" & Err.Description
+    Resume Next
 End Sub
 Private Sub Form_Unload(Cancel As Integer)
     IdReg = 0

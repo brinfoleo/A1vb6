@@ -4,7 +4,7 @@ Attribute VB_Name = "ModuloFuncoes"
 Public Declare Sub Sleep Lib "kernel32" (ByVal dwMilliseconds As Long)
 
 'Declaracao para validar Inscricao Estadual
-Declare Function ConsisteInscricaoEstadual Lib "DllInscE32" (ByVal Insc As String, ByVal uf As String) As Integer
+Declare Function ConsisteInscricaoEstadual Lib "DllInscE32" (ByVal Insc As String, ByVal UF As String) As Integer
 
 'Declaracao para abrir arquivos como o IExplore
 'Chamar a declaracao: ShellExecute hwnd, "open", (App.Path & "BancoDeDados.mdb"), "", "", 1
@@ -385,6 +385,7 @@ TrtErro:
 End Sub
 
 Public Function ChkVal(Valor As String, Dig As Integer, CasasDecimais As Integer)
+   On Error GoTo trtErroChkVal
     'Funcao para ser usado junto ao KEYPRESS do TextBox para formatar textos
     'em valores conforme as casas decimais
     '
@@ -413,7 +414,7 @@ Public Function ChkVal(Valor As String, Dig As Integer, CasasDecimais As Integer
                     End If
                     Valor = Replace(Valor, ".", "")
                     Valor = Replace(Valor, ",", ".")
-                    ChkVal = Valor
+                    ChkVal = ChkVal(Valor, 0, CasasDecimais)
                     'Valor = Format(Valor, "#." & String(CasasDecimais, "0"))
                     
                     'ChkVal = IIf(Trim(Mid(Valor, 1, IIf(InStr(Valor, ",") = 0, 1, InStr(Valor, ",")) - 1)) = "", "0", Mid(Valor, 1, IIf(InStr(Valor, ",") = 0, 1, InStr(Valor, ",")) - 1)) & "." _
@@ -428,8 +429,11 @@ Public Function ChkVal(Valor As String, Dig As Integer, CasasDecimais As Integer
                     'ChkVal = Mid(Valor, 1, InStr(Valor, ".") - 1) & "." &  IIf(Len(Mid(Valor, InStr(Valor, ".") + 1, Len(Valor))) = 1, Mid(Valor, InStr(Valor, ".") + 1, Len(Valor)) & 0, Mid(Valor, InStr(Valor, ".") + 1, Len(Valor)))
                     Dim tmpValor As String
                     ' tmpValor = Replace(Format(Replace(Valor, ".", ","), "#." & String(CasasDecimais, "0")), ",", ".")
-                    tmpValor = Replace(Format(Valor, "##,##0.00"), ",", "")
+                    'tmpValor = Replace(Format(Valor, "##,##0.00"), ",", "")
                     
+                    tmpValor = Format(Valor, "###,###,###,##0." & String(CasasDecimais, "0"))
+                    tmpValor = Replace(tmpValor, ",", "")
+
                     ChkVal = IIf(Trim(Mid(tmpValor, 1, InStr(tmpValor, ".") - 1)) = "", "0", Mid(tmpValor, 1, InStr(tmpValor, ".") - 1)) & "." & _
                             IIf(Len(Mid(tmpValor, InStr(tmpValor, ".") + 1, Len(tmpValor))) < CasasDecimais, Mid(tmpValor, InStr(tmpValor, ".") + 1, Len(tmpValor)) & Left(String(CasasDecimais, "0"), Val(CasasDecimais) - Len(Mid(tmpValor, InStr(tmpValor, ".") + 1, Len(tmpValor)))), _
                                 Mid(tmpValor, InStr(tmpValor, ".") + 1, Len(tmpValor)))
@@ -469,6 +473,12 @@ Public Function ChkVal(Valor As String, Dig As Integer, CasasDecimais As Integer
                     End If
             End If
     End Select
+    Exit Function
+trtErroChkVal:
+    RegLog "Err n." & Err.Number, "", "(chkVal) " & Err.Description
+    MsgBox Err.Number, vbCritical, "(modulo chkval) " & Err.Description
+    
+    Resume Next
 End Function
 
 Public Function ConvMoeda(Valor As String)
@@ -1123,14 +1133,14 @@ Public Function chkAcesso(Formulario As Form, TpAcesso As String) As Boolean
         MsgBox "Acesso NEGADO!", vbCritical, "Aviso"
     End If
 End Function
-Public Function ChkNFeTemCCe(chvNFe As String) As Integer
+Public Function ChkNFeTemCCe(chvnfe As String) As Integer
     '###############################################################################
     '### Funcao para checarse existe CC-e e retorna o num. da CC-e
     '###############################################################################
     
     Dim Rst     As Recordset
     Dim sSQL    As String
-    sSQL = "SELECT * FROM FaturamentoNFeCartaCorrecao WHERE chvNFe = '" & chvNFe & "'"
+    sSQL = "SELECT * FROM FaturamentoNFeCartaCorrecao WHERE chvNFe = '" & chvnfe & "'"
     Set Rst = RegistroBuscar(sSQL)
     If Rst.BOF And Rst.EOF Then
             ChkNFeTemCCe = 0

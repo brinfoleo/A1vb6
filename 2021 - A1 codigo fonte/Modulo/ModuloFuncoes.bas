@@ -4,7 +4,7 @@ Attribute VB_Name = "ModuloFuncoes"
 Public Declare Sub Sleep Lib "kernel32" (ByVal dwMilliseconds As Long)
 
 'Declaracao para validar Inscricao Estadual
-Declare Function ConsisteInscricaoEstadual Lib "DllInscE32" (ByVal Insc As String, ByVal UF As String) As Integer
+Declare Function ConsisteInscricaoEstadual Lib "DllInscE32" (ByVal Insc As String, ByVal uf As String) As Integer
 
 'Declaracao para abrir arquivos como o IExplore
 'Chamar a declaracao: ShellExecute hwnd, "open", (App.Path & "BancoDeDados.mdb"), "", "", 1
@@ -384,8 +384,8 @@ TrtErro:
 
 End Sub
 
-Public Function ChkVal(Valor As String, Dig As Integer, CasasDecimais As Integer)
-   On Error GoTo trtErroChkVal
+Public Function ChkVal(sValor As String, Dig As Integer, CasasDecimais As Integer)
+   'On Error GoTo trtErroChkVal
     'Funcao para ser usado junto ao KEYPRESS do TextBox para formatar textos
     'em valores conforme as casas decimais
     '
@@ -399,40 +399,57 @@ Public Function ChkVal(Valor As String, Dig As Integer, CasasDecimais As Integer
     '
     'Para converter virgulas em pontos no valor utilize Dig como "0" (Zero)
     '
+     '04.05.21 -  checks the decimal separator
+     Dim valor As String
+    If InStr(Format("0.00", "#0.00"), ",") <> 0 Then
+        'its have coma(,) BR
+            'valor = Format(sValor, "###,###,###,##0." & String(CasasDecimais, "0"))
+            valor = sValor
+            
+            'valor = Replace(sValor, ".", "")
+            
+        Else
+            valor = sValor
+            valor = Replace(valor, ",", "")
+    End If
+    'Valor = Format(Valor, "###,###,###,##0." & String(CasasDecimais, "0"))
+    '
+    '******************************************
     Dim tmpVl As String
-    tmpVl = Valor
-    If Not IsNumeric(Valor) And Len(Trim(Valor)) <> 0 Then
+    tmpVl = valor
+    If Not IsNumeric(valor) And Len(Trim(valor)) <> 0 Then
         ChkVal = 0
         Exit Function
     End If
     
     Select Case Dig
         Case 0 'Converter  virgula em ponto em um determinado valor
-            If Not InStr(Valor, ",") = 0 Then
-                    If Not InStr(Valor, "$") = 0 Then
-                        Valor = Trim(Right(Valor, Len(Valor) - 2))
+            If Not InStr(valor, ",") = 0 Then
+                    If Not InStr(valor, "$") = 0 Then
+                        valor = Trim(Right(valor, Len(valor) - 2))
                     End If
-                    Valor = Replace(Valor, ".", "")
-                    Valor = Replace(Valor, ",", ".")
-                    ChkVal = ChkVal(Valor, 0, CasasDecimais)
+                    valor = Replace(valor, ".", "")
+                    valor = Replace(valor, ",", ".")
+                    ChkVal = ChkVal(valor, 0, CasasDecimais)
                     'Valor = Format(Valor, "#." & String(CasasDecimais, "0"))
                     
                     'ChkVal = IIf(Trim(Mid(Valor, 1, IIf(InStr(Valor, ",") = 0, 1, InStr(Valor, ",")) - 1)) = "", "0", Mid(Valor, 1, IIf(InStr(Valor, ",") = 0, 1, InStr(Valor, ",")) - 1)) & "." _
                             & IIf(Len(Mid(Valor, InStr(Valor, ",") + 1, Len(Valor))) = 1, Mid(Valor, InStr(Valor, ",") + 1, Len(Valor)) & 0, Mid(Valor, InStr(Valor, ",") + 1, Len(Valor)))
                 Else
-                    If InStr(Valor, ".") = 0 Then
-                        ChkVal = IIf(CasasDecimais = 0, Valor, Valor & "." & String(CasasDecimais, "0"))
+                    If InStr(valor, ".") = 0 Then
+                        ChkVal = IIf(CasasDecimais = 0, valor, valor & "." & String(CasasDecimais, "0"))
                         ChkVal = IIf(Mid(ChkVal, 1, InStr(ChkVal, ".")) = ".", "0" & ChkVal, ChkVal)
                         Exit Function
                     End If
                     
                     'ChkVal = Mid(Valor, 1, InStr(Valor, ".") - 1) & "." &  IIf(Len(Mid(Valor, InStr(Valor, ".") + 1, Len(Valor))) = 1, Mid(Valor, InStr(Valor, ".") + 1, Len(Valor)) & 0, Mid(Valor, InStr(Valor, ".") + 1, Len(Valor)))
                     Dim tmpValor As String
-                    ' tmpValor = Replace(Format(Replace(Valor, ".", ","), "#." & String(CasasDecimais, "0")), ",", ".")
+                    tmpValor = Replace(Format(Replace(valor, ".", ","), "#." & String(CasasDecimais, "0")), ",", ".")
                     'tmpValor = Replace(Format(Valor, "##,##0.00"), ",", "")
                     
-                    tmpValor = Format(Valor, "###,###,###,##0." & String(CasasDecimais, "0"))
-                    tmpValor = Replace(tmpValor, ",", "")
+                    
+                    'tmpValor = Replace(tmpValor, ",", "")
+                    'tmpValor = valor
 
                     ChkVal = IIf(Trim(Mid(tmpValor, 1, InStr(tmpValor, ".") - 1)) = "", "0", Mid(tmpValor, 1, InStr(tmpValor, ".") - 1)) & "." & _
                             IIf(Len(Mid(tmpValor, InStr(tmpValor, ".") + 1, Len(tmpValor))) < CasasDecimais, Mid(tmpValor, InStr(tmpValor, ".") + 1, Len(tmpValor)) & Left(String(CasasDecimais, "0"), Val(CasasDecimais) - Len(Mid(tmpValor, InStr(tmpValor, ".") + 1, Len(tmpValor)))), _
@@ -442,20 +459,20 @@ Public Function ChkVal(Valor As String, Dig As Integer, CasasDecimais As Integer
             ChkVal = Dig
         
         Case 44 'Virgula
-            If InStr(Valor, ".") = 0 Then
+            If InStr(valor, ".") = 0 Then
                     ChkVal = 46
                 Else
                     ChkVal = 0
             End If
         Case 46 'Ponto
-            If InStr(Valor, ".") = 0 Then
+            If InStr(valor, ".") = 0 Then
                     ChkVal = Dig
                 Else
                     ChkVal = 0
             End If
         
         Case Else 'Caso contrario
-            If InStr(Valor, ".") = 0 Then
+            If InStr(valor, ".") = 0 Then
                     If IsNumeric(Chr(Dig)) Then
                             ChkVal = Dig
                         Else
@@ -463,7 +480,7 @@ Public Function ChkVal(Valor As String, Dig As Integer, CasasDecimais As Integer
                     End If
                 Else
                     If IsNumeric(Chr(Dig)) Then
-                            If Len(Mid(Valor, InStr(Valor, "."), Len(Valor))) >= CasasDecimais + 1 Then
+                            If Len(Mid(valor, InStr(valor, "."), Len(valor))) >= CasasDecimais + 1 Then
                                     ChkVal = 0
                                 Else
                                     ChkVal = Dig
@@ -481,7 +498,7 @@ trtErroChkVal:
     Resume Next
 End Function
 
-Public Function ConvMoeda(Valor As String)
+Public Function ConvMoeda(valor As String)
     'Converte qualquer valor em formato Dinheiro conforme conf. do computador
     Dim a As String
     Dim b As String
@@ -489,27 +506,27 @@ Public Function ConvMoeda(Valor As String)
     Dim m As String
     
     m = Trim(Mid(Format("1", "currency"), 1, InStr(Format("1", "currency"), " ")))
-    Valor = ChkVal(Valor, 0, cDecMoeda)
+    valor = ChkVal(valor, 0, cDecMoeda)
     
-    If InStr(Valor, "-") <> 0 Then
-            Valor = Replace(Valor, "-", "")
+    If InStr(valor, "-") <> 0 Then
+            valor = Replace(valor, "-", "")
             c = "-"
         Else
             c = ""
     End If
     'If Not InStr(Valor, ".") = 0 Then
-                    If Not InStr(Valor, "$") = 0 Then
-                        Valor = Trim(Right(Valor, Len(Valor) - 2))
+                    If Not InStr(valor, "$") = 0 Then
+                        valor = Trim(Right(valor, Len(valor) - 2))
                     End If
                     If cDecMoeda = 0 Then
-                        ConvMoeda = Valor
+                        ConvMoeda = valor
                         Exit Function
                     End If
                         
                     'ConvMoeda = Format(Mid(Valor, 1, InStr(Valor, ".") - 1) & "," & Mid(Valor, InStr(Valor, ".") + 1, Len(Valor)), "Currency")
-                    Valor = ChkVal(Valor, 0, cDecMoeda)
-                    a = Mid(Valor, 1, InStr(Valor, ".") - 1)
-                    b = Mid(Valor, InStr(Valor, ".") + 1, Len(Valor))
+                    valor = ChkVal(valor, 0, cDecMoeda)
+                    a = Mid(valor, 1, InStr(valor, ".") - 1)
+                    b = Mid(valor, InStr(valor, ".") + 1, Len(valor))
                     
                     If Len(a) >= 4 Then
                         a = Format(a, "0,###")
@@ -782,7 +799,7 @@ Public Function MovimentarContasPagarReceber(ContaPR As String, DtEmissao As Dat
     End If
 
 End Function
-Public Function Extenso(ByVal Valor As _
+Public Function Extenso(ByVal valor As _
        Double, ByVal MoedaPlural As _
        String, ByVal MoedaSingular As _
        String) As String
@@ -792,9 +809,9 @@ Public Function Extenso(ByVal Valor As _
   Dim Dezenas, Centenas, PotenciasSingular
   Dim PotenciasPlural
 
-  Negativo = (Valor < 0)
-  Valor = Abs(CDec(Valor))
-  If Valor Then
+  Negativo = (valor < 0)
+  valor = Abs(CDec(valor))
+  If valor Then
     Unidades = Array(vbNullString, "Um", "Dois", _
                "Três", "Quatro", "Cinco", _
                "Seis", "Sete", "Oito", "Nove", _
@@ -817,7 +834,7 @@ Public Function Extenso(ByVal Valor As _
                       " Milhões", " Bilhões", _
                       " Trilhões", " Quatrilhões")
 
-    StrValor = Left(Format(Valor, String(18, "0") & _
+    StrValor = Left(Format(valor, String(18, "0") & _
                ".000"), 18)
     For Posicao = 1 To 18 Step 3
       Parcial = Val(Mid(StrValor, Posicao, 3))
@@ -864,13 +881,13 @@ Public Function Extenso(ByVal Valor As _
       If Negativo Then
         Extenso = "Menos " & Extenso
       End If
-      If Int(Valor) = 1 Then
+      If Int(valor) = 1 Then
         Extenso = Extenso & " " & MoedaSingular
       Else
         Extenso = Extenso & " " & MoedaPlural
       End If
     End If
-    Parcial = Int((Valor - Int(Valor)) * _
+    Parcial = Int((valor - Int(valor)) * _
               100 + 0.1)
     If Parcial Then
     'MsgBox "X"
@@ -1133,14 +1150,14 @@ Public Function chkAcesso(Formulario As Form, TpAcesso As String) As Boolean
         MsgBox "Acesso NEGADO!", vbCritical, "Aviso"
     End If
 End Function
-Public Function ChkNFeTemCCe(chvnfe As String) As Integer
+Public Function ChkNFeTemCCe(chvNFe As String) As Integer
     '###############################################################################
     '### Funcao para checarse existe CC-e e retorna o num. da CC-e
     '###############################################################################
     
     Dim Rst     As Recordset
     Dim sSQL    As String
-    sSQL = "SELECT * FROM FaturamentoNFeCartaCorrecao WHERE chvNFe = '" & chvnfe & "'"
+    sSQL = "SELECT * FROM FaturamentoNFeCartaCorrecao WHERE chvNFe = '" & chvNFe & "'"
     Set Rst = RegistroBuscar(sSQL)
     If Rst.BOF And Rst.EOF Then
             ChkNFeTemCCe = 0
@@ -1159,7 +1176,7 @@ Public Sub MovimentarConta(idConta As Integer, _
                            nDoc As String, _
                            tDoc As Integer, _
                            Descricao As String, _
-                           Valor As String)
+                           valor As String)
      
     'nDoc - Numero do Documeto
     'tDoc - Codigo interno do Tipo de Documento
@@ -1178,9 +1195,9 @@ Public Sub MovimentarConta(idConta As Integer, _
             Rst.MoveFirst
             Saldo = ChkVal(IIf(IsNull(Rst.Fields("Saldo")), 0, Rst.Fields("Saldo")), 0, cDecMoeda)
             If cd = "C" Then
-                    Saldo = Val(Saldo) + Val(ChkVal(Valor, 0, cDecMoeda))
+                    Saldo = Val(Saldo) + Val(ChkVal(valor, 0, cDecMoeda))
                 Else
-                    Saldo = Val(Saldo) - Val(ChkVal(Valor, 0, cDecMoeda))
+                    Saldo = Val(Saldo) - Val(ChkVal(valor, 0, cDecMoeda))
             End If
             Saldo = ChkVal(Saldo, 0, cDecMoeda)
     End If
@@ -1192,7 +1209,7 @@ Public Sub MovimentarConta(idConta As Integer, _
     vReg(cReg) = Array("Documento", nDoc, "S"): cReg = cReg + 1
     vReg(cReg) = Array("TpDoc", tDoc, "N"): cReg = cReg + 1
     vReg(cReg) = Array("Descricao", Descricao, "S"): cReg = cReg + 1
-    vReg(cReg) = Array("Valor", ChkVal(Valor, 0, cDecMoeda), "S"): cReg = cReg + 1
+    vReg(cReg) = Array("Valor", ChkVal(valor, 0, cDecMoeda), "S"): cReg = cReg + 1
     vReg(cReg) = Array("CD", cd, "S"): cReg = cReg + 1
     vReg(cReg) = Array("Saldo", ChkVal(Saldo, 0, cDecMoeda), "S") ': cReg = cReg + 1
     

@@ -1,5 +1,5 @@
 formClientes = 0, 0, 0, 0, C, 0, 0, 0, 0, C
-MDIFormA1 = 0, 0, 0, 0, C, 0, 0, 0, 0, C
+MDIFormA1 = 0, 0, 0, 0, C, 78, 78, 1036, 724, C
 ModuloDatabase = 0, 0, 0, 0, C
 ModuloPrincipal = 0, 0, 0, 0, C
 formEmpresas = 0, 0, 0, 0, C, 0, 0, 0, 0, C

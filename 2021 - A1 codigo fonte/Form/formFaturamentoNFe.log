@@ -2,28 +2,3 @@ Line 74: Class MSComCtl2.DTPicker of control dtpSaida was not a loaded control c
 Line 86: Class MSComCtl2.DTPicker of control dtpEmissao was not a loaded control class.
 Line 286: Class MSComctlLib.Toolbar of control tbMenu was not a loaded control class.
 Line 322: Class MSComctlLib.ImageList of control ImageList1 was not a loaded control class.
-Line 80: The property name _ExtentX in dtpSaida is invalid.
-Line 81: The property name _ExtentY in dtpSaida is invalid.
-Line 82: The property name _Version in dtpSaida is invalid.
-Line 83: The property name Format in dtpSaida is invalid.
-Line 84: The property name CurrentDate in dtpSaida is invalid.
-Line 92: The property name _ExtentX in dtpEmissao is invalid.
-Line 93: The property name _ExtentY in dtpEmissao is invalid.
-Line 94: The property name _Version in dtpEmissao is invalid.
-Line 95: The property name Format in dtpEmissao is invalid.
-Line 96: The property name CurrentDate in dtpEmissao is invalid.
-Line 293: The property name _ExtentX in tbMenu is invalid.
-Line 294: The property name _ExtentY in tbMenu is invalid.
-Line 295: The property name ButtonWidth in tbMenu is invalid.
-Line 296: The property name ButtonHeight in tbMenu is invalid.
-Line 297: The property name AllowCustomize in tbMenu is invalid.
-Line 298: The property name ImageList in tbMenu is invalid.
-Line 299: The property name _Version in tbMenu is invalid.
-Line 321: The property name Buttons in tbMenu is invalid.
-Line 325: The property name _ExtentX in ImageList1 is invalid.
-Line 326: The property name _ExtentY in ImageList1 is invalid.
-Line 328: The property name ImageWidth in ImageList1 is invalid.
-Line 329: The property name ImageHeight in ImageList1 is invalid.
-Line 330: The property name MaskColor in ImageList1 is invalid.
-Line 331: The property name _Version in ImageList1 is invalid.
-Line 394: The property name Images in ImageList1 is invalid.

@@ -54,7 +54,7 @@ Public Function Calculo_ICMSST(UF_Origem As String, UF_Destino As String, sMVA A
     
     
 End Function
-Public Sub Consultar_NFe(chvNFe As String)
+Public Sub Consultar_NFe(chvnfe As String)
     'Dim Rst     As Recordset
     'Dim sSQL     As String
     Dim nmArq   As String
@@ -71,7 +71,7 @@ Public Sub Consultar_NFe(chvNFe As String)
     Dim idNFe       As Integer
     
     cReg = 0
-    idNFe = PgDadosNotaFiscal(chvNFe).Id
+    idNFe = PgDadosNotaFiscal(chvnfe).Id
     
     vReg(cReg) = Array("cStat", "", "S"): cReg = cReg + 1
     
@@ -80,7 +80,7 @@ Public Sub Consultar_NFe(chvNFe As String)
     RegistroAlterar "FaturamentoNFe", vReg, cReg, "id=" & idNFe
     '##############################################################################################
     
-    nmArq = chvNFe & "-ped-sit.txt"
+    nmArq = chvnfe & "-ped-sit.txt"
     
     ChecarArquivo nmArq
     'sSQL = "SELECT * FROM FaturamentoNFe WHERE idNFe ='" & chvnfe & "'"
@@ -95,13 +95,13 @@ Public Sub Consultar_NFe(chvNFe As String)
     grvReg nmArq, "versao|" & VersaoNFe
     grvReg nmArq, "tpAmb|" & PgDadosConfig.Ambiente
     grvReg nmArq, "xServ|CONSULTAR"
-    grvReg nmArq, "chNFe|" & chvNFe
+    grvReg nmArq, "chNFe|" & chvnfe
     'grvReg nmArq, "nProt|" & nProt
     'grvReg nmArq, "xJust|" & xJust
     MoverPastaEnvio_UniNFe (nmArq)
 End Sub
 
-Public Sub Cancelar_NFe(chvNFe As String)
+Public Sub Cancelar_NFe(chvnfe As String)
     'Alterado em 27/08/2013
     '
     Dim Rst         As Recordset
@@ -117,12 +117,12 @@ Public Sub Cancelar_NFe(chvNFe As String)
     Dim dtEvent As String
        
     tpEvento = "110111"
-    nmArq = chvNFe & "-env-canc.txt"
+    nmArq = chvnfe & "-env-canc.txt"
     
     ChecarArquivo (nmArq)
     
     
-    sSQL = "SELECT * FROM FaturamentoNFe WHERE ID_Empresa = " & ID_Empresa & " AND idNFe ='" & chvNFe & "'"
+    sSQL = "SELECT * FROM FaturamentoNFe WHERE ID_Empresa = " & ID_Empresa & " AND idNFe ='" & chvnfe & "'"
     Set Rst = RegistroBuscar(sSQL)
     If Rst.BOF And Rst.EOF Then
             Exit Sub
@@ -143,12 +143,12 @@ Public Sub Cancelar_NFe(chvNFe As String)
     grvReg nmArq, "idLote|0000000001"
     grvReg nmArq, "evento|1"
     grvReg nmArq, "versao|1.00"
-    grvReg nmArq, "Id|ID" & tpEvento & chvNFe & "01"
+    grvReg nmArq, "Id|ID" & tpEvento & chvnfe & "01"
     grvReg nmArq, "cOrgao|" & PgDadosConfig.uf
     grvReg nmArq, "tpAmb|" & PgDadosConfig.Ambiente
     grvReg nmArq, "xServ|CANCELAR"
     grvReg nmArq, "CNPJ|" & PgDadosEmpresa(ID_Empresa).CNPJ
-    grvReg nmArq, "chNFe|" & chvNFe
+    grvReg nmArq, "chNFe|" & chvnfe
     '** ERRO - 27.04.2015
     '** Tem de colocar a data do evento no formato AAAA-MM-DDThh:mm:ss-03:00
     grvReg nmArq, "dhEvento|" & dtEvent & "T" & hrEvent 'dhProt & PgDadosConfig.fusoHorario  '2013-08-19T08:41:42-03:00"
@@ -167,7 +167,7 @@ Public Sub Cancelar_NFe(chvNFe As String)
     'grvReg nmArq, "xJust|" & xJust
     MoverPastaEnvio_UniNFe (nmArq)
 End Sub
-Public Sub Inutilizar_NFe(chvNFe As String)
+Public Sub Inutilizar_NFe(chvnfe As String)
     Dim Rst     As Recordset
     Dim sSQL     As String
     Dim nmArq   As String
@@ -175,16 +175,16 @@ Public Sub Inutilizar_NFe(chvNFe As String)
     Dim nProt   As String
     Dim xJust   As String
     
-    nmArq = chvNFe & "-ped-inu.txt"
+    nmArq = chvnfe & "-ped-inu.txt"
     
-    sSQL = "SELECT * FROM FaturamentoNFe WHERE ID_Empresa = " & ID_Empresa & " AND idNFe ='" & chvNFe & "'"
+    sSQL = "SELECT * FROM FaturamentoNFe WHERE ID_Empresa = " & ID_Empresa & " AND idNFe ='" & chvnfe & "'"
     Set Rst = RegistroBuscar(sSQL)
     If Rst.BOF And Rst.EOF Then
         MsgBox "Erro ao localizar registros de inutilização!", vbInformation, "Aviso"
         Exit Sub
     End If
     
-    grvReg nmArq, "ID|" & chvNFe
+    grvReg nmArq, "ID|" & chvnfe
     grvReg nmArq, "versao|" & Rst.Fields("versao")
     grvReg nmArq, "tpAmb|" & PgDadosConfig.Ambiente
     grvReg nmArq, "cUF|" & Rst.Fields("ide_cUF")
@@ -192,8 +192,8 @@ Public Sub Inutilizar_NFe(chvNFe As String)
     grvReg nmArq, "mod|" & Rst.Fields("ide_Mod")
     grvReg nmArq, "Serie|" & Rst.Fields("ide_Serie")
     grvReg nmArq, "CNPJ|" & Rst.Fields("emit_CNPJ")
-    grvReg nmArq, "nNFIni|" & Mid(chvNFe, 24, 9)
-    grvReg nmArq, "nNFFin|" & Mid(chvNFe, 33, 9)
+    grvReg nmArq, "nNFIni|" & Mid(chvnfe, 24, 9)
+    grvReg nmArq, "nNFFin|" & Mid(chvnfe, 33, 9)
     grvReg nmArq, "xJust|" & Rst.Fields("inut_xJust")
     
     Rst.Close
@@ -265,7 +265,7 @@ Private Sub ChecarArquivo(nmArquivo)
     End If
 End Sub
 
-Public Function Exportar_CCe_v200_TXT(chvNFe As String) As String
+Public Function Exportar_CCe_v200_TXT(chvnfe As String) As String
     Dim Rst1        As Recordset
     Dim sSQL        As String
     Dim nmArq       As String
@@ -273,17 +273,17 @@ Public Function Exportar_CCe_v200_TXT(chvNFe As String) As String
     Dim hrEvent     As String
     
     
-    sSQL = "SELECT * FROM FaturamentoNFeCartaCorrecao WHERE ID_Empresa = " & ID_Empresa & " AND chvNFe = '" & chvNFe & "'"
+    sSQL = "SELECT * FROM FaturamentoNFeCartaCorrecao WHERE ID_Empresa = " & ID_Empresa & " AND chvNFe = '" & chvnfe & "'"
     Set Rst1 = RegistroBuscar(sSQL)
     If Rst1.BOF And Rst1.EOF Then
-            MsgBox "Erro ao localizar Carta de Correção na chave " & chvNFe, vbCritical, "Aviso"
+            MsgBox "Erro ao localizar Carta de Correção na chave " & chvnfe, vbCritical, "Aviso"
             Exportar_CCe_v200_TXT = ""
             Exit Function
         Else
             Rst1.MoveFirst
     End If
     
-     nmArq = chvNFe & "-00-env-cce.txt"
+     nmArq = chvnfe & "-00-env-cce.txt"
      
      ChecarArquivo (nmArq)
 '========================================================================
@@ -293,9 +293,9 @@ Public Function Exportar_CCe_v200_TXT(chvNFe As String) As String
     grvReg nmArq, "cOrgao|" & PgDadosConfig.uf
     grvReg nmArq, "tpAmb|" & PgDadosConfig.Ambiente
     grvReg nmArq, "CNPJ|" & PgDadosEmpresa(ID_Empresa).CNPJ
-    grvReg nmArq, "chNFe|" & chvNFe
+    grvReg nmArq, "chNFe|" & chvnfe
     
-    hrEvent = PgDadosNotaFiscal(chvNFe).dhProt
+    hrEvent = PgDadosNotaFiscal(chvnfe).dhProt
     dtEvent = Format(Trim(Mid(hrEvent, 1, InStr(hrEvent, " "))), "YYYY-MM-DD")
     hrEvent = Trim(Mid(hrEvent, InStr(hrEvent, " "), Len(hrEvent)))
     
@@ -310,7 +310,7 @@ Public Function Exportar_CCe_v200_TXT(chvNFe As String) As String
     'Move o txt para validacao do uninfe
     MoverPastaEnvio_UniNFe (nmArq)
 End Function
-Public Function Exportar_NFe_v200_TXT(chvNFe As String) As String
+Public Function Exportar_NFe_v200_TXT(chvnfe As String) As String
     Dim Rst1    As Recordset 'Cabecalho
     Dim Rst2    As Recordset 'Produto
     Dim Rst3    As Recordset 'Cobanca
@@ -319,7 +319,7 @@ Public Function Exportar_NFe_v200_TXT(chvNFe As String) As String
     Dim cItens  As Integer 'Conta os registros dos itens da Nota
     Dim cCob    As Integer 'Conta os registros da cobranca da Nota
     
-    sSQL = "SELECT * FROM FaturamentoNFe WHERE ID_Empresa = " & ID_Empresa & " AND idNFe = '" & chvNFe & "'"
+    sSQL = "SELECT * FROM FaturamentoNFe WHERE ID_Empresa = " & ID_Empresa & " AND idNFe = '" & chvnfe & "'"
     Set Rst1 = RegistroBuscar(sSQL)
     If Rst1.BOF And Rst1.EOF Then
             MsgBox "Etapa 1 - Erro ao localizar NF-e"
@@ -328,7 +328,7 @@ Public Function Exportar_NFe_v200_TXT(chvNFe As String) As String
         Else
             Rst1.MoveFirst
     End If
-    sSQL = "SELECT * FROM FaturamentoNFeItens WHERE ID_Empresa = " & ID_Empresa & " AND idNFe = '" & chvNFe & "'"
+    sSQL = "SELECT * FROM FaturamentoNFeItens WHERE ID_Empresa = " & ID_Empresa & " AND idNFe = '" & chvnfe & "'"
     Set Rst2 = RegistroBuscar(sSQL)
     If Rst2.BOF And Rst2.EOF Then
             MsgBox "Etapa 2 - Erro ao localizar NF-e"
@@ -337,7 +337,7 @@ Public Function Exportar_NFe_v200_TXT(chvNFe As String) As String
         Else
             Rst2.MoveFirst
     End If
-    sSQL = "SELECT * FROM FaturamentoNFeCobranca WHERE ID_Empresa = " & ID_Empresa & " AND idNFe = '" & chvNFe & "'"
+    sSQL = "SELECT * FROM FaturamentoNFeCobranca WHERE ID_Empresa = " & ID_Empresa & " AND idNFe = '" & chvnfe & "'"
     Set Rst3 = RegistroBuscar(sSQL)
     If Rst3.BOF And Rst3.EOF Then
             MsgBox "Etapa 3 - Erro ao localizar NF-e"
@@ -353,7 +353,7 @@ Public Function Exportar_NFe_v200_TXT(chvNFe As String) As String
     
     grvReg nmArq, "NOTAFISCAL|1"
     'A
-    grvReg nmArq, "A|" & Rst1.Fields("Versao") & "|NFe" & chvNFe & "|"
+    grvReg nmArq, "A|" & Rst1.Fields("Versao") & "|NFe" & chvnfe & "|"
     'B
     grvReg nmArq, "B|" & _
                     Rst1.Fields("ide_cUF") & "|" & _
@@ -529,6 +529,11 @@ Public Function Exportar_NFe_v200_TXT(chvNFe As String) As String
                                 Rst2.Fields("ICMS_MotDesICMS") & "|"
                                 
             'Case "41" 'Tributacao do ICMS NAO TRIBUTADA ()
+             grvReg nmArq, "N06|" & _
+                                Rst2.Fields("ICMS_Origem") & "|" & _
+                                Rst2.Fields("ICMS_CST") & "|" & _
+                                Rst2.Fields("ICMS_vICMS") & "|" & _
+                                Rst2.Fields("ICMS_MotDesICMS") & "|"
             
             Case "50" 'Tributacao do ICMS SUSPENSAO ()
                 grvReg nmArq, "N06|" & _
@@ -687,7 +692,7 @@ Public Function Exportar_NFe_v200_TXT(chvNFe As String) As String
                     Rst1.Fields("transp_PesoB") & "|"
 
     '***************************************** COBRANCA ********************************************
-    If PgDadosNotaFiscal(chvNFe).ImpFatura = 1 Then
+    If PgDadosNotaFiscal(chvnfe).ImpFatura = 1 Then
         grvReg nmArq, "Y|"
         If cNull(Rst3.Fields("cobr_nFat")) <> "" Then
             grvReg nmArq, "Y02|" & _
@@ -772,7 +777,7 @@ TrtErro:
     RegLog "", "", "Gerar NFe.txt [" & Err.Description & "] - " & caminho
 End Sub
 
-Public Function ImprimirProtCanc(chvNFe As String, Optional ModalShow As Integer) As Boolean
+Public Function ImprimirProtCanc(chvnfe As String, Optional ModalShow As Integer) As Boolean
     'True = OK
     'False = Erro
     
@@ -785,11 +790,11 @@ Public Function ImprimirProtCanc(chvNFe As String, Optional ModalShow As Integer
     
     ImprimirProtCanc = False
     
-    If Trim(chvNFe) = "" Then
+    If Trim(chvnfe) = "" Then
         MsgBox "Selecione uma Nf-e.", vbInformation, "Aviso"
         Exit Function
     End If
-    sSQL = "SELECT * FROM FaturamentoNFe WHERE ID_Empresa = " & ID_Empresa & " AND idNFE = '" & chvNFe & "'"
+    sSQL = "SELECT * FROM FaturamentoNFe WHERE ID_Empresa = " & ID_Empresa & " AND idNFE = '" & chvnfe & "'"
     Set Rst = RegistroBuscar(sSQL)
     If Rst.BOF And Rst.EOF Then
             MsgBox "NFe não encontrada.", vbInformation, "Aviso"
@@ -832,7 +837,7 @@ Public Function ImprimirProtCanc(chvNFe As String, Optional ModalShow As Integer
     ImprimirProtCanc = True
 End Function
 
-Public Function ImprimirDANFE(chvNFe As String) As Boolean
+Public Function ImprimirDANFE(chvnfe As String) As Boolean
     'True = OK
     'False = Erro
     On Error GoTo TrtErroImpDanfe
@@ -842,12 +847,12 @@ Public Function ImprimirDANFE(chvNFe As String) As Boolean
     Dim pXML        As String
     Dim sCMD        As String
     Dim idDest      As Integer
-    If Trim(chvNFe) = "" Then
+    If Trim(chvnfe) = "" Then
         MsgBox "Selecione uma Nf-e.", vbInformation, "Aviso"
         ImprimirDANFE = False
         Exit Function
     End If
-    sSQL = "SELECT * FROM FaturamentoNFe WHERE ID_Empresa = " & ID_Empresa & " AND idNFE = '" & chvNFe & "'"
+    sSQL = "SELECT * FROM FaturamentoNFe WHERE ID_Empresa = " & ID_Empresa & " AND idNFE = '" & chvnfe & "'"
     Set Rst = RegistroBuscar(sSQL)
     If Rst.BOF And Rst.EOF Then
             MsgBox "NFe não encontrada.", vbInformation, "Aviso"
@@ -863,9 +868,9 @@ Public Function ImprimirDANFE(chvNFe As String) As Boolean
     idDest = Rst.Fields("dest_idDest")
     
     'Localiza o XML da NF-e para impressao
-    If Trim(chvNFe) = "" Then Exit Function
+    If Trim(chvnfe) = "" Then Exit Function
     
-    pXML = PgDadosConfig.pBackup & "\Autorizados\" & Format(Rst.Fields("Ide_dEmi"), "YYYYMM") & "\" & chvNFe & "-procNFe.xml"
+    pXML = PgDadosConfig.pBackup & "\Autorizados\" & Format(Rst.Fields("Ide_dEmi"), "YYYYMM") & "\" & chvnfe & "-procNFe.xml"
     
     If Dir(pXML) = "" Then
             MsgBox "Arquivo XML não encontrado..."
@@ -898,7 +903,7 @@ TrtErroImpDanfe:
     RegLog "0", "0", Err.Number & " - " & Err.Description
     ImprimirDANFE = False
 End Function
-Public Sub ImprimirDANFE2(chvNFe As String, Optional ModalShow As Integer)
+Public Sub ImprimirDANFE2(chvnfe As String, Optional ModalShow As Integer)
     Dim Rst         As Recordset    'CAB
     Dim sSQL        As String       'CAB
     Dim Rst1        As Recordset    'CORPO
@@ -910,14 +915,14 @@ Public Sub ImprimirDANFE2(chvNFe As String, Optional ModalShow As Integer)
     Dim sCMD        As String
     Dim idDest      As Integer
     Dim cCob        As Integer      'Conta o numero de duplicatas/faturas
-    If Trim(chvNFe) = "" Then
+    If Trim(chvnfe) = "" Then
         MsgBox "Selecione uma Nf-e.", vbInformation, "Aviso"
         Exit Sub
     End If
     
     '****************************************************************************************
     'Cab
-    sSQL = "SELECT * FROM FaturamentoNFe WHERE ID_Empresa = " & ID_Empresa & " AND idNFE = '" & chvNFe & "'"
+    sSQL = "SELECT * FROM FaturamentoNFe WHERE ID_Empresa = " & ID_Empresa & " AND idNFE = '" & chvnfe & "'"
     Set Rst = RegistroBuscar(sSQL)
     If Rst.BOF And Rst.EOF Then
             MsgBox "NFe não encontrada.", vbInformation, "Aviso"
@@ -931,7 +936,7 @@ Public Sub ImprimirDANFE2(chvNFe As String, Optional ModalShow As Integer)
     'sSQL1 = "SELECT det_cProd,det_xProd,det_InfAdProd,det_NCM,ICMS_CST AS CST,det_CFOP,det_uCom,FORMAT(det_qCom," & cDecQtd & ") AS qCom,FORMAT(det_vUnCom," & cDecMoeda & ") AS vUnCom,det_vProd,ICMS_vBc,ICMS_vICMS,IPI_vIPI,ICMS_pICMS,IPI_pIPI,ID_Empresa" & _
             " FROM FaturamentoNFeItens WHERE ID_Empresa = " & ID_Empresa & " AND idNFE = '" & chvnfe & "'"
     sSQL1 = "SELECT det_cProd,CONCAT(det_xProd ,' ',COALESCE(det_InfAdProd,'')) AS dProd , det_NCM,CONCAT(CONVERT(ICMS_origem,CHAR),ICMS_CST) AS CST,det_CFOP,det_uCom,FORMAT(det_qCom," & cDecQtd & ") AS qCom,FORMAT(det_vUnCom," & cDecMoeda & ") AS vUnCom,det_vProd,ICMS_vBc,ICMS_vICMS,IPI_vIPI,ICMS_pICMS,IPI_pIPI,ID_Empresa" & _
-            " FROM FaturamentoNFeItens WHERE ID_Empresa = " & ID_Empresa & " AND idNFE = '" & chvNFe & "'"
+            " FROM FaturamentoNFeItens WHERE ID_Empresa = " & ID_Empresa & " AND idNFE = '" & chvnfe & "'"
     Set Rst1 = RegistroBuscar(sSQL1)
     If Rst1.BOF And Rst1.EOF Then
             MsgBox "Campo Descrição da NFe não encontrada.", vbInformation, "Aviso"
@@ -943,7 +948,7 @@ Public Sub ImprimirDANFE2(chvNFe As String, Optional ModalShow As Integer)
     'Fatura
     sSQL2 = "SELECT cobr_nDup, cobr_dVenc, cobr_vDup,ID_Empresa " & _
             "FROM FaturamentoNFeCobranca " & _
-            "WHERE ID_Empresa = " & ID_Empresa & " AND idNFE = '" & chvNFe & "'"
+            "WHERE ID_Empresa = " & ID_Empresa & " AND idNFE = '" & chvnfe & "'"
     Set Rst2 = RegistroBuscar(sSQL2)
     If Rst2.BOF And Rst2.EOF Then
             MsgBox "Campo Descrição da NFe não encontrada.", vbInformation, "Aviso"
@@ -1078,18 +1083,18 @@ Public Sub ImprimirDANFE2(chvNFe As String, Optional ModalShow As Integer)
 End Sub
 
 
-Public Sub ImprimirDANFEFornecedor(chvNFe As String)
+Public Sub ImprimirDANFEFornecedor(chvnfe As String)
     Dim Rst         As Recordset
     Dim sSQL        As String
     Dim pUniDANFe   As String
     Dim pXML        As String
     Dim sCMD        As String
     Dim idDest      As Integer
-    If Trim(chvNFe) = "" Then
+    If Trim(chvnfe) = "" Then
         MsgBox "Selecione uma Nf-e.", vbInformation, "Aviso"
         Exit Sub
     End If
-    sSQL = "SELECT * FROM FaturamentoNFeEntrada WHERE ID_Empresa = " & ID_Empresa & " AND idNFE = '" & chvNFe & "'"
+    sSQL = "SELECT * FROM FaturamentoNFeEntrada WHERE ID_Empresa = " & ID_Empresa & " AND idNFE = '" & chvnfe & "'"
     Set Rst = RegistroBuscar(sSQL)
     If Rst.BOF And Rst.EOF Then
             MsgBox "NFe não encontrada.", vbInformation, "Aviso"
@@ -1106,9 +1111,9 @@ Public Sub ImprimirDANFEFornecedor(chvNFe As String)
     
     'Localiza o XML da NF-e para impressao
     
-    If Trim(chvNFe) = "" Then Exit Sub
+    If Trim(chvnfe) = "" Then Exit Sub
     
-    pXML = PgDadosConfig.pXMLFornecedor & "\" & Format(Rst.Fields("Ide_dEmi"), "YYYYMM") & "\NFe" & chvNFe & ".xml"
+    pXML = PgDadosConfig.pXMLFornecedor & "\" & Format(Rst.Fields("Ide_dEmi"), "YYYYMM") & "\NFe" & chvnfe & ".xml"
     
     If Dir(pXML) = "" Then
             MsgBox "Arquivo XML não encontrado..."
@@ -1170,7 +1175,7 @@ trtErroLocal:
     RegLog Err.Number, "trocarChvAcesso", Err.Description
     
 End Sub
-Public Function Exportar_NFe_v310_TXT(chvNFe As String) As String
+Public Function Exportar_NFe_v310_TXT(chvnfe As String) As String
     Dim Rst1    As Recordset 'Cabecalho
     Dim Rst2    As Recordset 'Produto
     Dim Rst3    As Recordset 'Cobanca
@@ -1179,7 +1184,7 @@ Public Function Exportar_NFe_v310_TXT(chvNFe As String) As String
     Dim cItens  As Integer 'Conta os registros dos itens da Nota
     Dim cCob    As Integer 'Conta os registros da cobranca da Nota
     
-    sSQL = "SELECT * FROM FaturamentoNFe WHERE ID_Empresa = " & ID_Empresa & " AND idNFe = '" & chvNFe & "'"
+    sSQL = "SELECT * FROM FaturamentoNFe WHERE ID_Empresa = " & ID_Empresa & " AND idNFe = '" & chvnfe & "'"
     Set Rst1 = RegistroBuscar(sSQL)
     If Rst1.BOF And Rst1.EOF Then
             MsgBox "Etapa 1 - Erro ao localizar NF-e"
@@ -1188,7 +1193,7 @@ Public Function Exportar_NFe_v310_TXT(chvNFe As String) As String
         Else
             Rst1.MoveFirst
     End If
-    sSQL = "SELECT * FROM FaturamentoNFeItens WHERE ID_Empresa = " & ID_Empresa & " AND idNFe = '" & chvNFe & "'"
+    sSQL = "SELECT * FROM FaturamentoNFeItens WHERE ID_Empresa = " & ID_Empresa & " AND idNFe = '" & chvnfe & "'"
     Set Rst2 = RegistroBuscar(sSQL)
     If Rst2.BOF And Rst2.EOF Then
             MsgBox "Etapa 2 - Erro ao localizar NF-e"
@@ -1197,7 +1202,7 @@ Public Function Exportar_NFe_v310_TXT(chvNFe As String) As String
         Else
             Rst2.MoveFirst
     End If
-    sSQL = "SELECT * FROM FaturamentoNFeCobranca WHERE ID_Empresa = " & ID_Empresa & " AND idNFe = '" & chvNFe & "'"
+    sSQL = "SELECT * FROM FaturamentoNFeCobranca WHERE ID_Empresa = " & ID_Empresa & " AND idNFe = '" & chvnfe & "'"
     Set Rst3 = RegistroBuscar(sSQL)
     If Rst3.BOF And Rst3.EOF Then
             MsgBox "Etapa 3 - Erro ao localizar NF-e"
@@ -1214,7 +1219,7 @@ Public Function Exportar_NFe_v310_TXT(chvNFe As String) As String
     grvReg nmArq, "NOTAFISCAL|1"
     'A
     grvReg nmArq, "A|" & Rst1.Fields("Versao") & _
-                        "|NFe" & chvNFe & "|"
+                        "|NFe" & chvnfe & "|"
     'B
     grvReg nmArq, "B|" & _
                     Rst1.Fields("ide_cUF") & "|" & _
@@ -1623,7 +1628,7 @@ Public Function Exportar_NFe_v310_TXT(chvNFe As String) As String
                     Rst1.Fields("transp_PesoB") & "|"
 
     '***************************************** COBRANCA ********************************************
-    If PgDadosNotaFiscal(chvNFe).ImpFatura = 1 Then
+    If PgDadosNotaFiscal(chvnfe).ImpFatura = 1 Then
         grvReg nmArq, "Y|"
         If cNull(Rst3.Fields("cobr_nFat")) <> "" Then
             grvReg nmArq, "Y02|" & _
@@ -1656,7 +1661,7 @@ Public Function Exportar_NFe_v310_TXT(chvNFe As String) As String
     Rst2.Close
     Rst3.Close
 End Function
-Public Function Exportar_NFe_v400_TXT(chvNFe As String) As String
+Public Function Exportar_NFe_v400_TXT(chvnfe As String) As String
     Dim Rst1    As Recordset 'Cabecalho
     Dim Rst2    As Recordset 'Produto
     Dim Rst3    As Recordset 'Cobanca
@@ -1665,7 +1670,7 @@ Public Function Exportar_NFe_v400_TXT(chvNFe As String) As String
     Dim cItens  As Integer 'Conta os registros dos itens da Nota
     Dim cCob    As Integer 'Conta os registros da cobranca da Nota
     
-    sSQL = "SELECT * FROM FaturamentoNFe WHERE ID_Empresa = " & ID_Empresa & " AND idNFe = '" & chvNFe & "'"
+    sSQL = "SELECT * FROM FaturamentoNFe WHERE ID_Empresa = " & ID_Empresa & " AND idNFe = '" & chvnfe & "'"
     Set Rst1 = RegistroBuscar(sSQL)
     If Rst1.BOF And Rst1.EOF Then
             MsgBox "Etapa 1 - Erro ao localizar NF-e"
@@ -1674,7 +1679,7 @@ Public Function Exportar_NFe_v400_TXT(chvNFe As String) As String
         Else
             Rst1.MoveFirst
     End If
-    sSQL = "SELECT * FROM FaturamentoNFeItens WHERE ID_Empresa = " & ID_Empresa & " AND idNFe = '" & chvNFe & "'"
+    sSQL = "SELECT * FROM FaturamentoNFeItens WHERE ID_Empresa = " & ID_Empresa & " AND idNFe = '" & chvnfe & "'"
     Set Rst2 = RegistroBuscar(sSQL)
     If Rst2.BOF And Rst2.EOF Then
             MsgBox "Etapa 2 - Erro ao localizar NF-e"
@@ -1683,7 +1688,7 @@ Public Function Exportar_NFe_v400_TXT(chvNFe As String) As String
         Else
             Rst2.MoveFirst
     End If
-    sSQL = "SELECT * FROM FaturamentoNFeCobranca WHERE ID_Empresa = " & ID_Empresa & " AND idNFe = '" & chvNFe & "'"
+    sSQL = "SELECT * FROM FaturamentoNFeCobranca WHERE ID_Empresa = " & ID_Empresa & " AND idNFe = '" & chvnfe & "'"
     Set Rst3 = RegistroBuscar(sSQL)
     If Rst3.BOF And Rst3.EOF Then
             MsgBox "Etapa 3 - Erro ao localizar NF-e"
@@ -1700,7 +1705,7 @@ Public Function Exportar_NFe_v400_TXT(chvNFe As String) As String
     grvReg nmArq, "NOTAFISCAL|1"
     'A
     grvReg nmArq, "A|" & Rst1.Fields("Versao") & _
-                        "|NFe" & chvNFe & "|"
+                        "|NFe" & chvnfe & "|"
     'B
     ' Rst1.Fields("ide_indPag") & "|"
     grvReg nmArq, "B|" & _
@@ -1857,6 +1862,7 @@ Public Function Exportar_NFe_v400_TXT(chvNFe As String) As String
                 '22.12.17 - Inclusao da tag para DIFAL
                 If Rst2.Fields("ICMS_vBCUFDest") > 0 Then
                  grvReg nmArq, "NA|" & _
+                                Rst2.Fields("ICMS_vBCUFDest") & "|" & _
                                 Rst2.Fields("ICMS_vBCUFDest") & "|" & _
                                 Rst2.Fields("ICMS_pFCPUFDest") & "|" & _
                                 Rst2.Fields("ICMS_pICMSUFDest") & "|" & _
@@ -2126,7 +2132,7 @@ Public Function Exportar_NFe_v400_TXT(chvNFe As String) As String
                     Rst1.Fields("transp_PesoB") & "|"
 
     '***************************************** COBRANCA ********************************************
-    If PgDadosNotaFiscal(chvNFe).ImpFatura = 1 Then
+    If PgDadosNotaFiscal(chvnfe).ImpFatura = 1 Then
         'Fatura
         grvReg nmArq, "Y|"
         If cNull(Rst3.Fields("cobr_nFat")) <> "" Then

@@ -1,9 +1,1 @@
-Line 37: Class MSFlexGridLib.MSFlexGrid of control msfgTitulos was not a loaded control class.
-Line 77: Class MSFlexGridLib.MSFlexGrid of control msfgClientes was not a loaded control class.
-Line 116: Class MSFlexGridLib.MSFlexGrid of control msfgPV was not a loaded control class.
-Line 187: Class MSFlexGridLib.MSFlexGrid of control msfgHCont was not a loaded control class.
 Line 242: Class MSDataGridLib.DataGrid of control DataGrid was not a loaded control class.
-Line 376: Class MSFlexGridLib.MSFlexGrid of control msfgDescricao was not a loaded control class.
-Line 415: Class MSFlexGridLib.MSFlexGrid of control msfgNF was not a loaded control class.
-Line 483: Class MSComctlLib.Toolbar of control tbMenu was not a loaded control class.
-Line 531: Class MSComctlLib.ImageList of control ImageList1 was not a loaded control class.

@@ -1,1 +1,14 @@
 Line 99: Class MSDataGridLib.DataGrid of control grdBusca was not a loaded control class.
+Line 105: The property name _ExtentX in grdBusca is invalid.
+Line 106: The property name _ExtentY in grdBusca is invalid.
+Line 107: The property name _Version in grdBusca is invalid.
+Line 108: The property name AllowUpdate in grdBusca is invalid.
+Line 109: The property name HeadLines in grdBusca is invalid.
+Line 110: The property name RowHeight in grdBusca is invalid.
+Line 111: The property name AllowAddNew in grdBusca is invalid.
+Line 120: The property name HeadFont in grdBusca is invalid.
+Line 130: The property name ColumnCount in grdBusca is invalid.
+Line 143: The property name Column00 in grdBusca is invalid.
+Line 156: The property name Column01 in grdBusca is invalid.
+Line 157: The property name SplitCount in grdBusca is invalid.
+Line 163: The property name Split0 in grdBusca is invalid.

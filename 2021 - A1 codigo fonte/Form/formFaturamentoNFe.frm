@@ -80,7 +80,7 @@ Begin VB.Form formFaturamentoNFe
          _ExtentX        =   2778
          _ExtentY        =   556
          _Version        =   393216
-         Format          =   113770497
+         Format          =   50397185
          CurrentDate     =   40561
       End
       Begin MSComCtl2.DTPicker dtpEmissao 
@@ -92,7 +92,7 @@ Begin VB.Form formFaturamentoNFe
          _ExtentX        =   2778
          _ExtentY        =   556
          _Version        =   393216
-         Format          =   113770497
+         Format          =   50397185
          CurrentDate     =   40561
       End
       Begin VB.TextBox txtNumNota 
@@ -663,7 +663,7 @@ Private Function CalcICMS_Item() As Boolean
             Case "40"
                 Calculo_ICMS_CST_40 (i)
             Case "41"
-                MsgBox "CST - 41 incompleto"
+                Calculo_ICMS_CST_41 (i)
             Case "50"
                 Calculo_ICMS_CST_50 (i)
             Case "51"
@@ -1102,22 +1102,14 @@ Private Function PgPxNumNota() As String
     'sSQL = "SELECT * FROM FaturamentoNFe WHERE ID_Empresa = " & ID_Empresa & _
            " AND ide_Serie = " & PgDadosTpNotaFiscal(idTpNF).Serie & _
            " ORDER BY ide_nNF"
-    'sSQL = "SELECT * FROM FaturamentoNFe WHERE ID_Empresa = " & ID_Empresa & _
+    sSQL = "SELECT * FROM FaturamentoNFe WHERE ID_Empresa = " & ID_Empresa & _
            " AND ide_serie = '" & ide_serie & "'" & _
            " ORDER BY ide_nNF"
-    sSQL = "SELECT id, ID_Empresa, ide_serie,  ide_nNF" & _
-           " FROM FaturamentoNFe WHERE ID_Empresa = " & ID_Empresa & _
-           " AND ide_serie = '" & ide_serie & "'" & _
-           " ORDER BY ide_nNF DESC LIMIT 100"
-           
-           
-           
     Set Rst = RegistroBuscar(sSQL)
     If Rst.BOF And Rst.EOF Then
             PgPxNumNota = Left(String(9, "0"), 9 - Len(numIni)) & numIni
         Else
-            'Rst.MoveLast
-            Rst.MoveFirst
+            Rst.MoveLast
             numIni = Rst.Fields("ide_nNf")
             numIni = Val(numIni) + 1
             PgPxNumNota = Left(String(9, "0"), 9 - Len(numIni)) & numIni
@@ -2967,8 +2959,8 @@ Private Sub AlterarTransportadora()
 End Sub
 Private Sub Calculo_ICMS_CST_00(Item As Integer)
     'aICMS
-    '  Origem|CST|ModBC|pRedBC|vBC|pICMS|vICMS|modBCST|pMVAST|
-    '  pRedBCST|vBCST|pICMSST|vICMSST|pCredSN|vCredICMSSN|pFCP|vFCP
+    '  0Origem|1CST|2ModBC|3pRedBC|4vBC|5pICMS|6vICMS|7modBCST|8pMVAST|
+    '  9pRedBCST|10vBCST|11pICMSST|12vICMSST|13pCredSN|14vCredICMSSN|15pFCP|16vFCP
     '
     
     'Checa se o mat. e para: Mercadoria/Industrializacao ou Total do item/Consumo
@@ -2986,10 +2978,29 @@ Private Sub Calculo_ICMS_CST_00(Item As Integer)
     aICMS(Item)(6) = Val(ChkVal(CStr(aICMS(Item)(5)), 0, 2)) * Val(ChkVal(CStr(aICMS(Item)(4)), 0, 2)) / 100
     aICMS(Item)(6) = ChkVal(CStr(aICMS(Item)(6)), 0, 2)
     
-   Calculo_FCP_Item Item
-   
+    
+    'Calcula o FCP
+    
+    If Len(Trim(aICMS(Item)(15))) <> 0 Then
+        aICMS(Item)(15) = ChkVal(CStr(aICMS(Item)(15)), 0, 2)
+        
+        '06.01.19 - Alterado o calculo pois a petrobras notificou que a BCICMS para o FCP nao
+        '           tem resducao na base de calculo
+        '03.05.21 - Alterado novamente o calculo pois desta vez a Petrobras notificou que a
+        '           BCICMS para FCP incide na reducao da BC
+        'Calcula com base no valor da BCICMS
+        aICMS(Item)(16) = Val(ChkVal(CStr(aICMS(Item)(15)), 0, 2)) * Val(ChkVal(CStr(aICMS(Item)(4)), 0, 2)) / 100
+        'Calcula com base no valor TOTAL DA NOTA
+        'aICMS(Item)(16) = Val(ChkVal(CStr(aICMS(Item)(15)), 0, 2)) * Val(ChkVal(CStr(aItem(Item)(10)), 0, 2)) / 100
+        
+        aICMS(Item)(16) = ChkVal(CStr(aICMS(Item)(16)), 0, 2)
+        
+        'Informa nas obs do item o valor do FCP
+        aItem(Item)(22) = Trim(aItem(Item)(22)) & " [pFCP: " & aICMS(Item)(15) & "% vFCP: " & aICMS(Item)(16) & "]"
+    End If
+    
+    'if pgDadosICMS(
 End Sub
-
 Private Sub Calculo_ICMS_CST_10(Item As Integer)
 
     
@@ -3069,31 +3080,8 @@ Private Sub Calculo_ICMS_CST_20(Item As Integer)
     aICMS(Item)(5) = ManutencaoICMS(Item, CStr(aICMS(Item)(5)))
     aICMS(Item)(6) = Val(ChkVal(CStr(aICMS(Item)(5)), 0, 2)) * Val(ChkVal(CStr(aICMS(Item)(4)), 0, 2)) / 100
     aICMS(Item)(6) = ChkVal(CStr(aICMS(Item)(6)), 0, 2)
-    Calculo_FCP_Item Item
 End Sub
-Private Sub Calculo_FCP_Item(Item As Integer)
- 'Calcula o FCP
-    
-    If Len(Trim(aICMS(Item)(15))) <> 0 Then
-        aICMS(Item)(15) = ChkVal(CStr(aICMS(Item)(15)), 0, 2)
-        
-        '06.01.19 - Alterado o calculo pois a petrobras notificou que a BCICMS para o FCP nao
-        '           tem resducao na base de calculo
-        '03.05.21 - Alterado novamente o calculo pois desta vez a Petrobras notificou que a
-        '           BCICMS para FCP incide na reducao da BC
-        'Calcula com base no valor da BCICMS
-        aICMS(Item)(16) = Val(ChkVal(CStr(aICMS(Item)(15)), 0, 2)) * Val(ChkVal(CStr(aICMS(Item)(4)), 0, 2)) / 100
-        'Calcula com base no valor TOTAL DA NOTA
-        'aICMS(Item)(16) = Val(ChkVal(CStr(aICMS(Item)(15)), 0, 2)) * Val(ChkVal(CStr(aItem(Item)(10)), 0, 2)) / 100
-        
-        aICMS(Item)(16) = ChkVal(CStr(aICMS(Item)(16)), 0, 2)
-        
-        'Informa nas obs do item o valor do FCP
-        aItem(Item)(22) = Trim(aItem(Item)(22)) & " [pFCP: " & aICMS(Item)(15) & "% vFCP: " & aICMS(Item)(16) & "]"
-    End If
-    
-    'if pgDadosICMS(
-End Sub
+
 
 Private Function ManutencaoICMS(Item As Integer, icmsPV As String) As String
     '###################################################################
@@ -3129,7 +3117,8 @@ Private Function ManutencaoICMS(Item As Integer, icmsPV As String) As String
             '############################################################################################################
             '###      MUDA A BCICMS NO LUGAR DA ALIQUOTA DE ICMS
             '############################################################################################################
-                bcICMSAnt = ChkVal(CStr(aICMS(Item)(4)), 0, cDecMoeda)
+                
+                 bcICMSAnt = ChkVal(CStr(aICMS(Item)(4)), 0, cDecMoeda)
                 'Alterado em 04.05.2021
                 indice = (Val(bcICMSAnt) * Val(pICMS)) / 100
                 indice = Val(ChkVal(indice, 0, cDecMoeda)) / (Val(pgDadosICMS(dest_UF, 0).ICMS) + Val(pgDadosICMS(dest_UF, 0).ICMSFECP)) * 100
@@ -3260,6 +3249,23 @@ Private Sub Calculo_ICMS_CST_40(Item As Integer)
     aICMS(Item)(12) = 0
     
 End Sub
+Private Sub Calculo_ICMS_CST_41(Item As Integer)
+    '0-Origem|1-CST|2-ModBC|3-pRedBC|4-vBC|5-pICMS|6-vICMS|7-modBCST|8pMVAST|9-pRedBCST|10-vBCST|11-pICMSST|12-vICMSST
+    aICMS(Item)(2) = 0
+    aICMS(Item)(3) = 0
+    aICMS(Item)(4) = 0
+    aICMS(Item)(5) = 0
+    aICMS(Item)(6) = 0
+            
+    aICMS(Item)(7) = 0
+    aICMS(Item)(8) = 0
+    aICMS(Item)(9) = 0
+    aICMS(Item)(10) = 0
+    aICMS(Item)(11) = 0
+    aICMS(Item)(12) = 0
+    
+End Sub
+
 Private Sub Calculo_ICMS_CST_50(Item As Integer)
     '0-Origem|1-CST|2-ModBC|3-pRedBC|4-vBC|5-pICMS|6-vICMS|7-modBCST|8pMVAST|9-pRedBCST|10-vBCST|11-pICMSST|12-vICMSST
     aICMS(Item)(2) = 0
@@ -3394,8 +3400,8 @@ Public Sub Calculo_ICMS_DIFAL(Item As Integer)
     pICMSUFDest = "18.00"
     pICMSInter = aICMS(Item)(5)
     
-    pICMSInterPart = "80"
-    pICMSPartRemet = "20"
+    pICMSInterPart = "100"
+    pICMSPartRemet = "0"
     
     
     vFCPUFDest = Val(ChkVal(vBCICMS, 0, cDecMoeda)) * Val(ChkVal(pFCPUFDest, 0, cDecMoeda)) / 100

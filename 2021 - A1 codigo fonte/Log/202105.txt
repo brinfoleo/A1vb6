@@ -56,3 +56,9 @@
 26052021|12:50:18|0|||192.168.56.1|Erro ao consultar na base de dados as configurações do sistema
 26052021|12:59:54|0|||192.168.56.1|Erro ao consultar na base de dados as configurações do sistema
 26052021|12:59:54|0|||192.168.56.1|Erro ao consultar na base de dados as configurações do sistema
+30052021|13:27:03|0|||192.168.56.1|Erro ao consultar na base de dados as configurações do sistema
+30052021|13:27:03|0|||192.168.56.1|Erro ao consultar na base de dados as configurações do sistema
+30052021|13:31:57|2|||192.168.56.1|Arquivo: C:\Users\Leo\Desktop\New folder\3,3210517172976E+43-sit.err excluido
+30052021|13:32:45|2|||192.168.56.1|Arquivo: C:\Users\Leo\Desktop\New folder\33210517172976000144550010000014161300922117-sit.err excluido
+30052021|13:37:27|2|||192.168.56.1|Arquivo: C:\Users\Leo\Desktop\New folder\33210517172976000144550010000014161300922117-sit.err excluido
+30052021|13:41:51|2|||192.168.56.1|Arquivo: C:\Users\Leo\Desktop\New folder\33210517172976000144550010000014161300922117-sit.err excluido

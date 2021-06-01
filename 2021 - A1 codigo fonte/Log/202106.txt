@@ -1,0 +1,4 @@
+01062021|15:00:27|0|||192.168.56.1|Erro ao consultar na base de dados as configurações do sistema
+01062021|15:00:27|0|||192.168.56.1|Erro ao consultar na base de dados as configurações do sistema
+01062021|15:01:36|0|||192.168.56.1|Erro ao consultar na base de dados as configurações do sistema
+01062021|15:01:37|0|||192.168.56.1|Erro ao consultar na base de dados as configurações do sistema

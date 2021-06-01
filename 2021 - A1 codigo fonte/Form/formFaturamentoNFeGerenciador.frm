@@ -2,7 +2,7 @@ VERSION 5.00
 Object = "{5E9E78A0-531B-11CF-91F6-C2863C385E30}#1.0#0"; "MSFLXGRD.OCX"
 Object = "{F9043C88-F6F2-101A-A3C9-08002B2F49FB}#1.2#0"; "COMDLG32.OCX"
 Object = "{86CF1D34-0C5F-11D2-A9FC-0000F8754DA1}#2.0#0"; "MSCOMCT2.OCX"
-Object = "{831FDD16-0C5C-11D2-A9FC-0000F8754DA1}#2.2#0"; "MSCOMCTL.OCX"
+Object = "{831FDD16-0C5C-11D2-A9FC-0000F8754DA1}#2.2#0"; "mscomctl.ocx"
 Begin VB.Form formFaturamentoNFeGerenciador 
    Caption         =   "Faturamento - Controle de NF-e"
    ClientHeight    =   6150
@@ -233,7 +233,7 @@ Begin VB.Form formFaturamentoNFeGerenciador
             _ExtentX        =   2566
             _ExtentY        =   556
             _Version        =   393216
-            Format          =   129105921
+            Format          =   117112833
             CurrentDate     =   40557
          End
          Begin MSComCtl2.DTPicker dtpDtFinal 
@@ -245,7 +245,7 @@ Begin VB.Form formFaturamentoNFeGerenciador
             _ExtentX        =   2566
             _ExtentY        =   556
             _Version        =   393216
-            Format          =   129105921
+            Format          =   117112833
             CurrentDate     =   40557
          End
          Begin VB.Label Label1 
@@ -608,7 +608,7 @@ Private Sub LoadStatusEnvio(chvNFe As String, DtEmissao As String)
     '*************************************************************
     '**** Carrega o NUMERO DE PROTOCOLO Status e Motivo da NFe
     '*************************************************************
-     Arquivo = PgDadosConfig.pRetorno & "\" & nLote & "-pro-rec.xml"
+     Arquivo = PgDadosConfig.pRetorno & "\" & nRecibo & "-pro-rec.xml"
      'Arquivo = PgDadosConfig.pRetorno & "\" & nRecibo & "-pro-rec.xml"
     ConteudoXML = LoadXML(Arquivo)
     If ConteudoXML = "" Then

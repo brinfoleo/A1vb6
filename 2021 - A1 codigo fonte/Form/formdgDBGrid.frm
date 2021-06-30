@@ -11,54 +11,15 @@ Begin VB.Form formdbDBGrid
    ScaleHeight     =   8100
    ScaleWidth      =   15015
    WindowState     =   2  'Maximized
-   Begin VB.Frame Frame1 
-      Height          =   915
-      Left            =   2580
-      TabIndex        =   3
-      Top             =   1200
-      Width           =   5775
-      Begin VB.CommandButton btoExec 
-         Caption         =   "=>"
-         Height          =   315
-         Left            =   5400
-         TabIndex        =   6
-         Top             =   480
-         Width           =   315
-      End
-      Begin VB.TextBox txtSQL 
-         Height          =   315
-         Left            =   60
-         TabIndex        =   4
-         Text            =   "Text1"
-         Top             =   480
-         Width           =   5295
-      End
-      Begin VB.Label Label1 
-         Caption         =   "Comando SQL"
-         Height          =   195
-         Left            =   60
-         TabIndex        =   5
-         Top             =   180
-         Width           =   1155
-      End
-   End
-   Begin VB.ListBox lstTabelas 
-      Height          =   3765
-      Left            =   60
-      TabIndex        =   2
-      Top             =   60
-      Width           =   2415
-   End
    Begin MSDataGridLib.DataGrid DataGrid1 
-      Height          =   3915
-      Left            =   60
-      TabIndex        =   1
-      Top             =   4020
-      Width           =   8115
-      _ExtentX        =   14314
-      _ExtentY        =   6906
+      Height          =   5535
+      Left            =   2760
+      TabIndex        =   6
+      Top             =   2520
+      Width           =   12135
+      _ExtentX        =   21405
+      _ExtentY        =   9763
       _Version        =   393216
-      AllowUpdate     =   0   'False
       HeadLines       =   1
       RowHeight       =   15
       BeginProperty HeadFont {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
@@ -113,6 +74,44 @@ Begin VB.Form formdbDBGrid
          BeginProperty Column01 
          EndProperty
       EndProperty
+   End
+   Begin VB.Frame Frame1 
+      Height          =   915
+      Left            =   2580
+      TabIndex        =   3
+      Top             =   1200
+      Width           =   5775
+      Begin VB.CommandButton btoExec 
+         Caption         =   "=>"
+         Height          =   315
+         Left            =   5400
+         TabIndex        =   1
+         Top             =   480
+         Width           =   315
+      End
+      Begin VB.TextBox txtSQL 
+         Height          =   315
+         Left            =   60
+         TabIndex        =   4
+         Text            =   "Text1"
+         Top             =   480
+         Width           =   5295
+      End
+      Begin VB.Label Label1 
+         Caption         =   "Comando SQL"
+         Height          =   195
+         Left            =   60
+         TabIndex        =   5
+         Top             =   180
+         Width           =   1155
+      End
+   End
+   Begin VB.ListBox lstTabelas 
+      Height          =   3765
+      Left            =   60
+      TabIndex        =   2
+      Top             =   60
+      Width           =   2415
    End
    Begin VB.CommandButton cmdExibeTabelas 
       Appearance      =   0  'Flat

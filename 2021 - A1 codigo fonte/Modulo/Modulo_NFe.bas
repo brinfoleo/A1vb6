@@ -1915,7 +1915,12 @@ Public Function Exportar_NFe_v400_TXT(chvNFe As String) As String
                                 Rst2.Fields("ICMS_vICMS") & "|" & _
                                 Rst2.Fields("ICMS_MotDesICMS") & "|"
                                 
-            'Case "41" 'Tributacao do ICMS NAO TRIBUTADA ()
+            Case "41" 'Tributacao do ICMS NAO TRIBUTADA ()
+             grvReg nmArq, "N06|" & _
+                                Rst2.Fields("ICMS_Origem") & "|" & _
+                                Rst2.Fields("ICMS_CST") & "|" & _
+                                Rst2.Fields("ICMS_vICMS") & "|" & _
+                                Rst2.Fields("ICMS_MotDesICMS") & "|"
             
             Case "50" 'Tributacao do ICMS SUSPENSAO ()
                 grvReg nmArq, "N06|" & _

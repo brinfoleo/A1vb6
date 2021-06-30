@@ -1,7 +1,7 @@
 VERSION 5.00
-Object = "{CDE57A40-8B86-11D0-B3C6-00A0C90AEA82}#1.0#0"; "MSDATGRD.OCX"
 Object = "{5E9E78A0-531B-11CF-91F6-C2863C385E30}#1.0#0"; "MSFLXGRD.OCX"
 Object = "{831FDD16-0C5C-11D2-A9FC-0000F8754DA1}#2.2#0"; "MSCOMCTL.OCX"
+Object = "{CDE57A40-8B86-11D0-B3C6-00A0C90AEA82}#1.0#0"; "MSDATGRD.OCX"
 Begin VB.Form formComercialGerenciadorClientes 
    Caption         =   "Gerenciador de Clientes"
    ClientHeight    =   10740
@@ -14,9 +14,9 @@ Begin VB.Form formComercialGerenciadorClientes
    ScaleWidth      =   14895
    Begin VB.Frame frmConsCliente 
       Height          =   8415
-      Left            =   420
+      Left            =   720
       TabIndex        =   3
-      Top             =   1380
+      Top             =   9840
       Width           =   13455
       Begin VB.Frame frmTitulosVencidos 
          Caption         =   "Titulos Vencidos"
@@ -212,46 +212,21 @@ Begin VB.Form formComercialGerenciadorClientes
          Strikethrough   =   0   'False
       EndProperty
       Height          =   8655
-      Left            =   4140
+      Left            =   840
       TabIndex        =   29
-      Top             =   2940
+      Top             =   1080
       Width           =   14115
-      Begin VB.Frame frmPesqProd 
-         Height          =   975
-         Left            =   240
-         TabIndex        =   32
-         Top             =   6780
-         Width           =   12135
-         Begin VB.TextBox txtPesqProd 
-            Height          =   285
-            Left            =   120
-            TabIndex        =   33
-            Text            =   "Text1"
-            Top             =   480
-            Width           =   9255
-         End
-         Begin VB.Label Label5 
-            Caption         =   "Digite o material que deseja consultar:"
-            Height          =   195
-            Left            =   120
-            TabIndex        =   34
-            Top             =   240
-            Width           =   3195
-         End
-      End
       Begin MSDataGridLib.DataGrid DataGrid 
-         Height          =   6075
-         Left            =   120
-         TabIndex        =   31
+         Height          =   6135
+         Left            =   360
+         TabIndex        =   34
          Top             =   360
-         Width           =   12675
-         _ExtentX        =   22357
-         _ExtentY        =   10716
+         Width           =   12615
+         _ExtentX        =   22251
+         _ExtentY        =   10821
          _Version        =   393216
-         AllowUpdate     =   0   'False
          HeadLines       =   1
          RowHeight       =   15
-         FormatLocked    =   -1  'True
          BeginProperty HeadFont {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
             Name            =   "MS Sans Serif"
             Size            =   8.25
@@ -270,10 +245,10 @@ Begin VB.Form formComercialGerenciadorClientes
             Italic          =   0   'False
             Strikethrough   =   0   'False
          EndProperty
-         ColumnCount     =   5
+         ColumnCount     =   2
          BeginProperty Column00 
             DataField       =   ""
-            Caption         =   "Chave Acesso"
+            Caption         =   ""
             BeginProperty DataFormat {6D835690-900B-11D0-9484-00A0C91110ED} 
                Type            =   0
                Format          =   ""
@@ -286,46 +261,7 @@ Begin VB.Form formComercialGerenciadorClientes
          EndProperty
          BeginProperty Column01 
             DataField       =   ""
-            Caption         =   "Emissão"
-            BeginProperty DataFormat {6D835690-900B-11D0-9484-00A0C91110ED} 
-               Type            =   0
-               Format          =   ""
-               HaveTrueFalseNull=   0
-               FirstDayOfWeek  =   0
-               FirstWeekOfYear =   0
-               LCID            =   1046
-               SubFormatType   =   0
-            EndProperty
-         EndProperty
-         BeginProperty Column02 
-            DataField       =   ""
-            Caption         =   "Num. Nota Fiscal"
-            BeginProperty DataFormat {6D835690-900B-11D0-9484-00A0C91110ED} 
-               Type            =   0
-               Format          =   ""
-               HaveTrueFalseNull=   0
-               FirstDayOfWeek  =   0
-               FirstWeekOfYear =   0
-               LCID            =   1046
-               SubFormatType   =   0
-            EndProperty
-         EndProperty
-         BeginProperty Column03 
-            DataField       =   ""
-            Caption         =   "Cliente"
-            BeginProperty DataFormat {6D835690-900B-11D0-9484-00A0C91110ED} 
-               Type            =   0
-               Format          =   ""
-               HaveTrueFalseNull=   0
-               FirstDayOfWeek  =   0
-               FirstWeekOfYear =   0
-               LCID            =   1046
-               SubFormatType   =   0
-            EndProperty
-         EndProperty
-         BeginProperty Column04 
-            DataField       =   ""
-            Caption         =   "Produto"
+            Caption         =   ""
             BeginProperty DataFormat {6D835690-900B-11D0-9484-00A0C91110ED} 
                Type            =   0
                Format          =   ""
@@ -342,20 +278,37 @@ Begin VB.Form formComercialGerenciadorClientes
             EndProperty
             BeginProperty Column01 
             EndProperty
-            BeginProperty Column02 
-            EndProperty
-            BeginProperty Column03 
-            EndProperty
-            BeginProperty Column04 
-            EndProperty
          EndProperty
+      End
+      Begin VB.Frame frmPesqProd 
+         Height          =   975
+         Left            =   240
+         TabIndex        =   32
+         Top             =   6780
+         Width           =   12135
+         Begin VB.TextBox txtPesqProd 
+            Height          =   285
+            Left            =   120
+            TabIndex        =   33
+            Text            =   "Text1"
+            Top             =   480
+            Width           =   9255
+         End
+         Begin VB.Label Label5 
+            Caption         =   "Digite o material que deseja consultar:"
+            Height          =   195
+            Left            =   120
+            TabIndex        =   31
+            Top             =   240
+            Width           =   3195
+         End
       End
    End
    Begin VB.Frame frmConsNF 
       Height          =   7515
       Left            =   0
       TabIndex        =   19
-      Top             =   3180
+      Top             =   1800
       Width           =   14535
       Begin VB.Frame frmDescricao 
          Caption         =   "Descrição dos Produtos"

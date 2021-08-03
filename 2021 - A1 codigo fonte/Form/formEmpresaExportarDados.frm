@@ -1,7 +1,7 @@
 VERSION 5.00
-Object = "{831FDD16-0C5C-11D2-A9FC-0000F8754DA1}#2.1#0"; "MSCOMCTL.OCX"
 Object = "{F9043C88-F6F2-101A-A3C9-08002B2F49FB}#1.2#0"; "COMDLG32.OCX"
 Object = "{86CF1D34-0C5F-11D2-A9FC-0000F8754DA1}#2.0#0"; "MSCOMCT2.OCX"
+Object = "{831FDD16-0C5C-11D2-A9FC-0000F8754DA1}#2.2#0"; "MSCOMCTL.OCX"
 Begin VB.Form formEmpresaExportarDados 
    BorderStyle     =   1  'Fixed Single
    Caption         =   "Exportar Dados"
@@ -58,7 +58,7 @@ Begin VB.Form formEmpresaExportarDados
          _ExtentX        =   2566
          _ExtentY        =   556
          _Version        =   393216
-         Format          =   79036417
+         Format          =   134086657
          CurrentDate     =   41606
       End
       Begin MSComCtl2.DTPicker dtpDtIniEFD 
@@ -70,7 +70,7 @@ Begin VB.Form formEmpresaExportarDados
          _ExtentX        =   2566
          _ExtentY        =   556
          _Version        =   393216
-         Format          =   79036417
+         Format          =   134086657
          CurrentDate     =   41606
       End
       Begin VB.Label Label9 
@@ -132,7 +132,7 @@ Begin VB.Form formEmpresaExportarDados
          _ExtentX        =   2672
          _ExtentY        =   556
          _Version        =   393216
-         Format          =   79036417
+         Format          =   134086657
          CurrentDate     =   40977
       End
       Begin MSComCtl2.DTPicker dtpDtFinal 
@@ -144,7 +144,7 @@ Begin VB.Form formEmpresaExportarDados
          _ExtentX        =   2672
          _ExtentY        =   556
          _Version        =   393216
-         Format          =   79036417
+         Format          =   134086657
          CurrentDate     =   40977
       End
       Begin VB.Label Label2 
@@ -221,7 +221,7 @@ Begin VB.Form formEmpresaExportarDados
          _ExtentY        =   556
          _Version        =   393216
          CustomFormat    =   "MM/yyyy"
-         Format          =   79036419
+         Format          =   134086659
          CurrentDate     =   40989
       End
       Begin VB.CheckBox chkNFeSaida 
@@ -603,12 +603,12 @@ Private Function Fortes_GerarArquivo() As Boolean
             Do Until Rst.EOF
                 status (Rst.RecordCount)
                 sTxt = "PAR"
-                sTxt = sTxt & "|" & Fortes_cvt(Rst.fields("ID"), "N", 9)
-                sTxt = sTxt & "|" & Fortes_cvt(cNull(Rst.fields("xNome")), "C", 60)
-                sTxt = sTxt & "|" & Fortes_cvt(cNull(Rst.fields("UF")), "C", 2)
-                sTxt = sTxt & "|" & Fortes_cvt(cNull(Rst.fields("Doc")), "C", 14)
-                sTxt = sTxt & "|" & Fortes_cvt(IIf(cNull(Rst.fields("IE")) = "ISENTO", "", cNull(Rst.fields("IE"))), "C", 14)
-                sTxt = sTxt & "|" & Fortes_cvt(cNull(Rst.fields("IM")), "C", 14)
+                sTxt = sTxt & "|" & Fortes_cvt(Rst.Fields("ID"), "N", 9)
+                sTxt = sTxt & "|" & Fortes_cvt(cNull(Rst.Fields("xNome")), "C", 60)
+                sTxt = sTxt & "|" & Fortes_cvt(cNull(Rst.Fields("UF")), "C", 2)
+                sTxt = sTxt & "|" & Fortes_cvt(cNull(Rst.Fields("Doc")), "C", 14)
+                sTxt = sTxt & "|" & Fortes_cvt(IIf(cNull(Rst.Fields("IE")) = "ISENTO", "", cNull(Rst.Fields("IE"))), "C", 14)
+                sTxt = sTxt & "|" & Fortes_cvt(cNull(Rst.Fields("IM")), "C", 14)
                 sTxt = sTxt & "|" & "N" '8 - ISS Digital
                 sTxt = sTxt & "|" & "N" '9 - DIEF
                 sTxt = sTxt & "|" & "N" '10 - DIC
@@ -618,26 +618,26 @@ Private Function Fortes_GerarArquivo() As Boolean
                 sTxt = sTxt & "|" & "N" '14 - Fornecedor de Prod Primario
                 sTxt = sTxt & "|" & "N" '15 - Sociedade Simples
                 sTxt = sTxt & "|" & "35" '16 - Tipo Logradouro
-                sTxt = sTxt & "|" & Rst.fields("xLgr")
+                sTxt = sTxt & "|" & Rst.Fields("xLgr")
                   
                     
-                sTxt = sTxt & "|" & Fortes_cvt(cNull(Rst.fields("Nro")), "N", 6) '18 - Numero
-                sTxt = sTxt & "|" & Fortes_cvt(cNull(Rst.fields("xCpl")), "C", 20)
+                sTxt = sTxt & "|" & Fortes_cvt(cNull(Rst.Fields("Nro")), "N", 6) '18 - Numero
+                sTxt = sTxt & "|" & Fortes_cvt(cNull(Rst.Fields("xCpl")), "C", 20)
                 sTxt = sTxt & "|" & "01" '20 - Tipo de Bairro
-                sTxt = sTxt & "|" & Rst.fields("xBairro")
-                sTxt = sTxt & "|" & Rst.fields("CEP")
-                cMun = PgDadosMunicipio(PgDadosCliente(Rst.fields("id")).UF, PgDadosCliente(Rst.fields("ID")).Mun).codMun
+                sTxt = sTxt & "|" & Rst.Fields("xBairro")
+                sTxt = sTxt & "|" & Rst.Fields("CEP")
+                cMun = PgDadosMunicipio(PgDadosCliente(Rst.Fields("id")).uf, PgDadosCliente(Rst.Fields("ID")).Mun).codMun
                 sTxt = sTxt & "|" & Mid(cMun, 3, Len(cMun))
                 sTxt = sTxt & "|" & "" '24 - DDD
-                sTxt = sTxt & "|" & Fortes_cvt(cNull(Rst.fields("Fone")), "N", 8) '25 - Telefone
-                sTxt = sTxt & "|" & Rst.fields("Suframa")
+                sTxt = sTxt & "|" & Fortes_cvt(cNull(Rst.Fields("Fone")), "N", 8) '25 - Telefone
+                sTxt = sTxt & "|" & Rst.Fields("Suframa")
                 sTxt = sTxt & "|" & "" '27 - Substituto ISS
                 sTxt = sTxt & "|" & "" '28 - Conta Remetente/Prestador
                 sTxt = sTxt & "|" & "" '29 - Conta Dest/Tomador
                 sTxt = sTxt & "|" & "1058"
                 sTxt = sTxt & "|" & "N" '31 - Exterior
-                sTxt = sTxt & "|" & IIf((Rst.fields("IE")) = "", "C", "N") '32 - Isento de ICMS
-                sTxt = sTxt & "|" & Rst.fields("Email")
+                sTxt = sTxt & "|" & IIf((Rst.Fields("IE")) = "", "C", "N") '32 - Isento de ICMS
+                sTxt = sTxt & "|" & Rst.Fields("Email")
                 l = l + 1
                 grvFile nmFile, sTxt
                 Rst.MoveNext
@@ -657,14 +657,14 @@ Private Function Fortes_GerarArquivo() As Boolean
             Do Until Rst.EOF
                 status (Rst.RecordCount)
                 sTxt = "PAR"
-                cfor = Fortes_cvt(Rst.fields("ID"), "N", 7)
+                cfor = Fortes_cvt(Rst.Fields("ID"), "N", 7)
                 cfor = "6" & Mid(String(4, "0"), 1, 4 - Len(Trim(cfor))) & cfor
                 sTxt = sTxt & "|" & cfor
-                sTxt = sTxt & "|" & Fortes_cvt(cNull(Rst.fields("xNome")), "C", 60)
-                sTxt = sTxt & "|" & Fortes_cvt(cNull(Rst.fields("UF")), "C", 2)
-                sTxt = sTxt & "|" & Fortes_cvt(cNull(Rst.fields("Doc")), "C", 14)
-                sTxt = sTxt & "|" & Fortes_cvt(IIf(cNull(Rst.fields("IE")) = "ISENTO", "", cNull(Rst.fields("IE"))), "C", 14)
-                sTxt = sTxt & "|" & Fortes_cvt(cNull(Rst.fields("IM")), "C", 14)
+                sTxt = sTxt & "|" & Fortes_cvt(cNull(Rst.Fields("xNome")), "C", 60)
+                sTxt = sTxt & "|" & Fortes_cvt(cNull(Rst.Fields("UF")), "C", 2)
+                sTxt = sTxt & "|" & Fortes_cvt(cNull(Rst.Fields("Doc")), "C", 14)
+                sTxt = sTxt & "|" & Fortes_cvt(IIf(cNull(Rst.Fields("IE")) = "ISENTO", "", cNull(Rst.Fields("IE"))), "C", 14)
+                sTxt = sTxt & "|" & Fortes_cvt(cNull(Rst.Fields("IM")), "C", 14)
                 sTxt = sTxt & "|" & "N" '8 - ISS Digital
                 sTxt = sTxt & "|" & "N" '9 - DIEF
                 sTxt = sTxt & "|" & "N" '10 - DIC
@@ -674,26 +674,26 @@ Private Function Fortes_GerarArquivo() As Boolean
                 sTxt = sTxt & "|" & "N" '14 - Fornecedor de Prod Primario
                 sTxt = sTxt & "|" & "N" '15 - Sociedade Simples
                 sTxt = sTxt & "|" & "35" '16 - Tipo Logradouro
-                sTxt = sTxt & "|" & cNull(Rst.fields("Lgr"))
+                sTxt = sTxt & "|" & cNull(Rst.Fields("Lgr"))
                   
                     
-                sTxt = sTxt & "|" & Fortes_cvt(cNull(Rst.fields("Nro")), "N", 6) '18 - Numero
-                sTxt = sTxt & "|" & Fortes_cvt(cNull(Rst.fields("Cpl")), "C", 20)
+                sTxt = sTxt & "|" & Fortes_cvt(cNull(Rst.Fields("Nro")), "N", 6) '18 - Numero
+                sTxt = sTxt & "|" & Fortes_cvt(cNull(Rst.Fields("Cpl")), "C", 20)
                 sTxt = sTxt & "|" & "01" '20 - Tipo de Bairro
-                sTxt = sTxt & "|" & cNull(Rst.fields("Bairro"))
-                sTxt = sTxt & "|" & cNull(Rst.fields("CEP"))
-                cMun = PgDadosMunicipio(Rst.fields("UF"), Rst.fields("Mun")).codMun
+                sTxt = sTxt & "|" & cNull(Rst.Fields("Bairro"))
+                sTxt = sTxt & "|" & cNull(Rst.Fields("CEP"))
+                cMun = PgDadosMunicipio(Rst.Fields("UF"), Rst.Fields("Mun")).codMun
                 sTxt = sTxt & "|" & Mid(cMun, 3, Len(cMun))
                 sTxt = sTxt & "|" & "" '24 - DDD
-                sTxt = sTxt & "|" & Fortes_cvt(cNull(Rst.fields("Fone")), "N", 8) '25 - Telefone
+                sTxt = sTxt & "|" & Fortes_cvt(cNull(Rst.Fields("Fone")), "N", 8) '25 - Telefone
                 sTxt = sTxt & "|" & "" 'Rst.Fields("Suframa")'26 - Suframa
                 sTxt = sTxt & "|" & "" '27 - Substituto ISS
                 sTxt = sTxt & "|" & "" '28 - Conta Remetente/Prestador
                 sTxt = sTxt & "|" & "" '29 - Conta Dest/Tomador
                 sTxt = sTxt & "|" & "1058"
                 sTxt = sTxt & "|" & "N" '31 - Exterior
-                sTxt = sTxt & "|" & IIf((Rst.fields("IE")) = "", "C", "N") '32 - Isento de ICMS
-                sTxt = sTxt & "|" & cNull(Rst.fields("mail"))
+                sTxt = sTxt & "|" & IIf((Rst.Fields("IE")) = "", "C", "N") '32 - Isento de ICMS
+                sTxt = sTxt & "|" & cNull(Rst.Fields("mail"))
                 l = l + 1
                 grvFile nmFile, sTxt
                 Rst.MoveNext
@@ -712,8 +712,8 @@ Private Function Fortes_GerarArquivo() As Boolean
             Do Until Rst.EOF
                 status (Rst.RecordCount)
                 sTxt = "GRP"
-                sTxt = sTxt & "|" & Fortes_cvt(cNull(Rst.fields("id")), "N", 8)
-                sTxt = sTxt & "|" & Fortes_cvt(cNull(Rst.fields("Descricao")), "C", 40)
+                sTxt = sTxt & "|" & Fortes_cvt(cNull(Rst.Fields("id")), "N", 8)
+                sTxt = sTxt & "|" & Fortes_cvt(cNull(Rst.Fields("Descricao")), "C", 40)
                 sTxt = sTxt & "|" & Fortes_cvt("", "N", 1)
                 sTxt = sTxt & "|" & Fortes_cvt("00", "N", 2) '5 - SPED Situacao
                 sTxt = sTxt & "|" & Fortes_cvt("", "N", 7)
@@ -735,8 +735,8 @@ Private Function Fortes_GerarArquivo() As Boolean
             Do Until Rst.EOF
                 status (Rst.RecordCount)
                 sTxt = "UND"
-                sTxt = sTxt & "|" & Fortes_cvt(cNull(Rst.fields("Sigla")), "C", 6)
-                sTxt = sTxt & "|" & Fortes_cvt(cNull(Rst.fields("Descricao")), "C", 60)
+                sTxt = sTxt & "|" & Fortes_cvt(cNull(Rst.Fields("Sigla")), "C", 6)
+                sTxt = sTxt & "|" & Fortes_cvt(cNull(Rst.Fields("Descricao")), "C", 60)
                 l = l + 1
                 grvFile nmFile, sTxt
                 Rst.MoveNext
@@ -755,17 +755,17 @@ Private Function Fortes_GerarArquivo() As Boolean
             Do Until Rst.EOF
                 status (Rst.RecordCount)
                 sTxt = "PRO"
-                sTxt = sTxt & "|" & cNull(Rst.fields("ID"))
-                sTxt = sTxt & "|" & Fortes_cvt(cNull(Rst.fields("Descricao")), "C", 60)
-                sTxt = sTxt & "|" & cNull(Rst.fields("ID"))
-                sTxt = sTxt & "|" & cNull(Rst.fields("NCM"))
-                sTxt = sTxt & "|" & cNull(Rst.fields("Unidade"))
+                sTxt = sTxt & "|" & cNull(Rst.Fields("ID"))
+                sTxt = sTxt & "|" & Fortes_cvt(cNull(Rst.Fields("Descricao")), "C", 60)
+                sTxt = sTxt & "|" & cNull(Rst.Fields("ID"))
+                sTxt = sTxt & "|" & cNull(Rst.Fields("NCM"))
+                sTxt = sTxt & "|" & cNull(Rst.Fields("Unidade"))
                 sTxt = sTxt & "|" & "8" ' 07 - Unidade Medida DIEF
                 sTxt = sTxt & "|" & "22" ' 08 - Unidade Medida CENFOP
-                sTxt = sTxt & "|" & cNull(Rst.fields("NCM"))  ' 09 - Classificacao Fiscal
-                sTxt = sTxt & "|" & Fortes_cvt(cNull(Rst.fields("Grupo")), "N", 3) ' 10 - Grupo
+                sTxt = sTxt & "|" & cNull(Rst.Fields("NCM"))  ' 09 - Classificacao Fiscal
+                sTxt = sTxt & "|" & Fortes_cvt(cNull(Rst.Fields("Grupo")), "N", 3) ' 10 - Grupo
                 sTxt = sTxt & "|" & "" ' 11 - Genero
-                sTxt = sTxt & "|" & cNull(Rst.fields("CodigoBarras"))
+                sTxt = sTxt & "|" & cNull(Rst.Fields("CodigoBarras"))
                 sTxt = sTxt & "|" & "" ' 13 - Reducao
                 sTxt = sTxt & "|" & "" ' 14 - Codigo GAM57
                 sTxt = sTxt & "|" & "" 'Rst.Fields("ICMSCST") 15- CST ICMS NFe Importacao e Entrada
@@ -795,10 +795,10 @@ Private Function Fortes_GerarArquivo() As Boolean
     '        Do Until Rst.EOF
     '            status (Rst.RecordCount)
                 sTxt = "OUM"
-                sTxt = sTxt & "|" & Fortes_cvt(cNull(Rst.fields("id")), "N", 9) ' 2 - Codigo do produto
-                sTxt = sTxt & "|" & Fortes_cvt(cNull(Rst.fields("Unidade")), "C", 9) '3 - Unidade de Medida
+                sTxt = sTxt & "|" & Fortes_cvt(cNull(Rst.Fields("id")), "N", 9) ' 2 - Codigo do produto
+                sTxt = sTxt & "|" & Fortes_cvt(cNull(Rst.Fields("Unidade")), "C", 9) '3 - Unidade de Medida
                 sTxt = sTxt & "|" & Fortes_cvt("1", "V", 9) '4 - Unidade Equivalente Padrao
-                sTxt = sTxt & "|" & Fortes_cvt(cNull(Rst.fields("CodigoBarras")), "N", 20) '5 - Codigo de barras
+                sTxt = sTxt & "|" & Fortes_cvt(cNull(Rst.Fields("CodigoBarras")), "N", 20) '5 - Codigo de barras
                 l = l + 1
                 grvFile nmFile, sTxt
                 Rst.MoveNext
@@ -830,10 +830,10 @@ Private Function Fortes_GerarArquivo() As Boolean
             Rst.MoveFirst
             Do Until Rst.EOF
                 status (Rst.RecordCount)
-                cancNFe = IIf(IsNull(Rst.fields("canc_nProt")), False, True)
+                cancNFe = IIf(IsNull(Rst.Fields("canc_nProt")), False, True)
                 sTxt = "NFM"
                 sTxt = sTxt & "|" & "0001" 'Fortes_cvt(cNull(Rst.Fields("dest_idDest")), "N", 4) ' 2 - Codigi do Estabelecimento
-                sTxt = sTxt & "|" & IIf(Rst.fields("ide_tpNF") = 0, "E", "S")
+                sTxt = sTxt & "|" & IIf(Rst.Fields("ide_tpNF") = 0, "E", "S")
                 
                 'If Rst.Fields("ide_tpNF") = 0 Then
                 '    MsgBox "KKSK"
@@ -842,16 +842,16 @@ Private Function Fortes_GerarArquivo() As Boolean
                 sTxt = sTxt & "|" & "NFE"
                 sTxt = sTxt & "|" & "S"
                 sTxt = sTxt & "|" & "" ' 6 - AIDF
-                sTxt = sTxt & "|" & Rst.fields("ide_Serie")
+                sTxt = sTxt & "|" & Rst.Fields("ide_Serie")
                 sTxt = sTxt & "|" & "" '8 - Sub SerieRst.Fields("ide_SSerie")
-                sTxt = sTxt & "|" & Rst.fields("ide_nNF")
+                sTxt = sTxt & "|" & Rst.Fields("ide_nNF")
                 sTxt = sTxt & "|" & "" '10 - Formulario Inicial
                 sTxt = sTxt & "|" & "" '11 - Formulario Final
-                sTxt = sTxt & "|" & Fortes_cvt(Rst.fields("ide_dEmi"), "D", 10)
+                sTxt = sTxt & "|" & Fortes_cvt(Rst.Fields("ide_dEmi"), "D", 10)
                 If cancNFe = True Then
                         sTxt = sTxt & "|" & "1" '13 - 0 Normal / 1 Cancelado
                     Else
-                        If Rst.fields("ide_tpNF") = 0 Then
+                        If Rst.Fields("ide_tpNF") = 0 Then
                                 'Entrada
                                 sTxt = sTxt & "|" & ""
                                 
@@ -863,8 +863,8 @@ Private Function Fortes_GerarArquivo() As Boolean
                         
                 End If
                 
-                sTxt = sTxt & "|" & IIf(cancNFe = True, "", Fortes_cvt(cNull(Rst.fields("ide_dEmi")), "D", 10)) '14 - Dt. Entr/Saida
-                sTxt = sTxt & "|" & IIf(cancNFe = True, "", cNull(Rst.fields("dest_idDest")))
+                sTxt = sTxt & "|" & IIf(cancNFe = True, "", Fortes_cvt(cNull(Rst.Fields("ide_dEmi")), "D", 10)) '14 - Dt. Entr/Saida
+                sTxt = sTxt & "|" & IIf(cancNFe = True, "", cNull(Rst.Fields("dest_idDest")))
                 sTxt = sTxt & "|" & IIf(cancNFe = True, "", "N") '16 - Vinculo GNRE
                 sTxt = sTxt & "|" & "" '17 - GNRE ICMS
                 sTxt = sTxt & "|" & "" '18 - GNRE Mes/Ano
@@ -875,29 +875,29 @@ Private Function Fortes_GerarArquivo() As Boolean
                 sTxt = sTxt & "|" & "" '23 - GNRE Agencia
                 sTxt = sTxt & "|" & "" '24 - GNRE Agencia DV
                 sTxt = sTxt & "|" & "" '25 - GNRE Autenticado
-                sTxt = sTxt & "|" & IIf(cancNFe = True, "", cNull(Rst.fields("Total_vProd")))
-                sTxt = sTxt & "|" & IIf(cancNFe = True, "", cNull(Rst.fields("Total_vFrete")))
-                sTxt = sTxt & "|" & IIf(cancNFe = True, "", cNull(Rst.fields("Total_vSeg")))
-                sTxt = sTxt & "|" & IIf(cancNFe = True, "", cNull(Rst.fields("Total_vOutro")))
+                sTxt = sTxt & "|" & IIf(cancNFe = True, "", cNull(Rst.Fields("Total_vProd")))
+                sTxt = sTxt & "|" & IIf(cancNFe = True, "", cNull(Rst.Fields("Total_vFrete")))
+                sTxt = sTxt & "|" & IIf(cancNFe = True, "", cNull(Rst.Fields("Total_vSeg")))
+                sTxt = sTxt & "|" & IIf(cancNFe = True, "", cNull(Rst.Fields("Total_vOutro")))
                 sTxt = sTxt & "|" & "" '30 - ICMS Importacao
                 sTxt = sTxt & "|" & "" '31 - ICMS Importacao Diferimento
-                sTxt = sTxt & "|" & IIf(cancNFe = True, "", cNull(Rst.fields("Total_vIPI")))
+                sTxt = sTxt & "|" & IIf(cancNFe = True, "", cNull(Rst.Fields("Total_vIPI")))
                 sTxt = sTxt & "|" & "" '33 - Substituicao retido
                 sTxt = sTxt & "|" & "" '34 - Servico ISS
-                sTxt = sTxt & "|" & IIf(cancNFe = True, "", cNull(Rst.fields("Total_vDesc")))
-                sTxt = sTxt & "|" & IIf(cancNFe = True, "", cNull(Rst.fields("Total_vNF")))
+                sTxt = sTxt & "|" & IIf(cancNFe = True, "", cNull(Rst.Fields("Total_vDesc")))
+                sTxt = sTxt & "|" & IIf(cancNFe = True, "", cNull(Rst.Fields("Total_vNF")))
                 sTxt = sTxt & "|" & "" '37 - Quantidade de Intes/Produtos
                 sTxt = sTxt & "|" & "" '38 - ST Recolhes
                 sTxt = sTxt & "|" & "" '39 - Antecipar Recolher
                 sTxt = sTxt & "|" & "" '40 - Diferencial de Aliquota
                 sTxt = sTxt & "|" & "" '41 - Valor Contabil ST
-                sTxt = sTxt & "|" & IIf(cancNFe = True, "", cNull(Rst.fields("Total_vBCST"))) '42 - BC ICMS ST
+                sTxt = sTxt & "|" & IIf(cancNFe = True, "", cNull(Rst.Fields("Total_vBCST"))) '42 - BC ICMS ST
                 sTxt = sTxt & "|" & "" '43 - Valor Contabil Antecipado
                 sTxt = sTxt & "|" & "" '44 - ISS Retido
                 sTxt = sTxt & "|" & "" '45 - Data de Retencao do ISS
                 sTxt = sTxt & "|" & "" '46 - Servico
                 sTxt = sTxt & "|" & "" '47 - Data Entrada no Estado
-                sTxt = sTxt & "|" & IIf(cancNFe = True, "", IIf(Rst.fields("transp_ModFrete") = 0, "R", "D")) '48 - Frete por conta 'Tab 11
+                sTxt = sTxt & "|" & IIf(cancNFe = True, "", IIf(Rst.Fields("transp_ModFrete") = 0, "R", "D")) '48 - Frete por conta 'Tab 11
                 sTxt = sTxt & "|" & IIf(cancNFe = True, "", "P") '49 - Fatura ' Tab 12
                 sTxt = sTxt & "|" & "" '50 - Numero do EEC
                 sTxt = sTxt & "|" & "" '51 - Numero do Cupom
@@ -917,18 +917,18 @@ Private Function Fortes_GerarArquivo() As Boolean
                 sTxt = sTxt & "|" & ""  '65 - Observacoes
                 sTxt = sTxt & "|" & "" '66 - Aliquota ST
                 
-                sTxt = sTxt & "|" & Rst.fields("idNFe") '67 - Chave Eletronica
+                sTxt = sTxt & "|" & Rst.Fields("idNFe") '67 - Chave Eletronica
                 
                 sTxt = sTxt & "|" & "" '68 - INSS Retido na Fonte
                 sTxt = sTxt & "|" & "" '69 - BC COFINS / PIS nao cumulativo
                 
-                sTxt = sTxt & "|" & IIf(cancNFe = True, (Rst.fields("canc_xJust")), "") '70 - Motivo de cancelamento
+                sTxt = sTxt & "|" & IIf(cancNFe = True, (Rst.Fields("canc_xJust")), "") '70 - Motivo de cancelamento
                 
-                sTxt = sTxt & "|" & cNull(Rst.fields("ide_NatOp")) '71 - Natureza da Operacao
+                sTxt = sTxt & "|" & cNull(Rst.Fields("ide_NatOp")) '71 - Natureza da Operacao
                 sTxt = sTxt & "|" & ""  '72 - Cod. informacao complementar
                 sTxt = sTxt & "|" & ""  '73 - Complemento das inf. complementares
                 sTxt = sTxt & "|" & "" '74 - Hora da Saida
-                sTxt = sTxt & "|" & cNull(Rst.fields("emit_UF"))  '75 - UF de Embarque
+                sTxt = sTxt & "|" & cNull(Rst.Fields("emit_UF"))  '75 - UF de Embarque
                 sTxt = sTxt & "|" & ""  '76 - Local de embarque
                 grvFile nmFile, sTxt
                 l = l + 1
@@ -947,7 +947,7 @@ Private Function Fortes_GerarArquivo() As Boolean
             'Rst.MoveLast
     sSQL = "SELECT * " & _
            "FROM FaturamentoNFeItens " & _
-           "WHERE FaturamentoNFeItens.idNFe = '" & Rst.fields("idNFe") & "'"
+           "WHERE FaturamentoNFeItens.idNFe = '" & Rst.Fields("idNFe") & "'"
     Set Rst1 = RegistroBuscar(sSQL)
     If Rst1.BOF And Rst1.EOF Then
         Else
@@ -956,25 +956,25 @@ Private Function Fortes_GerarArquivo() As Boolean
                 'status (Rst1.RecordCount)
                 'cancNFe = IIf(IsNull(Rst1.Fields("canc_nProt")), True, False)
                 sTxt = "PNM"
-                sTxt = sTxt & "|" & cNull(Rst1.fields("det_cProd"))
-                sTxt = sTxt & "|" & cNull(Rst1.fields("det_CFOP"))
+                sTxt = sTxt & "|" & cNull(Rst1.Fields("det_cProd"))
+                sTxt = sTxt & "|" & cNull(Rst1.Fields("det_CFOP"))
                 sTxt = sTxt & "|" & ""  '4 - CFOP transferencia
-                sTxt = sTxt & "|" & cNull(Rst1.fields("ICMS_ORIGEM")) '5 - CSTA
-                sTxt = sTxt & "|" & cNull(Rst1.fields("ICMS_CST"))  '6 - CSTB
-                sTxt = sTxt & "|" & cNull(Rst1.fields("det_uCom"))
-                sTxt = sTxt & "|" & cNull(Rst1.fields("det_qCom"))
-                sTxt = sTxt & "|" & cNull(Rst1.fields("det_vProd"))
-                sTxt = sTxt & "|" & cNull(Rst1.fields("IPI_vIPI"))
+                sTxt = sTxt & "|" & cNull(Rst1.Fields("ICMS_ORIGEM")) '5 - CSTA
+                sTxt = sTxt & "|" & cNull(Rst1.Fields("ICMS_CST"))  '6 - CSTB
+                sTxt = sTxt & "|" & cNull(Rst1.Fields("det_uCom"))
+                sTxt = sTxt & "|" & cNull(Rst1.Fields("det_qCom"))
+                sTxt = sTxt & "|" & cNull(Rst1.Fields("det_vProd"))
+                sTxt = sTxt & "|" & cNull(Rst1.Fields("IPI_vIPI"))
                 sTxt = sTxt & "|" & "3" '11 - Tipo Trib ICMS 'tab.13
-                sTxt = sTxt & "|" & cNull(Rst1.fields("ICMS_vBC"))
-                sTxt = sTxt & "|" & cNull(Rst1.fields("ICMS_pICMS"))
-                sTxt = sTxt & "|" & cNull(Rst1.fields("ICMS_vBCST"))
-                sTxt = sTxt & "|" & cNull(Rst1.fields("ICMS_vICMSST"))
+                sTxt = sTxt & "|" & cNull(Rst1.Fields("ICMS_vBC"))
+                sTxt = sTxt & "|" & cNull(Rst1.Fields("ICMS_pICMS"))
+                sTxt = sTxt & "|" & cNull(Rst1.Fields("ICMS_vBCST"))
+                sTxt = sTxt & "|" & cNull(Rst1.Fields("ICMS_vICMSST"))
                 sTxt = sTxt & "|" & "" '16 - Tipo de recolhimento
                 sTxt = sTxt & "|" & "" '17 - Tipo Substituicao
                 sTxt = sTxt & "|" & "" '18 - Custo Aquisicao ST
                 sTxt = sTxt & "|" & "" '19 - Perc. Agreg. Substituicao
-                sTxt = sTxt & "|" & cNull(Rst1.fields("ICMS_vBCST"))
+                sTxt = sTxt & "|" & cNull(Rst1.Fields("ICMS_vBCST"))
                 sTxt = sTxt & "|" & "" '21 - Aliq ST
                 sTxt = sTxt & "|" & "" '22 - Credito Origem
                 sTxt = sTxt & "|" & "" '23 - Subst ja recolhido
@@ -987,22 +987,22 @@ Private Function Fortes_GerarArquivo() As Boolean
                 sTxt = sTxt & "|" & "" '30 - Aliquota de Origem
                 sTxt = sTxt & "|" & "" '31 - Aliquota Interna
                 sTxt = sTxt & "|" & "" '32 - Tipo Trib. IPI 'tab.13
-                sTxt = sTxt & "|" & cNull(Rst1.fields("IPI_vBC"))
-                sTxt = sTxt & "|" & cNull(Rst1.fields("IPI_pIPI"))
-                sTxt = sTxt & "|" & cNull(Rst1.fields("IPI_vIPI"))
-                sTxt = sTxt & "|" & cNull(Rst1.fields("IPI_CST")) '36 - CST IPI 'tab.17
-                sTxt = sTxt & "|" & IIf(Rst.fields("ide_tpNF") = 0, "70", cNull(Rst1.fields("COFINS_CST"))) '37 - CST COFINS 'tab.18
-                sTxt = sTxt & "|" & IIf(Rst.fields("ide_tpNF") = 0, "70", cNull(Rst1.fields("PIS_CST"))) '38 - CST PIS 'tab.18
-                sTxt = sTxt & "|" & cNull(Rst1.fields("COFINS_vBC"))
-                sTxt = sTxt & "|" & cNull(Rst1.fields("PIS_vBC"))
-                sTxt = sTxt & "|" & cNull(Rst1.fields("det_vFrete"))
-                sTxt = sTxt & "|" & cNull(Rst1.fields("det_vSeg"))
-                sTxt = sTxt & "|" & cNull(Rst1.fields("det_vDesc"))
+                sTxt = sTxt & "|" & cNull(Rst1.Fields("IPI_vBC"))
+                sTxt = sTxt & "|" & cNull(Rst1.Fields("IPI_pIPI"))
+                sTxt = sTxt & "|" & cNull(Rst1.Fields("IPI_vIPI"))
+                sTxt = sTxt & "|" & cNull(Rst1.Fields("IPI_CST")) '36 - CST IPI 'tab.17
+                sTxt = sTxt & "|" & IIf(Rst.Fields("ide_tpNF") = 0, "70", cNull(Rst1.Fields("COFINS_CST"))) '37 - CST COFINS 'tab.18
+                sTxt = sTxt & "|" & IIf(Rst.Fields("ide_tpNF") = 0, "70", cNull(Rst1.Fields("PIS_CST"))) '38 - CST PIS 'tab.18
+                sTxt = sTxt & "|" & cNull(Rst1.Fields("COFINS_vBC"))
+                sTxt = sTxt & "|" & cNull(Rst1.Fields("PIS_vBC"))
+                sTxt = sTxt & "|" & cNull(Rst1.Fields("det_vFrete"))
+                sTxt = sTxt & "|" & cNull(Rst1.Fields("det_vSeg"))
+                sTxt = sTxt & "|" & cNull(Rst1.Fields("det_vDesc"))
                 
                 
                 Dim vTotalSemImp As String
                 
-                vTotalSemImp = (Val(ChkVal(Rst1.fields("det_vProd"), 0, cDecMoeda)) + Val(ChkVal(cNull(Rst1.fields("det_vFrete")), 0, cDecMoeda)) + Val(ChkVal(cNull(Rst1.fields("det_vSeg")), 0, cDecMoeda))) - Val(ChkVal(cNull(Rst1.fields("det_vDesc")), 0, cDecMoeda))
+                vTotalSemImp = (Val(ChkVal(Rst1.Fields("det_vProd"), 0, cDecMoeda)) + Val(ChkVal(cNull(Rst1.Fields("det_vFrete")), 0, cDecMoeda)) + Val(ChkVal(cNull(Rst1.Fields("det_vSeg")), 0, cDecMoeda))) - Val(ChkVal(cNull(Rst1.Fields("det_vDesc")), 0, cDecMoeda))
                 vTotalSemImp = ChkVal(vTotalSemImp, 0, cDecMoeda)
                 sTxt = sTxt & "|" & cNull(vTotalSemImp) '44 - Valor Produto(Somatorio dos campos 9+41+42-43)
                 
@@ -1017,7 +1017,7 @@ Private Function Fortes_GerarArquivo() As Boolean
                 If AliquotaEspecifica = "N" Then
                         cCofins = "1"
                     Else
-                        If InStr(Rst1.fields("COFINS_CST"), "03,04,06,50,51,52,53,54,55,56,60,67,70,71,72,73,74,75") Then
+                        If InStr(Rst1.Fields("COFINS_CST"), "03,04,06,50,51,52,53,54,55,56,60,67,70,71,72,73,74,75") Then
                                 cCofins = "2"
                             Else
                                 cCofins = "0"
@@ -1025,29 +1025,29 @@ Private Function Fortes_GerarArquivo() As Boolean
                 End If
                 sTxt = sTxt & "|" & cNull(cCofins)  '51 - Tipo Calc COFINS
                 
-                sTxt = sTxt & "|" & IIf(AliquotaEspecifica = "N", "", Fortes_cvt(cNull(Rst1.fields("COFINS_pCOFINS")), "V", 7)) '52 - Aliquota COFINS(%)
+                sTxt = sTxt & "|" & IIf(AliquotaEspecifica = "N", "", Fortes_cvt(cNull(Rst1.Fields("COFINS_pCOFINS")), "V", 7)) '52 - Aliquota COFINS(%)
                 
                 sTxt = sTxt & "|" & "" '53 - Aliquota COFINS(R$)
                 
-                sTxt = sTxt & "|" & IIf(AliquotaEspecifica = "N", "", Fortes_cvt(cNull(Rst1.fields("COFINS_vCOFINS")), "V", 15)) '54 - Valor COFINS
+                sTxt = sTxt & "|" & IIf(AliquotaEspecifica = "N", "", Fortes_cvt(cNull(Rst1.Fields("COFINS_vCOFINS")), "V", 15)) '54 - Valor COFINS
                 
                  Dim cPIS As String
                 If AliquotaEspecifica = "N" Then
                         cPIS = "1"
                     Else
-                        If InStr(Rst1.fields("PIS_CST"), "03,04,06,50,51,52,53,54,55,56,60,67,70,71,72,73,74,75") Then
+                        If InStr(Rst1.Fields("PIS_CST"), "03,04,06,50,51,52,53,54,55,56,60,67,70,71,72,73,74,75") Then
                                 cPIS = "2"
                             Else
                                 cPIS = "0"
                         End If
                 End If
                 sTxt = sTxt & "|" & cPIS '55 - Tipo Calc PIS
-                sTxt = sTxt & "|" & IIf(AliquotaEspecifica = "N", "", Fortes_cvt(cNull(Rst1.fields("PIS_pPIS")), "V", 15))  '56 - Aliquota PIS(%)
+                sTxt = sTxt & "|" & IIf(AliquotaEspecifica = "N", "", Fortes_cvt(cNull(Rst1.Fields("PIS_pPIS")), "V", 15))  '56 - Aliquota PIS(%)
                 sTxt = sTxt & "|" & "" '57 - Aliquota PIS(R$)
-                sTxt = sTxt & "|" & IIf(AliquotaEspecifica = "N", "", Fortes_cvt(cNull(Rst1.fields("PIS_vPIS")), "V", 15))   '58 - Valor PIS
+                sTxt = sTxt & "|" & IIf(AliquotaEspecifica = "N", "", Fortes_cvt(cNull(Rst1.Fields("PIS_vPIS")), "V", 15))   '58 - Valor PIS
                 sTxt = sTxt & "|" & "" '59 - Codigo Ajuste Fiscal
-                sTxt = sTxt & "|" & cNull(Rst1.fields("det_xPed"))
-                sTxt = sTxt & "|" & cNull(Rst1.fields("det_nItemPed"))
+                sTxt = sTxt & "|" & cNull(Rst1.Fields("det_xPed"))
+                sTxt = sTxt & "|" & cNull(Rst1.Fields("det_nItemPed"))
                 
                 If cancNFe = False Then
                     grvFile nmFile, sTxt
@@ -1069,17 +1069,17 @@ Private Function Fortes_GerarArquivo() As Boolean
         'cancNFe = IIf(IsNull(Rst1.Fields("canc_nProt")), True, False)
         
         sTxt = "INM"
-        sTxt = sTxt & "|" & Fortes_cvt(cNull(Rst1.fields("det_vProd")), "V", 15) ' 2 - Valor
-        sTxt = sTxt & "|" & Fortes_cvt(cNull(Rst.fields("dest_UF")), "C", 2) ' 3 - Unidade Federal
-        sTxt = sTxt & "|" & Fortes_cvt(cNull(Rst1.fields("det_CFOP")), "N", 4) ' 4 - CFOP
+        sTxt = sTxt & "|" & Fortes_cvt(cNull(Rst1.Fields("det_vProd")), "V", 15) ' 2 - Valor
+        sTxt = sTxt & "|" & Fortes_cvt(cNull(Rst.Fields("dest_UF")), "C", 2) ' 3 - Unidade Federal
+        sTxt = sTxt & "|" & Fortes_cvt(cNull(Rst1.Fields("det_CFOP")), "N", 4) ' 4 - CFOP
         sTxt = sTxt & "|" & Fortes_cvt("", "N", 4) ' 5 - CFOP Transferencia
-        sTxt = sTxt & "|" & Fortes_cvt(cNull(Rst1.fields("ICMS_vBC")), "V", 15)
-        sTxt = sTxt & "|" & Fortes_cvt(cNull(Rst1.fields("ICMS_pICMS")), "V", 5)
-        sTxt = sTxt & "|" & Fortes_cvt(cNull(Rst1.fields("ICMS_vICMS")), "V", 15)
+        sTxt = sTxt & "|" & Fortes_cvt(cNull(Rst1.Fields("ICMS_vBC")), "V", 15)
+        sTxt = sTxt & "|" & Fortes_cvt(cNull(Rst1.Fields("ICMS_pICMS")), "V", 5)
+        sTxt = sTxt & "|" & Fortes_cvt(cNull(Rst1.Fields("ICMS_vICMS")), "V", 15)
         sTxt = sTxt & "|" & Fortes_cvt("", "V", 15) '9 - Isenta do ICMS
         sTxt = sTxt & "|" & Fortes_cvt("", "V", 15)     '10 - Outras do ICMS
-        sTxt = sTxt & "|" & Fortes_cvt(cNull(Rst1.fields("IPI_vBC")), "V", 15) '11 - BC do IPI
-        sTxt = sTxt & "|" & Fortes_cvt(cNull(Rst1.fields("IPI_vIPI")), "V", 15)
+        sTxt = sTxt & "|" & Fortes_cvt(cNull(Rst1.Fields("IPI_vBC")), "V", 15) '11 - BC do IPI
+        sTxt = sTxt & "|" & Fortes_cvt(cNull(Rst1.Fields("IPI_vIPI")), "V", 15)
         sTxt = sTxt & "|" & Fortes_cvt("", "V", 15) '13 - Isenta do IPI
         sTxt = sTxt & "|" & Fortes_cvt("", "V", 15) '14 - Outras do IPI
         sTxt = sTxt & "|" & Fortes_cvt("", "V", 15) '15 - ICMS ST / Somente no Simples
@@ -1132,20 +1132,20 @@ Private Function Fortes_GerarArquivo() As Boolean
                 sTxt = "NFM"
                 sTxt = sTxt & "|" & "0001" 'Fortes_cvt(cNull(Rst.Fields("dest_idDest")), "N", 4) ' 2 - Codigi do Estabelecimento
                 sTxt = sTxt & "|" & "E" 'IIf(Rst.Fields("ide_tpNF") = 0, "E", "S")'3 - Operacao
-                sTxt = sTxt & "|" & IIf(IsNull(Rst.fields("idNFe")), "NF1", "NFE") '4 - Especie
+                sTxt = sTxt & "|" & IIf(IsNull(Rst.Fields("idNFe")), "NF1", "NFE") '4 - Especie
                 sTxt = sTxt & "|" & "N" '5 - Documento Proprio
                 sTxt = sTxt & "|" & "" ' 6 - AIDF
-                sTxt = sTxt & "|" & Rst.fields("ide_Serie")
+                sTxt = sTxt & "|" & Rst.Fields("ide_Serie")
                 sTxt = sTxt & "|" & "" '8 - Sub SerieRst.Fields("ide_SSerie")
-                sTxt = sTxt & "|" & Rst.fields("ide_nNF")
+                sTxt = sTxt & "|" & Rst.Fields("ide_nNF")
                 sTxt = sTxt & "|" & "" '10 - Formulario Inicial
                 sTxt = sTxt & "|" & "" '11 - Formulario Final
-                sTxt = sTxt & "|" & Fortes_cvt(Rst.fields("ide_dEmi"), "D", 10)
+                sTxt = sTxt & "|" & Fortes_cvt(Rst.Fields("ide_dEmi"), "D", 10)
                 sTxt = sTxt & "|" & "" 'IIf(cancNFe = True, "1", "0") '13 - 0 Normal / 1 Cancelado
                 
-                sTxt = sTxt & "|" & IIf(cancNFe = True, "", Fortes_cvt(cNull(Rst.fields("ide_dEmi")), "D", 10)) '14 - Dt. Entr/Saida
+                sTxt = sTxt & "|" & IIf(cancNFe = True, "", Fortes_cvt(cNull(Rst.Fields("ide_dEmi")), "D", 10)) '14 - Dt. Entr/Saida
                 
-                cfor = Fortes_cvt(cNull(Rst.fields("emit_id")), "N", 7)
+                cfor = Fortes_cvt(cNull(Rst.Fields("emit_id")), "N", 7)
                 cfor = "6" & Mid(String(4, "0"), 1, 4 - Len(Trim(cfor))) & cfor
                 
                 sTxt = sTxt & "|" & IIf(cancNFe = True, "", cfor)
@@ -1159,29 +1159,29 @@ Private Function Fortes_GerarArquivo() As Boolean
                 sTxt = sTxt & "|" & "" '23 - GNRE Agencia
                 sTxt = sTxt & "|" & "" '24 - GNRE Agencia DV
                 sTxt = sTxt & "|" & "" '25 - GNRE Autenticado
-                sTxt = sTxt & "|" & IIf(cancNFe = True, "", cNull(Rst.fields("Total_vProd")))
-                sTxt = sTxt & "|" & IIf(cancNFe = True, "", cNull(Rst.fields("Total_vFrete")))
-                sTxt = sTxt & "|" & IIf(cancNFe = True, "", cNull(Rst.fields("Total_vSeg")))
-                sTxt = sTxt & "|" & IIf(cancNFe = True, "", cNull(Rst.fields("Total_vOutro")))
+                sTxt = sTxt & "|" & IIf(cancNFe = True, "", cNull(Rst.Fields("Total_vProd")))
+                sTxt = sTxt & "|" & IIf(cancNFe = True, "", cNull(Rst.Fields("Total_vFrete")))
+                sTxt = sTxt & "|" & IIf(cancNFe = True, "", cNull(Rst.Fields("Total_vSeg")))
+                sTxt = sTxt & "|" & IIf(cancNFe = True, "", cNull(Rst.Fields("Total_vOutro")))
                 sTxt = sTxt & "|" & "" '30 - ICMS Importacao
                 sTxt = sTxt & "|" & "" '31 - ICMS Importacao Diferimento
-                sTxt = sTxt & "|" & IIf(cancNFe = True, "", cNull(Rst.fields("Total_vIPI")))
+                sTxt = sTxt & "|" & IIf(cancNFe = True, "", cNull(Rst.Fields("Total_vIPI")))
                 sTxt = sTxt & "|" & "" '33 - Substituicao retido
                 sTxt = sTxt & "|" & "" '34 - Servico ISS
-                sTxt = sTxt & "|" & IIf(cancNFe = True, "", cNull(Rst.fields("Total_vDesc")))
-                sTxt = sTxt & "|" & IIf(cancNFe = True, "", cNull(Rst.fields("Total_vNF")))
+                sTxt = sTxt & "|" & IIf(cancNFe = True, "", cNull(Rst.Fields("Total_vDesc")))
+                sTxt = sTxt & "|" & IIf(cancNFe = True, "", cNull(Rst.Fields("Total_vNF")))
                 sTxt = sTxt & "|" & "" '37 - Quantidade de Intes/Produtos
                 sTxt = sTxt & "|" & "" '38 - ST Recolhes
                 sTxt = sTxt & "|" & "" '39 - Antecipar Recolher
                 sTxt = sTxt & "|" & "" '40 - Diferencial de Aliquota
                 sTxt = sTxt & "|" & "" '41 - Valor Contabil ST
-                sTxt = sTxt & "|" & IIf(cancNFe = True, "", cNull(Rst.fields("Total_vBCST"))) '42 - BC ICMS ST
+                sTxt = sTxt & "|" & IIf(cancNFe = True, "", cNull(Rst.Fields("Total_vBCST"))) '42 - BC ICMS ST
                 sTxt = sTxt & "|" & "" '43 - Valor Contabil Antecipado
                 sTxt = sTxt & "|" & "" '44 - ISS Retido
                 sTxt = sTxt & "|" & "" '45 - Data de Retencao do ISS
                 sTxt = sTxt & "|" & "" '46 - Servico
                 sTxt = sTxt & "|" & "" '47 - Data Entrada no Estado
-                sTxt = sTxt & "|" & IIf(cancNFe = True, "", IIf(Rst.fields("transp_ModFrete") = 0, "R", "D")) '48 - Frete por conta 'Tab 11
+                sTxt = sTxt & "|" & IIf(cancNFe = True, "", IIf(Rst.Fields("transp_ModFrete") = 0, "R", "D")) '48 - Frete por conta 'Tab 11
                 sTxt = sTxt & "|" & IIf(cancNFe = True, "", "P") '49 - Fatura ' Tab 12
                 sTxt = sTxt & "|" & "" '50 - Numero do EEC
                 sTxt = sTxt & "|" & "" '51 - Numero do Cupom
@@ -1201,7 +1201,7 @@ Private Function Fortes_GerarArquivo() As Boolean
                 sTxt = sTxt & "|" & ""  '65 - Observacoes
                 sTxt = sTxt & "|" & "" '66 - Aliquota ST
                 
-                sTxt = sTxt & "|" & Rst.fields("idNFe") '67 - Chave Eletronica
+                sTxt = sTxt & "|" & Rst.Fields("idNFe") '67 - Chave Eletronica
                 
                 sTxt = sTxt & "|" & "" '68 - INSS Retido na Fonte
                 sTxt = sTxt & "|" & "" '69 - BC COFINS / PIS nao cumulativo
@@ -1212,7 +1212,7 @@ Private Function Fortes_GerarArquivo() As Boolean
                 sTxt = sTxt & "|" & ""  '72 - Cod. informacao complementar
                 sTxt = sTxt & "|" & ""  '73 - Complemento das inf. complementares
                 sTxt = sTxt & "|" & "" '74 - Hora da Saida
-                sTxt = sTxt & "|" & cNull(Rst.fields("emit_UF"))  '75 - UF de Embarque
+                sTxt = sTxt & "|" & cNull(Rst.Fields("emit_UF"))  '75 - UF de Embarque
                 sTxt = sTxt & "|" & ""  '76 - Local de embarque
                 grvFile nmFile, sTxt
                 l = l + 1
@@ -1231,7 +1231,7 @@ Private Function Fortes_GerarArquivo() As Boolean
             'Rst.MoveLast
     sSQL = "SELECT * " & _
            "FROM FaturamentoNFeEntradaItens " & _
-           "WHERE FaturamentoNFeEntradaItens.idNFe = '" & Rst.fields("idNFe") & "'"
+           "WHERE FaturamentoNFeEntradaItens.idNFe = '" & Rst.Fields("idNFe") & "'"
     Set Rst1 = RegistroBuscar(sSQL)
     If Rst1.BOF And Rst1.EOF Then
         Else
@@ -1240,25 +1240,25 @@ Private Function Fortes_GerarArquivo() As Boolean
                 'status (Rst1.RecordCount)
                 'cancNFe = IIf(IsNull(Rst1.Fields("canc_nProt")), True, False)
                 sTxt = "PNM"
-                sTxt = sTxt & "|" & cNull(Rst1.fields("det_IdProduto")) 'cNull(Rst1.Fields("det_cProd"))
-                sTxt = sTxt & "|" & Fortes_cvt(Fortes_convCFOP_ES(cNull(Rst1.fields("det_CFOP"))), "N", 4)
+                sTxt = sTxt & "|" & cNull(Rst1.Fields("det_IdProduto")) 'cNull(Rst1.Fields("det_cProd"))
+                sTxt = sTxt & "|" & Fortes_cvt(Fortes_convCFOP_ES(cNull(Rst1.Fields("det_CFOP"))), "N", 4)
                 sTxt = sTxt & "|" & ""  '4 - CFOP transferencia
-                sTxt = sTxt & "|" & cNull(Rst1.fields("ICMS_ORIGEM")) '5 - CSTA
-                sTxt = sTxt & "|" & Fortes_convCST_ES(cNull(Rst1.fields("ICMS_CST")))  '6 - CSTB
-                sTxt = sTxt & "|" & cNull(Rst1.fields("det_uCom"))
-                sTxt = sTxt & "|" & cNull(Rst1.fields("det_qCom"))
-                sTxt = sTxt & "|" & cNull(Rst1.fields("det_vProd"))
-                sTxt = sTxt & "|" & cNull(Rst1.fields("IPI_vIPI"))
+                sTxt = sTxt & "|" & cNull(Rst1.Fields("ICMS_ORIGEM")) '5 - CSTA
+                sTxt = sTxt & "|" & Fortes_convCST_ES(cNull(Rst1.Fields("ICMS_CST")))  '6 - CSTB
+                sTxt = sTxt & "|" & cNull(Rst1.Fields("det_uCom"))
+                sTxt = sTxt & "|" & cNull(Rst1.Fields("det_qCom"))
+                sTxt = sTxt & "|" & cNull(Rst1.Fields("det_vProd"))
+                sTxt = sTxt & "|" & cNull(Rst1.Fields("IPI_vIPI"))
                 sTxt = sTxt & "|" & "3" '11 - Tipo Trib ICMS 'tab.13
-                sTxt = sTxt & "|" & cNull(Rst1.fields("ICMS_vBC"))
-                sTxt = sTxt & "|" & cNull(Rst1.fields("ICMS_pICMS"))
-                sTxt = sTxt & "|" & cNull(Rst1.fields("ICMS_vBCST"))
-                sTxt = sTxt & "|" & cNull(Rst1.fields("ICMS_vICMSST"))
+                sTxt = sTxt & "|" & cNull(Rst1.Fields("ICMS_vBC"))
+                sTxt = sTxt & "|" & cNull(Rst1.Fields("ICMS_pICMS"))
+                sTxt = sTxt & "|" & cNull(Rst1.Fields("ICMS_vBCST"))
+                sTxt = sTxt & "|" & cNull(Rst1.Fields("ICMS_vICMSST"))
                 sTxt = sTxt & "|" & "" '16 - Tipo de recolhimento
                 sTxt = sTxt & "|" & "" '17 - Tipo Substituicao
                 sTxt = sTxt & "|" & "" '18 - Custo Aquisicao ST
                 sTxt = sTxt & "|" & "" '19 - Perc. Agreg. Substituicao
-                sTxt = sTxt & "|" & cNull(Rst1.fields("ICMS_vBCST"))
+                sTxt = sTxt & "|" & cNull(Rst1.Fields("ICMS_vBCST"))
                 sTxt = sTxt & "|" & "" '21 - Aliq ST
                 sTxt = sTxt & "|" & "" '22 - Credito Origem
                 sTxt = sTxt & "|" & "" '23 - Subst ja recolhido
@@ -1271,22 +1271,22 @@ Private Function Fortes_GerarArquivo() As Boolean
                 sTxt = sTxt & "|" & "" '30 - Aliquota de Origem
                 sTxt = sTxt & "|" & "" '31 - Aliquota Interna
                 sTxt = sTxt & "|" & "" '32 - Tipo Trib. IPI 'tab.13
-                sTxt = sTxt & "|" & cNull(Rst1.fields("IPI_vBC"))
-                sTxt = sTxt & "|" & cNull(Rst1.fields("IPI_pIPI"))
-                sTxt = sTxt & "|" & cNull(Rst1.fields("IPI_vIPI"))
-                sTxt = sTxt & "|" & cNull(Rst1.fields("IPI_CST")) '36 - CST IPI 'tab.17
+                sTxt = sTxt & "|" & cNull(Rst1.Fields("IPI_vBC"))
+                sTxt = sTxt & "|" & cNull(Rst1.Fields("IPI_pIPI"))
+                sTxt = sTxt & "|" & cNull(Rst1.Fields("IPI_vIPI"))
+                sTxt = sTxt & "|" & cNull(Rst1.Fields("IPI_CST")) '36 - CST IPI 'tab.17
                 sTxt = sTxt & "|" & "" 'cNull(Rst1.Fields("COFINS_CST")) '37 - CST COFINS 'tab.18
                 sTxt = sTxt & "|" & "" 'cNull(Rst1.Fields("PIS_CST"))  '38 - CST PIS 'tab.18
-                sTxt = sTxt & "|" & cNull(Rst1.fields("COFINS_vBC"))
-                sTxt = sTxt & "|" & cNull(Rst1.fields("PIS_vBC"))
-                sTxt = sTxt & "|" & cNull(Rst1.fields("det_vFrete"))
-                sTxt = sTxt & "|" & cNull(Rst1.fields("det_vSeg"))
-                sTxt = sTxt & "|" & cNull(Rst1.fields("det_vDesc"))
+                sTxt = sTxt & "|" & cNull(Rst1.Fields("COFINS_vBC"))
+                sTxt = sTxt & "|" & cNull(Rst1.Fields("PIS_vBC"))
+                sTxt = sTxt & "|" & cNull(Rst1.Fields("det_vFrete"))
+                sTxt = sTxt & "|" & cNull(Rst1.Fields("det_vSeg"))
+                sTxt = sTxt & "|" & cNull(Rst1.Fields("det_vDesc"))
                 
                 
                 'Dim vTotalSemImp As String
                 
-                vTotalSemImp = (Val(ChkVal(Rst1.fields("det_vProd"), 0, cDecMoeda)) + Val(ChkVal(cNull(Rst1.fields("det_vFrete")), 0, cDecMoeda)) + Val(ChkVal(cNull(Rst1.fields("det_vSeg")), 0, cDecMoeda))) - Val(ChkVal(cNull(Rst1.fields("det_vDesc")), 0, cDecMoeda))
+                vTotalSemImp = (Val(ChkVal(Rst1.Fields("det_vProd"), 0, cDecMoeda)) + Val(ChkVal(cNull(Rst1.Fields("det_vFrete")), 0, cDecMoeda)) + Val(ChkVal(cNull(Rst1.Fields("det_vSeg")), 0, cDecMoeda))) - Val(ChkVal(cNull(Rst1.Fields("det_vDesc")), 0, cDecMoeda))
                 vTotalSemImp = ChkVal(vTotalSemImp, 0, cDecMoeda)
                 sTxt = sTxt & "|" & cNull(vTotalSemImp) '44 - Valor Produto(Somatorio dos campos 9+41+42-43)
                 
@@ -1301,7 +1301,7 @@ Private Function Fortes_GerarArquivo() As Boolean
                 If AliquotaEspecifica = "N" Then
                         cCofins = "1"
                     Else
-                        If InStr(Rst1.fields("COFINS_CST"), "03,04,06,50,51,52,53,54,55,56,60,67,70,71,72,73,74,75") Then
+                        If InStr(Rst1.Fields("COFINS_CST"), "03,04,06,50,51,52,53,54,55,56,60,67,70,71,72,73,74,75") Then
                                 cCofins = "2"
                             Else
                                 cCofins = "0"
@@ -1309,26 +1309,26 @@ Private Function Fortes_GerarArquivo() As Boolean
                 End If
                 sTxt = sTxt & "|" & cNull(cCofins)  '51 - Tipo Calc COFINS
                 
-                sTxt = sTxt & "|" & IIf(AliquotaEspecifica = "N", "", Fortes_cvt(cNull(Rst1.fields("COFINS_pCOFINS")), "V", 7)) '52 - Aliquota COFINS(%)
+                sTxt = sTxt & "|" & IIf(AliquotaEspecifica = "N", "", Fortes_cvt(cNull(Rst1.Fields("COFINS_pCOFINS")), "V", 7)) '52 - Aliquota COFINS(%)
                 
                 sTxt = sTxt & "|" & "" '53 - Aliquota COFINS(R$)
                 
-                sTxt = sTxt & "|" & IIf(AliquotaEspecifica = "N", "", Fortes_cvt(cNull(Rst1.fields("COFINS_vCOFINS")), "V", 15)) '54 - Valor COFINS
+                sTxt = sTxt & "|" & IIf(AliquotaEspecifica = "N", "", Fortes_cvt(cNull(Rst1.Fields("COFINS_vCOFINS")), "V", 15)) '54 - Valor COFINS
                 
                  'Dim cPIS As String
                 If AliquotaEspecifica = "N" Then
                         cPIS = "1"
                     Else
-                        If InStr(Rst1.fields("PIS_CST"), "03,04,06,50,51,52,53,54,55,56,60,67,70,71,72,73,74,75") Then
+                        If InStr(Rst1.Fields("PIS_CST"), "03,04,06,50,51,52,53,54,55,56,60,67,70,71,72,73,74,75") Then
                                 cPIS = "2"
                             Else
                                 cPIS = "0"
                         End If
                 End If
                 sTxt = sTxt & "|" & cPIS '55 - Tipo Calc PIS
-                sTxt = sTxt & "|" & IIf(AliquotaEspecifica = "N", "", Fortes_cvt(cNull(Rst1.fields("PIS_pPIS")), "V", 15))  '56 - Aliquota PIS(%)
+                sTxt = sTxt & "|" & IIf(AliquotaEspecifica = "N", "", Fortes_cvt(cNull(Rst1.Fields("PIS_pPIS")), "V", 15))  '56 - Aliquota PIS(%)
                 sTxt = sTxt & "|" & "" '57 - Aliquota PIS(R$)
-                sTxt = sTxt & "|" & IIf(AliquotaEspecifica = "N", "", Fortes_cvt(cNull(Rst1.fields("PIS_vPIS")), "V", 15))   '58 - Valor PIS
+                sTxt = sTxt & "|" & IIf(AliquotaEspecifica = "N", "", Fortes_cvt(cNull(Rst1.Fields("PIS_vPIS")), "V", 15))   '58 - Valor PIS
                 sTxt = sTxt & "|" & "" '59 - Codigo Ajuste Fiscal
                 sTxt = sTxt & "|" & "" 'cNull(Rst1.Fields("det_xPed"))
                 sTxt = sTxt & "|" & "" 'cNull(Rst1.Fields("det_nItemPed"))
@@ -1353,17 +1353,17 @@ Private Function Fortes_GerarArquivo() As Boolean
         'cancNFe = IIf(IsNull(Rst1.Fields("canc_nProt")), True, False)
         
         sTxt = "INM"
-        sTxt = sTxt & "|" & Fortes_cvt(cNull(Rst1.fields("det_vProd")), "V", 15) ' 2 - Valor
-        sTxt = sTxt & "|" & Fortes_cvt(cNull(Rst.fields("dest_UF")), "C", 2) ' 3 - Unidade Federal
-        sTxt = sTxt & "|" & Fortes_cvt(Fortes_convCFOP_ES(cNull(Rst1.fields("det_CFOP"))), "N", 4) ' 4 - CFOP
+        sTxt = sTxt & "|" & Fortes_cvt(cNull(Rst1.Fields("det_vProd")), "V", 15) ' 2 - Valor
+        sTxt = sTxt & "|" & Fortes_cvt(cNull(Rst.Fields("dest_UF")), "C", 2) ' 3 - Unidade Federal
+        sTxt = sTxt & "|" & Fortes_cvt(Fortes_convCFOP_ES(cNull(Rst1.Fields("det_CFOP"))), "N", 4) ' 4 - CFOP
         sTxt = sTxt & "|" & Fortes_cvt("", "N", 4) ' 5 - CFOP Transferencia
-        sTxt = sTxt & "|" & Fortes_cvt(cNull(Rst1.fields("ICMS_vBC")), "V", 15)
-        sTxt = sTxt & "|" & Fortes_cvt(cNull(Rst1.fields("ICMS_pICMS")), "V", 5)
-        sTxt = sTxt & "|" & Fortes_cvt(cNull(Rst1.fields("ICMS_vICMS")), "V", 15)
+        sTxt = sTxt & "|" & Fortes_cvt(cNull(Rst1.Fields("ICMS_vBC")), "V", 15)
+        sTxt = sTxt & "|" & Fortes_cvt(cNull(Rst1.Fields("ICMS_pICMS")), "V", 5)
+        sTxt = sTxt & "|" & Fortes_cvt(cNull(Rst1.Fields("ICMS_vICMS")), "V", 15)
         sTxt = sTxt & "|" & Fortes_cvt("", "V", 15) '9 - Isenta do ICMS
         sTxt = sTxt & "|" & Fortes_cvt("", "V", 15)     '10 - Outras do ICMS
-        sTxt = sTxt & "|" & Fortes_cvt(cNull(Rst1.fields("IPI_vBC")), "V", 15) '11 - BC do IPI
-        sTxt = sTxt & "|" & Fortes_cvt(cNull(Rst1.fields("IPI_vIPI")), "V", 15)
+        sTxt = sTxt & "|" & Fortes_cvt(cNull(Rst1.Fields("IPI_vBC")), "V", 15) '11 - BC do IPI
+        sTxt = sTxt & "|" & Fortes_cvt(cNull(Rst1.Fields("IPI_vIPI")), "V", 15)
         sTxt = sTxt & "|" & Fortes_cvt("", "V", 15) '13 - Isenta do IPI
         sTxt = sTxt & "|" & Fortes_cvt("", "V", 15) '14 - Outras do IPI
         sTxt = sTxt & "|" & Fortes_cvt("", "V", 15) '15 - ICMS ST / Somente no Simples
@@ -1551,7 +1551,7 @@ Private Sub Form_Load()
     frmNFe.Visible = False
 End Sub
 Private Sub XML_Exportar(Periodo As String)
-
+    On Error GoTo trtErrorXMLexp
     Dim caminho             As String
     Dim arquivoCliente      As String
     Dim arquivoFornecedor   As String
@@ -1615,7 +1615,11 @@ Private Sub XML_Exportar(Periodo As String)
     If MsgBox("Arquivos gerados com sucesso!" & vbCrLf & "Deseja enviar por e-mail?", vbQuestion + vbYesNo, App.EXEName) = vbYes Then
         formSendMail.CarregarForm "gloria@argoscont.com.br", "Movimento Mensal", "Em Anexo", txtDestXML.Text
     End If
-    
+    Exit Sub
+trtErrorXMLexp:
+    MsgBox Err.Description, vbCritical, Err.Number
+    RegLog "0", "0", "XML_Exportar - Erro: " & Err.Number & " - " & Err.Description
+    Resume Next
 End Sub
 Private Sub Sintegra(Periodo As String)
 

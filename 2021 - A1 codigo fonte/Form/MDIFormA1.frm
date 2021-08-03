@@ -1,7 +1,7 @@
 VERSION 5.00
 Object = "{38911DA0-E448-11D0-84A3-00DD01104159}#1.1#0"; "COMCT332.OCX"
 Object = "{248DD890-BB45-11CF-9ABC-0080C7E7B78D}#1.0#0"; "MSWINSCK.OCX"
-Object = "{831FDD16-0C5C-11D2-A9FC-0000F8754DA1}#2.2#0"; "mscomctl.ocx"
+Object = "{831FDD16-0C5C-11D2-A9FC-0000F8754DA1}#2.2#0"; "MSCOMCTL.OCX"
 Begin VB.MDIForm MDIFormA1 
    AutoShowChildren=   0   'False
    BackColor       =   &H00C0C000&
@@ -241,7 +241,7 @@ Begin VB.MDIForm MDIFormA1
             Bevel           =   0
             Object.Width           =   1693
             MinWidth        =   71
-            TextSave        =   "03/05/2021"
+            TextSave        =   "03/08/2021"
          EndProperty
          BeginProperty Panel6 {8E3867AB-8586-11D1-B16A-00C0F0283628} 
             Style           =   5
@@ -250,7 +250,7 @@ Begin VB.MDIForm MDIFormA1
             Bevel           =   0
             Object.Width           =   873
             MinWidth        =   71
-            TextSave        =   "23:28"
+            TextSave        =   "19:29"
          EndProperty
       EndProperty
    End

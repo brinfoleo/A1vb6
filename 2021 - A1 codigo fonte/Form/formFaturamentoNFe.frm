@@ -1,6 +1,6 @@
 VERSION 5.00
 Object = "{86CF1D34-0C5F-11D2-A9FC-0000F8754DA1}#2.0#0"; "MSCOMCT2.OCX"
-Object = "{831FDD16-0C5C-11D2-A9FC-0000F8754DA1}#2.2#0"; "mscomctl.ocx"
+Object = "{831FDD16-0C5C-11D2-A9FC-0000F8754DA1}#2.2#0"; "MSCOMCTL.OCX"
 Begin VB.Form formFaturamentoNFe 
    BorderStyle     =   1  'Fixed Single
    Caption         =   "Faturamento - Emissão de NF-e"
@@ -80,7 +80,7 @@ Begin VB.Form formFaturamentoNFe
          _ExtentX        =   2778
          _ExtentY        =   556
          _Version        =   393216
-         Format          =   50397185
+         Format          =   133169153
          CurrentDate     =   40561
       End
       Begin MSComCtl2.DTPicker dtpEmissao 
@@ -92,7 +92,7 @@ Begin VB.Form formFaturamentoNFe
          _ExtentX        =   2778
          _ExtentY        =   556
          _Version        =   393216
-         Format          =   50397185
+         Format          =   133169153
          CurrentDate     =   40561
       End
       Begin VB.TextBox txtNumNota 
@@ -2978,28 +2978,30 @@ Private Sub Calculo_ICMS_CST_00(Item As Integer)
     aICMS(Item)(6) = Val(ChkVal(CStr(aICMS(Item)(5)), 0, 2)) * Val(ChkVal(CStr(aICMS(Item)(4)), 0, 2)) / 100
     aICMS(Item)(6) = ChkVal(CStr(aICMS(Item)(6)), 0, 2)
     
+ 'FCP
+    Calculo_ICMS_FCP (Item)
     
     'Calcula o FCP
     
-    If Len(Trim(aICMS(Item)(15))) <> 0 Then
-        aICMS(Item)(15) = ChkVal(CStr(aICMS(Item)(15)), 0, 2)
-        
-        '06.01.19 - Alterado o calculo pois a petrobras notificou que a BCICMS para o FCP nao
-        '           tem resducao na base de calculo
-        '03.05.21 - Alterado novamente o calculo pois desta vez a Petrobras notificou que a
-        '           BCICMS para FCP incide na reducao da BC
-        'Calcula com base no valor da BCICMS
-        aICMS(Item)(16) = Val(ChkVal(CStr(aICMS(Item)(15)), 0, 2)) * Val(ChkVal(CStr(aICMS(Item)(4)), 0, 2)) / 100
-        'Calcula com base no valor TOTAL DA NOTA
-        'aICMS(Item)(16) = Val(ChkVal(CStr(aICMS(Item)(15)), 0, 2)) * Val(ChkVal(CStr(aItem(Item)(10)), 0, 2)) / 100
-        
-        aICMS(Item)(16) = ChkVal(CStr(aICMS(Item)(16)), 0, 2)
-        
-        'Informa nas obs do item o valor do FCP
-        aItem(Item)(22) = Trim(aItem(Item)(22)) & " [pFCP: " & aICMS(Item)(15) & "% vFCP: " & aICMS(Item)(16) & "]"
-    End If
+'    If Len(Trim(aICMS(Item)(15))) <> 0 Then
+'        aICMS(Item)(15) = ChkVal(CStr(aICMS(Item)(15)), 0, 2)
+'
+'        '06.01.19 - Alterado o calculo pois a petrobras notificou que a BCICMS para o FCP nao
+'        '           tem resducao na base de calculo
+'        '03.05.21 - Alterado novamente o calculo pois desta vez a Petrobras notificou que a
+'        '           BCICMS para FCP incide na reducao da BC
+'        'Calcula com base no valor da BCICMS
+'        aICMS(Item)(16) = Val(ChkVal(CStr(aICMS(Item)(15)), 0, 2)) * Val(ChkVal(CStr(aICMS(Item)(4)), 0, 2)) / 100
+'        'Calcula com base no valor TOTAL DA NOTA
+'        'aICMS(Item)(16) = Val(ChkVal(CStr(aICMS(Item)(15)), 0, 2)) * Val(ChkVal(CStr(aItem(Item)(10)), 0, 2)) / 100
+'
+'        aICMS(Item)(16) = ChkVal(CStr(aICMS(Item)(16)), 0, 2)
+'
+'        'Informa nas obs do item o valor do FCP
+'        aItem(Item)(22) = Trim(aItem(Item)(22)) & " [pFCP: " & aICMS(Item)(15) & "% vFCP: " & aICMS(Item)(16) & "]"
+'    End If
     
-    'if pgDadosICMS(
+ 
 End Sub
 Private Sub Calculo_ICMS_CST_10(Item As Integer)
 
@@ -3080,8 +3082,32 @@ Private Sub Calculo_ICMS_CST_20(Item As Integer)
     aICMS(Item)(5) = ManutencaoICMS(Item, CStr(aICMS(Item)(5)))
     aICMS(Item)(6) = Val(ChkVal(CStr(aICMS(Item)(5)), 0, 2)) * Val(ChkVal(CStr(aICMS(Item)(4)), 0, 2)) / 100
     aICMS(Item)(6) = ChkVal(CStr(aICMS(Item)(6)), 0, 2)
+    'FCP
+    Calculo_ICMS_FCP (Item)
+    
 End Sub
 
+Private Sub Calculo_ICMS_FCP(Item As Integer)
+     'Calcula o FCP
+    
+    If Len(Trim(aICMS(Item)(15))) <> 0 Then
+        aICMS(Item)(15) = ChkVal(CStr(aICMS(Item)(15)), 0, 2)
+        
+        '06.01.19 - Alterado o calculo pois a petrobras notificou que a BCICMS para o FCP nao
+        '           tem resducao na base de calculo
+        '03.05.21 - Alterado novamente o calculo pois desta vez a Petrobras notificou que a
+        '           BCICMS para FCP incide na reducao da BC
+        'Calcula com base no valor da BCICMS
+        aICMS(Item)(16) = Val(ChkVal(CStr(aICMS(Item)(15)), 0, 2)) * Val(ChkVal(CStr(aICMS(Item)(4)), 0, 2)) / 100
+        'Calcula com base no valor TOTAL DA NOTA
+        'aICMS(Item)(16) = Val(ChkVal(CStr(aICMS(Item)(15)), 0, 2)) * Val(ChkVal(CStr(aItem(Item)(10)), 0, 2)) / 100
+        
+        aICMS(Item)(16) = ChkVal(CStr(aICMS(Item)(16)), 0, 2)
+        
+        'Informa nas obs do item o valor do FCP
+        aItem(Item)(22) = Trim(aItem(Item)(22)) & " [pFCP: " & aICMS(Item)(15) & "% vFCP: " & aICMS(Item)(16) & "]"
+    End If
+End Sub
 
 Private Function ManutencaoICMS(Item As Integer, icmsPV As String) As String
     '###################################################################

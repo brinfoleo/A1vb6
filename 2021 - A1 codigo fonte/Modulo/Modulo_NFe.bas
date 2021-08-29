@@ -1888,6 +1888,7 @@ Public Function Exportar_NFe_v400_TXT(chvNFe As String) As String
                                 Rst2.Fields("ICMS_pICMSST") & "|" & _
                                 Rst2.Fields("ICMS_vICMSST") & "|"
             Case "20" 'Tributacao do ICMS com reducao da Base de Calculo (N04)
+                      'N04|orig|CST|modBC|pRedBC|vBC|pICMS|vICMS|vBCFCP|pFCP|vFCP|vICMSDeson|motDesICMS
                  grvReg nmArq, "N04|" & _
                                 Rst2.Fields("ICMS_Origem") & "|" & _
                                 Rst2.Fields("ICMS_CST") & "|" & _
@@ -1895,7 +1896,10 @@ Public Function Exportar_NFe_v400_TXT(chvNFe As String) As String
                                 Rst2.Fields("ICMS_pRedBC") & "|" & _
                                 Rst2.Fields("ICMS_vBC") & "|" & _
                                 Rst2.Fields("ICMS_pICMS") & "|" & _
-                                Rst2.Fields("ICMS_vICMS") & "|"
+                                Rst2.Fields("ICMS_vICMS") & "|" & _
+                                Rst2.Fields("ICMS_vBC") & "|" & _
+                                Rst2.Fields("ICMS_pFCP") & "|" & _
+                                Rst2.Fields("ICMS_vFCP") & "|||"
                                 
             Case "30" 'Tributacao Isenta com cobranca de ICMS por ST (N05)
                 grvReg nmArq, "N05|" & _

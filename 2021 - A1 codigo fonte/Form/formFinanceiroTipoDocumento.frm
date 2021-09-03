@@ -1,5 +1,5 @@
 VERSION 5.00
-Object = "{831FDD16-0C5C-11D2-A9FC-0000F8754DA1}#2.0#0"; "MSCOMCTL.OCX"
+Object = "{831FDD16-0C5C-11D2-A9FC-0000F8754DA1}#2.2#0"; "MSCOMCTL.OCX"
 Begin VB.Form formFinanceiroTipoDocumento 
    BorderStyle     =   1  'Fixed Single
    Caption         =   "Financeiro - Tipo de Documento"
@@ -269,7 +269,7 @@ Private Sub cboFormaPgto_DropDown()
         .AddItem "11  - Vale Refeição"
         .AddItem "12  - Vale Presente"
         .AddItem "13  - Vale Combustível"
-        '.AddItem "14  - Duplicata Mercantil"
+        .AddItem "14  - Duplicata Mercantil"
         .AddItem "15  - Boleto Bancário"
         .AddItem "90  - Sem Pagamento"
         .AddItem "99  - Outros"

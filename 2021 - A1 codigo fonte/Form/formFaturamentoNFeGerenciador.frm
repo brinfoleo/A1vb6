@@ -2,7 +2,7 @@ VERSION 5.00
 Object = "{5E9E78A0-531B-11CF-91F6-C2863C385E30}#1.0#0"; "MSFLXGRD.OCX"
 Object = "{F9043C88-F6F2-101A-A3C9-08002B2F49FB}#1.2#0"; "COMDLG32.OCX"
 Object = "{86CF1D34-0C5F-11D2-A9FC-0000F8754DA1}#2.0#0"; "MSCOMCT2.OCX"
-Object = "{831FDD16-0C5C-11D2-A9FC-0000F8754DA1}#2.2#0"; "mscomctl.ocx"
+Object = "{831FDD16-0C5C-11D2-A9FC-0000F8754DA1}#2.2#0"; "MSCOMCTL.OCX"
 Begin VB.Form formFaturamentoNFeGerenciador 
    Caption         =   "Faturamento - Controle de NF-e"
    ClientHeight    =   6150
@@ -233,7 +233,7 @@ Begin VB.Form formFaturamentoNFeGerenciador
             _ExtentX        =   2566
             _ExtentY        =   556
             _Version        =   393216
-            Format          =   117112833
+            Format          =   181469185
             CurrentDate     =   40557
          End
          Begin MSComCtl2.DTPicker dtpDtFinal 
@@ -245,7 +245,7 @@ Begin VB.Form formFaturamentoNFeGerenciador
             _ExtentX        =   2566
             _ExtentY        =   556
             _Version        =   393216
-            Format          =   117112833
+            Format          =   181469185
             CurrentDate     =   40557
          End
          Begin VB.Label Label1 
@@ -1010,6 +1010,7 @@ End Sub
 
 
 Private Function LoadErroXML(nmArquivo As String) As String
+    
     Dim docNFe      As DOMDocument60
     Dim Pasta       As String
     Dim F           As Long
@@ -1034,6 +1035,7 @@ Private Function LoadErroXML(nmArquivo As String) As String
 
             LoadErroXML = Trim(rc(strTexto))
     End If
+
 End Function
 Private Function LoadXML(nmArquivo As String) As String
     Dim docNFe      As DOMDocument60

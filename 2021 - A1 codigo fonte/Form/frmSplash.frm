@@ -31,7 +31,7 @@ Begin VB.Form frmSplash
       EndProperty
       ForeColor       =   &H00FFC0C0&
       Height          =   270
-      Left            =   6660
+      Left            =   6540
       TabIndex        =   4
       Top             =   60
       Width           =   1920

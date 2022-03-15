@@ -57,3 +57,273 @@
 07032022|19:36:25|0|||25.20.146.238|Erro ao consultar na base de dados as configurações do sistema
 07032022|19:37:21|0|||25.20.146.238|Erro ao consultar na base de dados as configurações do sistema
 07032022|19:37:21|0|||25.20.146.238|Erro ao consultar na base de dados as configurações do sistema
+14032022|14:02:46|0|||192.168.0.12|Erro ao consultar na base de dados as configurações do sistema
+14032022|14:02:46|0|||192.168.0.12|Erro ao consultar na base de dados as configurações do sistema
+14032022|14:03:30|0|||192.168.0.12|Erro ao consultar na base de dados as configurações do sistema
+14032022|14:03:30|0|||192.168.0.12|Erro ao consultar na base de dados as configurações do sistema
+14032022|14:11:53|0|||192.168.0.12|Erro ao consultar na base de dados as configurações do sistema
+14032022|14:11:53|0|||192.168.0.12|Erro ao consultar na base de dados as configurações do sistema
+14032022|14:13:07|0|||192.168.0.12|Erro ao consultar na base de dados as configurações do sistema
+14032022|14:13:07|0|||192.168.0.12|Erro ao consultar na base de dados as configurações do sistema
+14032022|14:14:41|0|||192.168.0.12|Erro ao consultar na base de dados as configurações do sistema
+14032022|14:14:41|0|||192.168.0.12|Erro ao consultar na base de dados as configurações do sistema
+14032022|14:15:54|2|||192.168.0.12|Arquivo: C:\Users\Leo\Desktop\tmp\A1tmp\NFe-Saida\Retorno\33220340253676000101550010000188091140945466-sit.err excluido
+14032022|14:15:55|2|||192.168.0.12|Arquivo: C:\Users\Leo\Desktop\tmp\A1tmp\NFe-Saida\Retorno\33220340253676000101550010000188091140945466-sit.err excluido
+14032022|14:30:15|0|||192.168.0.12|Erro ao consultar na base de dados as configurações do sistema
+14032022|14:30:15|0|||192.168.0.12|Erro ao consultar na base de dados as configurações do sistema
+14032022|14:30:28|2|||192.168.0.12|Arquivo: C:\Users\Leo\Desktop\tmp\A1tmp\NFe-Saida\Retorno\33220340253676000101550010000188091141416432-sit.err excluido
+14032022|14:30:29|2|||192.168.0.12|Arquivo: C:\Users\Leo\Desktop\tmp\A1tmp\NFe-Saida\Retorno\33220340253676000101550010000188091141416432-sit.err excluido
+14032022|14:31:28|2|||192.168.0.12|Gerar NFe.txt [Path not found] - C:\Users\Leo\Desktop\tmp\A1tmp\Arquivos\000018809_40253676000101_14_03_2022-nfe.txt
+14032022|14:31:29|2|||192.168.0.12|Gerar NFe.txt [Path not found] - C:\Users\Leo\Desktop\tmp\A1tmp\Arquivos\000018809_40253676000101_14_03_2022-nfe.txt
+14032022|14:31:29|2|||192.168.0.12|Gerar NFe.txt [Path not found] - C:\Users\Leo\Desktop\tmp\A1tmp\Arquivos\000018809_40253676000101_14_03_2022-nfe.txt
+14032022|14:31:30|2|||192.168.0.12|Gerar NFe.txt [Path not found] - C:\Users\Leo\Desktop\tmp\A1tmp\Arquivos\000018809_40253676000101_14_03_2022-nfe.txt
+14032022|14:31:30|2|||192.168.0.12|Gerar NFe.txt [Path not found] - C:\Users\Leo\Desktop\tmp\A1tmp\Arquivos\000018809_40253676000101_14_03_2022-nfe.txt
+14032022|14:31:30|2|||192.168.0.12|Gerar NFe.txt [Path not found] - C:\Users\Leo\Desktop\tmp\A1tmp\Arquivos\000018809_40253676000101_14_03_2022-nfe.txt
+14032022|14:31:31|2|||192.168.0.12|Gerar NFe.txt [Path not found] - C:\Users\Leo\Desktop\tmp\A1tmp\Arquivos\000018809_40253676000101_14_03_2022-nfe.txt
+14032022|14:31:31|2|||192.168.0.12|Gerar NFe.txt [Path not found] - C:\Users\Leo\Desktop\tmp\A1tmp\Arquivos\000018809_40253676000101_14_03_2022-nfe.txt
+14032022|14:31:31|2|||192.168.0.12|Gerar NFe.txt [Path not found] - C:\Users\Leo\Desktop\tmp\A1tmp\Arquivos\000018809_40253676000101_14_03_2022-nfe.txt
+14032022|14:31:32|2|||192.168.0.12|Gerar NFe.txt [Path not found] - C:\Users\Leo\Desktop\tmp\A1tmp\Arquivos\000018809_40253676000101_14_03_2022-nfe.txt
+14032022|14:31:32|2|||192.168.0.12|Gerar NFe.txt [Path not found] - C:\Users\Leo\Desktop\tmp\A1tmp\Arquivos\000018809_40253676000101_14_03_2022-nfe.txt
+14032022|14:31:32|2|||192.168.0.12|Gerar NFe.txt [Path not found] - C:\Users\Leo\Desktop\tmp\A1tmp\Arquivos\000018809_40253676000101_14_03_2022-nfe.txt
+14032022|14:31:33|2|||192.168.0.12|Gerar NFe.txt [Path not found] - C:\Users\Leo\Desktop\tmp\A1tmp\Arquivos\000018809_40253676000101_14_03_2022-nfe.txt
+14032022|14:31:33|2|||192.168.0.12|Gerar NFe.txt [Path not found] - C:\Users\Leo\Desktop\tmp\A1tmp\Arquivos\000018809_40253676000101_14_03_2022-nfe.txt
+14032022|14:31:34|2|||192.168.0.12|Gerar NFe.txt [Path not found] - C:\Users\Leo\Desktop\tmp\A1tmp\Arquivos\000018809_40253676000101_14_03_2022-nfe.txt
+14032022|14:31:34|2|||192.168.0.12|Gerar NFe.txt [Path not found] - C:\Users\Leo\Desktop\tmp\A1tmp\Arquivos\000018809_40253676000101_14_03_2022-nfe.txt
+14032022|14:31:34|2|||192.168.0.12|Gerar NFe.txt [Path not found] - C:\Users\Leo\Desktop\tmp\A1tmp\Arquivos\000018809_40253676000101_14_03_2022-nfe.txt
+14032022|14:31:34|2|||192.168.0.12|Gerar NFe.txt [Path not found] - C:\Users\Leo\Desktop\tmp\A1tmp\Arquivos\000018809_40253676000101_14_03_2022-nfe.txt
+14032022|14:31:35|2|||192.168.0.12|Gerar NFe.txt [Path not found] - C:\Users\Leo\Desktop\tmp\A1tmp\Arquivos\000018809_40253676000101_14_03_2022-nfe.txt
+14032022|14:31:35|2|||192.168.0.12|Gerar NFe.txt [Path not found] - C:\Users\Leo\Desktop\tmp\A1tmp\Arquivos\000018809_40253676000101_14_03_2022-nfe.txt
+14032022|14:31:36|2|||192.168.0.12|Gerar NFe.txt [Path not found] - C:\Users\Leo\Desktop\tmp\A1tmp\Arquivos\000018809_40253676000101_14_03_2022-nfe.txt
+14032022|14:31:36|2|||192.168.0.12|Gerar NFe.txt [Path not found] - C:\Users\Leo\Desktop\tmp\A1tmp\Arquivos\000018809_40253676000101_14_03_2022-nfe.txt
+14032022|14:31:36|2|||192.168.0.12|Gerar NFe.txt [Path not found] - C:\Users\Leo\Desktop\tmp\A1tmp\Arquivos\000018809_40253676000101_14_03_2022-nfe.txt
+14032022|14:31:37|2|||192.168.0.12|Gerar NFe.txt [Path not found] - C:\Users\Leo\Desktop\tmp\A1tmp\Arquivos\000018809_40253676000101_14_03_2022-nfe.txt
+14032022|14:31:37|2|||192.168.0.12|Gerar NFe.txt [Path not found] - C:\Users\Leo\Desktop\tmp\A1tmp\Arquivos\000018809_40253676000101_14_03_2022-nfe.txt
+14032022|14:31:37|2|||192.168.0.12|Gerar NFe.txt [Path not found] - C:\Users\Leo\Desktop\tmp\A1tmp\Arquivos\000018809_40253676000101_14_03_2022-nfe.txt
+14032022|14:31:37|2|||192.168.0.12|Gerar NFe.txt [Path not found] - C:\Users\Leo\Desktop\tmp\A1tmp\Arquivos\000018809_40253676000101_14_03_2022-nfe.txt
+14032022|14:31:38|2|||192.168.0.12|Gerar NFe.txt [Path not found] - C:\Users\Leo\Desktop\tmp\A1tmp\Arquivos\000018809_40253676000101_14_03_2022-nfe.txt
+14032022|14:31:38|2|||192.168.0.12|Gerar NFe.txt [Path not found] - C:\Users\Leo\Desktop\tmp\A1tmp\Arquivos\000018809_40253676000101_14_03_2022-nfe.txt
+14032022|14:31:39|2|||192.168.0.12|Gerar NFe.txt [Path not found] - C:\Users\Leo\Desktop\tmp\A1tmp\Arquivos\000018809_40253676000101_14_03_2022-nfe.txt
+14032022|14:31:39|2|||192.168.0.12|Gerar NFe.txt [Path not found] - C:\Users\Leo\Desktop\tmp\A1tmp\Arquivos\000018809_40253676000101_14_03_2022-nfe.txt
+14032022|14:31:39|2|||192.168.0.12|Gerar NFe.txt [Path not found] - C:\Users\Leo\Desktop\tmp\A1tmp\Arquivos\000018809_40253676000101_14_03_2022-nfe.txt
+14032022|14:31:40|2|||192.168.0.12|Gerar NFe.txt [Path not found] - C:\Users\Leo\Desktop\tmp\A1tmp\Arquivos\000018809_40253676000101_14_03_2022-nfe.txt
+14032022|14:31:40|2|||192.168.0.12|Gerar NFe.txt [Path not found] - C:\Users\Leo\Desktop\tmp\A1tmp\Arquivos\000018809_40253676000101_14_03_2022-nfe.txt
+14032022|14:31:40|2|||192.168.0.12|Gerar NFe.txt [Path not found] - C:\Users\Leo\Desktop\tmp\A1tmp\Arquivos\000018809_40253676000101_14_03_2022-nfe.txt
+14032022|14:31:41|2|||192.168.0.12|Gerar NFe.txt [Path not found] - C:\Users\Leo\Desktop\tmp\A1tmp\Arquivos\000018809_40253676000101_14_03_2022-nfe.txt
+14032022|14:31:41|2|||192.168.0.12|Gerar NFe.txt [Path not found] - C:\Users\Leo\Desktop\tmp\A1tmp\Arquivos\000018809_40253676000101_14_03_2022-nfe.txt
+14032022|14:31:41|2|||192.168.0.12|Gerar NFe.txt [Path not found] - C:\Users\Leo\Desktop\tmp\A1tmp\Arquivos\000018809_40253676000101_14_03_2022-nfe.txt
+14032022|14:31:41|2|||192.168.0.12|Gerar NFe.txt [Path not found] - C:\Users\Leo\Desktop\tmp\A1tmp\Arquivos\000018809_40253676000101_14_03_2022-nfe.txt
+14032022|14:31:41|2|||192.168.0.12|Gerar NFe.txt [Path not found] - C:\Users\Leo\Desktop\tmp\A1tmp\Arquivos\000018809_40253676000101_14_03_2022-nfe.txt
+14032022|14:31:42|2|||192.168.0.12|Gerar NFe.txt [Path not found] - C:\Users\Leo\Desktop\tmp\A1tmp\Arquivos\000018809_40253676000101_14_03_2022-nfe.txt
+14032022|14:31:42|2|||192.168.0.12|Gerar NFe.txt [Path not found] - C:\Users\Leo\Desktop\tmp\A1tmp\Arquivos\000018809_40253676000101_14_03_2022-nfe.txt
+14032022|14:31:42|2|||192.168.0.12|Gerar NFe.txt [Path not found] - C:\Users\Leo\Desktop\tmp\A1tmp\Arquivos\000018809_40253676000101_14_03_2022-nfe.txt
+14032022|14:31:42|2|||192.168.0.12|Gerar NFe.txt [Path not found] - C:\Users\Leo\Desktop\tmp\A1tmp\Arquivos\000018809_40253676000101_14_03_2022-nfe.txt
+14032022|14:31:42|2|||192.168.0.12|Gerar NFe.txt [Path not found] - C:\Users\Leo\Desktop\tmp\A1tmp\Arquivos\000018809_40253676000101_14_03_2022-nfe.txt
+14032022|14:31:43|2|||192.168.0.12|Gerar NFe.txt [Path not found] - C:\Users\Leo\Desktop\tmp\A1tmp\Arquivos\000018809_40253676000101_14_03_2022-nfe.txt
+14032022|14:31:43|2|||192.168.0.12|Gerar NFe.txt [Path not found] - C:\Users\Leo\Desktop\tmp\A1tmp\Arquivos\000018809_40253676000101_14_03_2022-nfe.txt
+14032022|14:31:43|2|||192.168.0.12|Gerar NFe.txt [Path not found] - C:\Users\Leo\Desktop\tmp\A1tmp\Arquivos\000018809_40253676000101_14_03_2022-nfe.txt
+14032022|14:31:43|2|||192.168.0.12|Gerar NFe.txt [Path not found] - C:\Users\Leo\Desktop\tmp\A1tmp\Arquivos\000018809_40253676000101_14_03_2022-nfe.txt
+14032022|14:31:43|2|||192.168.0.12|Gerar NFe.txt [Path not found] - C:\Users\Leo\Desktop\tmp\A1tmp\Arquivos\000018809_40253676000101_14_03_2022-nfe.txt
+14032022|14:31:43|2|||192.168.0.12|Gerar NFe.txt [Path not found] - C:\Users\Leo\Desktop\tmp\A1tmp\Arquivos\000018809_40253676000101_14_03_2022-nfe.txt
+14032022|14:31:43|2|||192.168.0.12|Gerar NFe.txt [Path not found] - C:\Users\Leo\Desktop\tmp\A1tmp\Arquivos\000018809_40253676000101_14_03_2022-nfe.txt
+14032022|14:31:44|2|||192.168.0.12|Gerar NFe.txt [Path not found] - C:\Users\Leo\Desktop\tmp\A1tmp\Arquivos\000018809_40253676000101_14_03_2022-nfe.txt
+14032022|14:31:44|2|||192.168.0.12|Gerar NFe.txt [Path not found] - C:\Users\Leo\Desktop\tmp\A1tmp\Arquivos\000018809_40253676000101_14_03_2022-nfe.txt
+14032022|14:31:44|2|||192.168.0.12|Gerar NFe.txt [Path not found] - C:\Users\Leo\Desktop\tmp\A1tmp\Arquivos\000018809_40253676000101_14_03_2022-nfe.txt
+14032022|14:31:44|2|||192.168.0.12|Gerar NFe.txt [Path not found] - C:\Users\Leo\Desktop\tmp\A1tmp\Arquivos\000018809_40253676000101_14_03_2022-nfe.txt
+14032022|14:31:44|2|||192.168.0.12|Gerar NFe.txt [Path not found] - C:\Users\Leo\Desktop\tmp\A1tmp\Arquivos\000018809_40253676000101_14_03_2022-nfe.txt
+14032022|14:31:44|2|||192.168.0.12|Gerar NFe.txt [Path not found] - C:\Users\Leo\Desktop\tmp\A1tmp\Arquivos\000018809_40253676000101_14_03_2022-nfe.txt
+14032022|14:31:45|2|||192.168.0.12|Gerar NFe.txt [Path not found] - C:\Users\Leo\Desktop\tmp\A1tmp\Arquivos\000018809_40253676000101_14_03_2022-nfe.txt
+14032022|14:31:45|2|||192.168.0.12|Gerar NFe.txt [Path not found] - C:\Users\Leo\Desktop\tmp\A1tmp\Arquivos\000018809_40253676000101_14_03_2022-nfe.txt
+14032022|14:31:45|2|||192.168.0.12|Gerar NFe.txt [Path not found] - C:\Users\Leo\Desktop\tmp\A1tmp\Arquivos\000018809_40253676000101_14_03_2022-nfe.txt
+14032022|14:31:45|2|||192.168.0.12|Gerar NFe.txt [Path not found] - C:\Users\Leo\Desktop\tmp\A1tmp\Arquivos\000018809_40253676000101_14_03_2022-nfe.txt
+14032022|14:31:45|2|||192.168.0.12|Gerar NFe.txt [Path not found] - C:\Users\Leo\Desktop\tmp\A1tmp\Arquivos\000018809_40253676000101_14_03_2022-nfe.txt
+14032022|14:31:45|2|||192.168.0.12|Gerar NFe.txt [Path not found] - C:\Users\Leo\Desktop\tmp\A1tmp\Arquivos\000018809_40253676000101_14_03_2022-nfe.txt
+14032022|14:31:45|2|||192.168.0.12|Gerar NFe.txt [Path not found] - C:\Users\Leo\Desktop\tmp\A1tmp\Arquivos\000018809_40253676000101_14_03_2022-nfe.txt
+14032022|14:31:46|2|||192.168.0.12|Gerar NFe.txt [Path not found] - C:\Users\Leo\Desktop\tmp\A1tmp\Arquivos\000018809_40253676000101_14_03_2022-nfe.txt
+14032022|14:31:46|2|||192.168.0.12|Gerar NFe.txt [Path not found] - C:\Users\Leo\Desktop\tmp\A1tmp\Arquivos\000018809_40253676000101_14_03_2022-nfe.txt
+14032022|14:31:46|2|||192.168.0.12|Gerar NFe.txt [Path not found] - C:\Users\Leo\Desktop\tmp\A1tmp\Arquivos\000018809_40253676000101_14_03_2022-nfe.txt
+14032022|14:31:46|2|||192.168.0.12|Gerar NFe.txt [Path not found] - C:\Users\Leo\Desktop\tmp\A1tmp\Arquivos\000018809_40253676000101_14_03_2022-nfe.txt
+14032022|14:31:46|2|||192.168.0.12|Gerar NFe.txt [Path not found] - C:\Users\Leo\Desktop\tmp\A1tmp\Arquivos\000018809_40253676000101_14_03_2022-nfe.txt
+14032022|14:31:46|2|||192.168.0.12|Gerar NFe.txt [Path not found] - C:\Users\Leo\Desktop\tmp\A1tmp\Arquivos\000018809_40253676000101_14_03_2022-nfe.txt
+14032022|14:31:46|2|||192.168.0.12|Gerar NFe.txt [Path not found] - C:\Users\Leo\Desktop\tmp\A1tmp\Arquivos\000018809_40253676000101_14_03_2022-nfe.txt
+14032022|14:31:47|2|||192.168.0.12|Gerar NFe.txt [Path not found] - C:\Users\Leo\Desktop\tmp\A1tmp\Arquivos\000018809_40253676000101_14_03_2022-nfe.txt
+14032022|14:31:47|2|||192.168.0.12|Gerar NFe.txt [Path not found] - C:\Users\Leo\Desktop\tmp\A1tmp\Arquivos\000018809_40253676000101_14_03_2022-nfe.txt
+14032022|14:31:47|2|||192.168.0.12|Gerar NFe.txt [Path not found] - C:\Users\Leo\Desktop\tmp\A1tmp\Arquivos\000018809_40253676000101_14_03_2022-nfe.txt
+14032022|14:31:48|2|||192.168.0.12|Gerar NFe.txt [Path not found] - C:\Users\Leo\Desktop\tmp\A1tmp\Arquivos\000018809_40253676000101_14_03_2022-nfe.txt
+14032022|14:31:49|2|||192.168.0.12|Gerar NFe.txt [Path not found] - C:\Users\Leo\Desktop\tmp\A1tmp\Arquivos\000018809_40253676000101_14_03_2022-nfe.txt
+14032022|14:31:49|2|||192.168.0.12|Gerar NFe.txt [Path not found] - C:\Users\Leo\Desktop\tmp\A1tmp\Arquivos\000018809_40253676000101_14_03_2022-nfe.txt
+14032022|14:31:49|2|||192.168.0.12|Gerar NFe.txt [Path not found] - C:\Users\Leo\Desktop\tmp\A1tmp\Arquivos\000018809_40253676000101_14_03_2022-nfe.txt
+14032022|14:31:49|2|||192.168.0.12|Gerar NFe.txt [Path not found] - C:\Users\Leo\Desktop\tmp\A1tmp\Arquivos\000018809_40253676000101_14_03_2022-nfe.txt
+14032022|14:31:50|2|||192.168.0.12|Gerar NFe.txt [Path not found] - C:\Users\Leo\Desktop\tmp\A1tmp\Arquivos\000018809_40253676000101_14_03_2022-nfe.txt
+14032022|14:31:50|2|||192.168.0.12|Gerar NFe.txt [Path not found] - C:\Users\Leo\Desktop\tmp\A1tmp\Arquivos\000018809_40253676000101_14_03_2022-nfe.txt
+14032022|14:31:52|2|||192.168.0.12|Gerar NFe.txt [Path not found] - C:\Users\Leo\Desktop\tmp\A1tmp\Arquivos\000018809_40253676000101_14_03_2022-nfe.txt
+14032022|14:31:52|2|||192.168.0.12|Gerar NFe.txt [Path not found] - C:\Users\Leo\Desktop\tmp\A1tmp\Arquivos\000018809_40253676000101_14_03_2022-nfe.txt
+14032022|14:34:50|0|||192.168.0.12|Erro ao consultar na base de dados as configurações do sistema
+14032022|14:34:50|0|||192.168.0.12|Erro ao consultar na base de dados as configurações do sistema
+14032022|14:51:28|0|||192.168.0.12|Erro ao consultar na base de dados as configurações do sistema
+14032022|14:51:28|0|||192.168.0.12|Erro ao consultar na base de dados as configurações do sistema
+14032022|14:51:41|2|0|0|192.168.0.12|PgDadosFinanceiroFatura: 6-Overflow
+14032022|14:51:41|2|0|0|192.168.0.12|PgDadosFinanceiroFatura: 6-Overflow
+14032022|14:51:41|2|0|0|192.168.0.12|PgDadosFinanceiroFatura: 6-Overflow
+14032022|14:51:41|2|0|0|192.168.0.12|PgDadosFinanceiroFatura: 6-Overflow
+14032022|14:51:41|2|0|0|192.168.0.12|PgDadosFinanceiroFatura: 6-Overflow
+14032022|14:51:41|2|0|0|192.168.0.12|PgDadosFinanceiroFatura: 6-Overflow
+14032022|14:51:41|2|0|0|192.168.0.12|PgDadosFinanceiroFatura: 6-Overflow
+14032022|14:51:41|2|0|0|192.168.0.12|PgDadosFinanceiroFatura: 6-Overflow
+14032022|14:51:41|2|0|0|192.168.0.12|PgDadosFinanceiroFatura: 6-Overflow
+14032022|14:51:41|2|0|0|192.168.0.12|PgDadosFinanceiroFatura: 6-Overflow
+14032022|14:51:41|2|0|0|192.168.0.12|PgDadosFinanceiroFatura: 6-Overflow
+14032022|14:51:41|2|0|0|192.168.0.12|PgDadosFinanceiroFatura: 6-Overflow
+14032022|14:51:41|2|0|0|192.168.0.12|PgDadosFinanceiroFatura: 6-Overflow
+14032022|14:51:41|2|0|0|192.168.0.12|PgDadosFinanceiroFatura: 6-Overflow
+14032022|14:51:42|2|0|0|192.168.0.12|PgDadosFinanceiroFatura: 6-Overflow
+14032022|14:51:42|2|0|0|192.168.0.12|PgDadosFinanceiroFatura: 6-Overflow
+14032022|14:51:42|2|0|0|192.168.0.12|PgDadosFinanceiroFatura: 6-Overflow
+14032022|14:51:42|2|0|0|192.168.0.12|PgDadosFinanceiroFatura: 6-Overflow
+14032022|14:51:42|2|0|0|192.168.0.12|PgDadosFinanceiroFatura: 6-Overflow
+14032022|14:51:42|2|0|0|192.168.0.12|PgDadosFinanceiroFatura: 6-Overflow
+14032022|14:51:42|2|0|0|192.168.0.12|PgDadosFinanceiroFatura: 6-Overflow
+14032022|14:51:46|2|||192.168.0.12|Arquivo: C:\Users\Leo\Desktop\tmp\A1tmp\NFe-Saida\Retorno\33220340253676000101550010000188091141431148-sit.err excluido
+14032022|14:51:46|2|||192.168.0.12|Arquivo: C:\Users\Leo\Desktop\tmp\A1tmp\NFe-Saida\Retorno\33220340253676000101550010000188091141431148-sit.err excluido
+14032022|14:51:51|2|||192.168.0.12|Arquivo: C:\Users\Leo\Desktop\tmp\A1tmp\NFe-Saida\Retorno\33220340253676000101550010000188091141431148-sit.err excluido
+14032022|14:53:04|2|||192.168.0.12|Arquivo: C:\Users\Leo\Desktop\tmp\A1tmp\NFe-Saida\Retorno\33220340253676000101550010000188091141431148-sit.err excluido
+14032022|14:53:15|2|||192.168.0.12|Arquivo: C:\Users\Leo\Desktop\tmp\A1tmp\NFe-Saida\Retorno\33220340253676000101550010000188091141431148-sit.err excluido
+14032022|14:53:16|2|||192.168.0.12|Arquivo: C:\Users\Leo\Desktop\tmp\A1tmp\NFe-Saida\Retorno\33220340253676000101550010000188091141431148-sit.err excluido
+14032022|14:53:40|2|||192.168.0.12|Arquivo: C:\Users\Leo\Desktop\tmp\A1tmp\NFe-Saida\Retorno\33220340253676000101550010000188091141431148-sit.err excluido
+14032022|14:53:50|2|||192.168.0.12|Arquivo: C:\Users\Leo\Desktop\tmp\A1tmp\NFe-Saida\Retorno\33220340253676000101550010000188091141431148-sit.err excluido
+14032022|14:55:14|2|||192.168.0.12|Arquivo: C:\Users\Leo\Desktop\tmp\A1tmp\NFe-Saida\Retorno\33220340253676000101550010000188091141149450-sit.err excluido
+14032022|14:55:54|2|||192.168.0.12|Arquivo: C:\Users\Leo\Desktop\tmp\A1tmp\NFe-Saida\Retorno\33220340253676000101550010000188091141431148-sit.err excluido
+14032022|14:56:16|2|||192.168.0.12|Arquivo: C:\Users\Leo\Desktop\tmp\A1tmp\NFe-Saida\Retorno\33220340253676000101550010000188091141149450-sit.err excluido
+14032022|14:56:34|2|||192.168.0.12|Arquivo: C:\Users\Leo\Desktop\tmp\A1tmp\NFe-Saida\Retorno\33220340253676000101550010000188091141431148-sit.err excluido
+14032022|14:58:53|2|||192.168.0.12|Arquivo: C:\Users\Leo\Desktop\tmp\A1tmp\NFe-Saida\Retorno\33220340253676000101550010000188091141149450-sit.err excluido
+14032022|14:59:00|2|||192.168.0.12|Arquivo: C:\Users\Leo\Desktop\tmp\A1tmp\NFe-Saida\Retorno\33220340253676000101550010000188091141431148-sit.err excluido
+14032022|15:22:50|0|||192.168.0.12|Erro ao consultar na base de dados as configurações do sistema
+14032022|15:22:50|0|||192.168.0.12|Erro ao consultar na base de dados as configurações do sistema
+14032022|15:23:24|2|||192.168.0.12|Arquivo: C:\Users\Leo\Desktop\tmp\A1tmp\NFe-Saida\Retorno\33220340253676000101550010000188091141149450-sit.err excluido
+14032022|15:23:28|2|||192.168.0.12|Arquivo: C:\Users\Leo\Desktop\tmp\A1tmp\NFe-Saida\Retorno\33220340253676000101550010000188091141431148-sit.err excluido
+14032022|15:23:38|2|||192.168.0.12|Arquivo: C:\Users\Leo\Desktop\tmp\A1tmp\NFe-Saida\Retorno\33220340253676000101550010000188091141431148-sit.err excluido
+14032022|15:23:53|2|||192.168.0.12|Arquivo: C:\Users\Leo\Desktop\tmp\A1tmp\NFe-Saida\Retorno\33220340253676000101550010000188091141431148-sit.err excluido
+14032022|15:24:47|2|||192.168.0.12|Arquivo: C:\Users\Leo\Desktop\tmp\A1tmp\NFe-Saida\Retorno\33220340253676000101550010000188091141149450-sit.err excluido
+14032022|15:27:54|2|||192.168.0.12|Arquivo: C:\Users\Leo\Desktop\tmp\A1tmp\NFe-Saida\Retorno\33220340253676000101550010000188091141431148-sit.err excluido
+14032022|15:28:58|2|||192.168.0.12|Arquivo: C:\Users\Leo\Desktop\tmp\A1tmp\NFe-Saida\Retorno\33220340253676000101550010000188091141431148-sit.err excluido
+14032022|15:29:19|2|0|0|192.168.0.12|PgDadosFinanceiroFatura: 6-Overflow
+14032022|15:29:19|2|0|0|192.168.0.12|PgDadosFinanceiroFatura: 6-Overflow
+14032022|15:29:19|2|0|0|192.168.0.12|PgDadosFinanceiroFatura: 6-Overflow
+14032022|15:29:19|2|0|0|192.168.0.12|PgDadosFinanceiroFatura: 6-Overflow
+14032022|15:29:19|2|0|0|192.168.0.12|PgDadosFinanceiroFatura: 6-Overflow
+14032022|15:29:19|2|0|0|192.168.0.12|PgDadosFinanceiroFatura: 6-Overflow
+14032022|15:29:19|2|0|0|192.168.0.12|PgDadosFinanceiroFatura: 6-Overflow
+14032022|15:29:19|2|0|0|192.168.0.12|PgDadosFinanceiroFatura: 6-Overflow
+14032022|15:29:19|2|0|0|192.168.0.12|PgDadosFinanceiroFatura: 6-Overflow
+14032022|15:29:19|2|0|0|192.168.0.12|PgDadosFinanceiroFatura: 6-Overflow
+14032022|15:29:19|2|0|0|192.168.0.12|PgDadosFinanceiroFatura: 6-Overflow
+14032022|15:29:19|2|0|0|192.168.0.12|PgDadosFinanceiroFatura: 6-Overflow
+14032022|15:29:19|2|0|0|192.168.0.12|PgDadosFinanceiroFatura: 6-Overflow
+14032022|15:29:19|2|0|0|192.168.0.12|PgDadosFinanceiroFatura: 6-Overflow
+14032022|15:29:19|2|0|0|192.168.0.12|PgDadosFinanceiroFatura: 6-Overflow
+14032022|15:29:19|2|0|0|192.168.0.12|PgDadosFinanceiroFatura: 6-Overflow
+14032022|15:29:19|2|0|0|192.168.0.12|PgDadosFinanceiroFatura: 6-Overflow
+14032022|15:29:19|2|0|0|192.168.0.12|PgDadosFinanceiroFatura: 6-Overflow
+14032022|15:29:19|2|0|0|192.168.0.12|PgDadosFinanceiroFatura: 6-Overflow
+14032022|15:29:19|2|0|0|192.168.0.12|PgDadosFinanceiroFatura: 6-Overflow
+14032022|15:29:19|2|0|0|192.168.0.12|PgDadosFinanceiroFatura: 6-Overflow
+14032022|15:29:22|2|0|0|192.168.0.12|PgDadosFinanceiroFatura: 6-Overflow
+14032022|15:29:22|2|0|0|192.168.0.12|PgDadosFinanceiroFatura: 6-Overflow
+14032022|15:29:22|2|0|0|192.168.0.12|PgDadosFinanceiroFatura: 6-Overflow
+14032022|15:29:22|2|0|0|192.168.0.12|PgDadosFinanceiroFatura: 6-Overflow
+14032022|15:29:22|2|0|0|192.168.0.12|PgDadosFinanceiroFatura: 6-Overflow
+14032022|15:29:22|2|0|0|192.168.0.12|PgDadosFinanceiroFatura: 6-Overflow
+14032022|15:29:22|2|0|0|192.168.0.12|PgDadosFinanceiroFatura: 6-Overflow
+14032022|15:29:22|2|0|0|192.168.0.12|PgDadosFinanceiroFatura: 6-Overflow
+14032022|15:29:22|2|0|0|192.168.0.12|PgDadosFinanceiroFatura: 6-Overflow
+14032022|15:29:22|2|0|0|192.168.0.12|PgDadosFinanceiroFatura: 6-Overflow
+14032022|15:29:22|2|0|0|192.168.0.12|PgDadosFinanceiroFatura: 6-Overflow
+14032022|15:29:22|2|0|0|192.168.0.12|PgDadosFinanceiroFatura: 6-Overflow
+14032022|15:29:22|2|0|0|192.168.0.12|PgDadosFinanceiroFatura: 6-Overflow
+14032022|15:29:22|2|0|0|192.168.0.12|PgDadosFinanceiroFatura: 6-Overflow
+14032022|15:29:22|2|0|0|192.168.0.12|PgDadosFinanceiroFatura: 6-Overflow
+14032022|15:29:22|2|0|0|192.168.0.12|PgDadosFinanceiroFatura: 6-Overflow
+14032022|15:29:22|2|0|0|192.168.0.12|PgDadosFinanceiroFatura: 6-Overflow
+14032022|15:29:22|2|0|0|192.168.0.12|PgDadosFinanceiroFatura: 6-Overflow
+14032022|15:29:22|2|0|0|192.168.0.12|PgDadosFinanceiroFatura: 6-Overflow
+14032022|15:29:22|2|0|0|192.168.0.12|PgDadosFinanceiroFatura: 6-Overflow
+14032022|15:29:22|2|0|0|192.168.0.12|PgDadosFinanceiroFatura: 6-Overflow
+14032022|15:29:22|2|0|0|192.168.0.12|PgDadosFinanceiroFatura: 6-Overflow
+14032022|15:29:22|2|0|0|192.168.0.12|PgDadosFinanceiroFatura: 6-Overflow
+14032022|15:29:22|2|0|0|192.168.0.12|PgDadosFinanceiroFatura: 6-Overflow
+14032022|15:29:22|2|0|0|192.168.0.12|PgDadosFinanceiroFatura: 6-Overflow
+14032022|15:29:22|2|0|0|192.168.0.12|PgDadosFinanceiroFatura: 6-Overflow
+14032022|15:29:22|2|0|0|192.168.0.12|PgDadosFinanceiroFatura: 6-Overflow
+14032022|15:29:22|2|0|0|192.168.0.12|PgDadosFinanceiroFatura: 6-Overflow
+14032022|15:29:22|2|0|0|192.168.0.12|PgDadosFinanceiroFatura: 6-Overflow
+14032022|15:29:22|2|0|0|192.168.0.12|PgDadosFinanceiroFatura: 6-Overflow
+14032022|15:29:22|2|0|0|192.168.0.12|PgDadosFinanceiroFatura: 6-Overflow
+14032022|15:29:22|2|0|0|192.168.0.12|PgDadosFinanceiroFatura: 6-Overflow
+14032022|15:29:22|2|0|0|192.168.0.12|PgDadosFinanceiroFatura: 6-Overflow
+14032022|15:29:22|2|0|0|192.168.0.12|PgDadosFinanceiroFatura: 6-Overflow
+14032022|15:29:22|2|0|0|192.168.0.12|PgDadosFinanceiroFatura: 6-Overflow
+14032022|15:29:22|2|0|0|192.168.0.12|PgDadosFinanceiroFatura: 6-Overflow
+14032022|15:29:22|2|0|0|192.168.0.12|PgDadosFinanceiroFatura: 6-Overflow
+14032022|15:29:22|2|0|0|192.168.0.12|PgDadosFinanceiroFatura: 6-Overflow
+14032022|15:29:22|2|0|0|192.168.0.12|PgDadosFinanceiroFatura: 6-Overflow
+14032022|15:29:22|2|0|0|192.168.0.12|PgDadosFinanceiroFatura: 6-Overflow
+14032022|15:29:22|2|0|0|192.168.0.12|PgDadosFinanceiroFatura: 6-Overflow
+14032022|15:29:22|2|0|0|192.168.0.12|PgDadosFinanceiroFatura: 6-Overflow
+14032022|15:29:22|2|0|0|192.168.0.12|PgDadosFinanceiroFatura: 6-Overflow
+14032022|15:29:22|2|0|0|192.168.0.12|PgDadosFinanceiroFatura: 6-Overflow
+14032022|15:29:22|2|0|0|192.168.0.12|PgDadosFinanceiroFatura: 6-Overflow
+14032022|15:29:22|2|0|0|192.168.0.12|PgDadosFinanceiroFatura: 6-Overflow
+14032022|15:29:22|2|0|0|192.168.0.12|PgDadosFinanceiroFatura: 6-Overflow
+14032022|15:29:22|2|0|0|192.168.0.12|PgDadosFinanceiroFatura: 6-Overflow
+14032022|15:29:22|2|0|0|192.168.0.12|PgDadosFinanceiroFatura: 6-Overflow
+14032022|15:29:22|2|0|0|192.168.0.12|PgDadosFinanceiroFatura: 6-Overflow
+14032022|15:29:22|2|0|0|192.168.0.12|PgDadosFinanceiroFatura: 6-Overflow
+14032022|15:29:22|2|0|0|192.168.0.12|PgDadosFinanceiroFatura: 6-Overflow
+14032022|15:29:22|2|0|0|192.168.0.12|PgDadosFinanceiroFatura: 6-Overflow
+14032022|15:29:22|2|0|0|192.168.0.12|PgDadosFinanceiroFatura: 6-Overflow
+14032022|15:29:22|2|0|0|192.168.0.12|PgDadosFinanceiroFatura: 6-Overflow
+14032022|15:29:22|2|0|0|192.168.0.12|PgDadosFinanceiroFatura: 6-Overflow
+14032022|15:29:22|2|0|0|192.168.0.12|PgDadosFinanceiroFatura: 6-Overflow
+14032022|15:29:22|2|0|0|192.168.0.12|PgDadosFinanceiroFatura: 6-Overflow
+14032022|15:29:22|2|0|0|192.168.0.12|PgDadosFinanceiroFatura: 6-Overflow
+14032022|15:29:22|2|0|0|192.168.0.12|PgDadosFinanceiroFatura: 6-Overflow
+14032022|15:29:22|2|0|0|192.168.0.12|PgDadosFinanceiroFatura: 6-Overflow
+14032022|15:29:22|2|0|0|192.168.0.12|PgDadosFinanceiroFatura: 6-Overflow
+14032022|15:29:22|2|0|0|192.168.0.12|PgDadosFinanceiroFatura: 6-Overflow
+14032022|15:29:22|2|0|0|192.168.0.12|PgDadosFinanceiroFatura: 6-Overflow
+14032022|15:29:22|2|0|0|192.168.0.12|PgDadosFinanceiroFatura: 6-Overflow
+14032022|15:29:22|2|0|0|192.168.0.12|PgDadosFinanceiroFatura: 6-Overflow
+14032022|15:29:22|2|0|0|192.168.0.12|PgDadosFinanceiroFatura: 6-Overflow
+14032022|15:29:22|2|0|0|192.168.0.12|PgDadosFinanceiroFatura: 6-Overflow
+14032022|15:29:22|2|0|0|192.168.0.12|PgDadosFinanceiroFatura: 6-Overflow
+14032022|15:29:22|2|0|0|192.168.0.12|PgDadosFinanceiroFatura: 6-Overflow
+14032022|15:29:22|2|0|0|192.168.0.12|PgDadosFinanceiroFatura: 6-Overflow
+14032022|15:29:22|2|0|0|192.168.0.12|PgDadosFinanceiroFatura: 6-Overflow
+14032022|15:29:22|2|0|0|192.168.0.12|PgDadosFinanceiroFatura: 6-Overflow
+14032022|15:29:22|2|0|0|192.168.0.12|PgDadosFinanceiroFatura: 6-Overflow
+14032022|15:29:22|2|0|0|192.168.0.12|PgDadosFinanceiroFatura: 6-Overflow
+14032022|15:29:22|2|0|0|192.168.0.12|PgDadosFinanceiroFatura: 6-Overflow
+14032022|15:29:22|2|0|0|192.168.0.12|PgDadosFinanceiroFatura: 6-Overflow
+14032022|15:29:22|2|0|0|192.168.0.12|PgDadosFinanceiroFatura: 6-Overflow
+14032022|15:29:22|2|0|0|192.168.0.12|PgDadosFinanceiroFatura: 6-Overflow
+14032022|15:29:22|2|0|0|192.168.0.12|PgDadosFinanceiroFatura: 6-Overflow
+14032022|15:29:22|2|0|0|192.168.0.12|PgDadosFinanceiroFatura: 6-Overflow
+14032022|15:29:22|2|0|0|192.168.0.12|PgDadosFinanceiroFatura: 6-Overflow
+14032022|15:29:22|2|0|0|192.168.0.12|PgDadosFinanceiroFatura: 6-Overflow
+14032022|15:29:22|2|0|0|192.168.0.12|PgDadosFinanceiroFatura: 6-Overflow
+14032022|15:29:22|2|0|0|192.168.0.12|PgDadosFinanceiroFatura: 6-Overflow
+14032022|15:29:22|2|0|0|192.168.0.12|PgDadosFinanceiroFatura: 6-Overflow
+14032022|15:29:22|2|0|0|192.168.0.12|PgDadosFinanceiroFatura: 6-Overflow
+14032022|15:29:22|2|0|0|192.168.0.12|PgDadosFinanceiroFatura: 6-Overflow
+14032022|15:29:22|2|0|0|192.168.0.12|PgDadosFinanceiroFatura: 6-Overflow
+14032022|15:29:22|2|0|0|192.168.0.12|PgDadosFinanceiroFatura: 6-Overflow
+14032022|15:29:22|2|0|0|192.168.0.12|PgDadosFinanceiroFatura: 6-Overflow
+14032022|15:29:22|2|0|0|192.168.0.12|PgDadosFinanceiroFatura: 6-Overflow
+14032022|15:29:22|2|0|0|192.168.0.12|PgDadosFinanceiroFatura: 6-Overflow
+14032022|15:29:22|2|0|0|192.168.0.12|PgDadosFinanceiroFatura: 6-Overflow
+14032022|15:29:22|2|0|0|192.168.0.12|PgDadosFinanceiroFatura: 6-Overflow
+14032022|15:29:22|2|0|0|192.168.0.12|PgDadosFinanceiroFatura: 6-Overflow
+14032022|15:29:22|2|0|0|192.168.0.12|PgDadosFinanceiroFatura: 6-Overflow
+14032022|15:29:22|2|0|0|192.168.0.12|PgDadosFinanceiroFatura: 6-Overflow
+14032022|15:29:22|2|0|0|192.168.0.12|PgDadosFinanceiroFatura: 6-Overflow
+14032022|15:29:22|2|0|0|192.168.0.12|PgDadosFinanceiroFatura: 6-Overflow
+14032022|15:29:22|2|0|0|192.168.0.12|PgDadosFinanceiroFatura: 6-Overflow

@@ -80,7 +80,7 @@ Begin VB.Form formFaturamentoNFe
          _ExtentX        =   2778
          _ExtentY        =   556
          _Version        =   393216
-         Format          =   133169153
+         Format          =   120979457
          CurrentDate     =   40561
       End
       Begin MSComCtl2.DTPicker dtpEmissao 
@@ -92,7 +92,7 @@ Begin VB.Form formFaturamentoNFe
          _ExtentX        =   2778
          _ExtentY        =   556
          _Version        =   393216
-         Format          =   133169153
+         Format          =   120979457
          CurrentDate     =   40561
       End
       Begin VB.TextBox txtNumNota 
@@ -2529,7 +2529,7 @@ End Sub
 Private Function grvRegistro() As Boolean
     Dim vReg(1000)   As Variant
     Dim cReg         As Integer 'Contador de Registros
-    Dim IdReg        As Integer  'Pega o Id do registro gravado
+    Dim IdReg        As Long  'Pega o Id do registro gravado
     Dim i            As Integer
     
     'BloquearTabela strTabela

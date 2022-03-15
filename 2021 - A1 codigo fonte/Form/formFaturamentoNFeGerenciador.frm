@@ -233,7 +233,7 @@ Begin VB.Form formFaturamentoNFeGerenciador
             _ExtentX        =   2566
             _ExtentY        =   556
             _Version        =   393216
-            Format          =   181469185
+            Format          =   120324097
             CurrentDate     =   40557
          End
          Begin MSComCtl2.DTPicker dtpDtFinal 
@@ -245,7 +245,7 @@ Begin VB.Form formFaturamentoNFeGerenciador
             _ExtentX        =   2566
             _ExtentY        =   556
             _Version        =   393216
-            Format          =   181469185
+            Format          =   120324097
             CurrentDate     =   40557
          End
          Begin VB.Label Label1 
@@ -588,28 +588,29 @@ Private Sub LoadStatusEnvio(chvNFe As String, DtEmissao As String)
     '*************** Carrega NUMERO DO RECIBO de envio
     '*************************************************************
     nLote = Mid(String(15, "0"), 1, 15 - Len(nLote)) & nLote
-    Arquivo = PgDadosConfig.pRetorno & "\" & nLote & "-rec.xml"
-    ConteudoXML = LoadXML(Arquivo)
-    If ConteudoXML = "" Then
-            'Checa se houve erro no arquivo
-            Arquivo = PgDadosConfig.pRetorno & "\" & nLote & "-rec.err"
-            ConteudoXML = LoadErroXML(Arquivo)
-            If ConteudoXML = "" Then
-                    'StatusNFe = ""
-                    'exit sub
-                Else
-                    StatusNFe = ConteudoXML
-                    'exit sub
-            End If
-        Else
-            'Pega o Numero do Lote do Envio
-            nRecibo = pgTagXML("<nRec>", "</nRec>", ConteudoXML)
-    End If
+    'Arquivo = PgDadosConfig.pRetorno & "\" & nLote & "-pro-rec.xml"
+    'ConteudoXML = LoadXML(Arquivo)
+    'If ConteudoXML = "" Then
+    '        'Checa se houve erro no arquivo
+    '        Arquivo = PgDadosConfig.pRetorno & "\" & nLote & "-proc-rec.err"
+    '        ConteudoXML = LoadErroXML(Arquivo)
+    '        If ConteudoXML = "" Then
+    '                'StatusNFe = ""
+    '                'exit sub
+    '            Else
+    '                StatusNFe = ConteudoXML
+    '                'exit sub
+    '       End If
+    '   Else
+    '        'Pega o Numero do Lote do Envio
+    '        nRecibo = pgTagXML("<nRec>", "</nRec>", ConteudoXML)
+    'End If
     '*************************************************************
     '**** Carrega o NUMERO DE PROTOCOLO Status e Motivo da NFe
     '*************************************************************
-     Arquivo = PgDadosConfig.pRetorno & "\" & nRecibo & "-pro-rec.xml"
+     Arquivo = PgDadosConfig.pRetorno & "\" & nLote & "-pro-rec.xml"
      'Arquivo = PgDadosConfig.pRetorno & "\" & nRecibo & "-pro-rec.xml"
+     
     ConteudoXML = LoadXML(Arquivo)
     If ConteudoXML = "" Then
             'Checa se houve erro no arquivo

@@ -1708,6 +1708,10 @@ Public Function Exportar_NFe_v400_TXT(chvNFe As String) As String
                         "|NFe" & chvNFe & "|"
     'B
     ' Rst1.Fields("ide_indPag") & "|"
+    'Indice do intermediador
+    Dim indIntermed As String
+    indIntermed = 0
+    
     grvReg nmArq, "B|" & _
                     Rst1.Fields("ide_cUF") & "|" & _
                     Rst1.Fields("ide_cNF") & "|" & _
@@ -1726,7 +1730,7 @@ Public Function Exportar_NFe_v400_TXT(chvNFe As String) As String
                     Rst1.Fields("ide_tpAmb") & "|" & _
                     Rst1.Fields("ide_finNFe") & "|" & _
                     Rst1.Fields("ide_indFinal") & "|" & _
-                    "3" & "|" & _
+                    "3" & "|" & indIntermed & "|" & _
                     Rst1.Fields("ide_procEmi") & "|" & _
                     Rst1.Fields("ide_VerProc") & "|" & _
                     IIf(PgDadosConfig.ContingenciaDt <> "", Format(PgDadosConfig.ContingenciaDt, "YYYY-MM-DD") & "T" & PgDadosConfig.ContingenciaHr, "") & "|" & _

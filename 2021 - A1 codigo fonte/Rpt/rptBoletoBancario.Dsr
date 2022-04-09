@@ -10,10 +10,10 @@ Begin {78E93846-85FD-11D0-8487-00A0C90DC8A9} rptBoletoBancario
    _ExtentX        =   22939
    _ExtentY        =   19315
    _Version        =   393216
-   _DesignerVersion=   100688210
+   _DesignerVersion=   100684101
    ReportWidth     =   10991
    BeginProperty Font {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
-      Name            =   "lbpf25LS"
+      Name            =   "Arial"
       Size            =   8.25
       Charset         =   0
       Weight          =   400
@@ -773,7 +773,7 @@ Begin {78E93846-85FD-11D0-8487-00A0C90DC8A9} rptBoletoBancario
          Object.Width           =   5835
          Object.Height          =   596
          BeginProperty Font {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
-            Name            =   "lbpf25LS"
+            Name            =   "Arial"
             Size            =   11.25
             Charset         =   0
             Weight          =   400
@@ -3534,6 +3534,7 @@ Private Sub DataReport_Initialize()
     rptBoletoBancario.Sections("Section1").Controls.Item("LblRodape").Caption = "A1 - v." & sVersao & " [Rev." & cVersao & "]"
     'lblCB3
 '    rptBoletoBancario.Sections("Section1").Controls.Item("lblCB3").Font = "lbpf25LS"
+    'rptBoletoBancario.Sections("Section1").Controls.Item("lblCB3").Font = "C:\Users\Leo\Desktop\A1-VB6\2021 - A1 codigo fonte\font\lbpf25LS.ttf"
 End Sub
 
 

@@ -2096,7 +2096,7 @@ Begin {78E93846-85FD-11D0-8487-00A0C90DC8A9} rptBoletoBancario
          Object.Width           =   8220
          Object.Height          =   240
          BeginProperty Font {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
-            Name            =   "Arial"
+            Name            =   "Arial Narrow"
             Size            =   8.25
             Charset         =   0
             Weight          =   400
@@ -2115,7 +2115,7 @@ Begin {78E93846-85FD-11D0-8487-00A0C90DC8A9} rptBoletoBancario
          Object.Width           =   8220
          Object.Height          =   240
          BeginProperty Font {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
-            Name            =   "Arial"
+            Name            =   "Arial Narrow"
             Size            =   8.25
             Charset         =   0
             Weight          =   400
@@ -2134,7 +2134,7 @@ Begin {78E93846-85FD-11D0-8487-00A0C90DC8A9} rptBoletoBancario
          Object.Width           =   8220
          Object.Height          =   240
          BeginProperty Font {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
-            Name            =   "Arial"
+            Name            =   "Arial Narrow"
             Size            =   8.25
             Charset         =   0
             Weight          =   400
@@ -2153,7 +2153,7 @@ Begin {78E93846-85FD-11D0-8487-00A0C90DC8A9} rptBoletoBancario
          Object.Width           =   8220
          Object.Height          =   240
          BeginProperty Font {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
-            Name            =   "Arial"
+            Name            =   "Arial Narrow"
             Size            =   8.25
             Charset         =   0
             Weight          =   400
@@ -2172,7 +2172,7 @@ Begin {78E93846-85FD-11D0-8487-00A0C90DC8A9} rptBoletoBancario
          Object.Width           =   8220
          Object.Height          =   240
          BeginProperty Font {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
-            Name            =   "Arial"
+            Name            =   "Arial Narrow"
             Size            =   8.25
             Charset         =   0
             Weight          =   400
@@ -2191,7 +2191,7 @@ Begin {78E93846-85FD-11D0-8487-00A0C90DC8A9} rptBoletoBancario
          Object.Width           =   8220
          Object.Height          =   240
          BeginProperty Font {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
-            Name            =   "Arial"
+            Name            =   "Arial Narrow"
             Size            =   8.25
             Charset         =   0
             Weight          =   400
@@ -2210,7 +2210,7 @@ Begin {78E93846-85FD-11D0-8487-00A0C90DC8A9} rptBoletoBancario
          Object.Width           =   8220
          Object.Height          =   240
          BeginProperty Font {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
-            Name            =   "Arial"
+            Name            =   "Arial Narrow"
             Size            =   8.25
             Charset         =   0
             Weight          =   400
@@ -2229,7 +2229,7 @@ Begin {78E93846-85FD-11D0-8487-00A0C90DC8A9} rptBoletoBancario
          Object.Width           =   8220
          Object.Height          =   240
          BeginProperty Font {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
-            Name            =   "Arial"
+            Name            =   "Arial Narrow"
             Size            =   8.25
             Charset         =   0
             Weight          =   400
@@ -2248,7 +2248,7 @@ Begin {78E93846-85FD-11D0-8487-00A0C90DC8A9} rptBoletoBancario
          Object.Width           =   8220
          Object.Height          =   240
          BeginProperty Font {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
-            Name            =   "Arial"
+            Name            =   "Arial Narrow"
             Size            =   8.25
             Charset         =   0
             Weight          =   400
@@ -2267,7 +2267,7 @@ Begin {78E93846-85FD-11D0-8487-00A0C90DC8A9} rptBoletoBancario
          Object.Width           =   8220
          Object.Height          =   240
          BeginProperty Font {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
-            Name            =   "Arial"
+            Name            =   "Arial Narrow"
             Size            =   8.25
             Charset         =   0
             Weight          =   400
@@ -2286,7 +2286,7 @@ Begin {78E93846-85FD-11D0-8487-00A0C90DC8A9} rptBoletoBancario
          Object.Width           =   8220
          Object.Height          =   240
          BeginProperty Font {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
-            Name            =   "Arial"
+            Name            =   "Arial Narrow"
             Size            =   8.25
             Charset         =   0
             Weight          =   400
@@ -2305,7 +2305,7 @@ Begin {78E93846-85FD-11D0-8487-00A0C90DC8A9} rptBoletoBancario
          Object.Width           =   8220
          Object.Height          =   240
          BeginProperty Font {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
-            Name            =   "Arial"
+            Name            =   "Arial Narrow"
             Size            =   8.25
             Charset         =   0
             Weight          =   400
@@ -3215,7 +3215,7 @@ Begin {78E93846-85FD-11D0-8487-00A0C90DC8A9} rptBoletoBancario
          Object.Width           =   8220
          Object.Height          =   240
          BeginProperty Font {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
-            Name            =   "Arial"
+            Name            =   "Arial Narrow"
             Size            =   8.25
             Charset         =   0
             Weight          =   400
@@ -3234,7 +3234,7 @@ Begin {78E93846-85FD-11D0-8487-00A0C90DC8A9} rptBoletoBancario
          Object.Width           =   8220
          Object.Height          =   240
          BeginProperty Font {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
-            Name            =   "Arial"
+            Name            =   "Arial Narrow"
             Size            =   8.25
             Charset         =   0
             Weight          =   400
@@ -3253,7 +3253,7 @@ Begin {78E93846-85FD-11D0-8487-00A0C90DC8A9} rptBoletoBancario
          Object.Width           =   8220
          Object.Height          =   240
          BeginProperty Font {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
-            Name            =   "Arial"
+            Name            =   "Arial Narrow"
             Size            =   8.25
             Charset         =   0
             Weight          =   400
@@ -3272,7 +3272,7 @@ Begin {78E93846-85FD-11D0-8487-00A0C90DC8A9} rptBoletoBancario
          Object.Width           =   8220
          Object.Height          =   240
          BeginProperty Font {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
-            Name            =   "Arial"
+            Name            =   "Arial Narrow"
             Size            =   8.25
             Charset         =   0
             Weight          =   400
@@ -3291,7 +3291,7 @@ Begin {78E93846-85FD-11D0-8487-00A0C90DC8A9} rptBoletoBancario
          Object.Width           =   8220
          Object.Height          =   240
          BeginProperty Font {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
-            Name            =   "Arial"
+            Name            =   "Arial Narrow"
             Size            =   8.25
             Charset         =   0
             Weight          =   400
@@ -3310,7 +3310,7 @@ Begin {78E93846-85FD-11D0-8487-00A0C90DC8A9} rptBoletoBancario
          Object.Width           =   8220
          Object.Height          =   240
          BeginProperty Font {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
-            Name            =   "Arial"
+            Name            =   "Arial Narrow"
             Size            =   8.25
             Charset         =   0
             Weight          =   400

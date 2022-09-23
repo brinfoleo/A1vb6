@@ -14,9 +14,9 @@ Begin VB.Form formComercialGerenciadorClientes
    ScaleWidth      =   14895
    Begin VB.Frame frmConsCliente 
       Height          =   8415
-      Left            =   720
+      Left            =   3000
       TabIndex        =   3
-      Top             =   9840
+      Top             =   1440
       Width           =   13455
       Begin VB.Frame frmTitulosVencidos 
          Caption         =   "Titulos Vencidos"
@@ -98,7 +98,7 @@ Begin VB.Form formComercialGerenciadorClientes
          End
       End
       Begin VB.Frame frmPV 
-         Caption         =   "Pré-Vendas"
+         Caption         =   "Pré-Vendas do ano "
          BeginProperty Font 
             Name            =   "MS Sans Serif"
             Size            =   8.25
@@ -113,6 +113,16 @@ Begin VB.Form formComercialGerenciadorClientes
          TabIndex        =   11
          Top             =   3600
          Width           =   4995
+         Begin VB.ComboBox cboPvAno 
+            Height          =   315
+            ItemData        =   "formComercialGerenciadorClientes.frx":00C4
+            Left            =   1800
+            List            =   "formComercialGerenciadorClientes.frx":00D4
+            Style           =   2  'Dropdown List
+            TabIndex        =   35
+            Top             =   0
+            Width           =   975
+         End
          Begin MSFlexGridLib.MSFlexGrid msfgPV 
             Height          =   2355
             Left            =   120
@@ -196,7 +206,7 @@ Begin VB.Form formComercialGerenciadorClientes
             Cols            =   3
             SelectionMode   =   1
             AllowUserResizing=   1
-            FormatString    =   $"formComercialGerenciadorClientes.frx":00C4
+            FormatString    =   $"formComercialGerenciadorClientes.frx":00F0
          End
       End
    End
@@ -212,9 +222,9 @@ Begin VB.Form formComercialGerenciadorClientes
          Strikethrough   =   0   'False
       EndProperty
       Height          =   8655
-      Left            =   840
+      Left            =   2760
       TabIndex        =   29
-      Top             =   1080
+      Top             =   7200
       Width           =   14115
       Begin MSDataGridLib.DataGrid DataGrid 
          Height          =   6135
@@ -306,9 +316,9 @@ Begin VB.Form formComercialGerenciadorClientes
    End
    Begin VB.Frame frmConsNF 
       Height          =   7515
-      Left            =   0
+      Left            =   120
       TabIndex        =   19
-      Top             =   1800
+      Top             =   1920
       Width           =   14535
       Begin VB.Frame frmDescricao 
          Caption         =   "Descrição dos Produtos"
@@ -338,7 +348,7 @@ Begin VB.Form formComercialGerenciadorClientes
             Cols            =   15
             SelectionMode   =   1
             AllowUserResizing=   1
-            FormatString    =   $"formComercialGerenciadorClientes.frx":018C
+            FormatString    =   $"formComercialGerenciadorClientes.frx":01B8
          End
       End
       Begin VB.Frame frmNF 
@@ -377,7 +387,7 @@ Begin VB.Form formComercialGerenciadorClientes
             Cols            =   6
             SelectionMode   =   1
             AllowUserResizing=   1
-            FormatString    =   $"formComercialGerenciadorClientes.frx":027B
+            FormatString    =   $"formComercialGerenciadorClientes.frx":02A7
          End
          Begin VB.Label Label4 
             Caption         =   "Nome:"
@@ -494,59 +504,59 @@ Begin VB.Form formComercialGerenciadorClientes
          BeginProperty Images {2C247F25-8591-11D1-B16A-00C0F0283628} 
             NumListImages   =   14
             BeginProperty ListImage1 {2C247F27-8591-11D1-B16A-00C0F0283628} 
-               Picture         =   "formComercialGerenciadorClientes.frx":0386
+               Picture         =   "formComercialGerenciadorClientes.frx":03B2
                Key             =   ""
             EndProperty
             BeginProperty ListImage2 {2C247F27-8591-11D1-B16A-00C0F0283628} 
-               Picture         =   "formComercialGerenciadorClientes.frx":07D8
+               Picture         =   "formComercialGerenciadorClientes.frx":0804
                Key             =   ""
             EndProperty
             BeginProperty ListImage3 {2C247F27-8591-11D1-B16A-00C0F0283628} 
-               Picture         =   "formComercialGerenciadorClientes.frx":0AF2
+               Picture         =   "formComercialGerenciadorClientes.frx":0B1E
                Key             =   ""
             EndProperty
             BeginProperty ListImage4 {2C247F27-8591-11D1-B16A-00C0F0283628} 
-               Picture         =   "formComercialGerenciadorClientes.frx":1384
+               Picture         =   "formComercialGerenciadorClientes.frx":13B0
                Key             =   ""
             EndProperty
             BeginProperty ListImage5 {2C247F27-8591-11D1-B16A-00C0F0283628} 
-               Picture         =   "formComercialGerenciadorClientes.frx":25D6
+               Picture         =   "formComercialGerenciadorClientes.frx":2602
                Key             =   ""
             EndProperty
             BeginProperty ListImage6 {2C247F27-8591-11D1-B16A-00C0F0283628} 
-               Picture         =   "formComercialGerenciadorClientes.frx":2EB0
+               Picture         =   "formComercialGerenciadorClientes.frx":2EDC
                Key             =   ""
             EndProperty
             BeginProperty ListImage7 {2C247F27-8591-11D1-B16A-00C0F0283628} 
-               Picture         =   "formComercialGerenciadorClientes.frx":3742
+               Picture         =   "formComercialGerenciadorClientes.frx":376E
                Key             =   ""
             EndProperty
             BeginProperty ListImage8 {2C247F27-8591-11D1-B16A-00C0F0283628} 
-               Picture         =   "formComercialGerenciadorClientes.frx":3FD4
+               Picture         =   "formComercialGerenciadorClientes.frx":4000
                Key             =   ""
             EndProperty
             BeginProperty ListImage9 {2C247F27-8591-11D1-B16A-00C0F0283628} 
-               Picture         =   "formComercialGerenciadorClientes.frx":5226
+               Picture         =   "formComercialGerenciadorClientes.frx":5252
                Key             =   ""
             EndProperty
             BeginProperty ListImage10 {2C247F27-8591-11D1-B16A-00C0F0283628} 
-               Picture         =   "formComercialGerenciadorClientes.frx":5540
+               Picture         =   "formComercialGerenciadorClientes.frx":556C
                Key             =   ""
             EndProperty
             BeginProperty ListImage11 {2C247F27-8591-11D1-B16A-00C0F0283628} 
-               Picture         =   "formComercialGerenciadorClientes.frx":585A
+               Picture         =   "formComercialGerenciadorClientes.frx":5886
                Key             =   ""
             EndProperty
             BeginProperty ListImage12 {2C247F27-8591-11D1-B16A-00C0F0283628} 
-               Picture         =   "formComercialGerenciadorClientes.frx":5C51
+               Picture         =   "formComercialGerenciadorClientes.frx":5C7D
                Key             =   ""
             EndProperty
             BeginProperty ListImage13 {2C247F27-8591-11D1-B16A-00C0F0283628} 
-               Picture         =   "formComercialGerenciadorClientes.frx":692B
+               Picture         =   "formComercialGerenciadorClientes.frx":6957
                Key             =   ""
             EndProperty
             BeginProperty ListImage14 {2C247F27-8591-11D1-B16A-00C0F0283628} 
-               Picture         =   "formComercialGerenciadorClientes.frx":6EC5
+               Picture         =   "formComercialGerenciadorClientes.frx":6EF1
                Key             =   ""
             EndProperty
          EndProperty
@@ -861,6 +871,12 @@ Private Sub LstClientes()
     If idFunc = 0 Then Exit Sub
     msfgClientes.Rows = 1
     LimpForm
+    
+    cboPvAno.AddItem (Format(Date, "YYYY"))
+    cboPvAno.ListIndex = 0
+    
+    
+    
     sBusca = Replace(Trim(txtNome.Text), " ", "|") & "|"
     If Trim(txtNome.Text) = "" Then
             sSQL = "SELECT * FROM Clientes WHERE ID_Empresa = " & ID_Empresa & " AND Vendedor = " & idFunc & " LIMIT 50"
@@ -952,9 +968,20 @@ End Sub
 Private Sub LstPV(idCliente As Integer)
     Dim Rst     As Recordset
     Dim sSQL    As String
+    Dim pvAno As Integer
     'If idFunc = 0 Then Exit Sub
+    pvAno = 0
+    pvAno = cboPvAno.Text
+    If pvAno = 0 Then
+        cboPvAno.AddItem (Format(Date, "YYYY"))
+        cboPvAno.ListIndex = 0
+    End If
+    
+    
+    
     msfgPV.Rows = 1
-    sSQL = "SELECT * FROM FaturamentoPV WHERE  ID_Empresa = " & ID_Empresa & " AND idCliente = " & idCliente & " LIMIT 300" ' ORDER Emissao DESC"
+    'SELECT * FROM FaturamentoPV WHERE ID_Empresa = 1 AND idCliente = 1 AND Emissao BETWEEN '2012-01-01' AND '2012-12-31'  LIMIT  400;
+    sSQL = "SELECT * FROM FaturamentoPV WHERE  ID_Empresa = " & ID_Empresa & " AND idCliente = " & idCliente & " AND Emissao BETWEEN '" & pvAno & "-01-01' AND '" & pvAno & "-12-31' LIMIT 400" ' ORDER Emissao DESC"
     Set Rst = RegistroBuscar(sSQL)
     If Rst.BOF And Rst.EOF Then
         Else
@@ -990,6 +1017,33 @@ Private Function pgNumNFe(intPV As Integer) As String
     End If
     Rst.Close
 End Function
+
+Private Sub cboPvAno_Click()
+    LstPV (idCliente)
+End Sub
+
+Private Sub cboPvAno_DropDown()
+    With cboPvAno
+        Dim i As Integer
+        .Clear
+        For i = 0 To 50
+            .AddItem (Format(Date, "YYYY") - i)
+        Next
+    End With
+    
+End Sub
+
+
+Private Sub cboPvAno_LostFocus()
+    If cboPvAno.Text = "" Then
+        cboPvAno.AddItem (Format(Date, "YYYY"))
+        cboPvAno.ListIndex = 0
+    End If
+    
+    
+    
+End Sub
+
 
 Private Sub DataGrid_Click()
     On Error GoTo TrtErroFatagrid
@@ -1045,6 +1099,8 @@ Private Sub Form_Resize()
     ResizeNF
     ResizeProdutos
 End Sub
+
+
 
 Private Sub msfgClientes_Click()
     

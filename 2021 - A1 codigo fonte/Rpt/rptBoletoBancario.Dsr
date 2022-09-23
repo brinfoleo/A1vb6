@@ -3528,12 +3528,18 @@ Attribute VB_Creatable = False
 Attribute VB_PredeclaredId = True
 Attribute VB_Exposed = False
 Option Explicit
+
+Private Sub DataReport_Activate()
+    On Error Resume Next
+    rptBoletoBancario.Sections("Section1").Controls.Item("lblCB3").Font.Name = "lbpf25LS"
+End Sub
+
 Private Sub DataReport_Initialize()
     'On Error Resume Next
     'Set rptBoletoBancario.Sections("Section2").Controls.Item("imgLogo").Picture = LoadPicture(PgDadosEmpresa(ID_Empresa).Logotipo)
     rptBoletoBancario.Sections("Section1").Controls.Item("LblRodape").Caption = "A1 - v." & sVersao & " [Rev." & cVersao & "]"
     'lblCB3
-'    rptBoletoBancario.Sections("Section1").Controls.Item("lblCB3").Font = "lbpf25LS"
+    rptBoletoBancario.Sections("Section1").Controls.Item("lblCB3").Font.Name = "lbpf25LS"
     'rptBoletoBancario.Sections("Section1").Controls.Item("lblCB3").Font = "C:\Users\Leo\Desktop\A1-VB6\2021 - A1 codigo fonte\font\lbpf25LS.ttf"
 End Sub
 

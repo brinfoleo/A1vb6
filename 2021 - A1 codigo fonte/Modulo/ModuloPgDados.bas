@@ -1705,7 +1705,7 @@ Public Function PgDadosFinanceiroFatura(Id As Long) As Dados_FinanceiroFatura
     PgDadosFinanceiroFatura.Juros = IIf(IsNull(Rst.Fields("Juros")), "", Rst.Fields("Juros"))
     PgDadosFinanceiroFatura.IdBanco = IIf(IsNull(Rst.Fields("idBanco")), 0, Rst.Fields("idBanco"))
     PgDadosFinanceiroFatura.Acrescimo = IIf(IsNull(Rst.Fields("Acrescimo")), "", Rst.Fields("Acrescimo"))
-    PgDadosFinanceiroFatura.Abatimento = IIf(IsNull(Rst.Fields("Abatimento")), "", Rst.Fields("Abatimento"))
+    PgDadosFinanceiroFatura.Abatimento = IIf(IsNull(Rst.Fields("Abatimento")), "0", Rst.Fields("Abatimento"))
     PgDadosFinanceiroFatura.Deducoes = IIf(IsNull(Rst.Fields("Deducoes")), "", Rst.Fields("Deducoes"))
     PgDadosFinanceiroFatura.DiasProtesto = IIf(IsNull(Rst.Fields("DiasProtesto")), "0", Rst.Fields("DiasProtesto"))
     PgDadosFinanceiroFatura.vlCobrado = IIf(IsNull(Rst.Fields("vlCobrado")), "", Rst.Fields("vlCobrado"))
@@ -1720,7 +1720,7 @@ Public Function PgDadosFinanceiroFatura(Id As Long) As Dados_FinanceiroFatura
     Rst.Close
     Exit Function
 regErro:
-    RegLog "0", "0", "PgDadosFinanceiroFatura: " & Err.Number & "-" & Err.Description
+    RegLog "0", "0", "PgDadosFinanceiroFatura: " & Err.Number & "-" & Err.Description & "(" & Id & ")"
     Resume Next
 End Function
 Public Function PgDadosTpNotaFiscal(Id As Integer) As Dados_TipoNotaFiscal

@@ -10,7 +10,7 @@ Begin {78E93846-85FD-11D0-8487-00A0C90DC8A9} rptDANFe
    _ExtentX        =   21405
    _ExtentY        =   19420
    _Version        =   393216
-   _DesignerVersion=   100688210
+   _DesignerVersion=   100684101
    ReportWidth     =   11355
    BeginProperty Font {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
       Name            =   "Times New Roman"
@@ -3002,7 +3002,7 @@ Begin {78E93846-85FD-11D0-8487-00A0C90DC8A9} rptDANFe
          Object.Width           =   4063
          Object.Height          =   567
          BeginProperty Font {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
-            Name            =   "lbttf128LD2"
+            Name            =   "Arial"
             Size            =   11.25
             Charset         =   0
             Weight          =   400
@@ -3998,6 +3998,8 @@ Option Explicit
 Private Sub DataReport_Initialize()
     On Error Resume Next
     Set rptDANFe.Sections("Section2").Controls.Item("imgLogo").Picture = LoadPicture(PgDadosEmpresa(ID_Empresa).Logotipo)
+    
+    rptDANFe.Sections("Section2").Controls.Item("lblCodBarras").Font.Name = "lbpf25LS"
     
     rptDANFe.Sections("Section2").Controls.Item("lblCab01").Caption = PgDadosEmpresa(ID_Empresa).Nome
     rptDANFe.Sections("Section2").Controls.Item("lblCab02").Caption = PgDadosEmpresa(ID_Empresa).Lgr & "," & PgDadosEmpresa(ID_Empresa).Nro

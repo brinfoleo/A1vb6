@@ -163,7 +163,6 @@ Private Function CriaBancoDados() As Boolean
 trata_erro:
     MsgBox Err.Number & " " & Err.Description, vbCritical, "Erro durante a criação do banco de dados."
 End Function
-
 Public Function RegistroAlterar(ByVal sTabela As String, ByVal vDados As Variant, nmReg As Integer, _
                                Optional ByVal sCondicao As String) As Boolean
     

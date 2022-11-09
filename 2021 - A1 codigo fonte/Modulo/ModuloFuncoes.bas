@@ -402,7 +402,7 @@ Public Sub RegLogDataBase(ByVal Chave As String, ByVal IDLog As String, ByVal ip
                "Chave varchar(120) Default Null," & _
                "IDLog varchar(120) Default Null," & _
                "ipOrigem varchar(120) Default Null," & _
-               "Descricao varchar(120) Default Null," & _
+               "Descricao longtext," & _
                "PRIMARY KEY (Id))"
    
     
@@ -938,7 +938,7 @@ Public Function Extenso(ByVal Valor As _
   End If
 End Function
 Public Function MovimentarEstoque(Mov As String, _
-                                    idProduto As Integer, _
+                                    idProduto As Long, _
                                     Data As Date, _
                                     sDoc As String, _
                                     Qtd As String, _

@@ -1038,7 +1038,7 @@ Private Sub txtValorUnitario_KeyPress(KeyAscii As Integer)
     End If
     KeyAscii = ChkVal(txtValorUnitario.Text, KeyAscii, cDecMoeda)
 End Sub
-Private Sub PesquisarProduto(Optional Id As Integer)
+Private Sub PesquisarProduto(Optional Id As Long)
     Dim pICMS   As String
     Dim cst     As String
     If Trim(Id) = "0" Then
@@ -1081,7 +1081,7 @@ Private Sub PesquisarProduto(Optional Id As Integer)
             
             'pICMS = pgDadosICMS(PgDadosCliente(idCli).UF, 0).ICMS
             pICMS = pgDadosICMS(UFCli, 0).ICMS
-            pICMS = IIf(Trim(pgAliqDifICMS(txtNCM.Text, PgDadosCliente(idCli).UF)) = "", pICMS, pgAliqDifICMS(txtNCM.Text, PgDadosCliente(idCli).UF))
+            pICMS = IIf(Trim(pgAliqDifICMS(txtNCM.Text, PgDadosCliente(idCli).uf)) = "", pICMS, pgAliqDifICMS(txtNCM.Text, PgDadosCliente(idCli).uf))
             pICMS = IIf(cst = "60", "0", pICMS)
             'pICMS = pICMS
     End If

@@ -665,7 +665,7 @@ Attribute VB_PredeclaredId = True
 Attribute VB_Exposed = False
 Option Explicit
 Dim Retorno     As Variant
-Dim IdReg       As Integer
+Dim IdReg       As Long
 Dim idCli       As Integer
 Dim UFCli       As String
 Dim bcICMS      As Integer '0=Mercadoria / 1 - Total da nota
@@ -1135,11 +1135,11 @@ Private Sub txtValorUnitario_KeyPress(KeyAscii As Integer)
     End If
     KeyAscii = ChkVal(txtValorUnitario.Text, KeyAscii, cDecMoeda)
 End Sub
-Private Sub PesquisarProduto(Optional Id As Integer)
+Private Sub PesquisarProduto(Optional Id As Long)
     On Error GoTo TratarErro
     Dim pICMS   As String
     Dim cst     As String
-    If Trim(Id) = "0" Then
+    If Trim(Id) = 0 Then
             Id = formBuscar.IniciarBusca("EstoqueProduto") ', , , , , "status='ATIVO'")
             If Trim(Id) = 0 Then Exit Sub
     End If

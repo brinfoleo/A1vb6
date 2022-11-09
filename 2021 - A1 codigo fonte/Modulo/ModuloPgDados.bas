@@ -1419,7 +1419,7 @@ Public Function pgMovEst(IdMov As Integer) As Dados_MovEstoque
             Exit Function
     End If
 End Function
-Public Function pgDadosEstoqueProduto(IdEstoqueProduto As Integer) As Dados_EstoqueProduto
+Public Function pgDadosEstoqueProduto(IdEstoqueProduto As Long) As Dados_EstoqueProduto
     On Error GoTo NotificarErro:
     Dim Rst As Recordset
     Dim sQL As String

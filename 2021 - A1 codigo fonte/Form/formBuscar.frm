@@ -173,7 +173,7 @@ Dim Tabela              As String
 Dim CampoBusca          As String
 Dim CamposBusca         As String
 Dim Ordenar             As String
-Dim resultadoBusca      As Integer
+Dim resultadoBusca      As Long
 Dim sizeColuna(100)     As Integer
 Dim criterio            As String
 
@@ -182,7 +182,7 @@ Public Function IniciarBusca(nomeTabela As String, _
                              Optional DefaultCampoBusca As String, _
                              Optional DefaultTextoBusca As String, _
                              Optional CampoOrdenar As String, _
-                             Optional sCriterio As String) As Integer
+                             Optional sCriterio As String) As Long
                              
     If nomeTabela = "" Then Exit Function
     

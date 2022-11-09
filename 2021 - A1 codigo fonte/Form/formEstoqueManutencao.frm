@@ -1,6 +1,6 @@
 VERSION 5.00
 Object = "{86CF1D34-0C5F-11D2-A9FC-0000F8754DA1}#2.0#0"; "MSCOMCT2.OCX"
-Object = "{831FDD16-0C5C-11D2-A9FC-0000F8754DA1}#2.0#0"; "MSCOMCTL.OCX"
+Object = "{831FDD16-0C5C-11D2-A9FC-0000F8754DA1}#2.2#0"; "MSCOMCTL.OCX"
 Begin VB.Form formEstoqueManutencao 
    BorderStyle     =   1  'Fixed Single
    Caption         =   "Estoque - Manutenção"
@@ -56,7 +56,7 @@ Begin VB.Form formEstoqueManutencao
          _ExtentX        =   2355
          _ExtentY        =   556
          _Version        =   393216
-         Format          =   80412673
+         Format          =   127336449
          CurrentDate     =   40540
       End
       Begin VB.Label Label10 
@@ -442,7 +442,7 @@ Attribute VB_PredeclaredId = True
 Attribute VB_Exposed = False
 
 Option Explicit
-Dim IdReg     As Integer
+Dim IdReg     As Long
 Dim strTabela   As String
 
 Private Sub cboMovimento_Click()

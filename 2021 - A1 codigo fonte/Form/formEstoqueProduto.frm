@@ -2,7 +2,7 @@ VERSION 5.00
 Object = "{BDC217C8-ED16-11CD-956C-0000C04E4C0A}#1.1#0"; "TABCTL32.OCX"
 Object = "{5E9E78A0-531B-11CF-91F6-C2863C385E30}#1.0#0"; "MSFLXGRD.OCX"
 Object = "{F9043C88-F6F2-101A-A3C9-08002B2F49FB}#1.2#0"; "COMDLG32.OCX"
-Object = "{831FDD16-0C5C-11D2-A9FC-0000F8754DA1}#2.0#0"; "MSCOMCTL.OCX"
+Object = "{831FDD16-0C5C-11D2-A9FC-0000F8754DA1}#2.2#0"; "MSCOMCTL.OCX"
 Begin VB.Form formEstoqueProduto 
    BorderStyle     =   1  'Fixed Single
    Caption         =   "Estoque - Cadastro de Produto"
@@ -1111,7 +1111,7 @@ Attribute VB_PredeclaredId = True
 Attribute VB_Exposed = False
 Option Explicit
 
-Dim IdReg       As Integer
+Dim IdReg       As Long
 Dim strTabela   As String
 Dim lKit        As Integer 'Linha do grid da tabela kit
 
@@ -1362,7 +1362,7 @@ Private Sub btPesqKitItem_Click()
     pesqItemKit
 End Sub
 Private Sub pesqItemKit(Optional Id As Integer)
-    Dim prodIdKit As Integer
+    Dim prodIdKit As Long
     If Id <> 0 Then
         prodIdKit = Id
     End If
@@ -1398,7 +1398,7 @@ End Sub
 Private Sub cboFabricante_dropdown()
     Dim Rst As Recordset
     cboFabricante.Clear
-    Set Rst = RegistroBuscar("SELECT * FROM EstoqueFabricante ORDER BY Descricao")
+    Set Rst = RegistroBuscar("SELECT * FROM EstoqueFabricante WHERE id_empresa=" & ID_Empresa & " ORDER BY Descricao")
     If Rst.BOF And Rst.EOF Then
             Rst.Close
             Exit Sub
@@ -1416,7 +1416,7 @@ End Sub
 Private Sub cboGrupo_DropDown()
     Dim Rst As Recordset
     cboGrupo.Clear
-    Set Rst = RegistroBuscar("SELECT * FROM EstoqueGrupos ORDER BY Descricao")
+    Set Rst = RegistroBuscar("SELECT * FROM EstoqueGrupos WHERE id_empresa=" & ID_Empresa & " ORDER BY Descricao")
     If Rst.BOF And Rst.EOF Then
             Rst.Close
             Exit Sub
@@ -1495,8 +1495,8 @@ End Sub
 
 Private Sub cbosubGrupo_DropDown()
     Dim Rst As Recordset
-    cboSubGrupo.Clear
-    Set Rst = RegistroBuscar("SELECT * FROM EstoqueSubGrupo ORDER BY Descricao")
+    cboSubgrupo.Clear
+    Set Rst = RegistroBuscar("SELECT * FROM EstoqueSubGrupo WHERE id_empresa=" & ID_Empresa & " ORDER BY Descricao")
     If Rst.BOF And Rst.EOF Then
             
             Rst.Close
@@ -1504,7 +1504,7 @@ Private Sub cbosubGrupo_DropDown()
         Else
             Rst.MoveFirst
             Do Until Rst.EOF
-                cboSubGrupo.AddItem Left(String(5, "0"), 5 - Len(Rst.Fields("Id"))) & Rst.Fields("Id") & _
+                cboSubgrupo.AddItem Left(String(5, "0"), 5 - Len(Rst.Fields("Id"))) & Rst.Fields("Id") & _
                                  " - " & Rst.Fields("descricao")
                 Rst.MoveNext
             Loop
@@ -1521,7 +1521,7 @@ End Sub
 Private Sub cboUnidade_DropDown()
     Dim Rst As Recordset
     cboUnidade.Clear
-    Set Rst = RegistroBuscar("SELECT * FROM EstoqueUnidadeMedida ORDER BY Descricao")
+    Set Rst = RegistroBuscar("SELECT * FROM EstoqueUnidadeMedida WHERE id_empresa=" & ID_Empresa & " ORDER BY Descricao")
     If Rst.BOF And Rst.EOF Then
         Else
             Rst.MoveFirst
@@ -1852,7 +1852,7 @@ Private Function ValidaDados() As Boolean
         ValidaDados = False
         Exit Function
     End If
-    If Trim(cboSubGrupo.Text) = "" Then
+    If Trim(cboSubgrupo.Text) = "" Then
         MsgBox "Subgrupo invalido. Favor verificar.", vbInformation, "Aviso"
         ValidaDados = False
         Exit Function
@@ -2227,13 +2227,13 @@ Private Sub MostrarDados()
     End If
     
      'Carregar os dados do SUBGRUPO
-    tmp = cboSubGrupo.Text
+    tmp = cboSubgrupo.Text
     If Trim(tmp) <> "" Then
-            cboSubGrupo.Clear
-            cboSubGrupo.AddItem Left(String(5, "0"), 5 - Len(tmp)) & tmp & " - " & pgDescrSubGrupo(tmp)
-            cboSubGrupo.Text = cboSubGrupo.List(0)
+            cboSubgrupo.Clear
+            cboSubgrupo.AddItem Left(String(5, "0"), 5 - Len(tmp)) & tmp & " - " & pgDescrSubGrupo(tmp)
+            cboSubgrupo.Text = cboSubgrupo.List(0)
         Else
-            cboSubGrupo.Clear
+            cboSubgrupo.Clear
     End If
     
     

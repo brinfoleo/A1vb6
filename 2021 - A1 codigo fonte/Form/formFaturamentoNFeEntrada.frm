@@ -44,8 +44,10 @@ Begin VB.Form formFaturamentoNFeEntrada
       TabCaption(1)   =   "Faturamento/Transportador"
       TabPicture(1)   =   "formFaturamentoNFeEntrada.frx":001C
       Tab(1).ControlEnabled=   0   'False
-      Tab(1).Control(0)=   "Frame7"
-      Tab(1).Control(1)=   "Frame5"
+      Tab(1).Control(0)=   "Frame5"
+      Tab(1).Control(0).Enabled=   0   'False
+      Tab(1).Control(1)=   "Frame7"
+      Tab(1).Control(1).Enabled=   0   'False
       Tab(1).ControlCount=   2
       TabCaption(2)   =   "Total da Nota Fiscal / Obs."
       TabPicture(2)   =   "formFaturamentoNFeEntrada.frx":0038
@@ -860,7 +862,7 @@ Begin VB.Form formFaturamentoNFeEntrada
             _ExtentX        =   2566
             _ExtentY        =   556
             _Version        =   393216
-            Format          =   137101313
+            Format          =   120520705
             CurrentDate     =   40591
          End
          Begin VB.TextBox txtnDupl 
@@ -999,7 +1001,7 @@ Begin VB.Form formFaturamentoNFeEntrada
          _ExtentX        =   2355
          _ExtentY        =   556
          _Version        =   393216
-         Format          =   137101313
+         Format          =   120520705
          CurrentDate     =   40591
       End
       Begin VB.TextBox txtnNF 
@@ -1337,7 +1339,7 @@ Attribute VB_Exposed = False
 Dim IdReg           As Integer
 Dim strTabela       As String
 Dim lnProd          As Integer
-Dim idProd          As Integer
+Dim idProd          As Long
 Dim idFornecedor    As Integer
 Dim lnDupl          As Integer
 Dim IdTransp        As Integer
@@ -2218,7 +2220,7 @@ End Sub
 Private Sub cboCentroCustos_DropDown()
     Dim Rst As Recordset
     cboCentroCustos.Clear
-    Set Rst = RegistroBuscar("SELECT * FROM FinanceiroCentroCustos")
+    Set Rst = RegistroBuscar("SELECT * FROM FinanceiroCentroCustos WHERE ID_Empresa = " & ID_Empresa)
     If Rst.BOF And Rst.EOF Then
             Exit Sub
         Else
@@ -2234,7 +2236,7 @@ End Sub
 Private Sub cboDocumento_DropDown()
     Dim Rst As Recordset
     cboDocumento.Clear
-    Set Rst = RegistroBuscar("SELECT * FROM FinanceiroTipoDocumento")
+    Set Rst = RegistroBuscar("SELECT * FROM FinanceiroTipoDocumento WHERE ID_Empresa = " & ID_Empresa)
     If Rst.BOF And Rst.EOF Then
             Exit Sub
         Else
@@ -2258,6 +2260,7 @@ End Sub
 
 Private Sub cboFornecedor_KeyDown(KeyCode As Integer, Shift As Integer)
     If KeyCode = 114 Then
+        idFornecedor = 0
         PesquisarForn
     End If
 End Sub
@@ -2290,7 +2293,7 @@ End Sub
 Private Sub cboPlanoContas_DropDown()
     Dim Rst As Recordset
     cboPlanoContas.Clear
-    Set Rst = RegistroBuscar("SELECT * FROM FinanceiroPlanoContas ORDER BY Codigo")
+    Set Rst = RegistroBuscar("SELECT * FROM FinanceiroPlanoContas WHERE ID_Empresa = " & ID_Empresa & " ORDER BY Codigo")
     If Rst.BOF And Rst.EOF Then
             'Exit Sub
         Else
@@ -2378,7 +2381,7 @@ End Sub
 Private Sub cboFornecedor_DropDown()
     Dim Rst As Recordset
     
-    Set Rst = RegistroBuscar("SELECT * FROM Fornecedores WHERE xNome LIKE '" & cboFornecedor.Text & "%'")
+    Set Rst = RegistroBuscar("SELECT * FROM Fornecedores WHERE ID_Empresa = " & ID_Empresa & " AND xNome LIKE '" & cboFornecedor.Text & "%'")
     If Rst.BOF And Rst.EOF Then
             cboFornecedor.Clear
             Exit Sub
@@ -2398,8 +2401,14 @@ Private Sub PesquisarForn(Optional CNPJ As String)
     Dim sSQL    As String
     Dim Rst     As Recordset
     'emit_id = 0
+        
+    If idFornecedor <> 0 Then
+        CNPJ = PgDadosFornecedor(idFornecedor).Doc
+    End If
+        
     If Trim(CNPJ) <> "" Then
         sSQL = "SELECT * FROM Fornecedores WHERE ID_Empresa = " & ID_Empresa & " AND Doc = '" & CNPJ & "'"
+       
         Set Rst = RegistroBuscar(sSQL)
         If Rst.BOF And Rst.EOF Then
                 idFornecedor = 0
@@ -2413,6 +2422,7 @@ Private Sub PesquisarForn(Optional CNPJ As String)
     End If
     If Trim(idFornecedor) = 0 Then Exit Sub
     
+    cboFornecedor.Clear
     cboFornecedor.Text = PgDadosFornecedor(idFornecedor).Nome
     txtDoc.Text = PgDadosFornecedor(idFornecedor).Doc
     emit_id = idFornecedor
@@ -3353,7 +3363,7 @@ Private Function grvRegistro() As Boolean
         '****** Movimenta o estoque **************************************
         If chkMovEstoque.Value = 1 Then
             If MovimentarEstoque("e", _
-                                CInt(aItem(i)(0)), _
+                                CLng(aItem(i)(0)), _
                                 CDate(ide_dEmi), _
                                 ide_nNF, _
                                 CStr(aEstoque(i)(1)), _
@@ -3443,7 +3453,7 @@ Private Function grvRegistro() As Boolean
 '*****************************************************************************************************************
         'ESTOQUE
         If chkMovEstoque.Value = 1 Then
-            vReg(cReg) = Array("Estoque_Unid", pgDadosEstoqueProduto(CInt(aItem(i)(0))).Unidade, "S"): cReg = cReg + 1
+            vReg(cReg) = Array("Estoque_Unid", pgDadosEstoqueProduto(CLng(aItem(i)(0))).Unidade, "S"): cReg = cReg + 1
             vReg(cReg) = Array("Estoque_Qtd", aEstoque(i)(1), "S"): cReg = cReg + 1
             vReg(cReg) = Array("Estoque_vUnit", aEstoque(i)(2), "S"): cReg = cReg + 1
         End If
@@ -3569,6 +3579,7 @@ End Sub
 
 Private Sub txtDoc_KeyDown(KeyCode As Integer, Shift As Integer)
     If KeyCode = 114 Then
+        idFornecedor = 0
         PesquisarForn
     End If
 
@@ -3601,6 +3612,8 @@ Private Sub txtIdProd_KeyPress(KeyAscii As Integer)
         PesquisarProduto
     End If
 End Sub
+
+
 
 
 

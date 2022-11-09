@@ -2,7 +2,7 @@ VERSION 5.00
 Object = "{BDC217C8-ED16-11CD-956C-0000C04E4C0A}#1.1#0"; "TABCTL32.OCX"
 Object = "{5E9E78A0-531B-11CF-91F6-C2863C385E30}#1.0#0"; "MSFLXGRD.OCX"
 Object = "{86CF1D34-0C5F-11D2-A9FC-0000F8754DA1}#2.0#0"; "MSCOMCT2.OCX"
-Object = "{831FDD16-0C5C-11D2-A9FC-0000F8754DA1}#2.2#0"; "mscomctl.ocx"
+Object = "{831FDD16-0C5C-11D2-A9FC-0000F8754DA1}#2.2#0"; "MSCOMCTL.OCX"
 Begin VB.Form formFaturamentoPV 
    BorderStyle     =   1  'Fixed Single
    Caption         =   "Faturamento - Pré Venda"
@@ -1016,7 +1016,7 @@ Begin VB.Form formFaturamentoPV
          _ExtentX        =   2566
          _ExtentY        =   556
          _Version        =   393216
-         Format          =   36700161
+         Format          =   127664129
          CurrentDate     =   40517
       End
       Begin VB.TextBox txtID 
@@ -2918,7 +2918,7 @@ Private Function cobrMontarParcelas() As Boolean
             ZerarParcelas
             idCobr = Left(cboCondicoesPagamento.Text, 3)
     End If
-   sSQL = "SELECT * FROM FinanceiroCondicoesPagamentoParcelas WHERE IdCondicoes = " & idCobr & " ORDER BY Parcela"
+   sSQL = "SELECT * FROM FinanceiroCondicoesPagamentoParcelas WHERE ID_Empresa = " & ID_Empresa & " AND IdCondicoes = " & idCobr & " ORDER BY Parcela"
     Set Rst = RegistroBuscar(sSQL)
     If Rst.BOF And Rst.EOF Then
             MsgBox "Erro ao encontrar indice financeiro da(s) parcela(s)." & vbCrLf & vbCrLf & _

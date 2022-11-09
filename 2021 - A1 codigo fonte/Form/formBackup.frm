@@ -1,6 +1,6 @@
 VERSION 5.00
 Object = "{F9043C88-F6F2-101A-A3C9-08002B2F49FB}#1.2#0"; "COMDLG32.OCX"
-Object = "{831FDD16-0C5C-11D2-A9FC-0000F8754DA1}#2.0#0"; "MSCOMCTL.OCX"
+Object = "{831FDD16-0C5C-11D2-A9FC-0000F8754DA1}#2.2#0"; "MSCOMCTL.OCX"
 Begin VB.Form formBackup 
    BorderStyle     =   1  'Fixed Single
    Caption         =   "Backup"
@@ -377,14 +377,22 @@ Begin VB.Form formBackup
       TabIndex        =   0
       Top             =   480
       Width           =   7635
+      Begin VB.CheckBox chkEmpCorrente 
+         Caption         =   "Backup apenas da empresa corrente"
+         Height          =   375
+         Left            =   4680
+         TabIndex        =   30
+         Top             =   480
+         Width           =   2775
+      End
       Begin VB.CheckBox chkIncDados 
          Caption         =   "Incluir dados"
          Height          =   195
-         Left            =   6000
+         Left            =   4680
          TabIndex        =   29
          Top             =   240
          Value           =   1  'Checked
-         Width           =   1455
+         Width           =   2775
       End
       Begin VB.Label Label9 
          Caption         =   "Porta:"
@@ -417,7 +425,7 @@ Begin VB.Form formBackup
          Left            =   1380
          TabIndex        =   2
          Top             =   360
-         Width           =   4155
+         Width           =   2835
       End
       Begin VB.Label lblPorta 
          Caption         =   "Label1"
@@ -434,7 +442,7 @@ Begin VB.Form formBackup
          Left            =   1380
          TabIndex        =   1
          Top             =   660
-         Width           =   4215
+         Width           =   1335
       End
    End
 End
@@ -445,7 +453,7 @@ Attribute VB_PredeclaredId = True
 Attribute VB_Exposed = False
 'Imprimir Grade
 Option Explicit
-Const MSG_01 = "Bakck UP Criado por: "
+Const MSG_01 = "Back-Up Criado por: "
 Const MSG_02 = "Base de Dados: "
 Const MSG_03 = "Inicio/Hora: "
 Const MSG_04 = "DD/MM/YY HH:MM:SS"
@@ -692,6 +700,16 @@ Public Sub MySQLBackup(ByVal strNomeArquivo As String, cnn As ADODB.Connection)
     Dim strBuffer       As String
     Dim strNomeBase     As String
     
+    
+'Carregar os dados apenas da empresa corrente
+    Dim strQuerry As String
+    strQuerry = ""
+    If chkEmpCorrente.Value = True Then
+            strQuerry = ""
+        Else
+            strQuerry = " where id_Empresa = " & ID_Empresa
+    End If
+    
     X = FreeFile
     Open strNomeArquivo For Output As X
     
@@ -813,8 +831,12 @@ Public Sub MySQLBackup(ByVal strNomeArquivo As String, cnn As ADODB.Connection)
             End With
             'Preenche com os dados da tabela
             If chkIncDados.Value = 1 Then
+               
+                
+                
                 With rssAux
-                    .Open "SELECT * FROM " & strNomeTabela & "", cnn
+                    '.Open "SELECT * FROM " & strNomeTabela & " where id_Empresa = " & ID_Empresa, cnn
+                    .Open "SELECT * FROM " & strNomeTabela & strQuerry, cnn
                     lblQtdeRegistros.Caption = rssAux.RecordCount & " Registro(s)": DoEvents
                     smsg = "Selecionando a tabela " & strNomeTabela
                     lstMSG.AddItem smsg

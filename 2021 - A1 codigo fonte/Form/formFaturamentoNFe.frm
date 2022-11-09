@@ -80,7 +80,7 @@ Begin VB.Form formFaturamentoNFe
          _ExtentX        =   2778
          _ExtentY        =   556
          _Version        =   393216
-         Format          =   120979457
+         Format          =   127336449
          CurrentDate     =   40561
       End
       Begin MSComCtl2.DTPicker dtpEmissao 
@@ -92,7 +92,7 @@ Begin VB.Form formFaturamentoNFe
          _ExtentX        =   2778
          _ExtentY        =   556
          _Version        =   393216
-         Format          =   120979457
+         Format          =   127336449
          CurrentDate     =   40561
       End
       Begin VB.TextBox txtNumNota 
@@ -1311,7 +1311,7 @@ Private Function MontarVariaveis() As Boolean
     Dim Rst3        As Recordset 'Busca as parcelas da cobranca
     Dim sSQL        As String
     Dim idTMP       As String
-    Dim idProduto   As Integer 'Armazena temporariamente o id do produto para montagem da array
+    Dim idProduto   As Long 'Armazena temporariamente o id do produto para montagem da array
     Dim cont        As Integer
     Dim cProd       As String 'Armazena o codigo do produto que saira na NFe
     

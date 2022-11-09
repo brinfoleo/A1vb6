@@ -89,7 +89,7 @@ Public Sub MontarBaseDados_MMxPOL()
         
         MsgBox "FIM"
 End Sub
-Public Function MontarReferenciaProduto(idProd As Integer) As String
+Public Function MontarReferenciaProduto(idProd As Long) As String
     On Error GoTo MntErro
     Dim sSQL    As String
     Dim Rst     As Recordset
@@ -109,7 +109,7 @@ Public Function MontarReferenciaProduto(idProd As Integer) As String
             If Rst.BOF And Rst.EOF Then
                 a(c, 1) = "0"
                 Else
-                a(c, 1) = cNull(Rst.fields("milimetro"))
+                a(c, 1) = cNull(Rst.Fields("milimetro"))
             End If
             
             'MsgBox a(c, 0) & " - " & ZE(Replace(ChkVal(CStr(a(c, 1)), 0, 2), ".", ""), 6)
@@ -118,12 +118,12 @@ Public Function MontarReferenciaProduto(idProd As Integer) As String
     Next
     Dim X As Integer
     Dim cod As String
-    Dim y As String
+    Dim Y As String
     cod = ""
     For X = 0 To c - 1
-        y = Replace(ChkVal(CStr(a(X, 1)), 0, 2), ".", "")
-        y = Left(String(6, "0"), 6 - Len(Trim(y))) & Trim(y)
-        cod = cod & y
+        Y = Replace(ChkVal(CStr(a(X, 1)), 0, 2), ".", "")
+        Y = Left(String(6, "0"), 6 - Len(Trim(Y))) & Trim(Y)
+        cod = cod & Y
         
     Next
     cod = ZE(CInt(pgDadosEstoqueProduto(idProd).Grupo), 6) & ZE(CInt(pgDadosEstoqueProduto(idProd).subGrupo), 6) & cod

@@ -618,7 +618,7 @@ Attribute VB_PredeclaredId = True
 Attribute VB_Exposed = False
 Option Explicit
 Dim Retorno     As Variant
-Dim IdReg       As Integer
+Dim IdReg       As Long
 Dim idCli       As Integer
 Dim UFCli       As String
 Dim bcICMS      As Integer '0=Mercadoria / 1 - Total da nota
@@ -1090,6 +1090,7 @@ Private Sub PesquisarProduto(Optional Id As Long)
 End Sub
 
 Private Sub CalcVlItem()
+On Error GoTo trtErroCalcVlItem
     Dim SubTotalItem    As String
     Dim IPIItem         As String
     Dim TotalItem       As String
@@ -1100,6 +1101,7 @@ Private Sub CalcVlItem()
     SubTotalItem = Val(ChkVal(txtQuantidade.Text, 0, cDecQtd)) * Val(ChkVal(txtValorUnitario.Text, 0, cDecMoeda))
     IPIItem = (Val(ChkVal(SubTotalItem, 0, cDecMoeda)) * Val(ChkVal(txtAliquotaIPI.Text, 0, cDecMoeda))) / 100
     TotalItem = (Val(ChkVal(SubTotalItem, 0, cDecMoeda)) + Val(ChkVal(IPIItem, 0, cDecMoeda))) - Val(ChkVal(txtDescItem.Text, 0, cDecMoeda))
+    TotalItem = IIf(Val(TotalItem) < 0, 0, TotalItem)
 '
 '    '10/07/2017 - Comentado para permitir ao usuario
 '    '             inserir o valor do ICMS-ST
@@ -1157,6 +1159,10 @@ Private Sub CalcVlItem()
     txtTotalProduto.Text = ConvMoeda(TotalItem)
     'txtvICMSST.text = ConvMoeda(vICMSST)
     lblvICMSSTtotal.Caption = ConvMoeda(vICMSST)
+    Exit Sub
+trtErroCalcVlItem:
+    RegLogDataBase 0, 0, MDIFormA1.wsMain.LocalIP, "Func. CalcVlItem - " & Err.Description
+    Resume Next
 End Sub
 
 Private Sub CarregarProduto()

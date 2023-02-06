@@ -1016,7 +1016,7 @@ Begin VB.Form formFaturamentoPV
          _ExtentX        =   2566
          _ExtentY        =   556
          _Version        =   393216
-         Format          =   127664129
+         Format          =   130416641
          CurrentDate     =   40517
       End
       Begin VB.TextBox txtID 
@@ -1249,7 +1249,7 @@ Attribute VB_PredeclaredId = True
 Attribute VB_Exposed = False
 Option Explicit
 Dim IdReg           As Integer 'ID do Pedido
-Dim iditem          As Integer 'Id dos itens do pedido
+Dim iditem          As Long 'Id dos itens do pedido
 Dim IdTransp        As Integer 'Id da transportadora
 Dim idCliente       As Integer 'Id do cliente
 Dim idCobr          As Integer 'Id Condicoes Pagamento

@@ -45,9 +45,7 @@ Begin VB.Form formFaturamentoNFeEntrada
       TabPicture(1)   =   "formFaturamentoNFeEntrada.frx":001C
       Tab(1).ControlEnabled=   0   'False
       Tab(1).Control(0)=   "Frame5"
-      Tab(1).Control(0).Enabled=   0   'False
       Tab(1).Control(1)=   "Frame7"
-      Tab(1).Control(1).Enabled=   0   'False
       Tab(1).ControlCount=   2
       TabCaption(2)   =   "Total da Nota Fiscal / Obs."
       TabPicture(2)   =   "formFaturamentoNFeEntrada.frx":0038
@@ -862,7 +860,7 @@ Begin VB.Form formFaturamentoNFeEntrada
             _ExtentX        =   2566
             _ExtentY        =   556
             _Version        =   393216
-            Format          =   120520705
+            Format          =   50593793
             CurrentDate     =   40591
          End
          Begin VB.TextBox txtnDupl 
@@ -1001,7 +999,7 @@ Begin VB.Form formFaturamentoNFeEntrada
          _ExtentX        =   2355
          _ExtentY        =   556
          _Version        =   393216
-         Format          =   120520705
+         Format          =   50593793
          CurrentDate     =   40591
       End
       Begin VB.TextBox txtnNF 
@@ -1552,7 +1550,7 @@ Private Sub ExcluirNFe()
                                 '****** Movimenta o estoque **************************************
                                 ide_tpNF = 0
                                 If MovimentarEstoque("s", _
-                                                    CInt(aItem(i)(0)), _
+                                                    CLng(aItem(i)(0)), _
                                                     CDate(ide_dEmi), _
                                                     ide_nNF, _
                                                     CStr(aEstoque(i)(1)), _
@@ -4044,7 +4042,7 @@ Private Sub calcTotais()
     MontarArrayTotais
   
 End Sub
-Private Function PgIDMaterial(cFab As String, sCNPJ As String) As Integer
+Private Function PgIDMaterial(cFab As String, sCNPJ As String) As Long
     Dim sSQL    As String
     Dim Rst     As Recordset
     sSQL = "SELECT FNFe.emit_CNPJ, FNFe.idNFe, FNFeI.idNFe, FNFeI.det_cProd, FNFeI.det_idproduto " & _

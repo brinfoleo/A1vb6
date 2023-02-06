@@ -80,7 +80,7 @@ Begin VB.Form formFaturamentoNFe
          _ExtentX        =   2778
          _ExtentY        =   556
          _Version        =   393216
-         Format          =   127336449
+         Format          =   153812993
          CurrentDate     =   40561
       End
       Begin MSComCtl2.DTPicker dtpEmissao 
@@ -92,7 +92,7 @@ Begin VB.Form formFaturamentoNFe
          _ExtentX        =   2778
          _ExtentY        =   556
          _Version        =   393216
-         Format          =   127336449
+         Format          =   153812993
          CurrentDate     =   40561
       End
       Begin VB.TextBox txtNumNota 
@@ -2055,7 +2055,7 @@ Private Function ValidarVariaveis() As Boolean
     '#### ITEMS
     For i = 0 To cItens
         'Verifica se existe NCM no item
-        If Trim(aItem(i)(5)) <> pgDadosEstoqueProduto(CInt(aItem(i)(0))).NCM Then
+        If Trim(aItem(i)(5)) <> pgDadosEstoqueProduto(CLng(aItem(i)(0))).NCM Then
             If MsgBox("Item " & i + 1 & " - NCM diferente do cadastrado no produto!" & vbCrLf & vbCrLf & _
                    "NCM na PV: " & aItem(i)(5) & vbCrLf & _
                    "NCM do Produto: " & pgDadosEstoqueProduto(CInt(aItem(i)(0))).NCM & vbCrLf & vbCrLf & _
@@ -2727,7 +2727,7 @@ Private Function grvRegistro() As Boolean
         '****** Movimenta o estoque **************************************
         If PgDadosTpNotaFiscal(idTpNF).MovEstoque <> 0 Then
             If MovimentarEstoque(IIf(ide_tpNF = 0, "e", "s"), _
-                                CInt(aItem(i)(0)), _
+                                CLng(aItem(i)(0)), _
                                 CDate(ide_dEmi), _
                                 ide_nNF, _
                                 CStr(aEstoque(i)(1)), _
@@ -2735,7 +2735,7 @@ Private Function grvRegistro() As Boolean
                                 CStr(aItem(i)(10)), _
                                 "Unid.: " & aItem(i)(7) & "  Qtd.: " & aItem(i)(8) & " Vl.Unit.: " & ConvMoeda(CStr(aItem(i)(9))), _
                                  dest_xNome, _
-                                 Id, dest_idDest, dest_CNPJ) = False Then
+                                 Id, CLng(dest_idDest), dest_CNPJ) = False Then
                 MsgBox "Erro ao Movimentar Estoque com o item n. " & i
             End If
         End If

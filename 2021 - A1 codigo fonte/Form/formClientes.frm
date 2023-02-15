@@ -1,7 +1,7 @@
 VERSION 5.00
-Object = "{BDC217C8-ED16-11CD-956C-0000C04E4C0A}#1.1#0"; "tabctl32.ocx"
-Object = "{5E9E78A0-531B-11CF-91F6-C2863C385E30}#1.0#0"; "msflxgrd.ocx"
-Object = "{831FDD16-0C5C-11D2-A9FC-0000F8754DA1}#2.0#0"; "MSCOMCTL.OCX"
+Object = "{BDC217C8-ED16-11CD-956C-0000C04E4C0A}#1.1#0"; "TABCTL32.OCX"
+Object = "{5E9E78A0-531B-11CF-91F6-C2863C385E30}#1.0#0"; "MSFLXGRD.OCX"
+Object = "{831FDD16-0C5C-11D2-A9FC-0000F8754DA1}#2.2#0"; "MSCOMCTL.OCX"
 Begin VB.Form formClientes 
    BorderStyle     =   1  'Fixed Single
    Caption         =   "Clientes"
@@ -245,23 +245,23 @@ Begin VB.Form formClientes
       _Version        =   393216
       TabOrientation  =   1
       Tabs            =   2
-      Tab             =   1
       TabsPerRow      =   2
       TabHeight       =   520
       TabCaption(0)   =   "Dados do Cliente"
       TabPicture(0)   =   "formClientes.frx":58CB
-      Tab(0).ControlEnabled=   0   'False
+      Tab(0).ControlEnabled=   -1  'True
       Tab(0).Control(0)=   "SSt"
+      Tab(0).Control(0).Enabled=   0   'False
       Tab(0).ControlCount=   1
       TabCaption(1)   =   "Histórico de Notas Fiscais"
       TabPicture(1)   =   "formClientes.frx":58E7
-      Tab(1).ControlEnabled=   -1  'True
+      Tab(1).ControlEnabled=   0   'False
       Tab(1).Control(0)=   "Frame5"
       Tab(1).Control(0).Enabled=   0   'False
       Tab(1).ControlCount=   1
       Begin VB.Frame Frame5 
          Height          =   3555
-         Left            =   120
+         Left            =   -74880
          TabIndex        =   14
          Top             =   60
          Width           =   9375
@@ -320,7 +320,7 @@ Begin VB.Form formClientes
       End
       Begin TabDlg.SSTab SSt 
          Height          =   3555
-         Left            =   -74880
+         Left            =   120
          TabIndex        =   16
          Top             =   120
          Width           =   9405
@@ -328,25 +328,26 @@ Begin VB.Form formClientes
          _ExtentY        =   6271
          _Version        =   393216
          Tabs            =   5
+         Tab             =   4
          TabsPerRow      =   5
          TabHeight       =   520
          TabCaption(0)   =   "Basico"
          TabPicture(0)   =   "formClientes.frx":7D5F
-         Tab(0).ControlEnabled=   -1  'True
+         Tab(0).ControlEnabled=   0   'False
          Tab(0).Control(0)=   "Frame3"
          Tab(0).Control(0).Enabled=   0   'False
          Tab(0).ControlCount=   1
          TabCaption(1)   =   "Entrega"
          TabPicture(1)   =   "formClientes.frx":7D7B
          Tab(1).ControlEnabled=   0   'False
-         Tab(1).Control(0)=   "Frame4"
-         Tab(1).Control(1)=   "Frame9"
+         Tab(1).Control(0)=   "Frame9"
+         Tab(1).Control(1)=   "Frame4"
          Tab(1).ControlCount=   2
          TabCaption(2)   =   "Cobrança"
          TabPicture(2)   =   "formClientes.frx":7D97
          Tab(2).ControlEnabled=   0   'False
-         Tab(2).Control(0)=   "Frame13"
-         Tab(2).Control(1)=   "Frame11"
+         Tab(2).Control(0)=   "Frame11"
+         Tab(2).Control(1)=   "Frame13"
          Tab(2).ControlCount=   2
          TabCaption(3)   =   "Contatos"
          TabPicture(3)   =   "formClientes.frx":7DB3
@@ -355,15 +356,19 @@ Begin VB.Form formClientes
          Tab(3).ControlCount=   1
          TabCaption(4)   =   "Outros"
          TabPicture(4)   =   "formClientes.frx":7DCF
-         Tab(4).ControlEnabled=   0   'False
-         Tab(4).Control(0)=   "Frame7"
-         Tab(4).Control(1)=   "Frame6"
-         Tab(4).Control(2)=   "Frame8"
-         Tab(4).Control(3)=   "Frame10"
+         Tab(4).ControlEnabled=   -1  'True
+         Tab(4).Control(0)=   "Frame10"
+         Tab(4).Control(0).Enabled=   0   'False
+         Tab(4).Control(1)=   "Frame8"
+         Tab(4).Control(1).Enabled=   0   'False
+         Tab(4).Control(2)=   "Frame6"
+         Tab(4).Control(2).Enabled=   0   'False
+         Tab(4).Control(3)=   "Frame7"
+         Tab(4).Control(3).Enabled=   0   'False
          Tab(4).ControlCount=   4
          Begin VB.Frame Frame3 
             Height          =   3015
-            Left            =   120
+            Left            =   -74880
             TabIndex        =   78
             Top             =   360
             Width           =   9015
@@ -931,7 +936,7 @@ Begin VB.Form formClientes
          End
          Begin VB.Frame Frame7 
             Height          =   1995
-            Left            =   -71160
+            Left            =   3840
             TabIndex        =   26
             Top             =   1320
             Width           =   4095
@@ -1024,7 +1029,7 @@ Begin VB.Form formClientes
          End
          Begin VB.Frame Frame6 
             Height          =   795
-            Left            =   -74940
+            Left            =   60
             TabIndex        =   23
             Top             =   1380
             Width           =   2835
@@ -1048,7 +1053,7 @@ Begin VB.Form formClientes
          Begin VB.Frame Frame8 
             Caption         =   "Observações:"
             Height          =   915
-            Left            =   -74940
+            Left            =   60
             TabIndex        =   21
             Top             =   360
             Width           =   9015
@@ -1073,7 +1078,7 @@ Begin VB.Form formClientes
                Strikethrough   =   0   'False
             EndProperty
             Height          =   795
-            Left            =   -74880
+            Left            =   120
             TabIndex        =   19
             Top             =   2400
             Width           =   3555

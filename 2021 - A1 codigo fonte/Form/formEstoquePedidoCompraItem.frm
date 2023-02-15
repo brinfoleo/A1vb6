@@ -94,7 +94,7 @@ Begin VB.Form formEstoquePedidoCompraItem
          Begin VB.TextBox txtAliquotaIPI 
             Height          =   285
             Left            =   840
-            MaxLength       =   3
+            MaxLength       =   8
             TabIndex        =   39
             Text            =   "Text1"
             Top             =   300
@@ -804,7 +804,7 @@ Private Sub txtAliquotaIPI_Change()
 End Sub
 
 Private Sub txtAliquotaIPI_KeyPress(KeyAscii As Integer)
-    KeyAscii = ChkVal(txtAliquotaIPI.Text, KeyAscii, 2)
+    KeyAscii = ChkVal(txtAliquotaIPI.Text, KeyAscii, 3)
 End Sub
 
 

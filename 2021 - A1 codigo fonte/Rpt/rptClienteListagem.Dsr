@@ -10,7 +10,7 @@ Begin {78E93846-85FD-11D0-8487-00A0C90DC8A9} rptClienteListagem
    _ExtentX        =   19659
    _ExtentY        =   14764
    _Version        =   393216
-   _DesignerVersion=   100688210
+   _DesignerVersion=   100684101
    ReportWidth     =   10470
    BeginProperty Font {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
       Name            =   "Arial"
@@ -93,14 +93,14 @@ Begin {78E93846-85FD-11D0-8487-00A0C90DC8A9} rptClienteListagem
    BeginProperty Section2 {1C13A8E0-A0B6-11D0-848E-00A0C90DC8A9} 
       _Version        =   393216
       Name            =   "Section1"
-      Object.Height          =   2415
+      Object.Height          =   1980
       NumControls     =   21
       ItemType0       =   5
       BeginProperty Item0 {1C13A8E3-A0B6-11D0-848E-00A0C90DC8A9} 
          _Version        =   393216
          Name            =   "Line1"
          Object.Left            =   57
-         Object.Top             =   2211
+         Object.Top             =   1869
          Object.Width           =   10305
       EndProperty
       ItemType1       =   3
@@ -128,7 +128,7 @@ Begin {78E93846-85FD-11D0-8487-00A0C90DC8A9} rptClienteListagem
          _Version        =   393216
          Name            =   "Label3"
          Object.Left            =   514
-         Object.Top             =   394
+         Object.Top             =   337
          Object.Width           =   1020
          Object.Height          =   225
          BeginProperty Font {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
@@ -148,7 +148,7 @@ Begin {78E93846-85FD-11D0-8487-00A0C90DC8A9} rptClienteListagem
          _Version        =   393216
          Name            =   "Label4"
          Object.Left            =   514
-         Object.Top             =   732
+         Object.Top             =   618
          Object.Width           =   1020
          Object.Height          =   225
          BeginProperty Font {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
@@ -168,7 +168,7 @@ Begin {78E93846-85FD-11D0-8487-00A0C90DC8A9} rptClienteListagem
          _Version        =   393216
          Name            =   "Label6"
          Object.Left            =   5499
-         Object.Top             =   732
+         Object.Top             =   618
          Object.Width           =   675
          Object.Height          =   225
          BeginProperty Font {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
@@ -188,7 +188,7 @@ Begin {78E93846-85FD-11D0-8487-00A0C90DC8A9} rptClienteListagem
          _Version        =   393216
          Name            =   "Label7"
          Object.Left            =   7257
-         Object.Top             =   732
+         Object.Top             =   618
          Object.Width           =   570
          Object.Height          =   225
          BeginProperty Font {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
@@ -208,7 +208,7 @@ Begin {78E93846-85FD-11D0-8487-00A0C90DC8A9} rptClienteListagem
          _Version        =   393216
          Name            =   "Label8"
          Object.Left            =   514
-         Object.Top             =   1070
+         Object.Top             =   899
          Object.Width           =   1020
          Object.Height          =   225
          BeginProperty Font {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
@@ -228,7 +228,7 @@ Begin {78E93846-85FD-11D0-8487-00A0C90DC8A9} rptClienteListagem
          _Version        =   393216
          Name            =   "Label9"
          Object.Left            =   514
-         Object.Top             =   1465
+         Object.Top             =   1180
          Object.Width           =   1020
          Object.Height          =   225
          BeginProperty Font {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
@@ -247,8 +247,8 @@ Begin {78E93846-85FD-11D0-8487-00A0C90DC8A9} rptClienteListagem
       BeginProperty Item8 {1C13A8E1-A0B6-11D0-848E-00A0C90DC8A9} 
          _Version        =   393216
          Name            =   "Label10"
-         Object.Left            =   3118
-         Object.Top             =   1867
+         Object.Left            =   3175
+         Object.Top             =   1525
          Object.Width           =   525
          Object.Height          =   210
          BeginProperty Font {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
@@ -268,7 +268,7 @@ Begin {78E93846-85FD-11D0-8487-00A0C90DC8A9} rptClienteListagem
          _Version        =   393216
          Name            =   "Label11"
          Object.Left            =   514
-         Object.Top             =   1860
+         Object.Top             =   1518
          Object.Width           =   1020
          Object.Height          =   225
          BeginProperty Font {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
@@ -288,7 +288,7 @@ Begin {78E93846-85FD-11D0-8487-00A0C90DC8A9} rptClienteListagem
          _Version        =   393216
          Name            =   "Text2"
          Object.Left            =   1701
-         Object.Top             =   394
+         Object.Top             =   337
          Object.Width           =   3005
          Object.Height          =   225
          BeginProperty Font {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
@@ -316,7 +316,7 @@ Begin {78E93846-85FD-11D0-8487-00A0C90DC8A9} rptClienteListagem
          _Version        =   393216
          Name            =   "Text3"
          Object.Left            =   1701
-         Object.Top             =   732
+         Object.Top             =   618
          Object.Width           =   3628
          Object.Height          =   225
          BeginProperty Font {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
@@ -344,7 +344,7 @@ Begin {78E93846-85FD-11D0-8487-00A0C90DC8A9} rptClienteListagem
          _Version        =   393216
          Name            =   "Text4"
          Object.Left            =   6293
-         Object.Top             =   732
+         Object.Top             =   618
          Object.Width           =   855
          Object.Height          =   225
          BeginProperty Font {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
@@ -372,7 +372,7 @@ Begin {78E93846-85FD-11D0-8487-00A0C90DC8A9} rptClienteListagem
          _Version        =   393216
          Name            =   "Text5"
          Object.Left            =   7937
-         Object.Top             =   732
+         Object.Top             =   618
          Object.Width           =   1935
          Object.Height          =   225
          BeginProperty Font {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
@@ -400,7 +400,7 @@ Begin {78E93846-85FD-11D0-8487-00A0C90DC8A9} rptClienteListagem
          _Version        =   393216
          Name            =   "Text6"
          Object.Left            =   1701
-         Object.Top             =   1074
+         Object.Top             =   903
          Object.Width           =   1984
          Object.Height          =   227
          BeginProperty Font {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
@@ -428,7 +428,7 @@ Begin {78E93846-85FD-11D0-8487-00A0C90DC8A9} rptClienteListagem
          _Version        =   393216
          Name            =   "Text7"
          Object.Left            =   1701
-         Object.Top             =   1464
+         Object.Top             =   1179
          Object.Width           =   2494
          Object.Height          =   227
          BeginProperty Font {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
@@ -456,7 +456,7 @@ Begin {78E93846-85FD-11D0-8487-00A0C90DC8A9} rptClienteListagem
          _Version        =   393216
          Name            =   "Text8"
          Object.Left            =   3798
-         Object.Top             =   1837
+         Object.Top             =   1495
          Object.Width           =   510
          Object.Height          =   270
          BeginProperty Font {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
@@ -484,7 +484,7 @@ Begin {78E93846-85FD-11D0-8487-00A0C90DC8A9} rptClienteListagem
          _Version        =   393216
          Name            =   "Text9"
          Object.Left            =   1701
-         Object.Top             =   1831
+         Object.Top             =   1489
          Object.Width           =   1077
          Object.Height          =   283
          BeginProperty Font {0BE35203-8F91-11CE-9DE3-00AA004BB851} 

@@ -241,7 +241,7 @@ Begin VB.MDIForm MDIFormA1
             Bevel           =   0
             Object.Width           =   1693
             MinWidth        =   71
-            TextSave        =   "03/08/2021"
+            TextSave        =   "14/02/2023"
          EndProperty
          BeginProperty Panel6 {8E3867AB-8586-11D1-B16A-00C0F0283628} 
             Style           =   5
@@ -250,7 +250,7 @@ Begin VB.MDIForm MDIFormA1
             Bevel           =   0
             Object.Width           =   873
             MinWidth        =   71
-            TextSave        =   "19:29"
+            TextSave        =   "23:19"
          EndProperty
       EndProperty
    End
@@ -705,8 +705,23 @@ Private Sub MDIForm_Activate()
         .Panels(2).Text = UCase(PgDadosUsuario(ID_Usuario).Nome)
         .Panels(2).Alignment = sbrLeft
     End With
+    NotificacaoValidadeCertificadoDigital
 End Sub
 
+
+Private Sub NotificacaoValidadeCertificadoDigital()
+    On Error Resume Next
+    Dim validCertDig As Date
+    
+    If Len(Trim(PgDadosConfig.FinValCertDigital)) = 0 Then Exit Sub
+    validCertDig = PgDadosConfig.FinValCertDigital
+    Dim x As Integer
+    x = CDate(validCertDig) - Date
+    If x <= 10 Then
+        MsgBox "Seu certificado digital expira em  " & x & " dias!", vbCritical, "Validade Certificado digital"
+    End If
+    
+End Sub
 Private Sub mnuContratoGerenciador_Click()
     formContratoGerenciador.Show
 End Sub

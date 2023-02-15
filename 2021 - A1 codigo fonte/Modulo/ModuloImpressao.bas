@@ -683,14 +683,16 @@ Public Sub ImpRomaneio(IdReg As Integer)
 End Sub
 
 
-Public Sub ImprimirListaClientes(Optional uf As String)
+Public Sub ImprimirListaClientes(Optional numVendedor As Integer, Optional uf As String)
     'Listagem de Cientes
     Dim sSQL        As String
     Dim Rst        As Recordset
     'Dim Rst2        As Recordset
     'If idReg = 0 Then Exit Sub
     
-    sSQL = "SELECT * FROM clientes WHERE ID_Empresa = " & ID_Empresa & IIf(Len(uf) = 0, "", " AND UF = '" & uf & "'")
+    sSQL = "SELECT * FROM clientes WHERE ID_Empresa = " & ID_Empresa & _
+    IIf(numVendedor = 0, "", " AND vendedor = '" & numVendedor & "'") & _
+    IIf(Len(uf) = 0, "", " AND UF = '" & uf & "'")
     '& " AND ID = " & idReg
     Set Rst = RegistroBuscar(sSQL)
     'Set rptClienteListagem.DataSource = Rst.DataSource

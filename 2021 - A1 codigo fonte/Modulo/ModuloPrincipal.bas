@@ -121,6 +121,8 @@ Public Sub Main()
 '    End If
    
     MonitoramentoConexao Conectar
+    'Update version of system
+    updateSistema
         
     MDIFormA1.Show
         
@@ -255,10 +257,12 @@ Public Sub updateSistema()
     '# o fechamento dos micros da rede
     '#
     '#
-    Dim sSQL    As String
-    Dim Rst     As Recordset
-    Dim vReg(5) As Variant
-    Dim cReg    As Integer
+    Dim sSQL        As String
+    Dim Rst         As Recordset
+    Dim fullVersion As Long
+    'Dim vReg(5) As Variant
+    'Dim cReg    As Integer
+    fullVersion = Replace(sVersao, ".", "") & cVersao
     sSQL = "CREATE TABLE IF NOT EXISTS updatesistema " & _
               "(Id INT(11) NOT NULL AUTO_INCREMENT," & _
                "Id_Empresa INT default Null," & _
@@ -268,12 +272,23 @@ Public Sub updateSistema()
                " PRIMARY KEY (Id))"
     BD.Execute sSQL
     
-    
-    'sSQL = "SELECT * FROM updatesistema ORDER BY vAtual"
-    'Set Rst = RegistroBuscar(sSQL)
-    'If Rst.BOF And Rst.EOF Then
-    '    Else
-    'End If
+    'Check system version
+    sSQL = "SELECT * FROM updatesistema WHERE Id_Empresa = " & ID_Empresa & " ORDER BY vAtual"
+    Set Rst = RegistroBuscar(sSQL)
+    If Rst.BOF And Rst.EOF Then
+            sSQL = "INSERT INTO updatesistema (id_Empresa,UsuID,DtHr,vAtual) VALUES " & _
+            "(" & ID_Empresa & "," & ID_Usuario & ",'" & Now() & "','" & fullVersion & "')"
+            BD.Execute sSQL
+        Else
+            If Rst.Fields("vAtual") < fullVersion Then
+                    
+                    sSQL = "UPDATE updatesistema SET DtHr='" & Now() & "', vAtual='" & fullVersion & "' WHERE ID_Empresa = " & ID_Empresa
+                    BD.Execute sSQL
+                ElseIf (Rst.Fields("vAtual") <> fullVersion) Then
+                    MsgBox "Seu sistema esta decrepito. Favor atualizar o mais breve possivel!", vbCritical, "Versao A1"
+            End If
+            
+    End If
     'FinalizandoSistema
     'End
     

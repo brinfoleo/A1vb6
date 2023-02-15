@@ -1571,7 +1571,7 @@ Public Function pgDadosCentroCustos(idCentroCustos As Integer) As Dados_CentroCu
             Rst.MoveFirst
             pgDadosCentroCustos.Id = Left(String(3, "0"), 3 - Len(Trim(idCentroCustos))) & idCentroCustos
             pgDadosCentroCustos.Descricao = Rst.Fields("descricao")
-            pgDadosCentroCustos.Sigla = Rst.Fields("Sigla")
+            pgDadosCentroCustos.Sigla = IIf(IsNull(Rst.Fields("Sigla")), "", Rst.Fields("Sigla"))
             Rst.Close
             Exit Function
     End If

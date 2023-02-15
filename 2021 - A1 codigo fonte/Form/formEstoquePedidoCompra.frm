@@ -2,7 +2,7 @@ VERSION 5.00
 Object = "{BDC217C8-ED16-11CD-956C-0000C04E4C0A}#1.1#0"; "TABCTL32.OCX"
 Object = "{5E9E78A0-531B-11CF-91F6-C2863C385E30}#1.0#0"; "MSFLXGRD.OCX"
 Object = "{86CF1D34-0C5F-11D2-A9FC-0000F8754DA1}#2.0#0"; "MSCOMCT2.OCX"
-Object = "{831FDD16-0C5C-11D2-A9FC-0000F8754DA1}#2.0#0"; "MSCOMCTL.OCX"
+Object = "{831FDD16-0C5C-11D2-A9FC-0000F8754DA1}#2.2#0"; "MSCOMCTL.OCX"
 Begin VB.Form formEstoquePedidoCompra 
    BorderStyle     =   1  'Fixed Single
    Caption         =   "Estoque - Pedido de Compra"
@@ -1007,7 +1007,7 @@ Begin VB.Form formEstoquePedidoCompra
          _ExtentX        =   2566
          _ExtentY        =   556
          _Version        =   393216
-         Format          =   101384193
+         Format          =   137101313
          CurrentDate     =   40517
       End
       Begin VB.TextBox txtID 
@@ -1223,7 +1223,7 @@ Attribute VB_PredeclaredId = True
 Attribute VB_Exposed = False
 Option Explicit
 Dim IdReg           As Integer 'ID do Pedido
-Dim iditem          As Integer 'Id dos itens do pedido
+Dim iditem          As Long 'Id dos itens do pedido
 Dim IdTransp        As Integer 'Id da transportadora
 Dim idCliente       As Integer 'Id do cliente
 Dim idCobr          As Integer 'Id Condicoes Pagamento

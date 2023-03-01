@@ -80,7 +80,7 @@ Begin VB.Form formFaturamentoNFe
          _ExtentX        =   2778
          _ExtentY        =   556
          _Version        =   393216
-         Format          =   153812993
+         Format          =   125304833
          CurrentDate     =   40561
       End
       Begin MSComCtl2.DTPicker dtpEmissao 
@@ -92,7 +92,7 @@ Begin VB.Form formFaturamentoNFe
          _ExtentX        =   2778
          _ExtentY        =   556
          _Version        =   393216
-         Format          =   153812993
+         Format          =   125304833
          CurrentDate     =   40561
       End
       Begin VB.TextBox txtNumNota 
@@ -2058,7 +2058,7 @@ Private Function ValidarVariaveis() As Boolean
         If Trim(aItem(i)(5)) <> pgDadosEstoqueProduto(CLng(aItem(i)(0))).NCM Then
             If MsgBox("Item " & i + 1 & " - NCM diferente do cadastrado no produto!" & vbCrLf & vbCrLf & _
                    "NCM na PV: " & aItem(i)(5) & vbCrLf & _
-                   "NCM do Produto: " & pgDadosEstoqueProduto(CInt(aItem(i)(0))).NCM & vbCrLf & vbCrLf & _
+                   "NCM do Produto: " & pgDadosEstoqueProduto(CLng(aItem(i)(0))).NCM & vbCrLf & vbCrLf & _
                    "Deseja substituir?", vbInformation + vbYesNo, "Aviso") = vbYes Then
                         'Substituir NCM
                         ValidarVariaveis = True
@@ -2066,7 +2066,7 @@ Private Function ValidarVariaveis() As Boolean
                         aItem(i)(5) = pgDadosEstoqueProduto(CInt(aItem(i)(0))).NCM
                     Else
                         'ValidarVariaveis = False
-                        msgValid "Item " & ZE(i + 1, 3) & ": NCM (" & aItem(i)(5) & ") diferente do cadastrado no produto (" & pgDadosEstoqueProduto(CInt(aItem(i)(0))).NCM & ")"
+                        msgValid "Item " & ZE(i + 1, 3) & ": NCM (" & aItem(i)(5) & ") diferente do cadastrado no produto (" & pgDadosEstoqueProduto(CLng(aItem(i)(0))).NCM & ")"
                         'Exit Function
             End If
             

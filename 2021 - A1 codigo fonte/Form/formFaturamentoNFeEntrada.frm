@@ -34,12 +34,12 @@ Begin VB.Form formFaturamentoNFeEntrada
       _ExtentX        =   21087
       _ExtentY        =   9869
       _Version        =   393216
-      Tab             =   2
       TabHeight       =   520
       TabCaption(0)   =   "Dados dos Produtos"
       TabPicture(0)   =   "formFaturamentoNFeEntrada.frx":0000
-      Tab(0).ControlEnabled=   0   'False
+      Tab(0).ControlEnabled=   -1  'True
       Tab(0).Control(0)=   "Frame6"
+      Tab(0).Control(0).Enabled=   0   'False
       Tab(0).ControlCount=   1
       TabCaption(1)   =   "Faturamento/Transportador"
       TabPicture(1)   =   "formFaturamentoNFeEntrada.frx":001C
@@ -49,11 +49,9 @@ Begin VB.Form formFaturamentoNFeEntrada
       Tab(1).ControlCount=   2
       TabCaption(2)   =   "Total da Nota Fiscal / Obs."
       TabPicture(2)   =   "formFaturamentoNFeEntrada.frx":0038
-      Tab(2).ControlEnabled=   -1  'True
-      Tab(2).Control(0)=   "Frame4"
-      Tab(2).Control(0).Enabled=   0   'False
-      Tab(2).Control(1)=   "Frame9"
-      Tab(2).Control(1).Enabled=   0   'False
+      Tab(2).ControlEnabled=   0   'False
+      Tab(2).Control(0)=   "Frame9"
+      Tab(2).Control(1)=   "Frame4"
       Tab(2).ControlCount=   2
       Begin VB.Frame Frame9 
          Caption         =   "Observações"
@@ -67,7 +65,7 @@ Begin VB.Form formFaturamentoNFeEntrada
             Strikethrough   =   0   'False
          EndProperty
          Height          =   1575
-         Left            =   180
+         Left            =   -74820
          TabIndex        =   113
          Top             =   3840
          Width           =   11535
@@ -94,7 +92,7 @@ Begin VB.Form formFaturamentoNFeEntrada
             Strikethrough   =   0   'False
          EndProperty
          Height          =   3375
-         Left            =   120
+         Left            =   -74880
          TabIndex        =   85
          Top             =   420
          Width           =   11595
@@ -450,7 +448,7 @@ Begin VB.Form formFaturamentoNFeEntrada
       End
       Begin VB.Frame Frame6 
          Height          =   5055
-         Left            =   -74820
+         Left            =   180
          TabIndex        =   39
          Top             =   420
          Width           =   11655
@@ -860,7 +858,7 @@ Begin VB.Form formFaturamentoNFeEntrada
             _ExtentX        =   2566
             _ExtentY        =   556
             _Version        =   393216
-            Format          =   50593793
+            Format          =   115933185
             CurrentDate     =   40591
          End
          Begin VB.TextBox txtnDupl 
@@ -999,7 +997,7 @@ Begin VB.Form formFaturamentoNFeEntrada
          _ExtentX        =   2355
          _ExtentY        =   556
          _Version        =   393216
-         Format          =   50593793
+         Format          =   115933185
          CurrentDate     =   40591
       End
       Begin VB.TextBox txtnNF 
@@ -1474,7 +1472,7 @@ Dim infCpl              As String
 
 
 
-Private Sub AtualizarCustos(iProduto As Integer, sCusto As String)
+Private Sub AtualizarCustos(iProduto As Long, sCusto As String)
     '******************************************************************************************
     '*** Data: 08/07/2011
     '*** Obj.: Atualiza o preco de custo do material
@@ -1913,6 +1911,11 @@ Private Sub btoDuplAdicionar_Click()
     cboCentroCustos.Clear
     cboDocumento.Clear
     cboPlanoContas.Clear
+    
+    cboCentroCustos.Enabled = False
+    cboDocumento.Enabled = False
+    cboPlanoContas.Enabled = False
+    btoDuplAdicionar.Enabled = False
 End Sub
 
 Private Sub btoDuplRemover_Click()
@@ -1944,7 +1947,7 @@ Private Sub PesquisarProduto()
     If Trim(idProd) = 0 Then Exit Sub
     
    
-    txtIdProd.Text = pgDadosEstoqueProduto(idProd).Id
+    txtIdProd.Text = idProd 'pgDadosEstoqueProduto(idProd).Id
     txtDescricao.Text = pgDadosEstoqueProduto(idProd).Descricao
     
     'Nao termina de preecher a tela pois tratase de NFe
@@ -2440,10 +2443,21 @@ Private Sub msfgDupl_Click()
         cboCentroCustos.Clear
         cboCentroCustos.AddItem IIf(Trim(.TextMatrix(.Row, 4)) = "", " ", .TextMatrix(.Row, 4))
         cboCentroCustos.Text = cboCentroCustos.List(0)
+        cboCentroCustos.Enabled = True
+        
         
         cboDocumento.Clear
         cboDocumento.AddItem IIf(Trim(.TextMatrix(.Row, 5)) = "", " ", .TextMatrix(.Row, 5))
         cboDocumento.Text = cboDocumento.List(0)
+        cboDocumento.Enabled = True
+        
+        cboPlanoContas.Clear
+        cboPlanoContas.AddItem IIf(Trim(.TextMatrix(.Row, 6)) = "", " ", .TextMatrix(.Row, 6))
+        cboPlanoContas.Text = cboPlanoContas.List(0)
+        cboPlanoContas.Enabled = True
+        
+        btoDuplAdicionar.Enabled = True
+        
     End With
 End Sub
 
@@ -3378,7 +3392,7 @@ Private Function grvRegistro() As Boolean
         '*** Objetivo: Atualizar Custo do Produto
         '*** Data: 08/07/2011
         If PgDadosConfig.EstoqueAtualizarCusto = 1 Then
-            AtualizarCustos CInt(aItem(i)(0)), CStr(aEstoque(i)(2))
+            AtualizarCustos CLng(aItem(i)(0)), CStr(aEstoque(i)(2))
         End If
         '*******************************************************************
         cReg = 0

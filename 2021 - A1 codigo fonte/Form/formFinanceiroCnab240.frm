@@ -1,18 +1,31 @@
 VERSION 5.00
+Object = "{5E9E78A0-531B-11CF-91F6-C2863C385E30}#1.0#0"; "MSFLXGRD.OCX"
 Object = "{86CF1D34-0C5F-11D2-A9FC-0000F8754DA1}#2.0#0"; "MSCOMCT2.OCX"
 Begin VB.Form formFinanceiroCnab240 
    BorderStyle     =   1  'Fixed Single
    Caption         =   "A1 - CNAB 240"
-   ClientHeight    =   3720
+   ClientHeight    =   9555
    ClientLeft      =   45
    ClientTop       =   375
-   ClientWidth     =   8205
+   ClientWidth     =   16305
    LinkTopic       =   "Form1"
    MaxButton       =   0   'False
    MinButton       =   0   'False
-   ScaleHeight     =   3720
-   ScaleWidth      =   8205
+   ScaleHeight     =   9555
+   ScaleWidth      =   16305
    StartUpPosition =   3  'Windows Default
+   Begin MSFlexGridLib.MSFlexGrid MSFlexGrid1 
+      Height          =   6555
+      Left            =   120
+      TabIndex        =   7
+      Top             =   2580
+      Width           =   15915
+      _ExtentX        =   28072
+      _ExtentY        =   11562
+      _Version        =   393216
+      Cols            =   6
+      FormatString    =   "^ID|Sacado                             |^Fatura   |^NN     |^Valor       |^Enviado "
+   End
    Begin VB.ComboBox cboConta 
       Height          =   315
       Left            =   1380
@@ -46,7 +59,7 @@ Begin VB.Form formFinanceiroCnab240
          _ExtentX        =   2566
          _ExtentY        =   556
          _Version        =   393216
-         Format          =   117309441
+         Format          =   137101313
          CurrentDate     =   40557
       End
       Begin MSComCtl2.DTPicker dtpDtFinal 
@@ -58,7 +71,7 @@ Begin VB.Form formFinanceiroCnab240
          _ExtentX        =   2566
          _ExtentY        =   556
          _Version        =   393216
-         Format          =   117309441
+         Format          =   137101313
          CurrentDate     =   40557
       End
       Begin VB.Label Label4 

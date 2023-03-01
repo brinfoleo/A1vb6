@@ -1,6 +1,6 @@
 VERSION 5.00
 Object = "{86CF1D34-0C5F-11D2-A9FC-0000F8754DA1}#2.0#0"; "MSCOMCT2.OCX"
-Object = "{831FDD16-0C5C-11D2-A9FC-0000F8754DA1}#2.2#0"; "mscomctl.ocx"
+Object = "{831FDD16-0C5C-11D2-A9FC-0000F8754DA1}#2.2#0"; "MSCOMCTL.OCX"
 Begin VB.Form formFinanceiroContasPRCadastro 
    BorderStyle     =   1  'Fixed Single
    Caption         =   "  "
@@ -63,7 +63,7 @@ Begin VB.Form formFinanceiroContasPRCadastro
          _ExtentX        =   2355
          _ExtentY        =   556
          _Version        =   393216
-         Format          =   114163713
+         Format          =   137035777
          CurrentDate     =   40602
       End
       Begin VB.Label Label25 
@@ -472,7 +472,7 @@ Begin VB.Form formFinanceiroContasPRCadastro
          _ExtentX        =   2355
          _ExtentY        =   556
          _Version        =   393216
-         Format          =   114163713
+         Format          =   137035777
          CurrentDate     =   40557
       End
       Begin VB.Label Label24 
@@ -600,7 +600,7 @@ Begin VB.Form formFinanceiroContasPRCadastro
          _ExtentX        =   2355
          _ExtentY        =   556
          _Version        =   393216
-         Format          =   114163713
+         Format          =   137035777
          CurrentDate     =   40557
       End
       Begin VB.Label Label4 
@@ -1085,7 +1085,7 @@ End Sub
 Private Sub cboCentroCustos_DropDown()
     Dim Rst As Recordset
     cboCentroCustos.Clear
-    Set Rst = RegistroBuscar("SELECT * FROM FinanceiroCentroCustos")
+    Set Rst = RegistroBuscar("SELECT * FROM FinanceiroCentroCustos WHERE ID_Empresa = " & ID_Empresa)
     If Rst.BOF And Rst.EOF Then
             'Exit Sub
         Else
@@ -1219,7 +1219,7 @@ End Sub
 Private Sub cboPlanoContas_DropDown()
     Dim Rst As Recordset
     cboPlanoContas.Clear
-    Set Rst = RegistroBuscar("SELECT * FROM FinanceiroPlanoContas ORDER BY Codigo")
+    Set Rst = RegistroBuscar("SELECT * FROM FinanceiroPlanoContas WHERE ID_Empresa = " & ID_Empresa & " ORDER BY Codigo")
     If Rst.BOF And Rst.EOF Then
             'Exit Sub
         Else

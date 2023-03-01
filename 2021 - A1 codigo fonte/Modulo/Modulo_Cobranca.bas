@@ -1122,8 +1122,8 @@ Public Sub cnab240(DtIni As Date, DtFin As Date, _
 
     Dim fd              As String
     Dim line            As String
-    Dim rgP(1000)       As String
-    Dim rgQ(1000)       As String
+    Dim rgP(9000)       As String
+    Dim rgQ(9000)       As String
     Dim c               As Integer
     Dim sQL             As String
     
@@ -1141,12 +1141,19 @@ Public Sub cnab240(DtIni As Date, DtFin As Date, _
         ExcluirFile fd
     End If
     
+    Dim tpPeriodo As String
+    
+    tpPeriodo = tpPeriodo & "Emissao >= '" & Format(DtIni, "YYYY-MM-DD") & _
+            "' AND " & tpPeriodo & " Emissao <= '" & Format(DtFin, "YYYY-MM-DD") & "'"
+    
     
     sQL = "SELECT * FROM financeirocontasprcadastro"
-    sQL = sQL & " WHERE gerarcnab240 = " & lote 'lote deve estar vazio pela 1 vez
+    sQL = sQL & " WHERE ID_Empresa = " & ID_Empresa & " AND " & tpPeriodo
+    'sQL = sQL & " WHERE gerarcnab240 = " & lote 'lote deve estar vazio pela 1 vez
     sQL = sQL & " AND conta = " & contaId
     sQL = sQL & " AND nossonumero Is NOT  Null"
     Set Rst = RegistroBuscar(sQL)
+    
     If Rst.BOF And Rst.EOF Then
         Rst.Close
         MsgBox "Nenhum registro encontrado"

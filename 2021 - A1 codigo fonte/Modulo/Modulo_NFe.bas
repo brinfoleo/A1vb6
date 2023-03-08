@@ -5,6 +5,7 @@ Type CalculoST
     vBCICMSST       As String
     vICMSST         As String
 End Type
+Private strMountTXT    As String
 Public Function Calculo_ICMSST(UF_Origem As String, UF_Destino As String, sMVA As String, sValor As String, vICMSOrigem As String) As CalculoST
     
     
@@ -257,9 +258,9 @@ Public Function cDV11(strNumero As String) As String
     cDV11 = Chr(Soma + Asc("0"))
   
 End Function
-Private Sub ChecarArquivo(nmArquivo)
+Private Sub ChecarArquivo(nmarquivo)
     Dim caminho As String
-    caminho = PgDadosConfig.pFileArmazenamento & "\" & nmArquivo
+    caminho = PgDadosConfig.pFileArmazenamento & "\" & nmarquivo
     If Dir(caminho) <> "" Then
         Kill caminho
     End If
@@ -726,7 +727,11 @@ Public Function Exportar_NFe_v200_TXT(chvNFe As String) As String
     Rst3.Close
 End Function
 
-Private Sub grvReg(nmArquivo As String, Dados As String)
+Private Sub MountTXT(dados As String)
+    strMountTXT = strMountTXT & vbCrLf & dados
+End Sub
+
+Private Sub grvReg(nmarquivo As String, dados As String)
     On Error GoTo TrtErro
     'define o ObjPreview filesystem e demais variaveis
     Dim fso As New FileSystemObject
@@ -734,12 +739,13 @@ Private Sub grvReg(nmArquivo As String, Dados As String)
     Dim arquivoLog As TextStream
     Dim msg As String
     Dim caminho As String
-
+    
+    
     'If Dir(SistemPath & "\Nfe", vbDirectory) = "" Then
     '    MkDir SistemPath & "\NFe"
     'End If
 
-    caminho = PgDadosConfig.pFileArmazenamento & "\" & nmArquivo
+    caminho = PgDadosConfig.pFileArmazenamento & "\" & nmarquivo
     'se o arquivo não existir então cria
     If fso.FileExists(caminho) Then
             Set Arquivo = fso.GetFile(caminho)
@@ -753,10 +759,11 @@ Private Sub grvReg(nmArquivo As String, Dados As String)
     Set arquivoLog = Arquivo.OpenAsTextStream(ForAppending)
     
     'monta informações para gerar a linha da mensagem
-    msg = Dados
+    msg = dados
 
     'inclui linhas no arquivo texto
     arquivoLog.WriteLine msg
+    
     
     'escreve uma linha em branco no arquivo - se voce quiser
     'arquivoLog.WriteBlankLines (1)
@@ -1669,7 +1676,7 @@ Public Function Exportar_NFe_v400_TXT(chvNFe As String) As String
     Dim nmArq   As String
     Dim cItens  As Integer 'Conta os registros dos itens da Nota
     Dim cCob    As Integer 'Conta os registros da cobranca da Nota
-    
+    Dim numNFe  As String ' Numero da nfe
     sSQL = "SELECT * FROM FaturamentoNFe WHERE ID_Empresa = " & ID_Empresa & " AND idNFe = '" & chvNFe & "'"
     Set Rst1 = RegistroBuscar(sSQL)
     If Rst1.BOF And Rst1.EOF Then
@@ -1697,14 +1704,16 @@ Public Function Exportar_NFe_v400_TXT(chvNFe As String) As String
         Else
             Rst3.MoveFirst
     End If
-     nmArq = Rst1.Fields("ide_nNF") & "_" & Rst1.Fields("emit_CNPJ") & "_" & Format(Rst1.Fields("ide_dEmi"), "DD") & "_" & Format(Rst1.Fields("ide_dEmi"), "MM") & "_" & Format(Rst1.Fields("ide_dEmi"), "YYYY") & "-nfe.txt"
+    
+    numNFe = Rst1.Fields("ide_nNF")
+    nmArq = Rst1.Fields("ide_nNF") & "_" & Rst1.Fields("emit_CNPJ") & "_" & Format(Rst1.Fields("ide_dEmi"), "DD") & "_" & Format(Rst1.Fields("ide_dEmi"), "MM") & "_" & Format(Rst1.Fields("ide_dEmi"), "YYYY") & "-nfe.txt"
      
-     ChecarArquivo (nmArq)
+    ChecarArquivo (nmArq)
 '========================================================================
     
-    grvReg nmArq, "NOTAFISCAL|1"
+    MountTXT "NOTAFISCAL|1"
     'A
-    grvReg nmArq, "A|" & Rst1.Fields("Versao") & _
+    MountTXT "A|" & Rst1.Fields("Versao") & _
                         "|NFe" & chvNFe & "|"
     'B
     ' Rst1.Fields("ide_indPag") & "|"
@@ -1712,7 +1721,7 @@ Public Function Exportar_NFe_v400_TXT(chvNFe As String) As String
     Dim indIntermed As String
     indIntermed = 0
     
-    grvReg nmArq, "B|" & _
+    MountTXT "B|" & _
                     Rst1.Fields("ide_cUF") & "|" & _
                     Rst1.Fields("ide_cNF") & "|" & _
                     Rst1.Fields("ide_NatOP") & "|" & _
@@ -1739,11 +1748,11 @@ Public Function Exportar_NFe_v400_TXT(chvNFe As String) As String
                     "ERRO NA SVRS AUTORIZADO PELO SITE DA NFE. 28/05/2012" & "|"
                     
     If Not IsNull(Rst1.Fields("ide_refNFe")) Then
-        grvReg nmArq, "B13|" & Rst1.Fields("ide_refNFe") & "|"
+        MountTXT "B13|" & Rst1.Fields("ide_refNFe") & "|"
     End If
     
     'C - dados EMITENTE
-    grvReg nmArq, "C|" & _
+    MountTXT "C|" & _
                     Rst1.Fields("emit_xNome") & "|" & _
                     Rst1.Fields("emit_xFant") & "|" & _
                     Rst1.Fields("emit_IE") & "|" & _
@@ -1752,9 +1761,9 @@ Public Function Exportar_NFe_v400_TXT(chvNFe As String) As String
                     IIf(Trim(Rst1.Fields("emit_IM")) <> "", Rst1.Fields("emit_CNAE"), "") & "|" & _
                     Rst1.Fields("emit_CRT") & "|"
                     
-    grvReg nmArq, "C02|" & _
+    MountTXT "C02|" & _
                     Rst1.Fields("emit_CNPJ") & "|"
-    grvReg nmArq, "C05|" & _
+    MountTXT "C05|" & _
                     Rst1.Fields("emit_xLgr") & "|" & _
                     Rst1.Fields("emit_nro") & "|" & _
                     Rst1.Fields("emit_xcpl") & "|" & _
@@ -1768,7 +1777,7 @@ Public Function Exportar_NFe_v400_TXT(chvNFe As String) As String
                     Rst1.Fields("emit_fone") & "|"
     'E - dados DESTINATARIO
                     
-    grvReg nmArq, "E|" & _
+    MountTXT "E|" & _
                     Rst1.Fields("dest_xNome") & "|" & _
                     Rst1.Fields("dest_indIEDest") & "|" & _
                     IIf(IsNull(Rst1.Fields("dest_IE")), "", Rst1.Fields("dest_IE")) & "|" & _
@@ -1776,10 +1785,10 @@ Public Function Exportar_NFe_v400_TXT(chvNFe As String) As String
                     "" & "|" & _
                     Rst1.Fields("dest_email") & "|"
                     
-    grvReg nmArq, "E" & IIf(UCase(Rst1.Fields("dest_Pessoa")) = "FISICA", "03", "02") & "|" & _
+    MountTXT "E" & IIf(UCase(Rst1.Fields("dest_Pessoa")) = "FISICA", "03", "02") & "|" & _
                     Rst1.Fields("dest_CNPJ") & "|"
                     
-    grvReg nmArq, "E05|" & _
+    MountTXT "E05|" & _
                     Rst1.Fields("dest_xLgr") & "|" & _
                     Rst1.Fields("dest_nro") & "|" & _
                     Rst1.Fields("dest_xCpl") & "|" & _
@@ -1794,7 +1803,7 @@ Public Function Exportar_NFe_v400_TXT(chvNFe As String) As String
     
     'G - dadosEntrega
     If Trim(Rst1.Fields("dest_cnpj")) <> Trim(Rst1.Fields("entr_CNPJ")) Then
-        grvReg nmArq, "G|" & _
+        MountTXT "G|" & _
                       Rst1.Fields("entr_xLgr") & "|" & _
                       Rst1.Fields("entr_nro") & "|" & _
                       Rst1.Fields("entr_xCpl") & "|" & _
@@ -1802,13 +1811,13 @@ Public Function Exportar_NFe_v400_TXT(chvNFe As String) As String
                       Rst1.Fields("entr_cMun") & "|" & _
                       Rst1.Fields("entr_xMun") & "|" & _
                       Rst1.Fields("entr_UF") & "|"
-        grvReg nmArq, "G02|" & _
+        MountTXT "G02|" & _
                       Rst1.Fields("entr_CNPJ") & "|"
     End If
     'H/I - dados DESCRICAO DOS ITENS
     Rst2.MoveFirst
     For cItens = 0 To Rst2.RecordCount - 1
-        grvReg nmArq, "H|" & cItens + 1 & "|" & _
+        MountTXT "H|" & cItens + 1 & "|" & _
                        IIf(Trim(Rst2.Fields("det_InfAdProd")) = "", "", Rst2.Fields("det_InfAdProd") & "|")
                        
                        '23.03.2015 - Campo vazio antes do EXTIPI ref NVE
@@ -1817,7 +1826,7 @@ Public Function Exportar_NFe_v400_TXT(chvNFe As String) As String
                        'EXTIPI|CFOP|UCom|QCom|VUnCom|VProd|CEANTrib|UTrib|QTrib|
                        'VUnTrib|VFrete|VSeg|VDesc|vOutro|indTot|xPed|nItemPed|nFCI|
                         '
-        grvReg nmArq, "I|" & Rst2.Fields("det_cProd") & "|" & _
+        MountTXT "I|" & Rst2.Fields("det_cProd") & "|" & _
                         Rst2.Fields("det_cEAN") & "|" & _
                         Rst2.Fields("det_xProd") & "|" & _
                         Rst2.Fields("det_NCM") & "|" & _
@@ -1844,13 +1853,13 @@ Public Function Exportar_NFe_v400_TXT(chvNFe As String) As String
                         "|"
 
         
-        grvReg nmArq, "M|"
-        grvReg nmArq, "N|"
+        MountTXT "M|"
+        MountTXT "N|"
         '*****************************************************************
         'ICMS ************************************************************
         Select Case Rst2.Fields("ICMS_CST")
             Case "00" 'Tributacao Integral (N02)
-                grvReg nmArq, "N02|" & _
+                MountTXT "N02|" & _
                                 Rst2.Fields("ICMS_Origem") & "|" & _
                                 Rst2.Fields("ICMS_CST") & "|" & _
                                 Rst2.Fields("ICMS_ModBC") & "|" & _
@@ -1865,7 +1874,7 @@ Public Function Exportar_NFe_v400_TXT(chvNFe As String) As String
                 
                 '22.12.17 - Inclusao da tag para DIFAL
                 If Rst2.Fields("ICMS_vBCUFDest") > 0 Then
-                 grvReg nmArq, "NA|" & _
+                 MountTXT "NA|" & _
                                 Rst2.Fields("ICMS_vBCUFDest") & "|" & _
                                 Rst2.Fields("ICMS_vBCUFDest") & "|" & _
                                 Rst2.Fields("ICMS_pFCPUFDest") & "|" & _
@@ -1878,7 +1887,7 @@ Public Function Exportar_NFe_v400_TXT(chvNFe As String) As String
                 End If
                 
             Case "10" 'Tributada com cobranca ICMS (N03)
-                grvReg nmArq, "N03|" & _
+                MountTXT "N03|" & _
                                 Rst2.Fields("ICMS_Origem") & "|" & _
                                 Rst2.Fields("ICMS_CST") & "|" & _
                                 Rst2.Fields("ICMS_ModBC") & "|" & _
@@ -1893,7 +1902,7 @@ Public Function Exportar_NFe_v400_TXT(chvNFe As String) As String
                                 Rst2.Fields("ICMS_vICMSST") & "|"
             Case "20" 'Tributacao do ICMS com reducao da Base de Calculo (N04)
                       'N04|orig|CST|modBC|pRedBC|vBC|pICMS|vICMS|vBCFCP|pFCP|vFCP|vICMSDeson|motDesICMS
-                 grvReg nmArq, "N04|" & _
+                 MountTXT "N04|" & _
                                 Rst2.Fields("ICMS_Origem") & "|" & _
                                 Rst2.Fields("ICMS_CST") & "|" & _
                                 Rst2.Fields("ICMS_ModBC") & "|" & _
@@ -1906,7 +1915,7 @@ Public Function Exportar_NFe_v400_TXT(chvNFe As String) As String
                                 Rst2.Fields("ICMS_vFCP") & "|||"
                                 
             Case "30" 'Tributacao Isenta com cobranca de ICMS por ST (N05)
-                grvReg nmArq, "N05|" & _
+                MountTXT "N05|" & _
                                 Rst2.Fields("ICMS_Origem") & "|" & _
                                 Rst2.Fields("ICMS_CST") & "|" & _
                                 Rst2.Fields("ICMS_ModBCST") & "|" & _
@@ -1917,26 +1926,26 @@ Public Function Exportar_NFe_v400_TXT(chvNFe As String) As String
                                 Rst2.Fields("ICMS_vICMSST") & "|"
                                 
             Case "40" 'Tributacao do ICMS ISENTA (N06)
-                grvReg nmArq, "N06|" & _
+                MountTXT "N06|" & _
                                 Rst2.Fields("ICMS_Origem") & "|" & _
                                 Rst2.Fields("ICMS_CST") & "|" & _
                                 Rst2.Fields("ICMS_vICMS") & "|" & _
                                 Rst2.Fields("ICMS_MotDesICMS") & "|"
                                 
             Case "41" 'Tributacao do ICMS NAO TRIBUTADA ()
-             grvReg nmArq, "N06|" & _
+             MountTXT "N06|" & _
                                 Rst2.Fields("ICMS_Origem") & "|" & _
                                 Rst2.Fields("ICMS_CST") & "|" & _
                                 Rst2.Fields("ICMS_vICMS") & "|" & _
                                 Rst2.Fields("ICMS_MotDesICMS") & "|"
             
             Case "50" 'Tributacao do ICMS SUSPENSAO ()
-                grvReg nmArq, "N06|" & _
+                MountTXT "N06|" & _
                                 Rst2.Fields("ICMS_Origem") & "|" & _
                                 Rst2.Fields("ICMS_CST") & "|"
             
             Case "51" 'Tributacao do ICMS POR DIFERIMENTO (N07)
-                grvReg nmArq, "N07|" & _
+                MountTXT "N07|" & _
                                 Rst2.Fields("ICMS_Origem") & "|" & _
                                 Rst2.Fields("ICMS_CST") & "|" & _
                                 Rst2.Fields("ICMS_ModBC") & "|" & _
@@ -1946,14 +1955,14 @@ Public Function Exportar_NFe_v400_TXT(chvNFe As String) As String
                                 Rst2.Fields("ICMS_vICMS") & "|"
             
             Case "60" 'ICMS cobrado anteriormente por ST (N08)
-                grvReg nmArq, "N08" & "|" & _
+                MountTXT "N08" & "|" & _
                                 Rst2.Fields("ICMS_Origem") & "|" & _
                                 Rst2.Fields("ICMS_CST") & "|" & _
                                 Rst2.Fields("ICMS_vBCST") & "|" & _
                                 Rst2.Fields("ICMS_vICMSST") & "|" & _
                                 "0.00|0.00|0.00|0.00|0.00|0.00|0.00|0.00|"
             Case "70" 'Tributacao do com reducao da base de calculo do ICMS ST (N09)
-                grvReg nmArq, "N09" & "|" & _
+                MountTXT "N09" & "|" & _
                                 Rst2.Fields("ICMS_Origem") & "|" & _
                                 Rst2.Fields("ICMS_CST") & "|" & _
                                 Rst2.Fields("ICMS_ModBC") & "|" & _
@@ -1968,7 +1977,7 @@ Public Function Exportar_NFe_v400_TXT(chvNFe As String) As String
                                 Rst2.Fields("ICMS_pICMSST") & "|" & _
                                 Rst2.Fields("ICMS_vICMSST") & "|"
             Case "90" ' 'Tributacao OUTROS (N10)
-                grvReg nmArq, "N10" & "|" & _
+                MountTXT "N10" & "|" & _
                                 Rst2.Fields("ICMS_Origem") & "|" & _
                                 Rst2.Fields("ICMS_CST") & "|" & _
                                 Rst2.Fields("ICMS_ModBC") & "|" & _
@@ -1983,13 +1992,13 @@ Public Function Exportar_NFe_v400_TXT(chvNFe As String) As String
                                 Rst2.Fields("ICMS_pICMSST") & "|" & _
                                 Rst2.Fields("ICMS_vICMSST") & "|"
             Case "101" 'Tributado pelo SN com permicao de credito (N10c)
-             grvReg nmArq, "N10c" & "|" & _
+             MountTXT "N10c" & "|" & _
                                 Rst2.Fields("ICMS_Origem") & "|" & _
                                 Rst2.Fields("ICMS_CST") & "|" & _
                                 Rst2.Fields("ICMS_pCredSN") & "|" & _
                                 Rst2.Fields("ICMS_vCredICMSSN") & "|"
             Case "102", "103" 'Tributado pelo SN sem permicao de credito (N10d)
-             grvReg nmArq, "N10d" & "|" & _
+             MountTXT "N10d" & "|" & _
                                 Rst2.Fields("ICMS_Origem") & "|" & _
                                 Rst2.Fields("ICMS_CST") & "|" & _
                                 "0.00" & "|" & _
@@ -1997,7 +2006,7 @@ Public Function Exportar_NFe_v400_TXT(chvNFe As String) As String
                                 "0.00" & "|"
             
             Case "300", "400" 'Nao Tributado pelo SN (N10d)
-             grvReg nmArq, "N10d" & "|" & _
+             MountTXT "N10d" & "|" & _
                                 Rst2.Fields("ICMS_Origem") & "|" & _
                                 Rst2.Fields("ICMS_CST") & "|" & _
                                 "0.00" & "|" & _
@@ -2006,7 +2015,7 @@ Public Function Exportar_NFe_v400_TXT(chvNFe As String) As String
             
             Case "500" 'Tributacao de ICMS pelo SIMPLES NACIONAL (N10g)
                        'Formato valido em 01.06.21 'N10g|0|500|0|0.00|0.00|0|0.00|0.00|0.00|
-             grvReg nmArq, "N10g" & "|" & _
+             MountTXT "N10g" & "|" & _
                                 Rst2.Fields("ICMS_Origem") & "|" & _
                                 Rst2.Fields("ICMS_CST") & "|" & _
                                 Rst2.Fields("ICMS_ModBC") & "|" & _
@@ -2016,7 +2025,7 @@ Public Function Exportar_NFe_v400_TXT(chvNFe As String) As String
             Case "900" 'Outros
                 'orig|CSOSN|modBC|vBC|pRedBC|pICMS|vICMS|modBCST|pMVAST|pRedBCST|vBCST|pICMSST
                 'vICMSST|pCredSN|vCredICMSSN
-                grvReg nmArq, "N10h|" & _
+                MountTXT "N10h|" & _
                                 Rst2.Fields("ICMS_Origem") & "|" & _
                                 Rst2.Fields("ICMS_CST") & "|" & _
                                 Rst2.Fields("ICMS_ModBC") & "|" & _
@@ -2036,46 +2045,46 @@ Public Function Exportar_NFe_v400_TXT(chvNFe As String) As String
         '************************************************************
         'IPI ********************************************************
         'O|CNPJProd|cSelo|qSelo|cEnq|
-        grvReg nmArq, "O||||" & _
+        MountTXT "O||||" & _
                         Rst2.Fields("IPI_cEnq") & "|"
                         
-        grvReg nmArq, "O07|" & _
+        MountTXT "O07|" & _
                         Rst2.Fields("IPI_CST") & "|" & _
                         Rst2.Fields("IPI_vIPI") & "|"
-        grvReg nmArq, "O10|" & _
+        MountTXT "O10|" & _
                         Rst2.Fields("IPI_vBC") & "|" & _
                         Rst2.Fields("IPI_pIPI") & "|"
                         
                         
                         
         'PIS ************************************************************
-        grvReg nmArq, "Q|"
+        MountTXT "Q|"
         Select Case Rst2.Fields("PIS_CST")
             Case "01", "02"  'Aliquota Normal/Aliquota Diferenciada (Q02)
-                grvReg nmArq, "Q02|" & _
+                MountTXT "Q02|" & _
                                 Rst2.Fields("PIS_CST") & "|" & _
                                 Rst2.Fields("PIS_vBC") & "|" & _
                                 Rst2.Fields("PIS_pPIS") & "|" & _
                                 Rst2.Fields("PIS_vPIS") & "|"
             Case Else
-                grvReg nmArq, "Q04|" & Rst2.Fields("PIS_CST") & "|"
+                MountTXT "Q04|" & Rst2.Fields("PIS_CST") & "|"
                 'MsgBox "Verificar o Codigo de exportacao do PIS da NFe - CODIGO DO CST DO PIS DESCONHECIDO"
         End Select
         
         
         
         'COFINS ************************************************************
-        grvReg nmArq, "S|"
+        MountTXT "S|"
         Select Case Rst2.Fields("COFINS_CST")
             Case "01", "02"  'Aliquota Normal/Aliquota Diferenciada (Q02)
-                grvReg nmArq, "S02|" & _
+                MountTXT "S02|" & _
                                 Rst2.Fields("COFINS_CST") & "|" & _
                                 Rst2.Fields("COFINS_vBC") & "|" & _
                                 Rst2.Fields("COFINS_pCOFINS") & "|" & _
                                 Rst2.Fields("COFINS_vCOFINS") & "|"
             Case Else
                 'MsgBox "Verificar o Codigo de exportacao do COFINS da NFe - CODIGO DO CST DO COFINS DESCONHECIDO"
-                grvReg nmArq, "S04|" & Rst2.Fields("COFINS_CST") & "|"
+                MountTXT "S04|" & Rst2.Fields("COFINS_CST") & "|"
         End Select
         
         Rst2.MoveNext
@@ -2084,7 +2093,7 @@ Public Function Exportar_NFe_v400_TXT(chvNFe As String) As String
 
     '*********************************** TOTAIS DA NF-e *****************************************
     Dim w As String
-    grvReg nmArq, "W|"
+    MountTXT "W|"
         w = "W02|"
         w = w & Rst1.Fields("total_vBC") & "|"
         w = w & Rst1.Fields("total_vICMS") & "|"
@@ -2110,7 +2119,7 @@ Public Function Exportar_NFe_v400_TXT(chvNFe As String) As String
         w = w & Rst1.Fields("total_vOutro") & "|"
         w = w & Rst1.Fields("total_vNF") & "|"
         w = w & "0.00" & "|" 'vTotTrib
-    grvReg nmArq, w
+    MountTXT w
 '    Dim msgCredICMSSN As String
 '
 '    If Rst1.Fields("total_vCredICMSSN") <> "0.00" Then
@@ -2123,25 +2132,25 @@ Public Function Exportar_NFe_v400_TXT(chvNFe As String) As String
 '    End If
 
     '*************************************** TRANSPORTE ********************************************
-    grvReg nmArq, "X|" & _
+    MountTXT "X|" & _
                     Rst1.Fields("transp_ModFrete") & "|"
     
-        grvReg nmArq, "X03|" & _
+        MountTXT "X03|" & _
                     Rst1.Fields("transp_xNome") & "|" & _
                     Rst1.Fields("transp_IE") & "|" & _
                     Rst1.Fields("transp_xEnder") & "|" & _
                     Rst1.Fields("transp_xMun") & "|" & _
                     Rst1.Fields("transp_UF") & "|"
     
-    grvReg nmArq, "X" & IIf(UCase(Rst1.Fields("transp_Pessoa")) = "FISICA", "05", "04") & "|" & _
+    MountTXT "X" & IIf(UCase(Rst1.Fields("transp_Pessoa")) = "FISICA", "05", "04") & "|" & _
                     Rst1.Fields("transp_CNPJ") & "|"
     If cNull(Rst1.Fields("transp_VeicPlaca")) <> "" Then
-        grvReg nmArq, "X18|" & _
+        MountTXT "X18|" & _
                     cNull(Rst1.Fields("transp_VeicPlaca")) & "|" & _
                     cNull(Rst1.Fields("transp_VeicUF")) & "|" & _
                     "" & "|"
     End If
-    grvReg nmArq, "X26|" & _
+    MountTXT "X26|" & _
                     Rst1.Fields("transp_qVol") & "|" & _
                     Rst1.Fields("transp_esp") & "|" & _
                     Rst1.Fields("transp_marca") & "|" & _
@@ -2152,9 +2161,9 @@ Public Function Exportar_NFe_v400_TXT(chvNFe As String) As String
     '***************************************** COBRANCA ********************************************
     If PgDadosNotaFiscal(chvNFe).ImpFatura = 1 Then
         'Fatura
-        grvReg nmArq, "Y|"
+        MountTXT "Y|"
         If cNull(Rst3.Fields("cobr_nFat")) <> "" Then
-            grvReg nmArq, "Y02|" & _
+            MountTXT "Y02|" & _
                         Rst3.Fields("cobr_nFat") & "|" & _
                         Rst3.Fields("cobr_vOrig") & "|" & _
                         IIf(cNull(Rst3.Fields("cobr_vDesc")) = "", "0.00", Rst3.Fields("cobr_vDesc")) & "|" & _
@@ -2166,7 +2175,7 @@ Public Function Exportar_NFe_v400_TXT(chvNFe As String) As String
         For cCob = 0 To Rst3.RecordCount - 1
             If cNull(Rst3.Fields("cobr_nDup")) <> "" Then
                 
-                'grvReg nmArq, "Y07|" & _
+                'MountTXT "Y07|" & _
                             Rst3.Fields("cobr_nDup") & "|" & _
                             Format(Rst3.Fields("cobr_dVenc"), "YYYY-MM-DD") & "|" & _
                             Rst3.Fields("cobr_vDup") & "|"
@@ -2176,7 +2185,7 @@ Public Function Exportar_NFe_v400_TXT(chvNFe As String) As String
                 'parcela = parcela & Trim(Rst3.Fields("cobr_nDup")) & "|"
                 parcela = parcela & Format(Rst3.Fields("cobr_dVenc"), "YYYY-MM-DD") & "|"
                 parcela = parcela & Rst3.Fields("cobr_vDup") & "|"
-                grvReg nmArq, parcela
+                MountTXT parcela
                 parcela = ""
                 
                '13.07.2018 - Conferme orientacao do grupo UNINFe
@@ -2186,7 +2195,7 @@ Public Function Exportar_NFe_v400_TXT(chvNFe As String) As String
                 
                 tpPag = Trim(Left(pgDadosTipoDocumento(Rst3.Fields("cobr_TpDoc")).formaPgto, 3))
                 
-                grvReg nmArq, "YA|" & _
+                MountTXT "YA|" & _
                             Trim(Rst1.Fields("ide_indPag")) & "|" & _
                             tpPag & "|" & _
                             IIf(tpPag = "90", "0.00", Rst3.Fields("cobr_vDup")) & "|" & "|||||"
@@ -2199,12 +2208,17 @@ Public Function Exportar_NFe_v400_TXT(chvNFe As String) As String
     End If
         
 '****************************************************************************************************
-    grvReg nmArq, "Z||" & _
+    MountTXT "Z||" & _
                     Rst1.Fields("InfAdic_InfCpl") & "|" ' & Trim(msgCredICMSSN) & "|"
 
 
 
 '========================================================================
+    grvReg nmArq, strMountTXT
+
+    'data lake included
+    dataLakeInputNFe numNFe, chvNFe, strMountTXT
+
     Exportar_NFe_v400_TXT = nmArq
     Rst1.Close
     Rst2.Close

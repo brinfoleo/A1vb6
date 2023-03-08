@@ -15,7 +15,7 @@ Begin VB.MDIForm MDIFormA1
    StartUpPosition =   3  'Windows Default
    WindowState     =   2  'Maximized
    Begin VB.Timer Timer1 
-      Interval        =   500
+      Interval        =   30000
       Left            =   180
       Top             =   4260
    End
@@ -241,7 +241,7 @@ Begin VB.MDIForm MDIFormA1
             Bevel           =   0
             Object.Width           =   1693
             MinWidth        =   71
-            TextSave        =   "14/02/2023"
+            TextSave        =   "07/03/2023"
          EndProperty
          BeginProperty Panel6 {8E3867AB-8586-11D1-B16A-00C0F0283628} 
             Style           =   5
@@ -250,7 +250,7 @@ Begin VB.MDIForm MDIFormA1
             Bevel           =   0
             Object.Width           =   873
             MinWidth        =   71
-            TextSave        =   "23:19"
+            TextSave        =   "14:22"
          EndProperty
       EndProperty
    End
@@ -715,10 +715,10 @@ Private Sub NotificacaoValidadeCertificadoDigital()
     
     If Len(Trim(PgDadosConfig.FinValCertDigital)) = 0 Then Exit Sub
     validCertDig = PgDadosConfig.FinValCertDigital
-    Dim x As Integer
-    x = CDate(validCertDig) - Date
-    If x <= 10 Then
-        MsgBox "Seu certificado digital expira em  " & x & " dias!", vbCritical, "Validade Certificado digital"
+    Dim X As Integer
+    X = CDate(validCertDig) - Date
+    If X <= 10 Then
+        MsgBox "Seu certificado digital expira em  " & X & " dias!", vbCritical, "Validade Certificado digital"
     End If
     
 End Sub
@@ -988,7 +988,7 @@ Private Sub tbMenuFinanceiro_ButtonClick(ByVal Button As MSComctlLib.Button)
 End Sub
 
 Private Sub Timer1_Timer()
-    'updateSistema
+    updateSistema
     chkUsuariosConectado
     
 End Sub

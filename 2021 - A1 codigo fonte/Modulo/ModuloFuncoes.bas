@@ -414,11 +414,11 @@ Public Sub RegLogDataBase(ByVal Chave As String, ByVal IDLog As String, ByVal ip
     vReg(cReg) = Array("ipOrigem", ipOrigem, "S")  ': cReg = cReg + 1
     
     If RegistroIncluir("RegLogDataBase", vReg, cReg) = 0 Then
-        MsgBox "Erro ao gerar ba classe RegLogDataBase"
+        MsgBox "Erro ao gerar regitro de log na classe RegLogDataBase"
     End If
     Exit Sub
 ErrRegLogDB:
-    MsgBox "Erro ao gerar ba classe RegLogDataBase"
+    MsgBox "Erro ao gerar regitro de log na classe RegLogDataBase"
     Resume Next
 End Sub
 Public Function ChkVal(sValor As String, Dig As Integer, CasasDecimais As Integer)

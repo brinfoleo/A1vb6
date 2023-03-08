@@ -41,7 +41,8 @@ Public Sub Main()
         'formdbDBGrid.Show 1
         'Exit Sub
         '#############################################################
-        
+        'Update version of system
+        updateSistema
         'Checando Licença
         .CarregarFormulario "Lendo licença de uso do sistema..."
         licenca
@@ -121,8 +122,7 @@ Public Sub Main()
 '    End If
    
     MonitoramentoConexao Conectar
-    'Update version of system
-    updateSistema
+    
         
     MDIFormA1.Show
         
@@ -273,17 +273,22 @@ Public Sub updateSistema()
     BD.Execute sSQL
     
     'Check system version
-    sSQL = "SELECT * FROM updatesistema WHERE Id_Empresa = " & ID_Empresa & " ORDER BY vAtual"
+    sSQL = "SELECT * FROM updatesistema WHERE Id_Empresa = 0 ORDER BY vAtual"
+    'sSQL = "SELECT * FROM updatesistema WHERE Id_Empresa = " & ID_Empresa & " ORDER BY vAtual"
     Set Rst = RegistroBuscar(sSQL)
     If Rst.BOF And Rst.EOF Then
             sSQL = "INSERT INTO updatesistema (id_Empresa,UsuID,DtHr,vAtual) VALUES " & _
             "(" & ID_Empresa & "," & ID_Usuario & ",'" & Now() & "','" & fullVersion & "')"
             BD.Execute sSQL
         Else
-            If Rst.Fields("vAtual") < fullVersion Then
-                    
+            If Rst.Fields("vAtual") < fullVersion Or Len(Trim((Rst.Fields("vAtual")))) = 0 Then
                     sSQL = "UPDATE updatesistema SET DtHr='" & Now() & "', vAtual='" & fullVersion & "' WHERE ID_Empresa = " & ID_Empresa
                     BD.Execute sSQL
+                    'Close the system to update
+                ElseIf (Rst.Fields("vAtual") = "99999999") Then
+                    MsgBox "Sistema temporariamenter indisponivel para manutencao! " & _
+                    "Clique no botao < OK > para o processo continuar e tente acessar em alguns minutos!", vbInformation, "A1 - Manutencao"
+                    FinalizandoSistema
                 ElseIf (Rst.Fields("vAtual") <> fullVersion) Then
                     MsgBox "Seu sistema esta decrepito. Favor atualizar o mais breve possivel!", vbCritical, "Versao A1"
             End If

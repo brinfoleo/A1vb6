@@ -145,6 +145,7 @@ Form=Form\formFinanceiroCnab240.frm
 Designer=Rpt\rptPreVenda.Dsr
 Designer=Rpt\rptClienteListagem.Dsr
 Form=Form\formClientesRelatorio.frm
+Module=ModuloDataLake; Modulo\ModuloDataLake.bas
 IconForm="MDIFormA1"
 Startup="Sub Main"
 HelpFile=""

@@ -752,7 +752,7 @@ Private Sub cboUnidade_DropDown()
         Else
             Rst.MoveFirst
             Do Until Rst.EOF
-                cboUnidade.AddItem UCase(Rst.Fields("Sigla"))
+                cboUnidade.AddItem UCase(IIf(IsNull(Rst.Fields("Sigla")), "", Rst.Fields("Sigla")))
                 Rst.MoveNext
             Loop
     End If

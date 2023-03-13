@@ -241,7 +241,7 @@ Begin VB.MDIForm MDIFormA1
             Bevel           =   0
             Object.Width           =   1693
             MinWidth        =   71
-            TextSave        =   "07/03/2023"
+            TextSave        =   "13/03/2023"
          EndProperty
          BeginProperty Panel6 {8E3867AB-8586-11D1-B16A-00C0F0283628} 
             Style           =   5
@@ -250,7 +250,7 @@ Begin VB.MDIForm MDIFormA1
             Bevel           =   0
             Object.Width           =   873
             MinWidth        =   71
-            TextSave        =   "14:22"
+            TextSave        =   "21:48"
          EndProperty
       EndProperty
    End
@@ -697,7 +697,7 @@ Private Sub InutilizarNumeroNF_Click()
 End Sub
 
 Private Sub MDIForm_Activate()
-  
+    IPLocal = MDIFormA1.wsMain.LocalIP
     With BarraStatus
         .Panels(1).Text = PgDadosEmpresa(ID_Empresa).Nome
         .Panels(4).Text = App.Major & "." & App.Minor & "." & App.Revision
@@ -713,8 +713,12 @@ Private Sub NotificacaoValidadeCertificadoDigital()
     On Error Resume Next
     Dim validCertDig As Date
     
-    If Len(Trim(PgDadosConfig.FinValCertDigital)) = 0 Then Exit Sub
-    validCertDig = PgDadosConfig.FinValCertDigital
+    If Len(Trim(PgDadosConfig.FinValCertDigital)) = 0 Then
+                validCertDig = Date
+        Else
+            validCertDig = PgDadosConfig.FinValCertDigital
+    End If
+
     Dim X As Integer
     X = CDate(validCertDig) - Date
     If X <= 10 Then

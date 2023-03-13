@@ -1,6 +1,6 @@
 VERSION 5.00
 Object = "{86CF1D34-0C5F-11D2-A9FC-0000F8754DA1}#2.0#0"; "MSCOMCT2.OCX"
-Object = "{831FDD16-0C5C-11D2-A9FC-0000F8754DA1}#2.0#0"; "MSCOMCTL.OCX"
+Object = "{831FDD16-0C5C-11D2-A9FC-0000F8754DA1}#2.2#0"; "MSCOMCTL.OCX"
 Begin VB.Form formFaturamentoNFeCartaCorrecao 
    BorderStyle     =   1  'Fixed Single
    Caption         =   "Faturamento - Carta de Correção"
@@ -121,7 +121,7 @@ Begin VB.Form formFaturamentoNFeCartaCorrecao
          _ExtentX        =   2355
          _ExtentY        =   556
          _Version        =   393216
-         Format          =   99549185
+         Format          =   62849025
          CurrentDate     =   40668
       End
       Begin VB.Label Label9 
@@ -410,7 +410,7 @@ Private Sub ExportarCCe()
     If Trim(txtChvNFe.Text) = "" Then Exit Sub
     tmp = Exportar_CCe_v200_TXT(txtChvNFe.Text)
     
-    RegLog "CCe", "0", "CCe: " & tmp
+    RegLogDataBase 0, "CCe", "0", "CCe: " & tmp
 End Sub
 Private Sub Incluir()
     If chkAcesso(Me, "n") = False Then Exit Sub

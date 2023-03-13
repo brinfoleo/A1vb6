@@ -233,7 +233,7 @@ Begin VB.Form formFaturamentoNFeGerenciador
             _ExtentX        =   2566
             _ExtentY        =   556
             _Version        =   393216
-            Format          =   118226945
+            Format          =   62849025
             CurrentDate     =   40557
          End
          Begin MSComCtl2.DTPicker dtpDtFinal 
@@ -245,7 +245,7 @@ Begin VB.Form formFaturamentoNFeGerenciador
             _ExtentX        =   2566
             _ExtentY        =   556
             _Version        =   393216
-            Format          =   118226945
+            Format          =   62849025
             CurrentDate     =   40557
          End
          Begin VB.Label Label1 
@@ -695,7 +695,7 @@ Private Sub LoadStatusEnvio(chvNFe As String, DtEmissao As String)
     End If
     'Apaga a situacao consultada
     ExcluirFile Arquivo
-    RegLog "", "", "Arquivo: " & Arquivo & " excluido"
+    RegLogDataBase 0, "", "", "Arquivo: " & Arquivo & " excluido"
 
     
     '*************************************************************
@@ -1456,7 +1456,7 @@ Private Sub ExcluirNFe(chvNFe As String)
     'MovimentarEstoque e,
     
     
-    RegLog "ExcluirNFe", "0", "Excluiu NFe: " & chvNFe
+    RegLogDataBase 0, "ExcluirNFe", "0", "Excluiu NFe: " & chvNFe
     
     chvNFe = ""
     LstNotasFiscais

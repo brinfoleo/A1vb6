@@ -80,7 +80,7 @@ Begin VB.Form formFaturamentoNFe
          _ExtentX        =   2778
          _ExtentY        =   556
          _Version        =   393216
-         Format          =   125304833
+         Format          =   139329537
          CurrentDate     =   40561
       End
       Begin MSComCtl2.DTPicker dtpEmissao 
@@ -92,7 +92,7 @@ Begin VB.Form formFaturamentoNFe
          _ExtentX        =   2778
          _ExtentY        =   556
          _Version        =   393216
-         Format          =   125304833
+         Format          =   139329537
          CurrentDate     =   40561
       End
       Begin VB.TextBox txtNumNota 
@@ -1755,7 +1755,7 @@ Private Function MontarVariaveis() As Boolean
             '****** COBRANCA ***************************************
             '*******************************************************
             condPag = Rst1.Fields("CondicoesPagamento")
-            sSQL = "SELECT * FROM FinanceiroCondicoesPagamentoParcelas WHERE IdCondicoes = " & condPag & " ORDER BY Parcela"
+            sSQL = "SELECT * FROM FinanceiroCondicoesPagamentoParcelas WHERE id_empresa = " & ID_Empresa & " AND IdCondicoes = " & condPag & " ORDER BY Parcela"
             Set Rst3 = RegistroBuscar(sSQL)
             If Rst3.BOF And Rst3.EOF Then
                     MsgBox "Erro ao encontrar as parcelas"

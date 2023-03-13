@@ -35,7 +35,7 @@ Private Sub LerArquivoConfig()
         
         linha = Trim(linha)
         If Left(linha, 1) <> "#" And Trim(linha) <> "" Then 'Nao executa as funcoes abaixo pois esta linha é comentario
-            'Separa os campos
+            'Separar os campos
             Campo = Trim(LCase(Mid(linha, 1, InStr(linha, "=") - 1)))
             parametro = Trim(Mid(linha, InStr(linha, "=") + 1, Len(linha)))
         
@@ -251,7 +251,7 @@ Public Function RegistroAlterar(ByVal sTabela As String, ByVal vDados As Variant
     Exit Function
 
 TrataErro:
-    RegLog "", Err.Number, Err.Description & " - SQL:[" & sSQL & "]"
+    RegLogDataBase 0, "", Err.Number, Err.Description & " - SQL:[" & sSQL & "]"
     'MsgBox "Erro ao ALTERAR registro.                                   " & _
            vbCrLf & vbCrLf & _
            "Erro n.: " & Err.Number & _
@@ -283,11 +283,11 @@ Public Function RegistroExcluir(sTabela As String, sFiltro As String) As Boolean
     sSQL = LCase(sSQL)
     BD.Execute sSQL
     RegistroExcluir = True
-    'RegLog "0", "0", "Exclusao: " & sSQL
+    'RegLogDataBase 0,"0", "0", "Exclusao: " & sSQL
     Exit Function
 TrtErro:
-    RegLog "", Err.Number, Err.Description & " - SQL:[" & sSQL & "]"
-    'RegLog "", Err.Number, Err.Description
+    RegLogDataBase 0, "", Err.Number, Err.Description & " - SQL:[" & sSQL & "]"
+    'RegLogDataBase 0,"", Err.Number, Err.Description
     'MsgBox "Erro ao EXCLUIR registro.                                   " & _
            vbCrLf & vbCrLf & _
            "Erro n.: " & Err.Number & _
@@ -318,8 +318,8 @@ TrtErro:
     
     nErro = Err.Number
     dErro = Err.Description
-    RegLog "", nErro, dErro & " - SQL:[" & sSQL & "]"
-    'RegLog "", nErro, dErro
+    RegLogDataBase 0, "", nErro, dErro & " - SQL:[" & sSQL & "]"
+    'RegLogDataBase 0,"", nErro, dErro
       MsgBox "Erro ao BUSCAR registro.                                   " & _
            vbCrLf & vbCrLf & _
            "Erro n.: " & nErro & _
@@ -420,9 +420,9 @@ Public Function RegistroIncluir(sTabela As String, vDados As Variant, nmReg As I
     Exit Function
 
 TrataErro:
-    RegLog "", Err.Number, Err.Description & " - SQL:[" & sSQL & "]"
+    RegLogDataBase 0, "", Err.Number, Err.Description & " - SQL:[" & sSQL & "]"
   ' Debug.Print Err.Description
-   ' RegLog "", Err.Number, Err.Description
+   ' RegLogDataBase 0,"", Err.Number, Err.Description
     'MsgBox "Erro ao INCLUIR registro.                                   " & _
            vbCrLf & vbCrLf & _
            "Erro n.: " & Err.Number & _

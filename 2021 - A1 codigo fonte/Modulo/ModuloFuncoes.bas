@@ -56,7 +56,7 @@ Public Sub chkUsuariosConectado()
     Rst.Close
     Exit Sub
 trtErroUsuCnc:
-    RegLog "", Err.Number, Err.Description
+    RegLogDataBase 0, "", Err.Number, Err.Description
 End Sub
 
 Public Sub grvFile(pathFile As String, LinhaTexto As String)
@@ -371,11 +371,11 @@ Public Sub RegLog(ByVal Chave As String, ByVal IDLog As String, ByVal Descricao 
     Set arquivoLog = Nothing
     Set fso = Nothing
     
-    RegLogDataBase Chave, IDLog, ipOrigem, Descricao
+    'RegLogDataBase 0,Chave, IDLog, ipOrigem, Descricao
     
     Exit Sub
 TrtErro:
-    
+
     MsgBox "Erro ao gerar registro de log.                                   " & _
            vbCrLf & _
            "local: " & cTMP & _
@@ -391,10 +391,10 @@ Public Sub RegLogDataBase(ByVal Chave As String, ByVal IDLog As String, ByVal ip
     Dim vReg(10)    As Variant
     Dim cReg        As Integer
     
-    
+    cnDatabaseLake
     
 
-     BD.Execute "CREATE TABLE IF NOT EXISTS RegLogDatabase" & _
+    dataLakeDb.Execute "CREATE TABLE IF NOT EXISTS RegLogDatabase" & _
                " (Id INT(11) NOT NULL AUTO_INCREMENT," & _
                "Id_Empresa INT default Null," & _
                "DtHr VARCHAR(20) default Null," & _
@@ -411,14 +411,20 @@ Public Sub RegLogDataBase(ByVal Chave As String, ByVal IDLog As String, ByVal ip
     vReg(cReg) = Array("Chave", Chave, "S"): cReg = cReg + 1
     vReg(cReg) = Array("IDLog", IDLog, "S"): cReg = cReg + 1
     vReg(cReg) = Array("Descricao", Descricao, "S"): cReg = cReg + 1
-    vReg(cReg) = Array("ipOrigem", ipOrigem, "S")  ': cReg = cReg + 1
+    vReg(cReg) = Array("ipOrigem", IIf(Len(Trim(ipOrigem)) = 0, IPLocal, ipOrigem), "S")  ': cReg = cReg + 1
     
-    If RegistroIncluir("RegLogDataBase", vReg, cReg) = 0 Then
+    
+    
+     
+    
+    
+    If RegistroIncluirDataLake("RegLogDataBase", vReg, cReg) = 0 Then
         MsgBox "Erro ao gerar regitro de log na classe RegLogDataBase"
     End If
     Exit Sub
 ErrRegLogDB:
-    MsgBox "Erro ao gerar regitro de log na classe RegLogDataBase"
+    RegLog 0, 0, Err.Number & " - " & Err.Description
+    'MsgBox "Erro ao gerar regitro de log na classe RegLogDataBase"
     Resume Next
 End Sub
 Public Function ChkVal(sValor As String, Dig As Integer, CasasDecimais As Integer)
@@ -529,7 +535,7 @@ Public Function ChkVal(sValor As String, Dig As Integer, CasasDecimais As Intege
     End Select
     Exit Function
 trtErroChkVal:
-    RegLog "Err n." & Err.Number, "", "(chkVal) " & Err.Description
+    RegLogDataBase 0, "Err n." & Err.Number, "", "(chkVal) " & Err.Description
     MsgBox Err.Number, vbCritical, "(modulo chkval) " & Err.Description
     
     Resume Next

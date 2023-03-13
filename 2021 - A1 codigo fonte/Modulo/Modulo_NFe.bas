@@ -258,9 +258,9 @@ Public Function cDV11(strNumero As String) As String
     cDV11 = Chr(Soma + Asc("0"))
   
 End Function
-Private Sub ChecarArquivo(nmarquivo)
+Private Sub ChecarArquivo(nmArquivo)
     Dim caminho As String
-    caminho = PgDadosConfig.pFileArmazenamento & "\" & nmarquivo
+    caminho = PgDadosConfig.pFileArmazenamento & "\" & nmArquivo
     If Dir(caminho) <> "" Then
         Kill caminho
     End If
@@ -727,11 +727,15 @@ Public Function Exportar_NFe_v200_TXT(chvNFe As String) As String
     Rst3.Close
 End Function
 
-Private Sub MountTXT(dados As String)
-    strMountTXT = strMountTXT & vbCrLf & dados
+Private Sub MountTXT(Dados As String)
+    If Len(Trim(Dados)) = 0 Then
+            strMountTXT = Dados
+        Else
+            strMountTXT = strMountTXT & vbCrLf & Dados
+    End If
 End Sub
 
-Private Sub grvReg(nmarquivo As String, dados As String)
+Private Sub grvReg(nmArquivo As String, Dados As String)
     On Error GoTo TrtErro
     'define o ObjPreview filesystem e demais variaveis
     Dim fso As New FileSystemObject
@@ -745,7 +749,7 @@ Private Sub grvReg(nmarquivo As String, dados As String)
     '    MkDir SistemPath & "\NFe"
     'End If
 
-    caminho = PgDadosConfig.pFileArmazenamento & "\" & nmarquivo
+    caminho = PgDadosConfig.pFileArmazenamento & "\" & nmArquivo
     'se o arquivo não existir então cria
     If fso.FileExists(caminho) Then
             Set Arquivo = fso.GetFile(caminho)
@@ -759,7 +763,7 @@ Private Sub grvReg(nmarquivo As String, dados As String)
     Set arquivoLog = Arquivo.OpenAsTextStream(ForAppending)
     
     'monta informações para gerar a linha da mensagem
-    msg = dados
+    msg = Dados
 
     'inclui linhas no arquivo texto
     arquivoLog.WriteLine msg
@@ -781,7 +785,7 @@ TrtErro:
            vbCrLf & vbCrLf & _
            "Descrição: " & Err.Description & _
            vbCrLf
-    RegLog "", "", "Gerar NFe.txt [" & Err.Description & "] - " & caminho
+    RegLogDataBase 0, "", "", "Gerar NFe.txt [" & Err.Description & "] - " & caminho
 End Sub
 
 Public Function ImprimirProtCanc(chvNFe As String, Optional ModalShow As Integer) As Boolean
@@ -907,7 +911,7 @@ Public Function ImprimirDANFE(chvNFe As String) As Boolean
     ImprimirDANFE = True
     Exit Function
 TrtErroImpDanfe:
-    RegLog "0", "0", Err.Number & " - " & Err.Description
+    RegLogDataBase 0, "0", "0", Err.Number & " - " & Err.Description
     ImprimirDANFE = False
 End Function
 Public Sub ImprimirDANFE2(chvNFe As String, Optional ModalShow As Integer)
@@ -1179,7 +1183,7 @@ Public Sub trocarChvAcesso(chvAntiga As String, novaChave As String)
     Exit Sub
 trtErroLocal:
     MsgBox Err.Description, vbInformation, "Erro n." & Err.Number
-    RegLog Err.Number, "trocarChvAcesso", Err.Description
+    RegLogDataBase 0, Err.Number, "trocarChvAcesso", Err.Description
     
 End Sub
 Public Function Exportar_NFe_v310_TXT(chvNFe As String) As String

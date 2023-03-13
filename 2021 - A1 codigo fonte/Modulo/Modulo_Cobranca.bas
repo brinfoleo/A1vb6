@@ -40,7 +40,7 @@ Public Sub AtualizarBoleto(idBol As Long, novaData As String)
     cReg = cReg - 1
     RegistroAlterar "FinanceiroContasPRCadastro", vReg, cReg, "id=" & idBol
     
-    RegLog "0", "0", "Atualizacao: Duplicata " & PgDadosFinanceiroFatura(idBol).NumDuplicata & " (id:" & idBol & ") atualizado para " & dtCalc & "."
+    RegLogDataBase 0, "0", "0", "Atualizacao: Duplicata " & PgDadosFinanceiroFatura(idBol).NumDuplicata & " (id:" & idBol & ") atualizado para " & dtCalc & "."
     
     'Imprime o boleto atualizado
     BoletoBancario (idBol)
@@ -1115,7 +1115,7 @@ Public Sub cobrLancamentoAutomaticoContasFixas()
     Exit Sub
 TrtErroCtaFixas:
     'MsgBox Err.Description, vbCritical, Err.Number
-    RegLog "Error n." & Err.Number, 0, "(cobrLancamentoAutomaticoContasFixas) " & Err.Description
+    RegLogDataBase 0, "Error n." & Err.Number, 0, "(cobrLancamentoAutomaticoContasFixas) " & Err.Description
 End Sub
 Public Sub cnab240(DtIni As Date, DtFin As Date, _
                     contaId As Integer, Optional lote As String)

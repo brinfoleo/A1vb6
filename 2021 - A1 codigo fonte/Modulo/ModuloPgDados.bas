@@ -745,7 +745,7 @@ Public Function PgDadosConfig() As Dados_Configuracoes
     Set Rst = RegistroBuscar(sSQL)
     If Rst.BOF And Rst.EOF Then
             'MsgBox "Favor verificar as configurações do sistema"
-            RegLog "", "", "Erro ao consultar na base de dados as configurações do sistema"
+            RegLogDataBase 0, "", "", "Erro ao consultar na base de dados as configurações do sistema"
             Exit Function
         Else
             Rst.MoveFirst
@@ -855,7 +855,7 @@ Public Function PgDadosConfig() As Dados_Configuracoes
 TrtErro:
    ' MsgBox "Erro na Configuração do sistema!" & vbCrLf & _
             "Favor verificar", vbCritical, "Configurações"
-     RegLog "", Err.Number, Err.Description
+     RegLogDataBase 0, "", Err.Number, Err.Description
     Resume Next
 End Function
 
@@ -1049,7 +1049,7 @@ Public Function PgDadosUsuario(Id As Integer) As Dados_Usuario
     Exit Function
 TrtErroUsu:
     'MsgBox "Erro pgDadosUsuario." & vbCrLf & Err.Description, vbCritical, Err.Number
-    RegLog "", Err.Number, Err.Description
+    RegLogDataBase 0, "", Err.Number, Err.Description
     Resume Next
 End Function
 
@@ -1467,7 +1467,7 @@ Public Function pgDadosEstoqueProduto(IdEstoqueProduto As Long) As Dados_Estoque
     End If
     Exit Function
 NotificarErro:
-    RegLog "0", "0", "[pgDadosEstoqueProduto] - " & Err.Number & " - " & Err.Description
+    RegLogDataBase 0, "0", "0", "[pgDadosEstoqueProduto] - " & Err.Number & " - " & Err.Description
     Resume Next
 End Function
 Public Function pgDadosBanco(IdBanco As String) As Dados_Banco '18.08.17
@@ -1523,7 +1523,7 @@ Public Function pgDadosConta(idConta As Integer) As Dados_Conta
     End If
     Exit Function
 regErro:
-    RegLog "0", "0", "PgDadosConta: " & Err.Number & " - " & Err.Description
+    RegLogDataBase 0, "0", "0", "PgDadosConta: " & Err.Number & " - " & Err.Description
     Resume Next
 End Function
 Public Function pgDadosTransportadora(IdTransportadora As Integer) As Dados_Transportadora
@@ -1601,7 +1601,7 @@ Public Function pgDadosTipoDocumento(IdTipoDocumento As Integer) As Dados_TipoDo
     Exit Function
 TrtErro:
 pgDadosTipoDocumento.Id = 0
-    RegLog "pgDadosTipoDocumento", "", Err.Number & " - " & Err.Description
+    RegLogDataBase 0, "pgDadosTipoDocumento", "", Err.Number & " - " & Err.Description
 End Function
 
 Public Function pgDadosICMS(sBusca As String, tpBusca As Integer) As Dados_ICMS
@@ -1720,7 +1720,7 @@ Public Function PgDadosFinanceiroFatura(Id As Long) As Dados_FinanceiroFatura
     Rst.Close
     Exit Function
 regErro:
-    RegLog "0", "0", "PgDadosFinanceiroFatura: " & Err.Number & "-" & Err.Description & "(" & Id & ")"
+    RegLogDataBase 0, "0", "0", "PgDadosFinanceiroFatura: " & Err.Number & "-" & Err.Description & "(" & Id & ")"
     Resume Next
 End Function
 Public Function PgDadosTpNotaFiscal(Id As Integer) As Dados_TipoNotaFiscal

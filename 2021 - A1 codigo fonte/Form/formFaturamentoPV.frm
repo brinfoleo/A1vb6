@@ -1016,7 +1016,7 @@ Begin VB.Form formFaturamentoPV
          _ExtentX        =   2566
          _ExtentY        =   556
          _Version        =   393216
-         Format          =   130416641
+         Format          =   62980097
          CurrentDate     =   40517
       End
       Begin VB.TextBox txtID 
@@ -2138,7 +2138,7 @@ On Error GoTo TrtErro
     Exit Sub
 TrtErro:
     MsgBox "Erro - verifique arquivo de log.", vbCritical, App.EXEName
-    RegLog "", "", "[formFaturamentoPv.PesquisarRegistro] " & Err.Number & " - " & Err.Description
+    RegLogDataBase 0, "", "", "[formFaturamentoPv.PesquisarRegistro] " & Err.Number & " - " & Err.Description
 End Sub
 Private Sub btoMovAbaixo_Click()
     If lnPv = 0 Then Exit Sub
@@ -2423,7 +2423,7 @@ Private Sub Form_Load()
     txtID.Enabled = True
     Exit Sub
 trtErroLoad:
-    RegLog Err.Number, "", "(FaturamentoPv.Load)" & Err.Description
+    RegLogDataBase 0, Err.Number, "", "(FaturamentoPv.Load)" & Err.Description
     Resume Next
 End Sub
 Private Sub Form_Unload(Cancel As Integer)

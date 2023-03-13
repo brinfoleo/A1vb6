@@ -1,5 +1,5 @@
 VERSION 5.00
-Object = "{831FDD16-0C5C-11D2-A9FC-0000F8754DA1}#2.0#0"; "MSCOMCTL.OCX"
+Object = "{831FDD16-0C5C-11D2-A9FC-0000F8754DA1}#2.2#0"; "MSCOMCTL.OCX"
 Begin VB.Form formManutencaoTabelas 
    BorderStyle     =   3  'Fixed Dialog
    Caption         =   "Manutenção"
@@ -190,7 +190,7 @@ TrtCriar:
 '            MsgBox Err.Description, vbInformation, Err.Number
     End Select
     'Debug.Print sSQL
-    RegLog "ManutencaoTabela", Err.Number, Err.Description & " [" & sSQL & "]"
+    RegLogDataBase 0, "ManutencaoTabela", Err.Number, Err.Description & " [" & sSQL & "]"
     Exit Sub
 End Sub
 Private Sub pgDadosForm()

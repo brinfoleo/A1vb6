@@ -1526,7 +1526,7 @@ Private Sub cboUnidade_DropDown()
         Else
             Rst.MoveFirst
             Do Until Rst.EOF
-                cboUnidade.AddItem Rst.Fields("sigla")
+                cboUnidade.AddItem IIf(IsNull(Rst.Fields("sigla")), "", Rst.Fields("sigla"))
                 Rst.MoveNext
             Loop
     End If

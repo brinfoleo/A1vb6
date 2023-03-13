@@ -58,7 +58,7 @@ Begin VB.Form formEmpresaExportarDados
          _ExtentX        =   2566
          _ExtentY        =   556
          _Version        =   393216
-         Format          =   134086657
+         Format          =   62849025
          CurrentDate     =   41606
       End
       Begin MSComCtl2.DTPicker dtpDtIniEFD 
@@ -70,7 +70,7 @@ Begin VB.Form formEmpresaExportarDados
          _ExtentX        =   2566
          _ExtentY        =   556
          _Version        =   393216
-         Format          =   134086657
+         Format          =   62849025
          CurrentDate     =   41606
       End
       Begin VB.Label Label9 
@@ -132,7 +132,7 @@ Begin VB.Form formEmpresaExportarDados
          _ExtentX        =   2672
          _ExtentY        =   556
          _Version        =   393216
-         Format          =   134086657
+         Format          =   62849025
          CurrentDate     =   40977
       End
       Begin MSComCtl2.DTPicker dtpDtFinal 
@@ -144,7 +144,7 @@ Begin VB.Form formEmpresaExportarDados
          _ExtentX        =   2672
          _ExtentY        =   556
          _Version        =   393216
-         Format          =   134086657
+         Format          =   62849025
          CurrentDate     =   40977
       End
       Begin VB.Label Label2 
@@ -221,7 +221,7 @@ Begin VB.Form formEmpresaExportarDados
          _ExtentY        =   556
          _Version        =   393216
          CustomFormat    =   "MM/yyyy"
-         Format          =   134086659
+         Format          =   62849027
          CurrentDate     =   40989
       End
       Begin VB.CheckBox chkNFeSaida 
@@ -1405,7 +1405,7 @@ Private Function Fortes_GerarArquivo() As Boolean
 trtErroFortes:
     Me.Enabled = True
     MsgBox Err.Description, vbCritical, Err.Number
-    RegLog "Fortes_GerarArquivo", Err.Number, Err.Description
+    RegLogDataBase 0, "Fortes_GerarArquivo", Err.Number, Err.Description
 End Function
 Private Sub status(Max As Long)
     On Error GoTo TrtStatus
@@ -1618,7 +1618,7 @@ Private Sub XML_Exportar(Periodo As String)
     Exit Sub
 trtErrorXMLexp:
     MsgBox Err.Description, vbCritical, Err.Number
-    RegLog "0", "0", "XML_Exportar - Erro: " & Err.Number & " - " & Err.Description
+    RegLogDataBase 0, "0", "0", "XML_Exportar - Erro: " & Err.Number & " - " & Err.Description
     Resume Next
 End Sub
 Private Sub Sintegra(Periodo As String)

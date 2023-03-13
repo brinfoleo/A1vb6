@@ -280,7 +280,7 @@ Private Function AutenticaUsuario(Nome As String, senha As String) As Boolean
     Rst.Close
     Exit Function
 trtErrAutUsu:
-    RegLog "", Err.Number, Err.Description
+    RegLogDataBase 0, "", Err.Number, Err.Description
 End Function
 
 Private Sub txtSenha_KeyPress(KeyAscii As Integer)

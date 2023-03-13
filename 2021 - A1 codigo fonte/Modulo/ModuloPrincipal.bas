@@ -4,6 +4,7 @@ Attribute VB_Name = "ModuloPrincipal"
 Public ID_Empresa       As Integer 'Empresa corrente
 Public ID_Usuario       As Integer 'Usuario corrente
 Public SistemPath       As String  'Local onde esta o programa
+Public IPLocal          As String  'Numero do Ip da maquina
 Public ID_Deposito      As Integer 'Deposito principal
 Public cDecMoeda        As Integer 'Casas decimais usadas para o Moeda Corrente
 Public cDecQtd          As Integer 'Casas decimais usadas para Quantidade
@@ -133,7 +134,7 @@ Public Sub Main()
 '************************************************************************************
     Exit Sub
 TrtMainError:
-    RegLog "", Err.Number, "(Main) " & Err.Description
+    RegLogDataBase "", Err.Number, "(Main) ", Err.Description
     
 End Sub
 Public Sub FinalizandoSistema()

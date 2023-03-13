@@ -1204,7 +1204,7 @@ Private Sub PesquisarProduto(Optional Id As Long)
     End If
     Exit Sub
 TratarErro:
-    RegLog "0", "0", "[formFaturamentoPVItem.pesquisarProduto] - " & Err.Number & " - " & Err.Description
+    RegLogDataBase 0, "0", "0", "[formFaturamentoPVItem.pesquisarProduto] - " & Err.Number & " - " & Err.Description
 End Sub
 
 Private Sub CalcVlItem()

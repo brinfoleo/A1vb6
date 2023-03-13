@@ -299,7 +299,7 @@ Private Sub LoadTable(sQL As String)
  '***** 22/02/2013                            ******
  '***** REGISTRAR TODOS O COMANDOS EXECUTADOS ******
  '***** NA TELA  formdbDBGrid.                ******
-    RegLog "0", "0", "formdbDBGrid: " & sQL
+    RegLogDataBase 0, "0", "0", "formdbDBGrid: " & sQL
  '**************************************************
  
  

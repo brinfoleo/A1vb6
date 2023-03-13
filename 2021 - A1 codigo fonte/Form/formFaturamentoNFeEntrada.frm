@@ -858,7 +858,7 @@ Begin VB.Form formFaturamentoNFeEntrada
             _ExtentX        =   2566
             _ExtentY        =   556
             _Version        =   393216
-            Format          =   115933185
+            Format          =   62980097
             CurrentDate     =   40591
          End
          Begin VB.TextBox txtnDupl 
@@ -997,7 +997,7 @@ Begin VB.Form formFaturamentoNFeEntrada
          _ExtentX        =   2355
          _ExtentY        =   556
          _Version        =   393216
-         Format          =   115933185
+         Format          =   62980097
          CurrentDate     =   40591
       End
       Begin VB.TextBox txtnNF 
@@ -3198,7 +3198,7 @@ Private Function LoadXML(fArquivo As String) As Boolean
     LoadXML = True
     Exit Function
 TrtErroXML:
-    RegLog "0", "formFaturamentoNFeEntrada.LoadXML", Err.Number & " - " & Err.Description
+    RegLogDataBase 0, "0", "formFaturamentoNFeEntrada.LoadXML", Err.Number & " - " & Err.Description
     LoadXML = False
 End Function
 Private Sub pgDadosEstoque()

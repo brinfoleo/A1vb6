@@ -80,7 +80,7 @@ End Sub
     OpenCnxLicenca = True
     Exit Function
 erroConect:
-    RegLog "0", "0", "OpenCnxLicenca - Erro: " & Err.Number & " - " & Err.Description
+    RegLogDataBase 0, "0", "0", "OpenCnxLicenca - Erro: " & Err.Number & " - " & Err.Description
     OpenCnxLicenca = False
     End Function
 Private Function closeCnxLicenca() As Boolean
@@ -92,7 +92,7 @@ Private Function closeCnxLicenca() As Boolean
     closeCnxLicenca = True
     Exit Function
 erroConect:
-    RegLog "0", "0", "closeCnxLicenca - Erro: " & Err.Number & " - " & Err.Description
+    RegLogDataBase 0, "0", "0", "closeCnxLicenca - Erro: " & Err.Number & " - " & Err.Description
     closeCnxLicenca = False
     End Function
 Private Function pegaLicencaWeb() As Boolean
@@ -167,7 +167,7 @@ Private Function pegaLicencaWeb() As Boolean
     closeCnxLicenca
     Exit Function
 TrtErroDB:
-    RegLog "0", "0", "pegaLicencaWeb - Erro: " & Err.Number & " " & Err.Description
+    RegLogDataBase 0, "0", "0", "pegaLicencaWeb - Erro: " & Err.Number & " " & Err.Description
     pegaLicencaWeb = False
     Resume Next
 End Function
@@ -190,7 +190,7 @@ Private Sub updateAcessSystem()
     Exit Sub
     
 trtErrAcess:
-    RegLog "0", "0", "updateAcessSystem - Erro: " & Err.Number & " " & Err.Description & " - [sql: " & sSQL & "]"
+    RegLogDataBase 0, "0", "0", "updateAcessSystem - Erro: " & Err.Number & " " & Err.Description & " - [sql: " & sSQL & "]"
     Resume Next
 End Sub
 Public Sub grvArqLicenca()

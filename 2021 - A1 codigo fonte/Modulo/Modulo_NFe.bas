@@ -728,7 +728,7 @@ Public Function Exportar_NFe_v200_TXT(chvNFe As String) As String
 End Function
 
 Private Sub MountTXT(Dados As String)
-    If Len(Trim(Dados)) = 0 Then
+    If Len(Trim(strMountTXT)) = 0 Then
             strMountTXT = Dados
         Else
             strMountTXT = strMountTXT & vbCrLf & Dados
@@ -1714,7 +1714,7 @@ Public Function Exportar_NFe_v400_TXT(chvNFe As String) As String
      
     ChecarArquivo (nmArq)
 '========================================================================
-    
+    strMountTXT = ""
     MountTXT "NOTAFISCAL|1"
     'A
     MountTXT "A|" & Rst1.Fields("Versao") & _

@@ -283,7 +283,7 @@ Public Function RegistroExcluir(sTabela As String, sFiltro As String) As Boolean
     sSQL = LCase(sSQL)
     BD.Execute sSQL
     RegistroExcluir = True
-    'RegLogDataBase 0,"0", "0", "Exclusao: " & sSQL
+    RegLogDataBase "", "", "", "modulo-RegistroExcluir: [" & sSQL & "]"
     Exit Function
 TrtErro:
     RegLogDataBase 0, "", Err.Number, Err.Description & " - SQL:[" & sSQL & "]"
@@ -357,38 +357,42 @@ Public Function RegistroIncluir(sTabela As String, vDados As Variant, nmReg As I
     '##########################################################
     For i = 0 To nmReg 'UBound(vDados)
         sFields = sFields & vDados(i)(0) & ","
-        
-        If vDados(i)(2) = "S" Then
-                'vDados(i)(1) = Replace(vDados(i)(1), "'", "´") ' Subistitui  apostrofo por acento agudo evitando erro na string
-                vDados(i)(1) = Replace(vDados(i)(1), "\", "\\")  'Subistitui \ por \\ para que o MySQL entenda que é uma barra
+     
+        If vDados(i)(2) = "S" Then ' String
+                'vDados(i)(1) = Replace(vDados(i)(1), "'", "´") ' Substitui  apostrofo por acento agudo evitando erro na string
+                vDados(i)(1) = Replace(vDados(i)(1), "\", "\\")  'Substitui \ por \\ para que o MySQL entenda que é uma barra
                 vDados(i)(1) = rc(CStr(vDados(i)(1)))
                 sValues = sValues & IIf(Trim(vDados(i)(1)) = "", "Null,", "'" & vDados(i)(1) & "'" & ",")
+            
+            ElseIf vDados(i)(2) = "O" Then 'Original STRING value
+                vDados(i)(1) = CStr(vDados(i)(1))
+                sValues = sValues & IIf(Trim(vDados(i)(1)) = "", "Null,", "'" & vDados(i)(1) & "'" & ",")
       
-             ElseIf vDados(i)(2) = "N" Then
+             ElseIf vDados(i)(2) = "N" Then ' Numeral
                 If vDados(i)(1) <> "" Then
                         sValues = sValues & vDados(i)(1) & ","
                     Else
                         sValues = sValues & 0 & ","
                 End If
       
-            ElseIf vDados(i)(2) = "I" Then
+            ElseIf vDados(i)(2) = "I" Then 'Interger
                 If vDados(i)(1) <> "" Then
                         sValues = sValues & CStr(Val(vDados(i)(1))) & ","
                     Else
                         sValues = sValues & "0" & ","
                 End If
       
-            ElseIf vDados(i)(2) = "D" Then
+            ElseIf vDados(i)(2) = "D" Then 'Date
                 Dim sDt As String
                 sDt = vDados(i)(1)
                 sDt = IIf(sDt = "", "Null", "'" & Format(sDt, "yyyy-mm-dd") & "'")
                 
                 sValues = sValues & sDt & "," 'ConverteData(vDados(I)(1)) & ","
       
-            ElseIf vDados(i)(2) = "T" Then
+            ElseIf vDados(i)(2) = "T" Then ' Time
                 sValues = sValues & vDados(i)(1) & "," 'ConverteTempo(vDados(I)(1)) & ","
       
-            ElseIf vDados(i)(2) = "V" Then
+            ElseIf vDados(i)(2) = "V" Then ' Value
                 sValues = sValues & vDados(i)(0) & "=" & vDados(i)(1) & ","
       
         End If

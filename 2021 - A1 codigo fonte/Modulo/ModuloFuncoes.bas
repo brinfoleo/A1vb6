@@ -405,18 +405,17 @@ Public Sub RegLogDataBase(ByVal Chave As String, ByVal IDLog As String, ByVal ip
                "Descricao longtext," & _
                "PRIMARY KEY (Id))"
    
+    dataLakeDb.Close
     
     
     cReg = 0
     vReg(cReg) = Array("Chave", Chave, "S"): cReg = cReg + 1
     vReg(cReg) = Array("IDLog", IDLog, "S"): cReg = cReg + 1
+    
     vReg(cReg) = Array("Descricao", Descricao, "S"): cReg = cReg + 1
     vReg(cReg) = Array("ipOrigem", IIf(Len(Trim(ipOrigem)) = 0, IPLocal, ipOrigem), "S")  ': cReg = cReg + 1
     
-    
-    
-     
-    
+  
     
     If RegistroIncluirDataLake("RegLogDataBase", vReg, cReg) = 0 Then
         MsgBox "Erro ao gerar regitro de log na classe RegLogDataBase"

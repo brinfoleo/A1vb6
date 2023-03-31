@@ -858,7 +858,7 @@ Begin VB.Form formFaturamentoNFeEntrada
             _ExtentX        =   2566
             _ExtentY        =   556
             _Version        =   393216
-            Format          =   62980097
+            Format          =   137035777
             CurrentDate     =   40591
          End
          Begin VB.TextBox txtnDupl 
@@ -997,7 +997,7 @@ Begin VB.Form formFaturamentoNFeEntrada
          _ExtentX        =   2355
          _ExtentY        =   556
          _Version        =   393216
-         Format          =   62980097
+         Format          =   137035777
          CurrentDate     =   40591
       End
       Begin VB.TextBox txtnNF 
@@ -1342,6 +1342,9 @@ Dim IdTransp        As Integer
 
 Dim fileXMLOrigem   As String 'Armazena o local de origem do XML do Fornecedor
 
+
+Dim xmlNFe          As String 'Store the NFe XML
+
 '
 '***********************************************************************************************
 '***********************************************************************************************
@@ -1644,6 +1647,8 @@ Private Sub MontarArrayIde()
     ide_finNFe = ""
     ide_procEmi = ""
     ide_verProc = ""
+    
+    nProt = Trim(txtnProt.Text)
 End Sub
 
 Private Sub MostrarDadosForm()
@@ -1780,7 +1785,7 @@ Private Function nfeCadastrada() As Boolean
             nfeCadastrada = True
     End If
     Rst.Close
-    If dest_CNPJ <> PgDadosEmpresa(ID_Empresa).CNPJ Then
+    If Len(Trim(dest_CNPJ)) <> 0 And dest_CNPJ <> PgDadosEmpresa(ID_Empresa).CNPJ Then
         MsgBox "O CNPJ (" & dest_CNPJ & ") do destinatário da NFe difere do CNPJ (" & PgDadosEmpresa(ID_Empresa).CNPJ & ")da empresa.", vbInformation, "Aviso!"
     End If
   
@@ -2930,6 +2935,9 @@ Private Function LoadXML(fArquivo As String) As Boolean
    '* Conforme NT 2013.005_V.1.10
    '***************************************************
     
+    'store the XML of Nfe to record later.
+    xmlNFe = docNFe.xml
+    
     '>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>IDENTIFICADOR DA NOTA
     NFe = pgTagXML("infNFe", ">", docNFe.xml)
     Id = Replace(Mid(NFe, InStr(NFe, "NFe"), 47), "NFe", "")
@@ -3350,13 +3358,14 @@ Private Function grvRegistro() As Boolean
     vReg(cReg) = Array("total_vCOFINS", IIf(Trim(total_vCOFINS) = "", "0.00", total_vCOFINS), "S"): cReg = cReg + 1
     vReg(cReg) = Array("total_vNF", IIf(Trim(total_vNF) = "", "0.00", total_vNF), "S"): cReg = cReg + 1
     vReg(cReg) = Array("infAdic_infCpl", IIf(Trim(infCpl) = "", "", infCpl), "S"): cReg = cReg + 1
-    vReg(cReg) = Array("ger_Vendedor", ger_Vendedor, "N") ': cReg = cReg + 1
-    
+    vReg(cReg) = Array("ger_Vendedor", ger_Vendedor, "N"): cReg = cReg + 1
+    vReg(cReg) = Array("xmlNFe", IIf(Len(Trim(xmlNFe)) = 0, "", xmlNFe), "O") ': cReg = cReg + 1
 '     If IdReg = 0 Then
             IdReg = RegistroIncluir(strTabela, vReg, cReg)
             If IdReg = 0 Then
                     MsgBox "Erro ao Incluir CAB"
                     grvRegistro = False
+                    Exit Function
                 Else
                     grvRegistro = True
             End If
@@ -3532,12 +3541,15 @@ Private Function grvRegistro() As Boolean
         'MovimentarContasPagarReceber "P", CDate(ide_dEmi), ide_nNF, CStr(aCob(i)(4)), "Fornecedores", emit_id, emit_xNome, emit_CNPJ, "0", Left(msfgDupl.TextMatrix(i, 4), 3), Left(msfgDupl.TextMatrix(i, 5), 3), "", "", CDate(aCob(i)(6)), _
                                     CStr(aCob(i)(5)), "0", "0", "0", "0", "0", "0", "0", CStr(aCob(i)(7)), "", Id
         If chkMovFinanceiro.Value = 1 Then
-            MovimentarContasPagarReceber "P", CDate(ide_dEmi), ide_nNF, CStr(aCob(i)(4)), "Fornecedores", emit_id, emit_xNome, emit_CNPJ, "0", Left(msfgDupl.TextMatrix(i, 4), 3), Left(msfgDupl.TextMatrix(i, 5), 3), Left(msfgDupl.TextMatrix(i, 6), 3), "", "", msfgDupl.TextMatrix(i, 2), _
-                                        msfgDupl.TextMatrix(i, 1), "0", "0", "0", "0", "0", "0", "0", ChkVal(msfgDupl.TextMatrix(i, 3), 0, 2), "", IIf(Trim(Id) = "", IdReg, Id)
+            MovimentarContasPagarReceber "P", CDate(ide_dEmi), ide_nNF, CStr(aCob(i)(4)), "Fornecedores", emit_id, emit_xNome, emit_CNPJ, "0", Left(msfgDupl.TextMatrix(i, 4), 3), _
+                                        Left(msfgDupl.TextMatrix(i, 5), 3), IIf(Len(Trim(msfgDupl.TextMatrix(i, 6))) = 0, "0", Left(msfgDupl.TextMatrix(i, 6), 3)), _
+                                        "", "", msfgDupl.TextMatrix(i, 2), msfgDupl.TextMatrix(i, 1), "0", "0", "0", "0", "0", "0", "0", ChkVal(msfgDupl.TextMatrix(i, 3), 0, 2), "", IIf(Trim(Id) = "", IdReg, Id)
         End If
     Next
         
-'    Next
+    RegLogDataBase "", "", "", "NFe-Entrada: " & IdReg & "-" & Id & " gravada com sucesso!"
+    MsgBox "Documento gravado com sucesso! " & vbCrLf & "Protocolo: " & IdReg, vbInformation, "NFe Entrada"
+    
 End Function
 Private Sub cboUnidade_DropDown()
     Dim Rst As Recordset

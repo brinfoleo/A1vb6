@@ -740,12 +740,12 @@ Public Function PgDadosConfig() As Dados_Configuracoes
     On Error GoTo TrtErro
     Dim Rst     As Recordset
     Dim sSQL    As String
-    
+    If ID_Empresa = 0 Then Exit Function
     sSQL = "SELECT * FROM configuracoes WHERE ID_Empresa = " & ID_Empresa
     Set Rst = RegistroBuscar(sSQL)
     If Rst.BOF And Rst.EOF Then
             'MsgBox "Favor verificar as configurações do sistema"
-            RegLogDataBase 0, "", "", "Erro ao consultar na base de dados as configurações do sistema"
+            RegLogDataBase "", "", "", "modulo-PgDadosConfig: Erro ao consultar na base de dados as configurações do sistema"
             Exit Function
         Else
             Rst.MoveFirst

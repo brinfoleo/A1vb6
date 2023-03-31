@@ -1016,7 +1016,7 @@ Begin VB.Form formFaturamentoPV
          _ExtentX        =   2566
          _ExtentY        =   556
          _Version        =   393216
-         Format          =   62980097
+         Format          =   137035777
          CurrentDate     =   40517
       End
       Begin VB.TextBox txtID 
@@ -2502,6 +2502,7 @@ Private Sub Excluir()
                         "Pre Venda.: " & txtID.Text, vbYesNo + vbQuestion) = vbYes Then
                 If RegistroExcluir(strTabela, "Id = " & IdReg) = True Then
                     RegistroExcluir strTabela2, "Id = " & IdReg
+                    RegLogDataBase "", "", "", "PV: " & IdReg & " Excluida "
                     LimpForm
                 End If
             End If

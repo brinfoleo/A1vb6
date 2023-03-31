@@ -1,6 +1,6 @@
 VERSION 5.00
-Object = "{831FDD16-0C5C-11D2-A9FC-0000F8754DA1}#2.1#0"; "MSCOMCTL.OCX"
 Object = "{5E9E78A0-531B-11CF-91F6-C2863C385E30}#1.0#0"; "MSFLXGRD.OCX"
+Object = "{831FDD16-0C5C-11D2-A9FC-0000F8754DA1}#2.2#0"; "MSCOMCTL.OCX"
 Begin VB.Form formUsuConexaoGerenciador 
    BorderStyle     =   1  'Fixed Single
    Caption         =   "Gerenciador de Conexão de Usuarios"
@@ -71,7 +71,7 @@ Begin VB.Form formUsuConexaoGerenciador
          Width           =   1755
       End
       Begin VB.Timer Timer1 
-         Interval        =   1000
+         Interval        =   5000
          Left            =   6300
          Top             =   0
       End
@@ -166,7 +166,7 @@ Attribute VB_PredeclaredId = True
 Attribute VB_Exposed = False
 Option Explicit
 Dim lin     As Integer
-Dim IdReg   As Integer
+Dim IdReg   As Long
 
 Private Sub Atualizar()
     On Error Resume Next
@@ -186,15 +186,15 @@ Private Sub Atualizar()
             Do Until Rst.EOF
                 With msfgConec
                 .Rows = .Rows + 1
-                .TextMatrix(.Rows - 1, 0) = Rst.fields("id")
-                .TextMatrix(.Rows - 1, 1) = Rst.fields("IdPrg")
-                .TextMatrix(.Rows - 1, 2) = Rst.fields("Nome")
-                .TextMatrix(.Rows - 1, 3) = Rst.fields("IP")
-                .TextMatrix(.Rows - 1, 4) = Rst.fields("Usuario")
-                .TextMatrix(.Rows - 1, 5) = Rst.fields("Data")
-                .TextMatrix(.Rows - 1, 6) = Rst.fields("Hora")
-                .TextMatrix(.Rows - 1, 7) = Rst.fields("Status")
-                verificarDadosStatus Rst.fields("id"), Rst.fields("Usuario"), Rst.fields("Status")
+                .TextMatrix(.Rows - 1, 0) = Rst.Fields("id")
+                .TextMatrix(.Rows - 1, 1) = Rst.Fields("IdPrg")
+                .TextMatrix(.Rows - 1, 2) = Rst.Fields("Nome")
+                .TextMatrix(.Rows - 1, 3) = Rst.Fields("IP")
+                .TextMatrix(.Rows - 1, 4) = Rst.Fields("Usuario")
+                .TextMatrix(.Rows - 1, 5) = Rst.Fields("Data")
+                .TextMatrix(.Rows - 1, 6) = Rst.Fields("Hora")
+                .TextMatrix(.Rows - 1, 7) = Rst.Fields("Status")
+                verificarDadosStatus Rst.Fields("id"), Rst.Fields("Usuario"), Rst.Fields("Status")
                 End With
                 Rst.MoveNext
             Loop
@@ -311,7 +311,7 @@ Private Sub ChecarConexao()
                 sTexto = "CHECAR - " & Time
                 msfgConec.TextMatrix(l, 7) = sTexto
                 vReg(0) = Array("Status", sTexto, "S")
-                RegistroAlterar "ConexaoGerenciador", vReg, 0, "id=" & Rst.fields("id")
+                RegistroAlterar "ConexaoGerenciador", vReg, 0, "id=" & Rst.Fields("id")
                 Rst.MoveNext
                 l = IIf(msfgConec.Rows < l, l, l + 1)
                 

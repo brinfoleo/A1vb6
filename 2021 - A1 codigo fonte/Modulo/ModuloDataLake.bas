@@ -157,7 +157,6 @@ Public Function RegistroIncluirDataLake(sTabela As String, vDados As Variant, nm
 
 TrataErro:
     RegLog "", Err.Number, Err.Description & " - SQL:[" & sSQL & "]"
-  
     RegistroIncluirDataLake = 0
     Exit Function
 End Function

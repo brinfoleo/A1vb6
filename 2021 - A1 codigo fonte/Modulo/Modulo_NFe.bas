@@ -2172,7 +2172,7 @@ Public Function Exportar_NFe_v400_TXT(chvNFe As String) As String
         tpPag = Trim(Left(pgDadosTipoDocumento(Rst3.Fields("cobr_TpDoc")).formaPgto, 3))
         
         If Trim(tpPag) = "90" Then
-                MountTXT "YA|" & Trim(Rst1.Fields("ide_indPag")) & "|" & tpPag
+                MountTXT "YA|" & ZE(Trim(Rst1.Fields("ide_indPag")), 2) & "|" & tpPag
 
             Else
         

@@ -283,7 +283,7 @@ Public Function RegistroExcluir(sTabela As String, sFiltro As String) As Boolean
     sSQL = LCase(sSQL)
     BD.Execute sSQL
     RegistroExcluir = True
-    RegLogDataBase "", "", "", "modulo-RegistroExcluir: [" & sSQL & "]"
+    RegLogDataBase "", "D", "", "modulo-RegistroExcluir: [" & sSQL & "]"
     Exit Function
 TrtErro:
     RegLogDataBase 0, "", Err.Number, Err.Description & " - SQL:[" & sSQL & "]"

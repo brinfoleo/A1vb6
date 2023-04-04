@@ -44,14 +44,14 @@ Begin VB.Form formFaturamentoNFeEntrada
       TabCaption(1)   =   "Faturamento/Transportador"
       TabPicture(1)   =   "formFaturamentoNFeEntrada.frx":001C
       Tab(1).ControlEnabled=   0   'False
-      Tab(1).Control(0)=   "Frame5"
-      Tab(1).Control(1)=   "Frame7"
+      Tab(1).Control(0)=   "Frame7"
+      Tab(1).Control(1)=   "Frame5"
       Tab(1).ControlCount=   2
       TabCaption(2)   =   "Total da Nota Fiscal / Obs."
       TabPicture(2)   =   "formFaturamentoNFeEntrada.frx":0038
       Tab(2).ControlEnabled=   0   'False
-      Tab(2).Control(0)=   "Frame9"
-      Tab(2).Control(1)=   "Frame4"
+      Tab(2).Control(0)=   "Frame4"
+      Tab(2).Control(1)=   "Frame9"
       Tab(2).ControlCount=   2
       Begin VB.Frame Frame9 
          Caption         =   "Observações"
@@ -858,7 +858,7 @@ Begin VB.Form formFaturamentoNFeEntrada
             _ExtentX        =   2566
             _ExtentY        =   556
             _Version        =   393216
-            Format          =   137035777
+            Format          =   122355713
             CurrentDate     =   40591
          End
          Begin VB.TextBox txtnDupl 
@@ -997,7 +997,7 @@ Begin VB.Form formFaturamentoNFeEntrada
          _ExtentX        =   2355
          _ExtentY        =   556
          _Version        =   393216
-         Format          =   137035777
+         Format          =   122355713
          CurrentDate     =   40591
       End
       Begin VB.TextBox txtnNF 
@@ -2936,7 +2936,7 @@ Private Function LoadXML(fArquivo As String) As Boolean
    '***************************************************
     
     'store the XML of Nfe to record later.
-    xmlNFe = docNFe.xml
+    xmlNFe = Replace(docNFe.xml, "'", "''")
     
     '>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>IDENTIFICADOR DA NOTA
     NFe = pgTagXML("infNFe", ">", docNFe.xml)

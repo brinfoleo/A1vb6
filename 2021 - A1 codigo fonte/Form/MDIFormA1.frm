@@ -241,7 +241,7 @@ Begin VB.MDIForm MDIFormA1
             Bevel           =   0
             Object.Width           =   1693
             MinWidth        =   71
-            TextSave        =   "13/03/2023"
+            TextSave        =   "06/04/2023"
          EndProperty
          BeginProperty Panel6 {8E3867AB-8586-11D1-B16A-00C0F0283628} 
             Style           =   5
@@ -250,7 +250,7 @@ Begin VB.MDIForm MDIFormA1
             Bevel           =   0
             Object.Width           =   873
             MinWidth        =   71
-            TextSave        =   "21:48"
+            TextSave        =   "00:06"
          EndProperty
       EndProperty
    End
@@ -389,8 +389,14 @@ Begin VB.MDIForm MDIFormA1
       Begin VB.Menu EstoqueSPC002 
          Caption         =   "-"
       End
-      Begin VB.Menu EstoquePedidoCompra 
-         Caption         =   "Pedido de Compra"
+      Begin VB.Menu EstoquePedidoCompraMn 
+         Caption         =   "Ordem de Compras"
+         Begin VB.Menu EstoquePedidoCompra 
+            Caption         =   "Pedido de Compra"
+         End
+         Begin VB.Menu EstoquePedidoCompraRelatorio 
+            Caption         =   "Relatorio"
+         End
       End
    End
    Begin VB.Menu Faturamento 
@@ -643,6 +649,12 @@ End Sub
 Private Sub EstoqueGerenciador_Click()
     formEstoqueGerenciador.Show
 End Sub
+
+Private Sub EstoquePedidoCompraRelatorio_Click()
+    formEstoquePedidoCompraRelatorios.Show
+   
+End Sub
+
 Private Sub EstoqueRelatorio_Click()
     formEstoqueAnalise.Show
 End Sub

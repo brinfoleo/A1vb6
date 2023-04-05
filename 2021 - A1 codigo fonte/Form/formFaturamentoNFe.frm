@@ -80,7 +80,7 @@ Begin VB.Form formFaturamentoNFe
          _ExtentX        =   2778
          _ExtentY        =   556
          _Version        =   393216
-         Format          =   139329537
+         Format          =   119734273
          CurrentDate     =   40561
       End
       Begin MSComCtl2.DTPicker dtpEmissao 
@@ -92,7 +92,7 @@ Begin VB.Form formFaturamentoNFe
          _ExtentX        =   2778
          _ExtentY        =   556
          _Version        =   393216
-         Format          =   139329537
+         Format          =   119734273
          CurrentDate     =   40561
       End
       Begin VB.TextBox txtNumNota 
@@ -1266,6 +1266,7 @@ End Sub
 Private Sub txtPedido_KeyPress(KeyAscii As Integer)
     If KeyAscii = 8 Then Exit Sub
     If KeyAscii = 13 Then
+        If (Len(Trim(txtPedido.Text))) = 0 Then Exit Sub
         PesquisarPedido (txtPedido.Text)
         If idPedido <> 0 Then
             Validar

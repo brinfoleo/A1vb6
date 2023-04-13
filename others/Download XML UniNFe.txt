@@ -1,0 +1,5 @@
+
+Gere, primeiro, o XML na pasta para validar, 
+o Uninfe vai validar e assinar e colocar o XML 
+assinado na subpasta validados, vc move ele 
+para a emprocessamento e daí faz a consulta.

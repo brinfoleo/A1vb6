@@ -1,7 +1,7 @@
 formClientes = 0, 0, 0, 0, C, 182, 182, 1137, 828, C
 MDIFormA1 = 208, 208, 1008, 854, C, 104, 104, 1059, 750, C
 ModuloDatabase = 156, 156, 1111, 802, C
-ModuloPrincipal = 0, 0, 0, 0, C
+ModuloPrincipal = 26, 26, 954, 672, Z
 formEmpresas = 0, 0, 0, 0, C, 234, 234, 1189, 880, C
 ModuloFuncoes = 52, 52, 1191, 513, C
 ModuloPgDados = 0, 0, 1139, 461, C
@@ -57,7 +57,7 @@ formUsuGerenciador = 0, 0, 0, 0, C, 156, 156, 1111, 802, C
 formTributacaoPais = 0, 0, 0, 0, C, 182, 182, 1137, 828, C
 formComercialGerenciadorClientes = 0, 0, 0, 0, C, 208, 208, 1163, 854, C
 formUsuTrocarSenha = 0, 0, 0, 0, C, 234, 234, 1189, 880, C
-rptListaOCPeriodo = 104, 104, 1088, 565, C, 52, 52, 808, 500, C
+rptListaOCPeriodo = 104, 104, 1088, 565, C, 52, 52, 808, 500, CZ
 modBase64 = 0, 0, 0, 0, C
 formFaturamentoSendMail = 0, 0, 0, 0, C, 286, 286, 1241, 932, C
 formRHFuncionarioTrocarComissao = 0, 0, 0, 0, C, 0, 0, 955, 646, C

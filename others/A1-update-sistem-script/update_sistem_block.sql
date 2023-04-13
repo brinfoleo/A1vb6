@@ -1,0 +1,1 @@
+UPDATE a1_rubber.updatesistema set vAtual='0' WHERE Id_Empresa=0

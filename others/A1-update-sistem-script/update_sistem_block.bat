@@ -1,1 +1,0 @@
-mysql -h localhost -u root -p < update_sistem_block.sql

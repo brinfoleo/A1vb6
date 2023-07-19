@@ -1,6 +1,6 @@
 VERSION 5.00
 Begin {78E93846-85FD-11D0-8487-00A0C90DC8A9} rptRHFolhaPonto 
-   Caption         =   "DataReport1"
+   Caption         =   "A1"
    ClientHeight    =   11670
    ClientLeft      =   60
    ClientTop       =   450
@@ -10,7 +10,7 @@ Begin {78E93846-85FD-11D0-8487-00A0C90DC8A9} rptRHFolhaPonto
    _ExtentX        =   22357
    _ExtentY        =   20585
    _Version        =   393216
-   _DesignerVersion=   100688210
+   _DesignerVersion=   100684101
    ReportWidth     =   10665
    BeginProperty Font {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
       Name            =   "Arial"
@@ -72,7 +72,7 @@ Begin {78E93846-85FD-11D0-8487-00A0C90DC8A9} rptRHFolhaPonto
             Italic          =   0   'False
             Strikethrough   =   0   'False
          EndProperty
-         Object.Caption         =   "CNPJ: 40.253.676/0001-01 I.E.: 84.344.893"
+         Object.Caption         =   "CNPJ: 00.000.000/0000-00 I.E.: 00.000.000"
       EndProperty
       ItemType3       =   3
       BeginProperty Item3 {1C13A8E1-A0B6-11D0-848E-00A0C90DC8A9} 
@@ -4845,7 +4845,7 @@ Private Sub DataReport_Initialize()
     Set rptRHFolhaPonto.Sections("Section2").Controls.Item("imgLogo").Picture = LoadPicture(PgDadosEmpresa(ID_Empresa).Logotipo)
     rptRHFolhaPonto.Sections("Section2").Controls.Item("LblDocs").Caption = "CNPJ: " & PgDadosEmpresa(ID_Empresa).CNPJ & "  I.E.: " & PgDadosEmpresa(ID_Empresa).IE
     rptRHFolhaPonto.Sections("Section2").Controls.Item("Lblendereco").Caption = PgDadosEmpresa(ID_Empresa).Lgr & " n. " & PgDadosEmpresa(ID_Empresa).Nro & "  -  " & PgDadosEmpresa(ID_Empresa).Bairro
-    rptRHFolhaPonto.Sections("Section2").Controls.Item("LblEnderecoCompl").Caption = PgDadosEmpresa(ID_Empresa).Mun & " - " & PgDadosEmpresa(ID_Empresa).UF & "  CEP:" & PgDadosEmpresa(ID_Empresa).CEP
+    rptRHFolhaPonto.Sections("Section2").Controls.Item("LblEnderecoCompl").Caption = PgDadosEmpresa(ID_Empresa).Mun & " - " & PgDadosEmpresa(ID_Empresa).uf & "  CEP:" & PgDadosEmpresa(ID_Empresa).CEP
     rptRHFolhaPonto.Sections("Section2").Controls.Item("Lblcontato1").Caption = "Tel.: " & PgDadosEmpresa(ID_Empresa).Fone
     rptRHFolhaPonto.Sections("Section2").Controls.Item("Lblcontato2").Caption = "e-mail: " & PgDadosEmpresa(ID_Empresa).Mail
     rptRHFolhaPonto.Sections("Section3").Controls.Item("LblRodape").Caption = "A1 - v." & sVersao & " [Rev." & cVersao & "]"

@@ -1,6 +1,6 @@
 VERSION 5.00
 Object = "{86CF1D34-0C5F-11D2-A9FC-0000F8754DA1}#2.0#0"; "MSCOMCT2.OCX"
-Object = "{831FDD16-0C5C-11D2-A9FC-0000F8754DA1}#2.0#0"; "MSCOMCTL.OCX"
+Object = "{831FDD16-0C5C-11D2-A9FC-0000F8754DA1}#2.2#0"; "MSCOMCTL.OCX"
 Begin VB.Form formFaturamentoPVRelatorios 
    BorderStyle     =   1  'Fixed Single
    Caption         =   "Pré-Venda - Relatórios"
@@ -112,7 +112,7 @@ Begin VB.Form formFaturamentoPVRelatorios
          _ExtentX        =   2355
          _ExtentY        =   503
          _Version        =   393216
-         Format          =   113180673
+         Format          =   162529281
          CurrentDate     =   40584
       End
       Begin MSComCtl2.DTPicker dtpNFFim 
@@ -124,7 +124,7 @@ Begin VB.Form formFaturamentoPVRelatorios
          _ExtentX        =   2355
          _ExtentY        =   503
          _Version        =   393216
-         Format          =   117112833
+         Format          =   162529281
          CurrentDate     =   40584
       End
    End
@@ -246,7 +246,8 @@ Private Sub LstPV()
 
             '22.02.2018 - Testado e funcionando
             sSQL = "SELECT" & _
-                " faturamentopv.Emissao, faturamentonfe.ide_nNF, faturamentopv.Id," & _
+                " financeirotipodocumento.id, financeirotipodocumento.sigla," & _
+                " faturamentopv.Emissao, faturamentonfe.ide_nNF, faturamentopv.Id AS pv_id, faturamentopv.FormaPagamento," & _
                 " faturamentopv.IdCliente, faturamentopv.Cliente," & _
                 " FaturamentoPV.VlTotalPV , rhfuncionariocadastro.xNome" & _
                 " from" & _
@@ -254,34 +255,42 @@ Private Sub LstPV()
                 " faturamentopv ON faturamentopv.Id = faturamentonfe.ger_idPV" & _
                 " Inner Join" & _
                 " rhfuncionariocadastro ON faturamentopv.Vendedor = rhfuncionariocadastro.Id" & _
+                " Inner Join financeirotipodocumento ON faturamentopv.FormaPagamento = financeirotipodocumento.Id " & _
                 " Where" & _
                 " faturamentopv.ID_Empresa = " & ID_Empresa
 
         Case 1 '1 - Com NF
                 
-            'sSQL = "SELECT *" & _
-                " FROM FaturamentoPV AS fpv, RHFuncionarioCadastro AS rh" & _
-                " WHERE fpv.id IN (SELECT ger_idpv FROM faturamentonfe WHERE ger_idpv is not null)" & _
-                " AND fpv.ID_Empresa = " & ID_Empresa & " AND fpv.vendedor = rh.id"
+            
         '21.02.18 - Ajustar para que possa pegar o num da nfe
-            sSQL = "SELECT * " & _
+            sSQL = "SELECT *, faturamentopv.Id AS pv_id" & _
             " from" & _
             " faturamentonfe INNER JOIN" & _
             " rhfuncionariocadastro ON faturamentonfe.ger_Vendedor =" & _
             " rhfuncionariocadastro.Id INNER JOIN" & _
             " faturamentopv ON faturamentonfe.ger_idPV = faturamentopv.Id" & _
+            " Inner Join financeirotipodocumento ON faturamentopv.FormaPagamento = financeirotipodocumento.Id " & _
             " Where" & _
             " faturamentopv.Id_Empresa = " & ID_Empresa '& _
-            " AND faturamentopv.Emissao BETWEEN '2018-02-21' AND '2018-02-21';"
+
             
         
         Case 2 '2 - Sem NF
-            'sSQL = "SELECT * FROM faturamentopv WHERE id not IN (SELECT ger_idpv FROM faturamentonfe)"
-             sSQL = "SELECT '00000' AS ide_nnf, FaturamentoPV.*, RHFuncionarioCadastro.*" & _
-                " FROM FaturamentoPV, RHFuncionarioCadastro" & _
-                " WHERE FaturamentoPV.id not IN (SELECT ger_idpv FROM faturamentonfe WHERE ger_idpv is not null)" & _
-                " AND FaturamentoPV.ID_Empresa = " & ID_Empresa & " AND FaturamentoPV.vendedor = RHFuncionarioCadastro.id"
-        
+             sSQL = "SELECT" & _
+                " financeirotipodocumento.id, financeirotipodocumento.sigla," & _
+                " faturamentopv.Emissao, faturamentonfe.ide_nNF, faturamentopv.Id AS pv_id, faturamentopv.FormaPagamento," & _
+                " faturamentopv.IdCliente, faturamentopv.Cliente," & _
+                " FaturamentoPV.VlTotalPV , rhfuncionariocadastro.xNome" & _
+                " from" & _
+                " faturamentonfe RIGHT JOIN" & _
+                " faturamentopv ON faturamentopv.Id = faturamentonfe.ger_idPV" & _
+                " Inner Join" & _
+                " rhfuncionariocadastro ON faturamentopv.Vendedor = rhfuncionariocadastro.Id" & _
+                " Inner Join financeirotipodocumento ON faturamentopv.FormaPagamento = financeirotipodocumento.Id " & _
+                " Where" & _
+                " faturamentopv.ID_Empresa = " & ID_Empresa & _
+                " AND ide_nNF is Null"
+                
     End Select
                    
            

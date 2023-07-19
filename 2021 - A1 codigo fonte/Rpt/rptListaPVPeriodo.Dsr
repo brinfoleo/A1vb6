@@ -4,13 +4,13 @@ Begin {78E93846-85FD-11D0-8487-00A0C90DC8A9} rptListaPVPeriodo
    ClientHeight    =   6135
    ClientLeft      =   60
    ClientTop       =   450
-   ClientWidth     =   11100
+   ClientWidth     =   14040
    StartUpPosition =   3  'Windows Default
    WindowState     =   2  'Maximized
-   _ExtentX        =   19579
+   _ExtentX        =   24765
    _ExtentY        =   10821
    _Version        =   393216
-   _DesignerVersion=   100688210
+   _DesignerVersion=   100684101
    ReportWidth     =   10380
    BeginProperty Font {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
       Name            =   "Arial"
@@ -220,8 +220,8 @@ Begin {78E93846-85FD-11D0-8487-00A0C90DC8A9} rptListaPVPeriodo
    BeginProperty Section2 {1C13A8E0-A0B6-11D0-848E-00A0C90DC8A9} 
       _Version        =   393216
       Name            =   "Section1"
-      Object.Height          =   258
-      NumControls     =   6
+      Object.Height          =   282
+      NumControls     =   7
       ItemType0       =   4
       BeginProperty Item0 {1C13A8E2-A0B6-11D0-848E-00A0C90DC8A9} 
          _Version        =   393216
@@ -293,7 +293,7 @@ Begin {78E93846-85FD-11D0-8487-00A0C90DC8A9} rptListaPVPeriodo
             Italic          =   0   'False
             Strikethrough   =   0   'False
          EndProperty
-         DataField       =   "id"
+         DataField       =   "pv_id"
          Alignment       =   2
          BeginProperty DataFormat {6D835690-900B-11D0-9484-00A0C91110ED} 
             Type            =   1
@@ -310,7 +310,7 @@ Begin {78E93846-85FD-11D0-8487-00A0C90DC8A9} rptListaPVPeriodo
          _Version        =   393216
          Name            =   "txtNome"
          Object.Left            =   4195
-         Object.Width           =   4432
+         Object.Width           =   3572
          Object.Height          =   225
          BeginProperty Font {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
             Name            =   "Arial"
@@ -380,6 +380,34 @@ Begin {78E93846-85FD-11D0-8487-00A0C90DC8A9} rptListaPVPeriodo
          BeginProperty DataFormat {6D835690-900B-11D0-9484-00A0C91110ED} 
             Type            =   0
             Format          =   ""
+            HaveTrueFalseNull=   0
+            FirstDayOfWeek  =   0
+            FirstWeekOfYear =   0
+            LCID            =   1046
+            SubFormatType   =   0
+         EndProperty
+      EndProperty
+      ItemType6       =   4
+      BeginProperty Item6 {1C13A8E2-A0B6-11D0-848E-00A0C90DC8A9} 
+         _Version        =   393216
+         Name            =   "txtPayment"
+         Object.Left            =   7880
+         Object.Width           =   737
+         Object.Height          =   225
+         BeginProperty Font {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
+            Name            =   "Arial"
+            Size            =   8.25
+            Charset         =   0
+            Weight          =   400
+            Underline       =   0   'False
+            Italic          =   0   'False
+            Strikethrough   =   0   'False
+         EndProperty
+         DataField       =   "sigla"
+         Alignment       =   2
+         BeginProperty DataFormat {6D835690-900B-11D0-9484-00A0C91110ED} 
+            Type            =   0
+            Format          =   "0,00"
             HaveTrueFalseNull=   0
             FirstDayOfWeek  =   0
             FirstWeekOfYear =   0

@@ -1,5 +1,6 @@
 VERSION 5.00
 Begin {78E93846-85FD-11D0-8487-00A0C90DC8A9} rptPedidoCompra 
+   Caption         =   "A1"
    ClientHeight    =   10890
    ClientLeft      =   60
    ClientTop       =   450
@@ -8,7 +9,7 @@ Begin {78E93846-85FD-11D0-8487-00A0C90DC8A9} rptPedidoCompra
    _ExtentX        =   21908
    _ExtentY        =   19209
    _Version        =   393216
-   _DesignerVersion=   100688210
+   _DesignerVersion=   100684101
    ReportWidth     =   10500
    BeginProperty Font {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
       Name            =   "Arial"
@@ -1741,7 +1742,7 @@ Private Sub DataReport_Initialize()
     
     rptPedidoCompra.Sections("Section4").Controls.Item("LblDocs").Caption = "CNPJ: " & PgDadosEmpresa(ID_Empresa).CNPJ & "  I.E.: " & PgDadosEmpresa(ID_Empresa).IE
     rptPedidoCompra.Sections("Section4").Controls.Item("Lblendereco").Caption = PgDadosEmpresa(ID_Empresa).Lgr & " n. " & PgDadosEmpresa(ID_Empresa).Nro & "  -  " & PgDadosEmpresa(ID_Empresa).Bairro
-    rptPedidoCompra.Sections("Section4").Controls.Item("LblEnderecoCompl").Caption = PgDadosEmpresa(ID_Empresa).Mun & " - " & PgDadosEmpresa(ID_Empresa).UF & "  CEP:" & PgDadosEmpresa(ID_Empresa).CEP
+    rptPedidoCompra.Sections("Section4").Controls.Item("LblEnderecoCompl").Caption = PgDadosEmpresa(ID_Empresa).Mun & " - " & PgDadosEmpresa(ID_Empresa).uf & "  CEP:" & PgDadosEmpresa(ID_Empresa).CEP
     rptPedidoCompra.Sections("Section4").Controls.Item("Lblcontato1").Caption = "Tel.: " & PgDadosEmpresa(ID_Empresa).Fone
     rptPedidoCompra.Sections("Section4").Controls.Item("Lblcontato2").Caption = "e-mail: " & PgDadosEmpresa(ID_Empresa).Mail
     rptPedidoCompra.Sections("Section3").Controls.Item("LblRodape").Caption = "A1 - v." & sVersao & " [Rev." & cVersao & "]"

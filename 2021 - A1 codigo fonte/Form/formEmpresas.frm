@@ -1,7 +1,7 @@
 VERSION 5.00
 Object = "{BDC217C8-ED16-11CD-956C-0000C04E4C0A}#1.1#0"; "TABCTL32.OCX"
 Object = "{F9043C88-F6F2-101A-A3C9-08002B2F49FB}#1.2#0"; "COMDLG32.OCX"
-Object = "{831FDD16-0C5C-11D2-A9FC-0000F8754DA1}#2.1#0"; "mscomctl.ocx"
+Object = "{831FDD16-0C5C-11D2-A9FC-0000F8754DA1}#2.2#0"; "MSCOMCTL.OCX"
 Begin VB.Form formEmpresas 
    BorderStyle     =   1  'Fixed Single
    Caption         =   "Empresas"
@@ -25,27 +25,30 @@ Begin VB.Form formEmpresas
       _ExtentY        =   9446
       _Version        =   393216
       Tabs            =   4
-      Tab             =   3
+      Tab             =   1
       TabsPerRow      =   4
       TabHeight       =   520
       TabCaption(0)   =   "Basico"
       TabPicture(0)   =   "formEmpresas.frx":0000
       Tab(0).ControlEnabled=   0   'False
       Tab(0).Control(0)=   "Frame1"
+      Tab(0).Control(0).Enabled=   0   'False
       Tab(0).ControlCount=   1
       TabCaption(1)   =   "Documentos"
       TabPicture(1)   =   "formEmpresas.frx":001C
-      Tab(1).ControlEnabled=   0   'False
+      Tab(1).ControlEnabled=   -1  'True
       Tab(1).Control(0)=   "Frame3"
+      Tab(1).Control(0).Enabled=   0   'False
       Tab(1).ControlCount=   1
       TabCaption(2)   =   "Logotipo"
       TabPicture(2)   =   "formEmpresas.frx":0038
       Tab(2).ControlEnabled=   0   'False
       Tab(2).Control(0)=   "Frame4"
+      Tab(2).Control(0).Enabled=   0   'False
       Tab(2).ControlCount=   1
       TabCaption(3)   =   "Contador"
       TabPicture(3)   =   "formEmpresas.frx":0054
-      Tab(3).ControlEnabled=   -1  'True
+      Tab(3).ControlEnabled=   0   'False
       Tab(3).Control(0)=   "Frame5"
       Tab(3).Control(0).Enabled=   0   'False
       Tab(3).ControlCount=   1
@@ -61,7 +64,7 @@ Begin VB.Form formEmpresas
             Strikethrough   =   0   'False
          EndProperty
          Height          =   4815
-         Left            =   120
+         Left            =   -74880
          TabIndex        =   50
          Top             =   360
          Width           =   8715
@@ -460,7 +463,7 @@ Begin VB.Form formEmpresas
       End
       Begin VB.Frame Frame3 
          Height          =   4815
-         Left            =   -74880
+         Left            =   120
          TabIndex        =   26
          Top             =   360
          Width           =   8715
@@ -1027,8 +1030,8 @@ Private Sub btoBusca_Click(Index As Integer)
     With cmdLogo
         .Filter = "Imagem JPEG|*.jpg"
         .ShowOpen
-        pctLogo.Picture = LoadPicture(.filename)
-        txtfLogotipo.Text = .filename
+        pctLogo.Picture = LoadPicture(.FileName)
+        txtfLogotipo.Text = .FileName
     End With
     Exit Sub
 TrtErro:

@@ -241,7 +241,7 @@ Begin VB.MDIForm MDIFormA1
             Bevel           =   0
             Object.Width           =   1693
             MinWidth        =   71
-            TextSave        =   "06/04/2023"
+            TextSave        =   "22/06/2023"
          EndProperty
          BeginProperty Panel6 {8E3867AB-8586-11D1-B16A-00C0F0283628} 
             Style           =   5
@@ -250,7 +250,7 @@ Begin VB.MDIForm MDIFormA1
             Bevel           =   0
             Object.Width           =   873
             MinWidth        =   71
-            TextSave        =   "00:06"
+            TextSave        =   "22:38"
          EndProperty
       EndProperty
    End
@@ -600,7 +600,7 @@ Private Sub AjustesdoLeo_Click()
         
         Dim c As Integer
         Dim a As Integer
-        Dim total As Integer
+        Dim Total As Integer
         Dim sCod As String
         
         sSQL = "SELECT * FROM estoqueproduto WHERE ID_Empresa = " & ID_Empresa & " AND Deposito = " & ID_Deposito
@@ -608,7 +608,7 @@ Private Sub AjustesdoLeo_Click()
         If Rst.BOF And Rst.EOF Then
             Else
                 Rst.MoveFirst
-                total = Rst.RecordCount
+                Total = Rst.RecordCount
                 c = 0
                 a = 0
                 Do Until Rst.EOF
@@ -623,7 +623,7 @@ Private Sub AjustesdoLeo_Click()
                     
                 End If
                 a = a + 1
-                Me.Caption = "Atual: " & a & " Modificados: " & c & " Total: " & total
+                Me.Caption = "Atual: " & a & " Modificados: " & c & " Total: " & Total
                 Rst.MoveNext
                 Loop
         End If

@@ -58,7 +58,7 @@ Begin VB.Form formEmpresaExportarDados
          _ExtentX        =   2566
          _ExtentY        =   556
          _Version        =   393216
-         Format          =   62849025
+         Format          =   136970241
          CurrentDate     =   41606
       End
       Begin MSComCtl2.DTPicker dtpDtIniEFD 
@@ -70,7 +70,7 @@ Begin VB.Form formEmpresaExportarDados
          _ExtentX        =   2566
          _ExtentY        =   556
          _Version        =   393216
-         Format          =   62849025
+         Format          =   136970241
          CurrentDate     =   41606
       End
       Begin VB.Label Label9 
@@ -132,7 +132,7 @@ Begin VB.Form formEmpresaExportarDados
          _ExtentX        =   2672
          _ExtentY        =   556
          _Version        =   393216
-         Format          =   62849025
+         Format          =   136970241
          CurrentDate     =   40977
       End
       Begin MSComCtl2.DTPicker dtpDtFinal 
@@ -144,7 +144,7 @@ Begin VB.Form formEmpresaExportarDados
          _ExtentX        =   2672
          _ExtentY        =   556
          _Version        =   393216
-         Format          =   62849025
+         Format          =   136970241
          CurrentDate     =   40977
       End
       Begin VB.Label Label2 
@@ -221,7 +221,7 @@ Begin VB.Form formEmpresaExportarDados
          _ExtentY        =   556
          _Version        =   393216
          CustomFormat    =   "MM/yyyy"
-         Format          =   62849027
+         Format          =   136970243
          CurrentDate     =   40989
       End
       Begin VB.CheckBox chkNFeSaida 
@@ -384,6 +384,13 @@ Attribute VB_PredeclaredId = True
 Attribute VB_Exposed = False
 Option Explicit
 Dim tpExp As Integer
+Private Sub Compress(cArqCompactado As String, cArq As String)
+        With New cZipArchive
+            .AddFromFolder cArq
+            .CompressArchive cArqCompactado
+        End With
+End Sub
+
 Private Sub Exportar()
     Select Case tpExp
         Case 1 'Arquivo Fortes Fiscal
@@ -1409,7 +1416,7 @@ trtErroFortes:
 End Function
 Private Sub status(Max As Long)
     On Error GoTo TrtStatus
-    pb.min = 0
+    pb.Min = 0
     pb.Max = Max
     DoEvents
     pb.Value = pb.Value + 1
@@ -1527,7 +1534,7 @@ Private Sub btoDestinoXMLNFe_Click()
     cd.DialogTitle = App.EXEName
     'cd.Filter = "Compactado|*.zip "
     cd.ShowSave
-    txtDestXML.Text = cd.filename
+    txtDestXML.Text = cd.FileName
     
 End Sub
 
@@ -1579,11 +1586,17 @@ Private Sub XML_Exportar(Periodo As String)
     If chkNFeSaida.Value = 1 Then
         caminho = PgDadosConfig.pBackup & "\Autorizados\" & Periodo
         If Dir(caminho, vbDirectory) = "" Then
-            MsgBox "Erro ao localizar a pasta com os dados!", vbCritical, App.EXEName
+            MsgBox "Saida - Erro ao localizar a pasta com os dados!", vbCritical, App.EXEName
+            Me.Enabled = True
             Exit Sub
         End If
         arquivoCliente = PgDadosConfig.pFileArmazenamento & "\Saida-" & RS(PgDadosEmpresa(ID_Empresa).CNPJ) & Format(Periodo, "YYYYMM") & ".zip"
-        Compacta arquivoCliente, caminho & "\*.*"
+        'Compacta arquivoCliente, caminho & "\*.*"
+        Compress arquivoCliente, caminho & "\*.*"
+        
+        '+++++++++++++++++++++++++++++++++++++++++++
+        
+        '+++++++++++++++++++++++++++++++++++++++++++
     End If
     '#######################################################################################
     
@@ -1593,15 +1606,18 @@ Private Sub XML_Exportar(Periodo As String)
     If chkNFeEntrada.Value = 1 Then
         caminho = PgDadosConfig.pXMLFornecedor & "\" & Periodo
         If Dir(caminho, vbDirectory) = "" Then
-            MsgBox "Erro ao localizar a pasta com os dados"
+            MsgBox "Entrada - Erro ao localizar a pasta com os dados"
+            Me.Enabled = True
             Exit Sub
         End If
         arquivoFornecedor = PgDadosConfig.pFileArmazenamento & "\Entrada-" & RS(PgDadosEmpresa(ID_Empresa).CNPJ) & Format(Periodo, "YYYYMM") & ".zip"
-        Compacta arquivoFornecedor, caminho & "\*.*"
+        'Compacta arquivoFornecedor, caminho & "\*.*"
+        Compress arquivoFornecedor, caminho & "\*.*"
     End If
     '#######################################################################################
     status (4)
-    Compacta zipDestino, PgDadosConfig.pFileArmazenamento & "\*-" & RS(PgDadosEmpresa(ID_Empresa).CNPJ) & Format(Periodo, "YYYYMM") & ".zip"
+    'Compacta zipDestino, PgDadosConfig.pFileArmazenamento & "\*-" & RS(PgDadosEmpresa(ID_Empresa).CNPJ) & Format(Periodo, "YYYYMM") & ".zip"
+    Compress zipDestino, PgDadosConfig.pFileArmazenamento & "\*-" & RS(PgDadosEmpresa(ID_Empresa).CNPJ) & Format(Periodo, "YYYYMM") & ".zip"
     
     '### Exclui os Arquivos pre compactados
     If chkNFeEntrada.Value = 1 Then
@@ -1612,13 +1628,14 @@ Private Sub XML_Exportar(Periodo As String)
     End If
     
     status (4)
-    If MsgBox("Arquivos gerados com sucesso!" & vbCrLf & "Deseja enviar por e-mail?", vbQuestion + vbYesNo, App.EXEName) = vbYes Then
-        formSendMail.CarregarForm "gloria@argoscont.com.br", "Movimento Mensal", "Em Anexo", txtDestXML.Text
-    End If
+    'If MsgBox("Arquivos gerados com sucesso!" & vbCrLf & "Deseja enviar por e-mail?", vbQuestion + vbYesNo, App.EXEName) = vbYes Then
+    '    formSendMail.CarregarForm "gloria@argoscont.com.br", "Movimento Mensal", "Em Anexo", txtDestXML.Text
+    'End If
     Exit Sub
 trtErrorXMLexp:
     MsgBox Err.Description, vbCritical, Err.Number
     RegLogDataBase 0, "0", "0", "XML_Exportar - Erro: " & Err.Number & " - " & Err.Description
+    Me.Enabled = True
     Resume Next
 End Sub
 Private Sub Sintegra(Periodo As String)

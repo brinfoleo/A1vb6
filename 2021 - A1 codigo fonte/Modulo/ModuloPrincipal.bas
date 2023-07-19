@@ -247,6 +247,7 @@ Private Function AnaliseDataEquipamento() As Boolean
     
 End Function
 Public Sub updateSistema()
+   
     '#
     '# Leonardo Aquino - 27/09/2012
     '#

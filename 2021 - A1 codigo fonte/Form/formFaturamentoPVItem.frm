@@ -1047,7 +1047,10 @@ Private Sub txtNCM_Change()
         txtNCMDescricao.Text = ""
         Exit Sub
     End If
-    txtNCMDescricao.Text = PgDadosNCM("NCM", Trim(txtNCM.Text), "S").Descricao & " [" & PgDadosNCM("NCM", Trim(txtNCM.Text), "S").pIPI & "%]"
+    txtNCMDescricao.Text = PgDadosNCM("NCM", Trim(txtNCM.Text), "S").Descricao & _
+                           IIf(Trim(PgDadosNCM("NCM", Trim(txtNCM.Text), "S").pIPI) <> "", " [" & PgDadosNCM("NCM", Trim(txtNCM.Text), "S").pIPI & "%]", "") & _
+                           IIf(Trim(PgDadosNCM("NCM", Trim(txtNCM.Text), "S").cest) <> "", " [CEST: " & PgDadosNCM("NCM", Trim(txtNCM.Text), "S").cest & "]", "")
+                           
 End Sub
 
 Private Sub txtNCMDescricao_KeyPress(KeyAscii As Integer)

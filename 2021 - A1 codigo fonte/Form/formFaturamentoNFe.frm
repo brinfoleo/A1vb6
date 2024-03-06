@@ -80,7 +80,7 @@ Begin VB.Form formFaturamentoNFe
          _ExtentX        =   2778
          _ExtentY        =   556
          _Version        =   393216
-         Format          =   136970241
+         Format          =   110034945
          CurrentDate     =   40561
       End
       Begin MSComCtl2.DTPicker dtpEmissao 
@@ -92,7 +92,7 @@ Begin VB.Form formFaturamentoNFe
          _ExtentX        =   2778
          _ExtentY        =   556
          _Version        =   393216
-         Format          =   136970241
+         Format          =   110034945
          CurrentDate     =   40561
       End
       Begin VB.TextBox txtNumNota 
@@ -3046,7 +3046,7 @@ Private Sub Calculo_ICMS_CST_10(Item As Integer)
     aICMS(Item)(9) = 0
             
     If Trim(aICMS(Item)(8)) = "" Then
-        MsgBox "Erro ao localizar o MVA do item " & ZE(Item, 3) & ".", vbInformation, "Aviso"
+        MsgBox "Erro ao localizar o MVA do item " & ZE(Item + 1, 3) & ".", vbInformation, "Aviso"
         msgValid "Item " & ZE(Item, 3) & " - Erro ao localizar MVA"
         Exit Sub
     End If

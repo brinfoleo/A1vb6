@@ -1307,7 +1307,7 @@ End Sub
 Private Sub btoFileBuscar_Click()
     Dim sFile As String
     cdFile.ShowOpen
-    sFile = cdFile.filename
+    sFile = cdFile.FileName
     txtFile.Text = sFile
 End Sub
 
@@ -1685,7 +1685,7 @@ Private Sub msfgDocAnexo_DblClick()
         Rst.Close
         
         If Dir(nmFile) = "" Then Exit Sub
-        ShellExecute Hwnd, "open", (nmFile), "", "", 1
+        ShellExecute hWnd, "open", (nmFile), "", "", 1
     End With
 End Sub
 

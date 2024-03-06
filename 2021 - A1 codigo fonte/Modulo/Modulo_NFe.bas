@@ -741,7 +741,7 @@ Private Sub grvReg(nmArquivo As String, Dados As String)
     Dim fso As New FileSystemObject
     Dim Arquivo As File
     Dim arquivoLog As TextStream
-    Dim msg As String
+    Dim Msg As String
     Dim caminho As String
     
     
@@ -763,10 +763,10 @@ Private Sub grvReg(nmArquivo As String, Dados As String)
     Set arquivoLog = Arquivo.OpenAsTextStream(ForAppending)
     
     'monta informações para gerar a linha da mensagem
-    msg = Dados
+    Msg = Dados
 
     'inclui linhas no arquivo texto
-    arquivoLog.WriteLine msg
+    arquivoLog.WriteLine Msg
     
     
     'escreve uma linha em branco no arquivo - se voce quiser
@@ -1878,6 +1878,7 @@ Public Function Exportar_NFe_v400_TXT(chvNFe As String) As String
                 
                 '22.12.17 - Inclusao da tag para DIFAL
                 If Rst2.Fields("ICMS_vBCUFDest") > 0 Then
+                '04/03/2024 - NA|0.00|0.00|2.00|18.00|12.00|100.00|0.00|0.00|0.00|
                  MountTXT "NA|" & _
                                 Rst2.Fields("ICMS_vBCUFDest") & "|" & _
                                 Rst2.Fields("ICMS_vBCUFDest") & "|" & _
@@ -1947,6 +1948,14 @@ Public Function Exportar_NFe_v400_TXT(chvNFe As String) As String
                 MountTXT "N06|" & _
                                 Rst2.Fields("ICMS_Origem") & "|" & _
                                 Rst2.Fields("ICMS_CST") & "|"
+                '04/03/24 - Quando for venda para:
+                            'Operação Interestadual (tag: idDest = 2)
+                            'Consumidor Final (tag: indFinal = 1)
+                            'Não Contribuinte (tag: indIEDest = 9)
+                            'Inserir a tag NA no formato (NA|0.00|0.00|2.00|18.00|12.00|100.00|0.00|0.00|0.00|)
+                If Rst1.Fields("ide_idDest") = 2 And Rst1.Fields("ide_indFinal") = 1 And Rst1.Fields("dest_indIEDest") = 9 Then
+                    MountTXT "NA|0.00|0.00|2.00|18.00|12.00|100.00|0.00|0.00|0.00|"
+                End If
             
             Case "51" 'Tributacao do ICMS POR DIFERIMENTO (N07)
                 MountTXT "N07|" & _
@@ -2199,12 +2208,14 @@ Public Function Exportar_NFe_v400_TXT(chvNFe As String) As String
                         MountTXT parcela
                         parcela = ""
                 
-                        '13.07.2018 - Conferme orientacao do grupo UNINFe
-                        'YA|indPag|tPag|vPag|CNPJ|tBand|cAut|tpIntegra|vTroco
+                        '06.03.2024 - Layout UniNFE
+                        'YA|indPag|tPag|xPag|vPag|CNPJ|tBand|cAut|tpIntegra|
+                        'ex: YA|1|99|Outros|1200.00||||||
                 
                         MountTXT "YA|" & _
                                 Trim(Rst1.Fields("ide_indPag")) & "|" & _
                                 tpPag & "|" & _
+                                "|" & _
                                 IIf(tpPag = "90", "0.00", Rst3.Fields("cobr_vDup")) & "|" & "|||||"
             
                     End If

@@ -2181,7 +2181,9 @@ Public Function Exportar_NFe_v400_TXT(chvNFe As String) As String
         tpPag = Trim(Left(pgDadosTipoDocumento(Rst3.Fields("cobr_TpDoc")).formaPgto, 3))
         
         If Trim(tpPag) = "90" Then
-                MountTXT "YA|" & tpPag
+                'MountTXT "YA|" & tpPag
+                MountTXT "YA|1|" & tpPag + "|||||||"
+                         
 
             Else
         
@@ -2216,7 +2218,7 @@ Public Function Exportar_NFe_v400_TXT(chvNFe As String) As String
                                 Trim(Rst1.Fields("ide_indPag")) & "|" & _
                                 tpPag & "|" & _
                                 "|" & _
-                                IIf(tpPag = "90", "0.00", Rst3.Fields("cobr_vDup")) & "|" & "|||||"
+                                IIf(tpPag = "90", "0.00", Rst3.Fields("cobr_vDup")) & "|" & "||||"
             
                     End If
                     Rst3.MoveNext

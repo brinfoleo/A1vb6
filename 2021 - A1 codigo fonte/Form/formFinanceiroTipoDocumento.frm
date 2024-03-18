@@ -258,6 +258,7 @@ End Sub
 
 Private Sub cboFormaPgto_DropDown()
 '07.05.18 - Colocar um espaco a mais para que a gravacao capture apenas o numero
+'NT2016.002 - 1.50
     With cboFormaPgto
         .Clear
         .AddItem "01  - Dinheiro"
@@ -269,7 +270,7 @@ Private Sub cboFormaPgto_DropDown()
         .AddItem "11  - Vale Refeição"
         .AddItem "12  - Vale Presente"
         .AddItem "13  - Vale Combustível"
-        .AddItem "14  - Duplicata Mercantil"
+        '.AddItem "14  - Duplicata Mercantil"
         .AddItem "15  - Boleto Bancário"
         .AddItem "90  - Sem Pagamento"
         .AddItem "99  - Outros"

@@ -1,6 +1,6 @@
 VERSION 5.00
-Object = "{831FDD16-0C5C-11D2-A9FC-0000F8754DA1}#2.0#0"; "MSCOMCTL.OCX"
 Object = "{5E9E78A0-531B-11CF-91F6-C2863C385E30}#1.0#0"; "MSFLXGRD.OCX"
+Object = "{831FDD16-0C5C-11D2-A9FC-0000F8754DA1}#2.0#0"; "MSCOMCTL.OCX"
 Begin VB.Form formTributacaoCFOP 
    BorderStyle     =   1  'Fixed Single
    Caption         =   "Tributação - CFOP"
@@ -246,7 +246,8 @@ Private Sub LoadGrid()
     
     msfgGrid.Rows = 1
     
-    sSQL = "SELECT * FROM " & sTabela & " WHERE ID_Empresa = " & ID_Empresa & " ORDER BY cCFOP"
+    'sSQL = "SELECT * FROM " & sTabela & " WHERE ID_Empresa = " & ID_Empresa & " ORDER BY cCFOP"
+    sSQL = "SELECT * FROM " & sTabela & " ORDER BY cCFOP"
     Set Rst = RegistroBuscar(sSQL)
     If Rst.BOF And Rst.EOF Then
         Else

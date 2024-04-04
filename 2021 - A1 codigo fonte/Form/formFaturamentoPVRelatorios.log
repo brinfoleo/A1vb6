@@ -1,1 +1,2 @@
-Line 4: The Form or MDIForm name formFaturamentoPVRelatorios is already in use; cannot load this form.
+Line 131: Class MSComctlLib.Toolbar of control tbMenu was not a loaded control class.
+Line 154: Class MSComctlLib.ImageList of control ImageList1 was not a loaded control class.

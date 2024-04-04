@@ -1,10 +1,2 @@
-Line 19: Class TabDlg.SSTab of control sstConfig was not a loaded control class.
-Line 43: Class TabDlg.SSTab of control sstNFe was not a loaded control class.
-Line 233: Class TabDlg.SSTab of control sstNFeUnimaker was not a loaded control class.
-Line 392: Class MSComDlg.CommonDialog of control cmd was not a loaded control class.
-Line 487: Class MSComCtl2.DTPicker of control dtpDataContigencia was not a loaded control class.
-Line 499: Class MSComCtl2.DTPicker of control dtpHoraContigencia was not a loaded control class.
-Line 716: Class TabDlg.SSTab of control sstGeralConfig was not a loaded control class.
-Line 953: Class MSComCtl2.DTPicker of control dtpDtUltMov was not a loaded control class.
 Line 1364: Class MSComctlLib.Toolbar of control tbMenu was not a loaded control class.
 Line 1427: Class MSComctlLib.ImageList of control ImageList1 was not a loaded control class.

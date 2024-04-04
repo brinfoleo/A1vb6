@@ -1,4 +1,2 @@
-Line 18: Class TabDlg.SSTab of control sstEmpresa was not a loaded control class.
-Line 426: Class MSComDlg.CommonDialog of control cmdLogo was not a loaded control class.
-Line 868: Class MSComctlLib.Toolbar of control tbMenu was not a loaded control class.
-Line 928: Class MSComctlLib.ImageList of control ImageList1 was not a loaded control class.
+Line 871: Class MSComctlLib.Toolbar of control tbMenu was not a loaded control class.
+Line 931: Class MSComctlLib.ImageList of control ImageList1 was not a loaded control class.

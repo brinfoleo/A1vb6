@@ -1,30 +1,4 @@
 Line 17: Class MSComctlLib.Toolbar of control tbMenu was not a loaded control class.
-Line 49: Class MSComDlg.CommonDialog of control cd was not a loaded control class.
 Line 56: Class MSComctlLib.ImageList of control ImageList1 was not a loaded control class.
 Line 122: Class MSComctlLib.ProgressBar of control pb2 was not a loaded control class.
 Line 134: Class MSComctlLib.ProgressBar of control pb was not a loaded control class.
-Line 24: The property name _ExtentX in tbMenu is invalid.
-Line 25: The property name _ExtentY in tbMenu is invalid.
-Line 26: The property name ButtonWidth in tbMenu is invalid.
-Line 27: The property name ButtonHeight in tbMenu is invalid.
-Line 29: The property name ImageList in tbMenu is invalid.
-Line 30: The property name _Version in tbMenu is invalid.
-Line 48: The property name Buttons in tbMenu is invalid.
-Line 52: The property name _ExtentX in cd is invalid.
-Line 53: The property name _ExtentY in cd is invalid.
-Line 54: The property name _Version in cd is invalid.
-Line 59: The property name _ExtentX in ImageList1 is invalid.
-Line 60: The property name _ExtentY in ImageList1 is invalid.
-Line 62: The property name ImageWidth in ImageList1 is invalid.
-Line 63: The property name ImageHeight in ImageList1 is invalid.
-Line 64: The property name MaskColor in ImageList1 is invalid.
-Line 65: The property name _Version in ImageList1 is invalid.
-Line 80: The property name Images in ImageList1 is invalid.
-Line 128: The property name _ExtentX in pb2 is invalid.
-Line 129: The property name _ExtentY in pb2 is invalid.
-Line 130: The property name _Version in pb2 is invalid.
-Line 132: The property name Scrolling in pb2 is invalid.
-Line 140: The property name _ExtentX in pb is invalid.
-Line 141: The property name _ExtentY in pb is invalid.
-Line 142: The property name _Version in pb is invalid.
-Line 144: The property name Scrolling in pb is invalid.

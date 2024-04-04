@@ -1,6 +1,3 @@
-Line 18: Class TabDlg.SSTab of control sstGerenciador was not a loaded control class.
 Line 54: Class MSComctlLib.TreeView of control trvGrupos was not a loaded control class.
-Line 107: Class MSFlexGridLib.MSFlexGrid of control msfgGrupos was not a loaded control class.
-Line 233: Class MSFlexGridLib.MSFlexGrid of control msfgUsuarios was not a loaded control class.
 Line 249: Class MSComctlLib.Toolbar of control tbMenu was not a loaded control class.
 Line 314: Class MSComctlLib.ImageList of control ImageList1 was not a loaded control class.

@@ -1,2 +1,3 @@
-Line 167: Property Left in tbMenu could not be set.
-Line 167: Property Width in tbMenu could not be set.
+Line 167: Class MSComctlLib.Toolbar of control tbMenu was not a loaded control class.
+Line 225: Class MSComctlLib.ProgressBar of control pb was not a loaded control class.
+Line 236: Class MSComctlLib.ImageList of control ImageList1 was not a loaded control class.

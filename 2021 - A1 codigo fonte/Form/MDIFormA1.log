@@ -1,7 +1,5 @@
-Line 22: Class ComCtl3.CoolBar of control cbMenu was not a loaded control class.
 Line 46: Class MSComctlLib.Toolbar of control tbMenuFinanceiro was not a loaded control class.
 Line 76: Class MSComctlLib.Toolbar of control tbMenuFaturamento was not a loaded control class.
 Line 110: Class MSComctlLib.Toolbar of control tbMenuComercial was not a loaded control class.
 Line 142: Class MSComctlLib.ImageList of control ImageList2 was not a loaded control class.
 Line 196: Class MSComctlLib.StatusBar of control BarraStatus was not a loaded control class.
-Line 257: Class MSWinsockLib.Winsock of control wsMain was not a loaded control class.

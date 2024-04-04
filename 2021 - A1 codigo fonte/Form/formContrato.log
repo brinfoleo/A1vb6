@@ -1,11 +1,2 @@
-Line 20: Class TabDlg.SSTab of control SSTab1 was not a loaded control class.
-Line 198: Class MSFlexGridLib.MSFlexGrid of control msfgMdO was not a loaded control class.
-Line 222: Class TabDlg.SSTab of control SSTab2 was not a loaded control class.
-Line 336: Class MSComDlg.CommonDialog of control cdFile was not a loaded control class.
-Line 362: Class MSFlexGridLib.MSFlexGrid of control msfgDocAnexo was not a loaded control class.
-Line 470: Class MSFlexGridLib.MSFlexGrid of control msfgFuncionarios was not a loaded control class.
-Line 635: Class MSFlexGridLib.MSFlexGrid of control msfgMateriais was not a loaded control class.
-Line 701: Class MSComCtl2.DTPicker of control dtpInicial was not a loaded control class.
-Line 713: Class MSComCtl2.DTPicker of control dtpFinal was not a loaded control class.
 Line 761: Class MSComctlLib.Toolbar of control tbMenu was not a loaded control class.
 Line 795: Class MSComctlLib.ImageList of control ImageList1 was not a loaded control class.

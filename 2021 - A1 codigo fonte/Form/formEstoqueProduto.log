@@ -1,10 +1,2 @@
-Line 23: Property Size in Font had an invalid value.
-Line 308: Property Size in Font had an invalid value.
-Line 339: Property Size in Font had an invalid value.
-Line 370: Property Size in Font had an invalid value.
-Line 485: Property Size in Font had an invalid value.
-Line 501: Property Size in Font had an invalid value.
-Line 552: Property Size in Font had an invalid value.
-Line 664: Property Size in Font had an invalid value.
-Line 693: Property Size in Font had an invalid value.
-Line 781: Property Size in Font had an invalid value.
+Line 965: Class MSComctlLib.Toolbar of control tbMenu was not a loaded control class.
+Line 1039: Class MSComctlLib.ImageList of control ImageList1 was not a loaded control class.

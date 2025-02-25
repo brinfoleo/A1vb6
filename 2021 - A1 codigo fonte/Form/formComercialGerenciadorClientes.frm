@@ -1,7 +1,7 @@
 VERSION 5.00
 Object = "{5E9E78A0-531B-11CF-91F6-C2863C385E30}#1.0#0"; "MSFLXGRD.OCX"
-Object = "{831FDD16-0C5C-11D2-A9FC-0000F8754DA1}#2.2#0"; "MSCOMCTL.OCX"
 Object = "{CDE57A40-8B86-11D0-B3C6-00A0C90AEA82}#1.0#0"; "MSDATGRD.OCX"
+Object = "{831FDD16-0C5C-11D2-A9FC-0000F8754DA1}#2.0#0"; "MSCOMCTL.OCX"
 Begin VB.Form formComercialGerenciadorClientes 
    Caption         =   "Gerenciador de Clientes"
    ClientHeight    =   10740
@@ -589,7 +589,7 @@ Private Sub LstContatos()
     Dim Rst     As Recordset
     Dim sSQL    As String
     msfgHCont.Rows = 1
-    sSQL = "SELECT * FROM ComercialGerenciadorClientes WHERE  ID_Empresa = " & ID_Empresa & " AND IdCliente = " & idCliente
+    sSQL = "SELECT * FROM ComercialGerenciadorClientes WHERE  ID_Empresa = " & ID_Empresa & " AND IdCliente = " & idCliente & " LIMIT 50"
     Set Rst = RegistroBuscar(sSQL)
     If Rst.BOF And Rst.EOF Then
         Else
@@ -887,7 +887,7 @@ Private Sub LstClientes()
             Loop
             sSQL = "SELECT * FROM Clientes WHERE ID_Empresa = " & ID_Empresa & " AND Vendedor = " & idFunc & IIf(Trim(sSQLa) = "", "", " AND " & sSQLa) & " LIMIT 50"
     End If
-    
+    'Debug.Print sSQL
     Set Rst = RegistroBuscar(sSQL)
     If Rst.BOF And Rst.EOF Then
         Else
@@ -981,7 +981,7 @@ Private Sub LstPV(idCliente As Integer)
     
     msfgPV.Rows = 1
     'SELECT * FROM FaturamentoPV WHERE ID_Empresa = 1 AND idCliente = 1 AND Emissao BETWEEN '2012-01-01' AND '2012-12-31'  LIMIT  400;
-    sSQL = "SELECT * FROM FaturamentoPV WHERE  ID_Empresa = " & ID_Empresa & " AND idCliente = " & idCliente & " AND Emissao BETWEEN '" & pvAno & "-01-01' AND '" & pvAno & "-12-31' LIMIT 400" ' ORDER Emissao DESC"
+    sSQL = "SELECT * FROM FaturamentoPV WHERE  ID_Empresa = " & ID_Empresa & " AND idCliente = " & idCliente & " AND Emissao BETWEEN '" & pvAno & "-01-01' AND '" & pvAno & "-12-31' LIMIT 200" ' ORDER Emissao DESC"
     Set Rst = RegistroBuscar(sSQL)
     If Rst.BOF And Rst.EOF Then
         Else
@@ -1071,6 +1071,7 @@ Private Sub Form_Activate()
 End Sub
 
 Private Sub Form_Load()
+On Error GoTo regLogErro
     Me.Top = 0
     Me.Left = 0
     Me.Height = 9870
@@ -1078,20 +1079,31 @@ Private Sub Form_Load()
     optConsulta_Click (0) 'LstClientes
     HDMenu Me, True
     strTabela = Mid(Me.Name, 5, Len(Me.Name))
-    LimpaFormulario Me
+    'LimpaFormulario Me
+    txtNFNome.Text = ""
+    txtNome.Text = ""
     LimpForm
     cboFuncionario.Clear
-    cboFuncionario.AddItem Left("000", 3 - Len(Trim(PgDadosUsuario(ID_Usuario).idFunc))) & PgDadosUsuario(ID_Usuario).idFunc & " - " & PgDadosRhFuncionario(PgDadosUsuario(ID_Usuario).idFunc).Nome
+    If Len(Trim(PgDadosRhFuncionario(PgDadosUsuario(ID_Usuario).idFunc).Nome)) <> 0 Then
+            cboFuncionario.AddItem Left("000", 3 - Len(Trim(PgDadosUsuario(ID_Usuario).idFunc))) & PgDadosUsuario(ID_Usuario).idFunc & " - " & PgDadosRhFuncionario(PgDadosUsuario(ID_Usuario).idFunc).Nome
+            cboFuncionario.Text = cboFuncionario.List(0)
+            idFunc = IIf(Len(Trim(cboFuncionario.Text)) = 0, 0, Left(cboFuncionario.Text, 3))
+        Else
+            idFunc = 0
+    End If
     '
     'cboFuncionario.AddItem PgDadosUsuario(ID_Usuario).Nome
     '
-    cboFuncionario.Text = cboFuncionario.List(0)
-    idFunc = Left(cboFuncionario.Text, 3)
+
     'Caso seja super usuario desabilita o cbo de funcionario impedindo de ver os dados dos outros
     If PgDadosUsuario(ID_Usuario).SuperUsuario <> 1 Then
         cboFuncionario.Enabled = IIf(PgDadosConfig.VisualizarOutrosFunc = 0, False, True)
     End If
-    
+    Exit Sub
+regLogErro:
+   MsgBox Err.Number & " - " & Err.Description, vbCritical, "Erro"
+    RegLog "FormComercialGerenciadorClientes_Load", "0", Err.Number & " - " & Err.Description
+    Resume Next
 End Sub
 
 Private Sub Form_Resize()
@@ -1116,6 +1128,7 @@ Private Sub msfgClientes_Click()
     LstContatos
 End Sub
 Private Sub LimpForm()
+    
     msfgPV.Rows = 1
     msfgTitulos.Rows = 1
     msfgHCont.Rows = 1
@@ -1261,6 +1274,7 @@ Private Sub LstTitulosVencidos(idCliente As Integer)
     Rst.Close
 End Sub
 Private Function PgNumTitulosAtraso(idCliente As Integer) As Integer
+On Error GoTo trtErro
     Dim Rst     As Recordset
     Dim sSQL    As String
   
@@ -1278,9 +1292,14 @@ Private Function PgNumTitulosAtraso(idCliente As Integer) As Integer
             PgNumTitulosAtraso = Rst.RecordCount
     End If
     Rst.Close
-    
+    Exit Function
+trtErro:
+    RegLog "PgNumTitulosAtraso", "0", Err.Number & Err.Description
+    'MsgBox Err.Number & Err.Description, vbCritical, "Erro - PgNumTitulosAtraso"
+    Resume Next
 End Function
 Private Function PgNumTitulosAvencer(idCliente As Integer) As Integer
+On Error GoTo trtErro
     Dim Rst     As Recordset
     Dim sSQL    As String
     sSQL = "SELECT * FROM FinanceiroContasPRCadastro WHERE ID_Empresa = " & ID_Empresa & " AND idSacado = " & idCliente & " AND Tabela = 'Clientes' AND Vencimento > '" & Format(Date, "YYYY-MM-DD") & "'"
@@ -1292,7 +1311,11 @@ Private Function PgNumTitulosAvencer(idCliente As Integer) As Integer
             PgNumTitulosAvencer = Rst.RecordCount
     End If
     Rst.Close
-    
+    Exit Function
+trtErro:
+    'MsgBox Err.Number & Err.Description, vbCritical, "Erro - PgNumTitulosAvencer"
+    RegLog "PgNumTitulosAvencer", "0", Err.Number & Err.Description & "-" & sSQL
+    Resume Next
 End Function
 
 Private Sub msfgHCont_Click()
@@ -1384,7 +1407,7 @@ Private Sub LstNFDescricao()
     Dim Rst As Recordset
     
     msfgDescricao.Rows = 1
-    sSQL = "SELECT * FROM FaturamentoNFeItens WHERE  ID_Empresa = " & ID_Empresa & " AND idNFe = '" & chvNFe & "'"
+    sSQL = "SELECT * FROM FaturamentoNFeItens WHERE  ID_Empresa = " & ID_Empresa & " AND idNFe = '" & chvNFe & "'" & " LIMIT 50"
     Set Rst = RegistroBuscar(sSQL)
     If Rst.BOF And Rst.EOF Then
             Rst.Close
@@ -1432,7 +1455,8 @@ Private Sub LstNFporProduto()
                  "FNFe.idNFe = FNFeI.idNFe AND " & sTexto & _
            " ORDER BY FNFe.ide_nNF"
            
-   
+    sSQL = sSQL & " LIMIT 50"
+    
     Set Rst = RegistroBuscar(sSQL)
     If Rst Is Nothing Then
         DataGrid.Enabled = False

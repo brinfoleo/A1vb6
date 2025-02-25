@@ -141,7 +141,7 @@ Private Function cnab240LoteHeader(contaId As Integer, lote As String) As String
     
     line = line & "0" '09.1 - Tipo de inscricao
     line = line & F("n", 15, PgDadosEmpresa(ID_Empresa).CNPJ)
-    line = line & F("a", 20, pgDadosConta(contaId).Convenio)
+    line = line & F("a", 20, pgDadosConta(contaId).convenio)
     line = line & F("n", 5, pgDadosConta(contaId).agencia)
     line = line & F("n", 1, pgDadosConta(contaId).AgenciaDV)
     line = line & F("n", 12, pgDadosConta(contaId).conta)
@@ -583,7 +583,7 @@ Public Sub BoletoBancario_001(Id As Long)
     '########################################################################################################
     '# Multiplicador base 9
     Dim NN1, NN2 As String
-    NN1 = pgDadosConta(PgDadosFinanceiroFatura(Id).idConta).Convenio
+    NN1 = pgDadosConta(PgDadosFinanceiroFatura(Id).idConta).convenio
     If Len(Trim(Id)) > 5 Then
             NN2 = Right(Id, 5)
         Else
@@ -676,6 +676,205 @@ Public Sub BoletoBancario_001(Id As Long)
     'ImprBoletoBancario Id ', NossoNumero, LinhaDigitavel, CodigoBarras
     
 End Sub
+Public Sub API_BBCobranca(faturaId As Long)
+    Dim Id As Long
+    Id = faturaId
+    
+    '#######################################################################################
+    '### Banco do Brasil
+    '#######################################################################################
+    Dim NossoNumero     As String
+    Dim LinhaDigitavel  As String
+    Dim CodigoBarras    As String
+    
+    Dim agencia         As String
+    Dim conta           As String
+    Dim fator           As Integer
+    Dim Valor           As String
+    
+    Dim seqI            As String
+    Dim seqII           As String
+    Dim seqIII          As String
+    Dim seqIV           As String
+    Dim sequencia       As String
+    
+    Dim dvLinhaDig      As String
+    Dim dvCB            As String
+    Dim dvNN            As String
+    
+    '-------------------------------------------------DADOS PARA API --------------------
+    
+    ' "numeroConvenio": 0,
+    'pgDadosConta(PgDadosFinanceiroFatura(Id).idConta).convenio
+    
+  '"numeroCarteira": 0,
+  pgDadosConta(PgDadosFinanceiroFatura(Id).idConta).carteira
+  
+  '"numeroVariacaoCarteira": 0,
+  pgDadosConta(PgDadosFinanceiroFatura(Id).idConta).carteira
+  '"codigoModalidade": 0,
+  
+  '"dataEmissao": "string",
+  PgDadosFinanceiroFatura(Id).emissao
+  
+  '"dataVencimento": "string",
+  PgDadosFinanceiroFatura(Id).Vencimento
+  
+  '"valorOriginal": 0,
+  PgDadosFinanceiroFatura(Id).vlCobrado
+  
+  '"valorAbatimento": 0,
+  PgDadosFinanceiroFatura(Id).Deducoes
+  
+  '"quantidadeDiasProtesto": 0,
+  PgDadosFinanceiroFatura(Id).DiasProtesto
+  
+  '"quantidadeDiasNegativacao": 0,
+ 
+  '"orgaoNegativador": 0,
+  '"indicadorAceiteTituloVencido": "string",
+  '"numeroDiasLimiteRecebimento": 0,
+  '"codigoAceite": "string",
+  '"codigoTipoTitulo": 0,
+  '"descricaoTipoTitulo": "string",
+  '"indicadorPermissaoRecebimentoParcial": "string",
+  '"numeroTituloBeneficiario": "string",
+  '"campoUtilizacaoBeneficiario": "string",
+  '"numeroTituloCliente": "string",
+  '"mensagemBloquetoOcorrencia": "string",
+  '"desconto": {
+  '  "tipo": 0,
+    
+   '"jurosMora": {
+   ' "tipo": 0,
+  '  "porcentagem": 0,
+   PgDadosFinanceiroFatura(Id).Juros
+  '  "valor": 0
+ ' },
+ ' "multa": {
+ '   "tipo": 0,
+ '   "data": "string",
+ '   "porcentagem": 0,
+  PgDadosFinanceiroFatura(Id).Multa
+ '   "valor": 0
+ ' },
+ ' "pagador": {
+ '   "tipoInscricao": 0,
+ '   "numeroInscricao": 0,
+ '   "nome": "string",
+  PgDadosCliente(PgDadosFinanceiroFatura(Id).Sacado).Nome
+ '   "endereco": "string",
+ PgDadosCliente(PgDadosFinanceiroFatura(Id).Sacado).Lgr
+ '   "cep": 0,
+ PgDadosCliente(PgDadosFinanceiroFatura(Id).Sacado).CEP
+ '   "cidade": "string",
+ PgDadosCliente(PgDadosFinanceiroFatura(Id).Sacado).Mun
+ 
+ '   "bairro": "string",
+ PgDadosCliente(PgDadosFinanceiroFatura(Id).Sacado).Bairro
+ '   "uf": "string",
+ PgDadosCliente(PgDadosFinanceiroFatura(Id).Sacado).uf
+ '   "telefone": "string",
+ PgDadosCliente(PgDadosFinanceiroFatura(Id).Sacado).Fone
+ '   "email": "string"
+ PgDadosCliente(PgDadosFinanceiroFatura(Id).Sacado).emailfin
+ ' },
+ ' "beneficiarioFinal": {
+ '   "tipoInscricao": 0,
+ '   "numeroInscricao": 0,
+ '   "nome": "string"
+ ' },
+ ' "indicadorPix": "string"
+'}
+'-------------------------------------------------------------------------------------------------------
+    NossoNumero = convenio & NN2
+    'dvNN = Trim(Calculo_DV11(NossoNumero))
+    dvNN = Trim(calculo_dv11base9(NossoNumero))
+    '########################################################################################################
+    
+    agencia = pgDadosConta(PgDadosFinanceiroFatura(Id).idConta).agencia
+    agencia = Left("0000", 4 - Len(agencia)) & agencia
+    
+    conta = pgDadosConta(PgDadosFinanceiroFatura(Id).idConta).conta
+    conta = Mid(String(8, "0"), 1, Len(Trim(conta))) & conta
+    fator = CalculoFator(PgDadosFinanceiroFatura(Id).Vencimento)
+    
+    
+    Valor = IIf(Trim(PgDadosFinanceiroFatura(Id).vlCobrado) <> 0, PgDadosFinanceiroFatura(Id).vlCobrado, PgDadosFinanceiroFatura(Id).vlDuplicata)
+    Valor = RS(ChkVal(Valor, 0, cDecMoeda))
+    Valor = Left(String(10, "0"), 10 - Len(Valor)) & Valor
+    
+    '########################################################################################################
+    '###  CODIGO DE BARRAS
+    '########################################################################################################
+    CodigoBarras = pgDadosBanco(PgDadosFinanceiroFatura(Id).IdBanco).Numero & _
+                   "9" & _
+                   fator & _
+                   Left(String(10, "0"), 10 - Len(Valor)) & Valor & _
+                   NossoNumero & _
+                   agencia & _
+                   conta & _
+                   pgDadosConta(PgDadosFinanceiroFatura(Id).idConta).carteira
+    
+    dvCB = Trim(calculo_dv11base9(CodigoBarras))
+    Select Case dvCB
+        Case 0
+            dvCB = 1
+        Case 10
+            dvCB = 1
+        Case 11
+            dvCB = 1
+        Case "X"
+            dvCB = 1
+    End Select
+    
+    CodigoBarras = Left(CodigoBarras, 4) & dvCB & Mid(CodigoBarras, 5, Len(CodigoBarras))
+    '########################################################################################################
+    
+    
+    '******************************** Bloco I *************************************************************
+    'seqI = pgDadosBanco(PgDadosFinanceiroFatura(Id).IdBanco).Numero & _
+                        "9" & _
+                         Mid(NossoNumero, 1, 5)
+                         
+    seqI = pgDadosBanco(PgDadosFinanceiroFatura(Id).IdBanco).Numero & _
+                        "9" & _
+                         Mid(CodigoBarras, 20, 5)
+    dv1 = Trim(Calculo_DV10(seqI))
+    
+    '******************************** Bloco II *************************************************************
+    'seqII = Mid(NossoNumero, 6, Len(NossoNumero)) & Agencia
+    seqII = Mid(CodigoBarras, 25, 10)
+    dv2 = Trim(Calculo_DV10(seqII))
+    '******************************** Bloco III *************************************************************
+    'seqIII = Left(String(8, "0"), 8 - Len(Conta)) & Conta & pgDadosConta(PgDadosFinanceiroFatura(Id).IdConta).Carteira
+    seqIII = Mid(CodigoBarras, 35, 10)
+    
+    dv3 = Trim(Calculo_DV10(seqIII))
+    
+    '******************************** Bloco IV *************************************************************
+    seqIV = fator & Left(String(10, "0"), 10 - Len(Valor)) & Valor
+    
+    '*******************************************************************************************************
+    
+    sequencia = seqI & seqII & seqIII
+            
+    
+    
+    
+    sequencia = seqI & dv1 & seqII & dv2 & seqIII & dv3 & dvCB & seqIV
+    LinhaDigitavel = sequencia 'Formatar_Linha_Digitavel(sequencia)
+    
+    
+    NossoNumero = NossoNumero & dvNN
+    
+    grvDadosBoleto Id, NossoNumero, LinhaDigitavel, CodigoBarras
+    
+    
+    'ImprBoletoBancario Id ', NossoNumero, LinhaDigitavel, CodigoBarras
+    
+End Sub
+
 Public Sub BoletoBancario_237(Id As Long)
     '#######################################################################################
     '### Banco do Brasdesco - 237
@@ -706,7 +905,7 @@ Public Sub BoletoBancario_237(Id As Long)
     '### Montagem de NOSSO NUMERO
     '########################################################################################################
     Dim NN1, NN2 As String
-    NN1 = pgDadosConta(PgDadosFinanceiroFatura(Id).idConta).Convenio
+    NN1 = pgDadosConta(PgDadosFinanceiroFatura(Id).idConta).convenio
     carteira = pgDadosConta(PgDadosFinanceiroFatura(Id).idConta).carteira
     If Len(Trim(Id)) > 5 Then
             NN2 = Right(Id, 5)
@@ -1243,7 +1442,7 @@ Private Function cnab240ArquivoHeader(contaId As Integer, lote As String) As Str
     '----------------
     line = line & "0" '05.0 - Tipo de inscricao
     line = line & F("n", 14, PgDadosEmpresa(ID_Empresa).CNPJ) '06.0 - num insc empresa
-    line = line & F("a", 20, pgDadosConta(contaId).Convenio) '07.0- convenio
+    line = line & F("a", 20, pgDadosConta(contaId).convenio) '07.0- convenio
     line = line & F("n", 5, pgDadosConta(contaId).agencia)
     line = line & F("n", 1, pgDadosConta(contaId).AgenciaDV)
     line = line & F("n", 12, pgDadosConta(contaId).conta)

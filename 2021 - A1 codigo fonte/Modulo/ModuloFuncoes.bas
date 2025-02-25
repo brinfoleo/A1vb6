@@ -8,7 +8,7 @@ Declare Function ConsisteInscricaoEstadual Lib "DllInscE32" (ByVal Insc As Strin
 
 'Declaracao para abrir arquivos como o IExplore
 'Chamar a declaracao: ShellExecute hwnd, "open", (App.Path & "BancoDeDados.mdb"), "", "", 1
-Declare Function ShellExecute Lib "shell32.dll" Alias "ShellExecuteA" (ByVal Hwnd As Long, ByVal lpOperation As String, ByVal lpFile As String, ByVal lpParameters As String, ByVal lpDirectory As String, ByVal nShowCmd As Long) As Long
+Declare Function ShellExecute Lib "shell32.dll" Alias "ShellExecuteA" (ByVal hWnd As Long, ByVal lpOperation As String, ByVal lpFile As String, ByVal lpParameters As String, ByVal lpDirectory As String, ByVal nShowCmd As Long) As Long
 
      
 Type CalcTitulo
@@ -65,7 +65,7 @@ Public Sub grvFile(pathFile As String, LinhaTexto As String)
     Dim fso As New FileSystemObject
     Dim Arquivo As File
     Dim arquivoLog As TextStream
-    Dim msg As String
+    Dim Msg As String
     'Dim caminho As String
  
  
@@ -82,10 +82,10 @@ Public Sub grvFile(pathFile As String, LinhaTexto As String)
     Set arquivoLog = Arquivo.OpenAsTextStream(ForAppending)
     
     'monta informações para gerar a linha da mensagem
-    msg = LinhaTexto
+    Msg = LinhaTexto
 
     'inclui linhas no arquivo texto
-    arquivoLog.WriteLine msg
+    arquivoLog.WriteLine Msg
     
     'escreve uma linha em branco no arquivo - se voce quiser
     'arquivoLog.WriteBlankLines (1)
@@ -157,6 +157,7 @@ Public Sub MonitoramentoConexao(op As OpcoesConexao)
     
 End Sub
 Public Function LimpaFormulario(Formulario As Form)
+On Error Resume Next
     Dim Controle    As Control
     Dim i           As Integer
     DoEvents
@@ -324,7 +325,7 @@ Public Sub RegLog(ByVal Chave As String, ByVal IDLog As String, ByVal Descricao 
     Dim fso As New FileSystemObject
     Dim Arquivo As File
     Dim arquivoLog As TextStream
-    Dim msg As String
+    Dim Msg As String
     Dim caminho As String
 
     If Dir(App.Path & "\Log", vbDirectory) = "" Then
@@ -352,7 +353,7 @@ Public Sub RegLog(ByVal Chave As String, ByVal IDLog As String, ByVal Descricao 
     Set arquivoLog = Arquivo.OpenAsTextStream(ForAppending)
     
     'monta informações para gerar a linha da mensagem
-    msg = Format(Date, "DDMMYYYY") & "|" & _
+    Msg = Format(Date, "DDMMYYYY") & "|" & _
           Time & "|" & _
           ID_Usuario & "|" & _
           Chave & "|" & _
@@ -362,7 +363,7 @@ Public Sub RegLog(ByVal Chave As String, ByVal IDLog As String, ByVal Descricao 
           
 
     'inclui linhas no arquivo texto
-    arquivoLog.WriteLine msg
+    arquivoLog.WriteLine Msg
     
     'escreve uma linha em branco no arquivo - se voce quiser
     'arquivoLog.WriteBlankLines (1)

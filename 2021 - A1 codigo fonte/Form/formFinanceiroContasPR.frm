@@ -2,17 +2,17 @@ VERSION 5.00
 Object = "{5E9E78A0-531B-11CF-91F6-C2863C385E30}#1.0#0"; "MSFLXGRD.OCX"
 Object = "{65E121D4-0C60-11D2-A9FC-0000F8754DA1}#2.0#0"; "MSCHRT20.OCX"
 Object = "{86CF1D34-0C5F-11D2-A9FC-0000F8754DA1}#2.0#0"; "MSCOMCT2.OCX"
-Object = "{831FDD16-0C5C-11D2-A9FC-0000F8754DA1}#2.2#0"; "MSCOMCTL.OCX"
+Object = "{831FDD16-0C5C-11D2-A9FC-0000F8754DA1}#2.0#0"; "MSCOMCTL.OCX"
 Begin VB.Form formFinanceiroContasPRGerenciador 
    Caption         =   "Financeiro - Contas a Pagar e Receber"
    ClientHeight    =   8430
    ClientLeft      =   60
    ClientTop       =   450
-   ClientWidth     =   16020
+   ClientWidth     =   15240
    LinkTopic       =   "Form1"
    MDIChild        =   -1  'True
    ScaleHeight     =   8430
-   ScaleWidth      =   16020
+   ScaleWidth      =   15240
    WindowState     =   2  'Maximized
    Begin VB.Frame frmContas 
       Height          =   5055
@@ -38,7 +38,7 @@ Begin VB.Form formFinanceiroContasPRGerenciador
             Italic          =   0   'False
             Strikethrough   =   0   'False
          EndProperty
-         Format          =   135921665
+         Format          =   151977985
          CurrentDate     =   40658
       End
       Begin MSFlexGridLib.MSFlexGrid msfgContas 
@@ -170,8 +170,8 @@ Begin VB.Form formFinanceiroContasPRGerenciador
       Left            =   0
       TabIndex        =   11
       Top             =   0
-      Width           =   16020
-      _ExtentX        =   28258
+      Width           =   15240
+      _ExtentX        =   26882
       _ExtentY        =   741
       ButtonWidth     =   609
       ButtonHeight    =   582
@@ -660,7 +660,7 @@ Private Sub mntArqCNAB240()
     Dim DtFin As Date
     Dim conta As Integer
     DtIni = "01/03/2017"
-    DtIni = "30/03/2017"
+    DtFin = "30/03/2017"
     conta = 1
     cnab240 DtIni, DtFin, conta, lote
 End Sub
@@ -1036,7 +1036,7 @@ Private Sub txtObs_KeyPress(KeyAscii As Integer)
 End Sub
 Private Sub status(Max As Long)
     
-    pb.min = 0
+    pb.Min = 0
     pb.Max = Max
     DoEvents
     pb.Value = pb.Value + 1

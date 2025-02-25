@@ -1,15 +1,15 @@
 VERSION 5.00
 Object = "{38911DA0-E448-11D0-84A3-00DD01104159}#1.1#0"; "COMCT332.OCX"
 Object = "{248DD890-BB45-11CF-9ABC-0080C7E7B78D}#1.0#0"; "MSWINSCK.OCX"
-Object = "{831FDD16-0C5C-11D2-A9FC-0000F8754DA1}#2.2#0"; "MSCOMCTL.OCX"
+Object = "{831FDD16-0C5C-11D2-A9FC-0000F8754DA1}#2.0#0"; "MSCOMCTL.OCX"
 Begin VB.MDIForm MDIFormA1 
    AutoShowChildren=   0   'False
    BackColor       =   &H00C0C000&
    Caption         =   "A1 - Aplicativo de Gestão Empresarial"
    ClientHeight    =   5985
-   ClientLeft      =   225
-   ClientTop       =   870
-   ClientWidth     =   17940
+   ClientLeft      =   165
+   ClientTop       =   810
+   ClientWidth     =   15240
    Icon            =   "MDIFormA1.frx":0000
    LinkTopic       =   "MDIForm1"
    StartUpPosition =   3  'Windows Default
@@ -25,10 +25,10 @@ Begin VB.MDIForm MDIFormA1
       Left            =   0
       TabIndex        =   1
       Top             =   0
-      Width           =   17940
-      _ExtentX        =   31644
+      Width           =   15240
+      _ExtentX        =   26882
       _ExtentY        =   1535
-      _CBWidth        =   17940
+      _CBWidth        =   15240
       _CBHeight       =   870
       _Version        =   "6.0.8169"
       Child1          =   "tbMenuComercial"
@@ -48,8 +48,8 @@ Begin VB.MDIForm MDIFormA1
          Left            =   6075
          TabIndex        =   4
          Top             =   30
-         Width           =   11775
-         _ExtentX        =   20770
+         Width           =   9075
+         _ExtentX        =   16007
          _ExtentY        =   1429
          ButtonWidth     =   1455
          ButtonHeight    =   1429
@@ -199,15 +199,15 @@ Begin VB.MDIForm MDIFormA1
       Left            =   0
       TabIndex        =   0
       Top             =   5490
-      Width           =   17940
-      _ExtentX        =   31644
+      Width           =   15240
+      _ExtentX        =   26882
       _ExtentY        =   873
       _Version        =   393216
       BeginProperty Panels {8E3867A5-8586-11D1-B16A-00C0F0283628} 
          NumPanels       =   6
          BeginProperty Panel1 {8E3867AB-8586-11D1-B16A-00C0F0283628} 
             AutoSize        =   1
-            Object.Width           =   18830
+            Object.Width           =   14067
             MinWidth        =   71
             Text            =   "1"
             TextSave        =   "1"
@@ -241,7 +241,7 @@ Begin VB.MDIForm MDIFormA1
             Bevel           =   0
             Object.Width           =   1693
             MinWidth        =   71
-            TextSave        =   "22/06/2023"
+            TextSave        =   "06/05/2024"
          EndProperty
          BeginProperty Panel6 {8E3867AB-8586-11D1-B16A-00C0F0283628} 
             Style           =   5
@@ -250,7 +250,7 @@ Begin VB.MDIForm MDIFormA1
             Bevel           =   0
             Object.Width           =   873
             MinWidth        =   71
-            TextSave        =   "22:38"
+            TextSave        =   "10:37"
          EndProperty
       EndProperty
    End

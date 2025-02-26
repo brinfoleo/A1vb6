@@ -2,17 +2,17 @@ VERSION 5.00
 Object = "{5E9E78A0-531B-11CF-91F6-C2863C385E30}#1.0#0"; "MSFLXGRD.OCX"
 Object = "{F9043C88-F6F2-101A-A3C9-08002B2F49FB}#1.2#0"; "COMDLG32.OCX"
 Object = "{86CF1D34-0C5F-11D2-A9FC-0000F8754DA1}#2.0#0"; "MSCOMCT2.OCX"
-Object = "{831FDD16-0C5C-11D2-A9FC-0000F8754DA1}#2.2#0"; "MSCOMCTL.OCX"
+Object = "{831FDD16-0C5C-11D2-A9FC-0000F8754DA1}#2.0#0"; "MSCOMCTL.OCX"
 Begin VB.Form formFaturamentoNFeGerenciador 
    Caption         =   "Faturamento - Controle de NF-e"
    ClientHeight    =   6150
    ClientLeft      =   60
    ClientTop       =   450
-   ClientWidth     =   15120
+   ClientWidth     =   11400
    LinkTopic       =   "Form1"
    MDIChild        =   -1  'True
    ScaleHeight     =   6150
-   ScaleWidth      =   15120
+   ScaleWidth      =   11400
    WindowState     =   2  'Maximized
    Begin VB.Frame frmEnvioEmail 
       Caption         =   "Envio de Email:"
@@ -233,7 +233,7 @@ Begin VB.Form formFaturamentoNFeGerenciador
             _ExtentX        =   2566
             _ExtentY        =   556
             _Version        =   393216
-            Format          =   62849025
+            Format          =   153157633
             CurrentDate     =   40557
          End
          Begin MSComCtl2.DTPicker dtpDtFinal 
@@ -245,7 +245,7 @@ Begin VB.Form formFaturamentoNFeGerenciador
             _ExtentX        =   2566
             _ExtentY        =   556
             _Version        =   393216
-            Format          =   62849025
+            Format          =   153157633
             CurrentDate     =   40557
          End
          Begin VB.Label Label1 
@@ -288,8 +288,8 @@ Begin VB.Form formFaturamentoNFeGerenciador
       Left            =   0
       TabIndex        =   8
       Top             =   0
-      Width           =   15120
-      _ExtentX        =   26670
+      Width           =   11400
+      _ExtentX        =   20108
       _ExtentY        =   741
       ButtonWidth     =   609
       ButtonHeight    =   582
@@ -994,7 +994,7 @@ Private Sub Form_Load()
 End Sub
 
 Private Sub status(Max As Long)
-    pb.min = 0
+    pb.Min = 0
     pb.Max = Max
     DoEvents
     pb.Value = pb.Value + 1
@@ -1215,16 +1215,16 @@ Private Sub ExportarXML(op As Integer)
         Exit Sub
     End If
     cd.CancelError = True 'Forca um erro caso o usuario clique em cancelar/fechar
-    cd.filename = NFe
+    cd.FileName = NFe
     cd.ShowSave
     'If cd.Object = "" Then Exit Sub
     Select Case op
         Case 1
             Origem = PgDadosConfig.pBackup & "\Autorizados\" & Format(msfgNotas.TextMatrix(msfgNotas.Row, 4), "YYYYMM") & "\" & NFe & "-procNFe.xml"
-            Destino = cd.filename & "-procNFe.xml"
+            Destino = cd.FileName & "-procNFe.xml"
         Case 2
             Origem = PgDadosConfig.pBackup & "\Autorizados\" & Format(msfgNotas.TextMatrix(msfgNotas.Row, 4), "YYYYMM") & "\" & NFe & "-procCancNFe.xml"
-            Destino = cd.filename & "-procCancNFe.xml"
+            Destino = cd.FileName & "-procCancNFe.xml"
     End Select
     
     If Dir(Origem) = "" Then

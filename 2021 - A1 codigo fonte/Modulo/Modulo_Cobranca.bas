@@ -688,54 +688,54 @@ Public Sub API_BBCobranca(faturaId As Long)
     Dim strJSON As String
    
     '-------------------------------------------------DADOS PARA API --------------------
-    strJSON = "{" & _
-    "numeroConvenio:" & pgDadosConta(PgDadosFinanceiroFatura(Id).idConta).Convenio & _
-    ",numeroCarteira:" & pgDadosConta(PgDadosFinanceiroFatura(Id).idConta).carteira & _
-    ",numeroVariacaoCarteira:" & pgDadosConta(PgDadosFinanceiroFatura(Id).idConta).carteira & _
-    ",codigoModalidade: 0" & _
-    "dataEmissao: " & PgDadosFinanceiroFatura(Id).emissao & _
-    ",dataVencimento: " & PgDadosFinanceiroFatura(Id).Vencimento & _
-    ",valorOriginal: " & PgDadosFinanceiroFatura(Id).vlCobrado & _
-  ",valorAbatimento: " & PgDadosFinanceiroFatura(Id).Deducoes & _
-  ",quantidadeDiasProtesto: " & PgDadosFinanceiroFatura(Id).DiasProtesto & _
-  ",quantidadeDiasNegativacao: 0, " & _
-  ",orgaoNegativador: 0, " & _
-  ",indicadorAceiteTituloVencido: string," & _
-  ",numeroDiasLimiteRecebimento: " & PgDadosFinanceiroFatura(Id).DiasProtesto & _
-  ",codigoAceite: string," & _
-  ",codigoTipoTitulo 0," & _
-  ",descricaoTipoTitulo: string," & _
-  ",indicadorPermissaoRecebimentoParcial: string," & _
-  ",numeroTituloBeneficiario: string," & _
-  ",campoUtilizacaoBeneficiario: string," & _
-  ",numeroTituloCliente: string," & _
-    ",mensagemBloquetoOcorrencia: string"
+    strJSON = "{" & vbCrLf & _
+    "numeroConvenio: " & pgDadosConta(PgDadosFinanceiroFatura(Id).idConta).Convenio & "," & vbCrLf & _
+    "numeroCarteira: " & pgDadosConta(PgDadosFinanceiroFatura(Id).idConta).carteira & "," & vbCrLf & _
+    "numeroVariacaoCarteira: " & pgDadosConta(PgDadosFinanceiroFatura(Id).idConta).carteira & "," & vbCrLf & _
+    "codigoModalidade: 0" & "," & vbCrLf & _
+    "dataEmissao: " & PgDadosFinanceiroFatura(Id).emissao & "," & vbCrLf & _
+    "dataVencimento: " & PgDadosFinanceiroFatura(Id).Vencimento & "," & vbCrLf & _
+    "valorOriginal: " & PgDadosFinanceiroFatura(Id).vlCobrado & "," & vbCrLf & _
+    "valorAbatimento: " & PgDadosFinanceiroFatura(Id).Deducoes & "," & vbCrLf & _
+    "quantidadeDiasProtesto: " & PgDadosFinanceiroFatura(Id).DiasProtesto & "," & vbCrLf & _
+    "quantidadeDiasNegativacao: 0 " & "," & vbCrLf & _
+    "orgaoNegativador: 0 " & "," & vbCrLf & _
+    "indicadorAceiteTituloVencido: string" & "," & vbCrLf & _
+    "numeroDiasLimiteRecebimento: " & PgDadosFinanceiroFatura(Id).DiasProtesto & "," & vbCrLf & _
+    "codigoAceite: string" & "," & vbCrLf & _
+    "codigoTipoTitulo 0" & "," & vbCrLf & _
+    "descricaoTipoTitulo: string" & "," & vbCrLf & _
+    "indicadorPermissaoRecebimentoParcial: string" & "," & vbCrLf & _
+    "numeroTituloBeneficiario: string" & "," & vbCrLf & _
+    "campoUtilizacaoBeneficiario: string" & "," & vbCrLf & _
+    "numeroTituloCliente: string" & "," & vbCrLf & _
+    "mensagemBloquetoOcorrencia: string"
     
-    strJSON = strJSON & _
-    ",desconto: {" & _
-    ",tipo: 0," & _
-    ",jurosMora: {" & _
-    ",tipo: 0," & _
-    ",porcentagem: " & PgDadosFinanceiroFatura(Id).Juros & _
-    ",valor: 0" & _
-    ",multa: {" & _
-    ",tipo: 0," & _
-    ",data: string," & _
-    ",porcentagem: " & PgDadosFinanceiroFatura(Id).Multa & _
-    ",valor: 0"
+    strJSON = strJSON & "," & vbCrLf & _
+    "desconto: {" & "," & vbCrLf & _
+    "tipo: 0" & "," & vbCrLf & _
+    "jurosMora: {" & "," & vbCrLf & _
+    "tipo: 0" & "," & vbCrLf & _
+    "porcentagem: " & PgDadosFinanceiroFatura(Id).Juros & "," & vbCrLf & _
+    "valor: 0" & "," & vbCrLf & _
+    "multa: {" & "," & vbCrLf & _
+    "tipo: 0" & "," & vbCrLf & _
+    "data: string" & "," & vbCrLf & _
+    "porcentagem: " & PgDadosFinanceiroFatura(Id).Multa & "," & vbCrLf & _
+    "valor: 0"
  
-    strJSON = strJSON & _
-    "pagador: {" & _
-    ",tipoInscricao: 0," & _
-    ",numeroInscricao: 0," & _
-    ",nome: " & PgDadosCliente(PgDadosFinanceiroFatura(Id).Sacado).Nome & _
-    ",endereco:" & PgDadosCliente(PgDadosFinanceiroFatura(Id).Sacado).Lgr & _
-    ",cep: " & PgDadosCliente(PgDadosFinanceiroFatura(Id).Sacado).CEP & _
-    ",cidade: " & PgDadosCliente(PgDadosFinanceiroFatura(Id).Sacado).Mun & _
-    ",bairro: " & PgDadosCliente(PgDadosFinanceiroFatura(Id).Sacado).Bairro & _
-    ",uf: " & PgDadosCliente(PgDadosFinanceiroFatura(Id).Sacado).uf & _
-    ",telefone: " & PgDadosCliente(PgDadosFinanceiroFatura(Id).Sacado).Fone & _
-    ",email: " & PgDadosCliente(PgDadosFinanceiroFatura(Id).Sacado).emailfin
+    strJSON = strJSON & "," & vbCrLf & _
+    "pagador: {" & "," & vbCrLf & _
+    "tipoInscricao: 0" & "," & vbCrLf & _
+    "numeroInscricao: 0" & "," & vbCrLf & _
+    "nome: " & PgDadosCliente(PgDadosFinanceiroFatura(Id).IDSacado).Nome & "," & vbCrLf & _
+    "endereco:" & PgDadosCliente(PgDadosFinanceiroFatura(Id).IDSacado).Lgr & "," & vbCrLf & _
+    "cep: " & PgDadosCliente(PgDadosFinanceiroFatura(Id).IDSacado).CEP & "," & vbCrLf & _
+    "cidade: " & PgDadosCliente(PgDadosFinanceiroFatura(Id).IDSacado).Mun & "," & vbCrLf & _
+    "bairro: " & PgDadosCliente(PgDadosFinanceiroFatura(Id).IDSacado).Bairro & "," & vbCrLf & _
+    "uf: " & PgDadosCliente(PgDadosFinanceiroFatura(Id).IDSacado).uf & "," & vbCrLf & _
+    "telefone: " & PgDadosCliente(PgDadosFinanceiroFatura(Id).IDSacado).Fone & "," & vbCrLf & _
+    "email: " & PgDadosCliente(PgDadosFinanceiroFatura(Id).IDSacado).emailfin
  ' },
  ' "beneficiarioFinal": {
  '   "tipoInscricao": 0,
@@ -743,7 +743,7 @@ Public Sub API_BBCobranca(faturaId As Long)
  '   "nome": "string"
  ' },
  ' "indicadorPix": "string"
-'}
+    strJSON = strJSON & "}"
 '----------------------------------------------------------------------
 End Sub
 

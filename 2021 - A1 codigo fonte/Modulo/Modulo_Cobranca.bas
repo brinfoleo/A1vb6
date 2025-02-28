@@ -54,6 +54,23 @@ Public Sub AtualizarBoleto(idBol As Long, novaData As String)
     RegistroAlterar "FinanceiroContasPRCadastro", vReg, cReg, "id=" & idBol
     
 End Sub
+Private Function BoletoBancario_001_NossoNumero(Id As Long) As String
+    '########################################################################################################
+    '### Montagem de NOSSO NUMERO
+    '### 28.02.25
+    '########################################################################################################
+    '# Multiplicador base 9
+    Dim NN1, NN2 As String
+    NN1 = pgDadosConta(PgDadosFinanceiroFatura(Id).idConta).Convenio
+    NN1 = Left(String(7, "0"), 7 - Len(Trim(NN1))) & Trim(NN1)
+    If Len(Trim(Id)) > 10 Then
+            NN2 = Right(Id, 10)
+        Else
+            NN2 = Left(String(10, "0"), 10 - Len(Trim(Id))) & Trim(Id)
+    End If
+    BoletoBancario_001_NossoNumero = "000" & NN1 & NN2
+End Function
+
 Function Calculo_DV10(strNumero As String) As String
     'declara As variáveis
     Dim intContador As Integer
@@ -554,6 +571,7 @@ Public Sub BoletoBancario(Id As Long, Optional Visualizar = True)
     'Comando de impressao do boleto
     ImprBoletoBancario Id, Visualizar
 End Sub
+'
 Public Sub BoletoBancario_001(Id As Long)
 
 
@@ -692,73 +710,73 @@ Public Sub API_BBCobranca(faturaId As Long)
      
 
     strJSON = "{" & vbCrLf
-    strJSON = strJSON & mJ("numeroConvenio", pgDadosConta(PgDadosFinanceiroFatura(Id).idConta).Convenio, 0) & ","
+    strJSON = strJSON & mJ("numeroConvenio", pgDadosConta(PgDadosFinanceiroFatura(Id).idConta).Convenio, 0) & "," & vbCrLf
     strJSON = strJSON & mJ("numeroCarteira", pgDadosConta(PgDadosFinanceiroFatura(Id).idConta).carteira, 0) & "," & vbCrLf
     
     
-    strJSON = strJSON & mJ("numeroVariacaoCarteira", pgDadosConta(PgDadosFinanceiroFatura(Id).idConta).carteira, 0) & "," & vbCrLf
-    strJSON = strJSON & mJ("codigoModalidade", "0", 0) & "," & vbCrLf
+    strJSON = strJSON & mJ("numeroVariacaoCarteira", pgDadosConta(PgDadosFinanceiroFatura(Id).idConta).Variacao, 0) & "," & vbCrLf
+    strJSON = strJSON & mJ("codigoModalidade", 1, 0) & "," & vbCrLf
     
-    strJSON = strJSON & mJ("dataEmissao", PgDadosFinanceiroFatura(Id).emissao, 1) & "," & vbCrLf
-    strJSON = strJSON & mJ("dataVencimento", PgDadosFinanceiroFatura(Id).Vencimento, 1) & "," & vbCrLf
+    strJSON = strJSON & mJ("dataEmissao", Replace(PgDadosFinanceiroFatura(Id).emissao, "/", "."), 1) & "," & vbCrLf
+    strJSON = strJSON & mJ("dataVencimento", Replace(PgDadosFinanceiroFatura(Id).Vencimento, "/", "."), 1) & "," & vbCrLf
     strJSON = strJSON & mJ("valorOriginal", PgDadosFinanceiroFatura(Id).vlCobrado, 0) & "," & vbCrLf
     strJSON = strJSON & mJ("valorAbatimento", PgDadosFinanceiroFatura(Id).Deducoes, 0) & "," & vbCrLf
     strJSON = strJSON & mJ("quantidadeDiasProtesto", PgDadosFinanceiroFatura(Id).DiasProtesto, 0) & "," & vbCrLf
     strJSON = strJSON & mJ("quantidadeDiasNegativacao", "0", 0) & "," & vbCrLf
-    strJSON = strJSON & mJ("orgaoNegativador", "0", 0) & "," & vbCrLf
-    strJSON = strJSON & mJ("indicadorAceiteTituloVencido", "string", 1) & "," & vbCrLf
+    strJSON = strJSON & mJ("orgaoNegativador", "10", 0) & "," & vbCrLf
+    strJSON = strJSON & mJ("indicadorAceiteTituloVencido", "S", 1) & "," & vbCrLf
     strJSON = strJSON & mJ("numeroDiasLimiteRecebimento", PgDadosFinanceiroFatura(Id).DiasProtesto, 0) & "," & vbCrLf
-    strJSON = strJSON & mJ("codigoAceite", "string", 1) & "," & vbCrLf
-    strJSON = strJSON & mJ("codigoTipoTitulo", "0", 0) & "," & vbCrLf
+    strJSON = strJSON & mJ("codigoAceite", "A", 1) & "," & vbCrLf
+    strJSON = strJSON & mJ("codigoTipoTitulo", "2", 0) & "," & vbCrLf
     strJSON = strJSON & mJ("descricaoTipoTitulo", "string", 1) & "," & vbCrLf
-    strJSON = strJSON & mJ("indicadorPermissaoRecebimentoParcial", "string", 1) & "," & vbCrLf
+    strJSON = strJSON & mJ("indicadorPermissaoRecebimentoParcial", "N", 1) & "," & vbCrLf
     strJSON = strJSON & mJ("numeroTituloBeneficiario", "string", 1) & "," & vbCrLf
     strJSON = strJSON & mJ("campoUtilizacaoBeneficiario", "string", 1) & "," & vbCrLf
-    strJSON = strJSON & mJ("numeroTituloCliente", "string", 1) & "," & vbCrLf
+    strJSON = strJSON & mJ("numeroTituloCliente", BoletoBancario_001_NossoNumero(Id), 1) & "," & vbCrLf
     strJSON = strJSON & mJ("mensagemBloquetoOcorrencia", "string", 1) & ","
     
     strJSON = strJSON & vbCrLf & _
-    "desconto: {" & vbCrLf & _
+    mJ("desconto", "", 2) & "{" & vbCrLf & _
     mJ("tipo", "0", 0) & "," & vbCrLf & _
-    mJ("dataExpiracao", "string", 1) & "," & vbCrLf & _
+    mJ("dataExpiracao", "", 1) & "," & vbCrLf & _
     mJ("porcentagem", "0", 0) & "," & vbCrLf & _
     mJ("valor", "0", 0) & _
-    "},"
+    vbCrLf & "},"
     
     strJSON = strJSON & vbCrLf & _
-    "segundoDesconto: {" & vbCrLf & _
-    mJ("dataExpiracao", "string", 1) & "," & vbCrLf & _
+     mJ("segundoDesconto", "", 2) & "{" & vbCrLf & _
+    mJ("dataExpiracao", "", 1) & "," & vbCrLf & _
     mJ("porcentagem", "0", 0) & "," & vbCrLf & _
     mJ("valor", "0", 0) & _
-    "},"
+    vbCrLf & "},"
    
     strJSON = strJSON & vbCrLf & _
-    "terceiroDesconto: {" & vbCrLf & _
-    mJ("dataExpiracao", "string", 1) & "," & vbCrLf & _
+     mJ("terceiroDesconto", "", 2) & "{" & vbCrLf & _
+    mJ("dataExpiracao", "", 1) & "," & vbCrLf & _
     mJ("porcentagem", "0", 0) & "," & vbCrLf & _
     mJ("valor", "0", 0) & _
-    "},"
+    vbCrLf & "},"
     
     
     strJSON = strJSON & vbCrLf & _
-    "jurosMora: {" & vbCrLf & _
+    mJ("jurosMora", "", 2) & "{" & vbCrLf & _
     mJ("tipo", "0", 0) & "," & vbCrLf & _
     mJ("porcentagem", PgDadosFinanceiroFatura(Id).Juros, 0) & "," & vbCrLf & _
     mJ("valor", "0", 0) & _
-    "},"
+    vbCrLf & "},"
     
     
     strJSON = strJSON & vbCrLf & _
-    "multa: {" & vbCrLf & _
+    mJ("multa", "", 2) & "{" & vbCrLf & _
     mJ("tipo", "0", 0) & "," & vbCrLf & _
-     mJ("data", "000", 1) & "," & vbCrLf & _
+    mJ("data", "000", 1) & "," & vbCrLf & _
     mJ("porcentagem", PgDadosFinanceiroFatura(Id).Juros, 0) & "," & vbCrLf & _
     mJ("valor", "0", 0) & _
-    "},"
+    vbCrLf & "},"
         
    
-    strJSON = strJSON & "," & vbCrLf & _
-    "pagador: {" & "," & vbCrLf & _
+    strJSON = strJSON & vbCrLf & _
+     mJ("pagador", "", 2) & "{" & vbCrLf & _
     mJ("tipoInscricao", 0, 0) & "," & vbCrLf & _
     mJ("numeroInscricao", 0, 0) & "," & vbCrLf & _
     mJ("nome", PgDadosCliente(PgDadosFinanceiroFatura(Id).IDSacado).Nome, 1) & "," & vbCrLf & _
@@ -772,17 +790,17 @@ Public Sub API_BBCobranca(faturaId As Long)
     " },"
     
     
-     strJSON = strJSON & vbCrLf & _
-    "beneficiarioFinal: {" & vbCrLf & _
-    mJ("tipoInscricao", "0", 0) & "," & vbCrLf & _
-     mJ("numeroInscricao", "0", 0) & "," & vbCrLf & _
-    mJ("nome", "string", 1) & "," & vbCrLf & _
+    strJSON = strJSON & vbCrLf & _
+    mJ("beneficiarioFinal", "", 2) & "{" & vbCrLf & _
+    mJ("tipoInscricao", 2, 0) & "," & vbCrLf & _
+    mJ("numeroInscricao", PgDadosEmpresa(ID_Empresa).CNPJ, 0) & "," & vbCrLf & _
+    mJ("nome", PgDadosEmpresa(ID_Empresa).Nome, 1) & vbCrLf & _
     "}," & vbCrLf & _
-    mJ("indicadorPix", "string", 1)
-    strJSON = strJSON & "}"
+    mJ("indicadorPix", "N", 1)
+    strJSON = strJSON & vbCrLf & "}"
 '----------------------------------------------------------------------
 End Sub
-Private Function mJ(sField As String, sData As String, iType As Integer) As String
+Private Function mJ(sField As String, sData As Variant, iType As Integer) As String
     'Monta uma linha para JSON
     '
     'iType
@@ -791,10 +809,13 @@ Private Function mJ(sField As String, sData As String, iType As Integer) As Stri
     If iType = 0 Then
             'Number
             mJ = """" & sField & """: " & sData
-        Else
+        ElseIf iType = 1 Then
             'String
             '
             mJ = """" & sField & """" & ": " & """" & sData & """"
+            
+        Else
+            mJ = """" & sField & """" & ": "
     End If
 End Function
 Public Sub BoletoBancario_237(Id As Long)

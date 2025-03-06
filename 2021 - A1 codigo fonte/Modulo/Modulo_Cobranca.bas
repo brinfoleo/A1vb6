@@ -61,7 +61,7 @@ Private Function BoletoBancario_001_NossoNumero(Id As Long) As String
     '########################################################################################################
     '# Multiplicador base 9
     Dim NN1, NN2 As String
-    NN1 = pgDadosConta(PgDadosFinanceiroFatura(Id).idConta).Convenio
+    NN1 = pgDadosConta(PgDadosFinanceiroFatura(Id).idConta).convenio
     NN1 = Left(String(7, "0"), 7 - Len(Trim(NN1))) & Trim(NN1)
     If Len(Trim(Id)) > 10 Then
             NN2 = Right(Id, 10)
@@ -158,7 +158,7 @@ Private Function cnab240LoteHeader(contaId As Integer, lote As String) As String
     
     line = line & "0" '09.1 - Tipo de inscricao
     line = line & F("n", 15, PgDadosEmpresa(ID_Empresa).CNPJ)
-    line = line & F("a", 20, pgDadosConta(contaId).Convenio)
+    line = line & F("a", 20, pgDadosConta(contaId).convenio)
     line = line & F("n", 5, pgDadosConta(contaId).agencia)
     line = line & F("n", 1, pgDadosConta(contaId).AgenciaDV)
     line = line & F("n", 12, pgDadosConta(contaId).conta)
@@ -607,7 +607,7 @@ API_BBCobranca Id
     '########################################################################################################
     '# Multiplicador base 9
     Dim NN1, NN2 As String
-    NN1 = pgDadosConta(PgDadosFinanceiroFatura(Id).idConta).Convenio
+    NN1 = pgDadosConta(PgDadosFinanceiroFatura(Id).idConta).convenio
     If Len(Trim(Id)) > 5 Then
             NN2 = Right(Id, 5)
         Else
@@ -702,19 +702,49 @@ API_BBCobranca Id
 End Sub
 Public Sub API_BBCobranca(faturaId As Long)
     Dim Id As Long
-    Id = faturaId
     Dim strJSON As String
+    Dim producao As Boolean
    
+    
+    Dim convenio As String
+    Dim carteira As String
+    Dim carteiraVariacao As String
+    Dim tipoConta As String
+    
+    
+    
+    
+     
+    Id = faturaId
+    producao = False
+    
     '-------------------------------------------------DADOS PARA API --------------------
      ' 0 = num // 1= str // 2= empty
      
 
     strJSON = "{" & vbCrLf
     
-    strJSON = strJSON & mJ("numeroConvenio", pgDadosConta(PgDadosFinanceiroFatura(Id).idConta).Convenio, 0) & "," & vbCrLf
-    strJSON = strJSON & mJ("numeroCarteira", pgDadosConta(PgDadosFinanceiroFatura(Id).idConta).carteira, 0) & "," & vbCrLf
-    strJSON = strJSON & mJ("numeroVariacaoCarteira", CInt(pgDadosConta(PgDadosFinanceiroFatura(Id).idConta).Variacao), 0) & "," & vbCrLf
-    strJSON = strJSON & mJ("codigoModalidade", CInt(pgDadosConta(PgDadosFinanceiroFatura(Id).idConta).Tipo), 0) & "," & vbCrLf
+    If producao = True Then
+            'Modulo Producao
+            convenio = pgDadosConta(PgDadosFinanceiroFatura(Id).idConta).convenio
+            carteira = pgDadosConta(PgDadosFinanceiroFatura(Id).idConta).carteira
+            carteiraVariacao = pgDadosConta(PgDadosFinanceiroFatura(Id).idConta).Variacao
+            tipoConta = pgDadosConta(PgDadosFinanceiroFatura(Id).idConta).Tipo
+        Else
+            
+            'Modulo Homologacao
+            convenio = "3128557"
+            carteira = "17"
+            carteiraVariacao = "35"
+            tipoConta = "4"
+    
+    End If
+    
+    strJSON = strJSON & mJ("numeroConvenio", convenio, 0) & "," & vbCrLf
+    strJSON = strJSON & mJ("numeroCarteira", carteira, 0) & "," & vbCrLf
+    strJSON = strJSON & mJ("numeroVariacaoCarteira", CInt(carteiraVariacao), 0) & "," & vbCrLf
+    strJSON = strJSON & mJ("codigoModalidade", CInt(tipoConta), 0) & "," & vbCrLf
+    
     
     strJSON = strJSON & mJ("dataEmissao", Replace(PgDadosFinanceiroFatura(Id).emissao, "/", "."), 1) & "," & vbCrLf
     strJSON = strJSON & mJ("dataVencimento", Replace(PgDadosFinanceiroFatura(Id).Vencimento, "/", "."), 1) & "," & vbCrLf
@@ -760,17 +790,17 @@ Public Sub API_BBCobranca(faturaId As Long)
     'Mora Diaria
     Dim vMD As String
     Dim vMulta As String
-    mD = ConvMoeda(cobCalcMora(PgDadosFinanceiroFatura(Id).vlDuplicata, 1, PgDadosFinanceiroFatura(Id).Juros, "D"))
+    vMD = ConvMoeda(cobCalcMora(PgDadosFinanceiroFatura(Id).vlDuplicata, 1, PgDadosFinanceiroFatura(Id).Juros, "D"))
     vMulta = PgDadosFinanceiroFatura(Id).Multa & "% ou " & ConvMoeda(cobCalcMulta(PgDadosFinanceiroFatura(Id).vlDuplicata, PgDadosFinanceiroFatura(Id).Multa, 1))
             
     
     'JUROS MORA
     strJSON = strJSON & vbCrLf & _
-    mJ("jurosMora", "", 2) & "{" & vbCrLf & _
-    mJ("tipo", "1", 0) & "," & vbCrLf & _
-    mJ("porcentagem", PgDadosFinanceiroFatura(Id).Juros, 0) & "," & vbCrLf & _
-    mJ("valor", vMD, 0) & _
-    vbCrLf & "},"
+    strJSON = strJSON & mJ("jurosMora", "", 2) & "{" & vbCrLf
+    strJSON = strJSON & mJ("tipo", "1", 0) & "," & vbCrLf
+    strJSON = strJSON & mJ("porcentagem", PgDadosFinanceiroFatura(Id).Juros, 0) & "," & vbCrLf
+    strJSON = strJSON & mJ("valor", vMD, 0) & vbCrLf
+    strJSON = strJSON & "},"
     
     'MULTA
     strJSON = strJSON & vbCrLf & _
@@ -855,7 +885,7 @@ Public Sub BoletoBancario_237(Id As Long)
     '### Montagem de NOSSO NUMERO
     '########################################################################################################
     Dim NN1, NN2 As String
-    NN1 = pgDadosConta(PgDadosFinanceiroFatura(Id).idConta).Convenio
+    NN1 = pgDadosConta(PgDadosFinanceiroFatura(Id).idConta).convenio
     carteira = pgDadosConta(PgDadosFinanceiroFatura(Id).idConta).carteira
     If Len(Trim(Id)) > 5 Then
             NN2 = Right(Id, 5)
@@ -1392,7 +1422,7 @@ Private Function cnab240ArquivoHeader(contaId As Integer, lote As String) As Str
     '----------------
     line = line & "0" '05.0 - Tipo de inscricao
     line = line & F("n", 14, PgDadosEmpresa(ID_Empresa).CNPJ) '06.0 - num insc empresa
-    line = line & F("a", 20, pgDadosConta(contaId).Convenio) '07.0- convenio
+    line = line & F("a", 20, pgDadosConta(contaId).convenio) '07.0- convenio
     line = line & F("n", 5, pgDadosConta(contaId).agencia)
     line = line & F("n", 1, pgDadosConta(contaId).AgenciaDV)
     line = line & F("n", 12, pgDadosConta(contaId).conta)

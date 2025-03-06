@@ -241,7 +241,7 @@ Begin VB.MDIForm MDIFormA1
             Bevel           =   0
             Object.Width           =   1693
             MinWidth        =   71
-            TextSave        =   "06/05/2024"
+            TextSave        =   "06/03/2025"
          EndProperty
          BeginProperty Panel6 {8E3867AB-8586-11D1-B16A-00C0F0283628} 
             Style           =   5
@@ -250,7 +250,7 @@ Begin VB.MDIForm MDIFormA1
             Bevel           =   0
             Object.Width           =   873
             MinWidth        =   71
-            TextSave        =   "10:37"
+            TextSave        =   "03:05"
          EndProperty
       EndProperty
    End
@@ -340,9 +340,6 @@ Begin VB.MDIForm MDIFormA1
       End
       Begin VB.Menu financeiroContasPagarReceberDRE 
          Caption         =   "DRE"
-      End
-      Begin VB.Menu financeiroCnab240 
-         Caption         =   "Gerar CNAB 240"
       End
    End
    Begin VB.Menu Estoque 
@@ -676,9 +673,6 @@ Private Sub FinanceiroBxAutomatica_Click()
     formFinanceiroBaixaAutomaticaTitulo.Show
 End Sub
 
-Private Sub financeiroCnab240_Click()
-    formFinanceiroCnab240.Show
-End Sub
 
 Private Sub financeiroContasPagarReceberDRE_Click()
     formFinanceiroDRE.Show

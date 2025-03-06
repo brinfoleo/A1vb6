@@ -140,7 +140,6 @@ Designer=Rpt\rptListaVendasPeriodo.Dsr
 Designer=Rpt\rptRomaneio.Dsr
 Form=Form\formFaturamentoPV.frm
 Form=Form\formFaturamentoPVItem.frm
-Form=Form\formFinanceiroCnab240.frm
 Designer=Rpt\rptPreVenda.Dsr
 Designer=Rpt\rptClienteListagem.Dsr
 Form=Form\formClientesRelatorio.frm

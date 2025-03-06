@@ -38,7 +38,7 @@ Begin VB.Form formFinanceiroContasPRGerenciador
             Italic          =   0   'False
             Strikethrough   =   0   'False
          EndProperty
-         Format          =   151977985
+         Format          =   174063617
          CurrentDate     =   40658
       End
       Begin MSFlexGridLib.MSFlexGrid msfgContas 
@@ -312,6 +312,23 @@ Begin VB.Form formFinanceiroContasPRGerenciador
          EndProperty
       End
    End
+   Begin VB.Label Label1 
+      Caption         =   "# - cobranca registrada"
+      BeginProperty Font 
+         Name            =   "MS Sans Serif"
+         Size            =   8.25
+         Charset         =   0
+         Weight          =   400
+         Underline       =   0   'False
+         Italic          =   -1  'True
+         Strikethrough   =   0   'False
+      EndProperty
+      Height          =   255
+      Left            =   4080
+      TabIndex        =   14
+      Top             =   7680
+      Width           =   3735
+   End
 End
 Attribute VB_Name = "formFinanceiroContasPRGerenciador"
 Attribute VB_GlobalNameSpace = False
@@ -372,6 +389,7 @@ End Sub
 
 
 Private Sub AtualizarLista()
+    'Lista os boletos no GRID
     On Error Resume Next
     Dim Rst         As Recordset
     Dim dtCalc      As String
@@ -418,7 +436,14 @@ Private Sub AtualizarLista()
                     'FV
                     .TextMatrix(.Rows - 1, 3) = IIf(cNull(Rst.Fields("FixoVariavel")) = "", "", cNull(Rst.Fields("FixoVariavel")))
                     .TextMatrix(.Rows - 1, 4) = Rst.Fields("Emissao")
-                    .TextMatrix(.Rows - 1, 5) = IIf(IsNull(Rst.Fields("NumDuplicata")), " ", Rst.Fields("NumDuplicata"))
+                    
+                    'NUMERO DA DUPLICATA
+                    Dim nDup As String
+                    nDup = IIf(IsNull(Rst.Fields("NumDuplicata")), " ", Rst.Fields("NumDuplicata"))
+                    nDup = nDup & IIf(Rst.Fields("gerarCNAB240") <> 0, "#", "")
+                    .TextMatrix(.Rows - 1, 5) = nDup
+                    
+                    
                     .TextMatrix(.Rows - 1, 6) = ConvMoeda(ChkVal(IIf(IsNull(Rst.Fields("vlDuplicata")), "0", Rst.Fields("vlDuplicata")), 0, cDecMoeda)) & IIf(Rst.Fields("ContaPR") = "P", "D", "C")
                     .TextMatrix(.Rows - 1, 7) = Rst.Fields("Vencimento")
                     '.TextMatrix(.Rows - 1, 8) = Date
@@ -634,35 +659,40 @@ Private Sub tbMenu_ButtonMenuClick(ByVal ButtonMenu As MSComctlLib.ButtonMenu)
     End Select
 End Sub
 Private Sub mntArqCNAB240()
-    Dim vDados(10)   As Variant
-    Dim cReg        As Integer
-    Dim i As Integer
-    Dim criterio As String
-    Dim lote As String
+
+    If MsgBox("Sistema entrara em modo operante para registrar os boletos junto ao banco. Isso pode levar alguns minutos dependendo do numero de boletos solicitado. Deseja continuar?", vbQuestion + vbYesNo, "A - Aviso") = vbNo Then
+        MsgBox "Operacao cancelada.", vbInformation, "Aviso"
+        Exit Sub
+    End If
+    'Dim vDados(10)   As Variant
+    'Dim cReg        As Integer
+    'Dim i As Integer
+    'Dim criterio As String
+    'Dim lote As String
     
-    lote = "100"
+    'lote = "100"
     
-    With msfgContas
-        .Enabled = False
-        For i = 1 To .Rows - 1
-            cReg = 0
-            vDados(cReg) = Array("gerarcnab240", lote, "N"): cReg = cReg + 1
-            cReg = cReg - 1
-            criterio = "id=" & .TextMatrix(i, 0)
-            RegistroAlterar "financeirocontasprcadastro", vDados, cReg, criterio
-        Next
-        .Enabled = True
-    End With
+    'With msfgContas
+    '    .Enabled = False
+    '    For i = 1 To .Rows - 1
+    '        cReg = 0
+    '        vDados(cReg) = Array("gerarcnab240", lote, "N"): cReg = cReg + 1
+    '        cReg = cReg - 1
+    '        criterio = "id=" & .TextMatrix(i, 0)
+    '        RegistroAlterar "financeirocontasprcadastro", vDados, cReg, criterio
+    '    Next
+    '    .Enabled = True
+    'End With
     
     
     'Variaveis necessarias
-    Dim DtIni As Date
-    Dim DtFin As Date
-    Dim conta As Integer
-    DtIni = "01/03/2017"
-    DtFin = "30/03/2017"
-    conta = 1
-    cnab240 DtIni, DtFin, conta, lote
+    'Dim DtIni As Date
+    'Dim DtFin As Date
+    'Dim conta As Integer
+    'DtIni = "01/03/2017"
+    'DtFin = "30/03/2017"
+    'conta = 1
+    'cnab240 DtIni, DtFin, conta, lote
 End Sub
 Private Sub ImprimirListagemPlanoContas()
     If chkAcesso(Me, "i") = False Then Exit Sub

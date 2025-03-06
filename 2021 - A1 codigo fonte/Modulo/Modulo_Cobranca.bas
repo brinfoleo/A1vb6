@@ -710,12 +710,11 @@ Public Sub API_BBCobranca(faturaId As Long)
      
 
     strJSON = "{" & vbCrLf
+    
     strJSON = strJSON & mJ("numeroConvenio", pgDadosConta(PgDadosFinanceiroFatura(Id).idConta).Convenio, 0) & "," & vbCrLf
     strJSON = strJSON & mJ("numeroCarteira", pgDadosConta(PgDadosFinanceiroFatura(Id).idConta).carteira, 0) & "," & vbCrLf
-    
-    
     strJSON = strJSON & mJ("numeroVariacaoCarteira", CInt(pgDadosConta(PgDadosFinanceiroFatura(Id).idConta).Variacao), 0) & "," & vbCrLf
-    strJSON = strJSON & mJ("codigoModalidade", 1, 0) & "," & vbCrLf
+    strJSON = strJSON & mJ("codigoModalidade", CInt(pgDadosConta(PgDadosFinanceiroFatura(Id).idConta).Tipo), 0) & "," & vbCrLf
     
     strJSON = strJSON & mJ("dataEmissao", Replace(PgDadosFinanceiroFatura(Id).emissao, "/", "."), 1) & "," & vbCrLf
     strJSON = strJSON & mJ("dataVencimento", Replace(PgDadosFinanceiroFatura(Id).Vencimento, "/", "."), 1) & "," & vbCrLf
@@ -730,17 +729,18 @@ Public Sub API_BBCobranca(faturaId As Long)
     strJSON = strJSON & mJ("codigoTipoTitulo", "2", 0) & "," & vbCrLf
     strJSON = strJSON & mJ("descricaoTipoTitulo", "DM", 1) & "," & vbCrLf
     strJSON = strJSON & mJ("indicadorPermissaoRecebimentoParcial", "N", 1) & "," & vbCrLf
-    strJSON = strJSON & mJ("numeroTituloBeneficiario", "string", 1) & "," & vbCrLf
-    strJSON = strJSON & mJ("campoUtilizacaoBeneficiario", "string", 1) & "," & vbCrLf
+    strJSON = strJSON & mJ("numeroTituloBeneficiario", PgDadosFinanceiroFatura(Id).NumFatura, 1) & "," & vbCrLf
+    strJSON = strJSON & mJ("campoUtilizacaoBeneficiario", PgDadosFinanceiroFatura(Id).NumDuplicata, 1) & "," & vbCrLf
     strJSON = strJSON & mJ("numeroTituloCliente", BoletoBancario_001_NossoNumero(Id), 1) & "," & vbCrLf
-    strJSON = strJSON & mJ("mensagemBloquetoOcorrencia", "string", 1) & ","
+    strJSON = strJSON & mJ("mensagemBloquetoOcorrencia", PgDadosFinanceiroFatura(Id).Obs, 1) & ","
     
+    'DESCONTO
     strJSON = strJSON & vbCrLf & _
     mJ("desconto", "", 2) & "{" & vbCrLf & _
     mJ("tipo", "0", 0) & "," & vbCrLf & _
-    mJ("dataExpiracao", "", 1) & "," & vbCrLf & _
+    mJ("dataExpiracao", Replace(PgDadosFinanceiroFatura(Id).Vencimento, "/", "."), 1) & "," & vbCrLf & _
     mJ("porcentagem", "0", 0) & "," & vbCrLf & _
-    mJ("valor", "0", 0) & _
+    mJ("valor", PgDadosFinanceiroFatura(Id).Deducoes, 0) & _
     vbCrLf & "},"
     
     strJSON = strJSON & vbCrLf & _
@@ -757,28 +757,35 @@ Public Sub API_BBCobranca(faturaId As Long)
     mJ("valor", "0", 0) & _
     vbCrLf & "},"
     
+    'Mora Diaria
+    Dim vMD As String
+    Dim vMulta As String
+    mD = ConvMoeda(cobCalcMora(PgDadosFinanceiroFatura(Id).vlDuplicata, 1, PgDadosFinanceiroFatura(Id).Juros, "D"))
+    vMulta = PgDadosFinanceiroFatura(Id).Multa & "% ou " & ConvMoeda(cobCalcMulta(PgDadosFinanceiroFatura(Id).vlDuplicata, PgDadosFinanceiroFatura(Id).Multa, 1))
+            
     
+    'JUROS MORA
     strJSON = strJSON & vbCrLf & _
     mJ("jurosMora", "", 2) & "{" & vbCrLf & _
     mJ("tipo", "1", 0) & "," & vbCrLf & _
     mJ("porcentagem", PgDadosFinanceiroFatura(Id).Juros, 0) & "," & vbCrLf & _
-    mJ("valor", "0.00", 0) & _
+    mJ("valor", vMD, 0) & _
     vbCrLf & "},"
     
-    
+    'MULTA
     strJSON = strJSON & vbCrLf & _
     mJ("multa", "", 2) & "{" & vbCrLf & _
     mJ("tipo", "1", 0) & "," & vbCrLf & _
-    mJ("data", "00.00.0000", 1) & "," & vbCrLf & _
-    mJ("porcentagem", PgDadosFinanceiroFatura(Id).Juros, 0) & "," & vbCrLf & _
-    mJ("valor", "0.00", 0) & _
+    mJ("data", Replace(PgDadosFinanceiroFatura(Id).Vencimento, "/", "."), 1) & "," & vbCrLf & _
+    mJ("porcentagem", PgDadosFinanceiroFatura(Id).Multa, 0) & "," & vbCrLf & _
+    mJ("valor", vMulta, 0) & _
     vbCrLf & "},"
         
-   
+   'PAGADOR
     strJSON = strJSON & vbCrLf & _
      mJ("pagador", "", 2) & "{" & vbCrLf & _
-    mJ("tipoInscricao", 2, 0) & "," & vbCrLf & _
-    mJ("numeroInscricao", PgDadosCliente(PgDadosFinanceiroFatura(Id).IDSacado).Doc, 0) & "," & vbCrLf & _
+    mJ("tipoInscricao", IIf(LCase(PgDadosCliente(PgDadosFinanceiroFatura(Id).IDSacado).Pessoa) = "juridica", 2, 1), 0) & "," & vbCrLf & _
+    mJ("numeroInscricao", PgDadosCliente(PgDadosFinanceiroFatura(Id).IDSacado).Doc, 1) & "," & vbCrLf & _
     mJ("nome", PgDadosCliente(PgDadosFinanceiroFatura(Id).IDSacado).Nome, 1) & "," & vbCrLf & _
     mJ("endereco", PgDadosCliente(PgDadosFinanceiroFatura(Id).IDSacado).Lgr, 1) & "," & vbCrLf & _
     mJ("cep", PgDadosCliente(PgDadosFinanceiroFatura(Id).IDSacado).CEP, 1) & "," & vbCrLf & _
@@ -789,7 +796,7 @@ Public Sub API_BBCobranca(faturaId As Long)
     mJ("email", PgDadosCliente(PgDadosFinanceiroFatura(Id).IDSacado).emailfin, 1) & vbCrLf & _
     " },"
     
-    
+    'BENEFICIARIO
     strJSON = strJSON & vbCrLf & _
     mJ("beneficiarioFinal", "", 2) & "{" & vbCrLf & _
     mJ("tipoInscricao", 2, 0) & "," & vbCrLf & _

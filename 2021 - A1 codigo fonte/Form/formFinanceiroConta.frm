@@ -79,7 +79,7 @@ Begin VB.Form formFinanceiroConta
          End
          Begin VB.Label Label12 
             Alignment       =   1  'Right Justify
-            Caption         =   "Tipo:"
+            Caption         =   "Tipo Convenio:"
             Height          =   195
             Left            =   600
             TabIndex        =   28

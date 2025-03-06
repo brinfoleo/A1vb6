@@ -54,22 +54,7 @@ Public Sub AtualizarBoleto(idBol As Long, novaData As String)
     RegistroAlterar "FinanceiroContasPRCadastro", vReg, cReg, "id=" & idBol
     
 End Sub
-Private Function BoletoBancario_001_NossoNumero(Id As Long) As String
-    '########################################################################################################
-    '### Montagem de NOSSO NUMERO
-    '### 28.02.25
-    '########################################################################################################
-    '# Multiplicador base 9
-    Dim NN1, NN2 As String
-    NN1 = pgDadosConta(PgDadosFinanceiroFatura(Id).idConta).convenio
-    NN1 = Left(String(7, "0"), 7 - Len(Trim(NN1))) & Trim(NN1)
-    If Len(Trim(Id)) > 10 Then
-            NN2 = Right(Id, 10)
-        Else
-            NN2 = Left(String(10, "0"), 10 - Len(Trim(Id))) & Trim(Id)
-    End If
-    BoletoBancario_001_NossoNumero = "000" & NN1 & NN2
-End Function
+
 
 Function Calculo_DV10(strNumero As String) As String
     'declara As variáveis
@@ -384,12 +369,41 @@ Private Function CalculoFator(Vencimento As Date) As Integer
     'valor = Int(valor * 100)
     'Livre = Format(Livre, "0000000000000000000000000")
 End Function
-Function Calculo_NossoNumero(sequencia As String) As String
-    'montamos o nosso numero com o numero do convenio ( 6 posicoes)
-    Dim dv As Integer
-    sequencia = IIf(Trim(sequencia) = "", "0", sequencia)
-    dv = Calculo_DV11(sequencia)
-    Calculo_NossoNumero = Format(sequencia & dv, "0000000000000")
+Function Calculo_NossoNumero(Id As Long) As String
+
+'########################################################################################################
+    '### Montagem de NOSSO NUMERO
+    '### 28.02.25
+    '########################################################################################################
+    Dim convenio As String
+    
+    Dim NN1, NN2 As String
+    convenio = pgDadosConta(PgDadosFinanceiroFatura(Id).idConta).convenio
+    NN1 = convenio
+    Select Case Len(Trim(convenio))
+        Case Is <= 6
+            'Dim NN1, NN2 As String
+            
+            If Len(Trim(Id)) > 5 Then
+                    NN2 = Right(Id, 5)
+                Else
+                    NN2 = Left(String(5, "0"), 5 - Len(Trim(Id))) & Trim(Id)
+            End If
+            Calculo_NossoNumero = NN1 & NN2 & Trim(calculo_dv11base9(NN1 & NN2))
+            
+    
+        Case 7
+            NN1 = Left(String(7, "0"), 7 - Len(Trim(NN1))) & Trim(NN1)
+            If Len(Trim(Id)) > 10 Then
+                    NN2 = Right(Id, 10)
+                Else
+                    NN2 = Left(String(10, "0"), 10 - Len(Trim(Id))) & Trim(Id)
+            End If
+            Calculo_NossoNumero = "000" & NN1 & NN2
+    End Select
+    
+
+    
 
 End Function
 
@@ -606,16 +620,15 @@ API_BBCobranca Id
     '### Montagem de NOSSO NUMERO
     '########################################################################################################
     '# Multiplicador base 9
-    Dim NN1, NN2 As String
-    NN1 = pgDadosConta(PgDadosFinanceiroFatura(Id).idConta).convenio
-    If Len(Trim(Id)) > 5 Then
-            NN2 = Right(Id, 5)
-        Else
-            NN2 = Left(String(5, "0"), 5 - Len(Trim(Id))) & Trim(Id)
-    End If
-    NossoNumero = NN1 & NN2
-    'dvNN = Trim(Calculo_DV11(NossoNumero))
-    dvNN = Trim(calculo_dv11base9(NossoNumero))
+    'Dim NN1, NN2 As String
+    'NN1 = pgDadosConta(PgDadosFinanceiroFatura(Id).idConta).convenio
+    'If Len(Trim(Id)) > 5 Then
+     '       NN2 = Right(Id, 5)
+     '   Else
+     '       NN2 = Left(String(5, "0"), 5 - Len(Trim(Id))) & Trim(Id)
+    'End If
+    NossoNumero = Calculo_NossoNumero(Id)
+    
     '########################################################################################################
     
     agencia = pgDadosConta(PgDadosFinanceiroFatura(Id).idConta).agencia
@@ -710,6 +723,8 @@ Public Sub API_BBCobranca(faturaId As Long)
     Dim carteira As String
     Dim carteiraVariacao As String
     Dim tipoConta As String
+    Dim cnpjPagador As String
+    Dim cnpjBeneficiario As String
     
     
     
@@ -719,7 +734,7 @@ Public Sub API_BBCobranca(faturaId As Long)
     producao = False
     
     '-------------------------------------------------DADOS PARA API --------------------
-     ' 0 = num // 1= str // 2= empty
+     ' mJ(string , 0 = num // 1= str // 2= empty)
      
 
     strJSON = "{" & vbCrLf
@@ -730,6 +745,10 @@ Public Sub API_BBCobranca(faturaId As Long)
             carteira = pgDadosConta(PgDadosFinanceiroFatura(Id).idConta).carteira
             carteiraVariacao = pgDadosConta(PgDadosFinanceiroFatura(Id).idConta).Variacao
             tipoConta = pgDadosConta(PgDadosFinanceiroFatura(Id).idConta).Tipo
+            
+            cnpjPagador = PgDadosCliente(PgDadosFinanceiroFatura(Id).IDSacado).Doc
+            cnpjBeneficiario = PgDadosEmpresa(ID_Empresa).CNPJ
+            
         Else
             
             'Modulo Homologacao
@@ -737,6 +756,9 @@ Public Sub API_BBCobranca(faturaId As Long)
             carteira = "17"
             carteiraVariacao = "35"
             tipoConta = "4"
+            cnpjPagador = "74910037000193"
+            cnpjBeneficiario = "98959112000179"
+            
     
     End If
     
@@ -761,7 +783,7 @@ Public Sub API_BBCobranca(faturaId As Long)
     strJSON = strJSON & mJ("indicadorPermissaoRecebimentoParcial", "N", 1) & "," & vbCrLf
     strJSON = strJSON & mJ("numeroTituloBeneficiario", PgDadosFinanceiroFatura(Id).NumFatura, 1) & "," & vbCrLf
     strJSON = strJSON & mJ("campoUtilizacaoBeneficiario", PgDadosFinanceiroFatura(Id).NumDuplicata, 1) & "," & vbCrLf
-    strJSON = strJSON & mJ("numeroTituloCliente", BoletoBancario_001_NossoNumero(Id), 1) & "," & vbCrLf
+    strJSON = strJSON & mJ("numeroTituloCliente", Calculo_NossoNumero(Id), 1) & "," & vbCrLf
     strJSON = strJSON & mJ("mensagemBloquetoOcorrencia", PgDadosFinanceiroFatura(Id).Obs, 1) & ","
     
     'DESCONTO
@@ -814,8 +836,8 @@ Public Sub API_BBCobranca(faturaId As Long)
    'PAGADOR
     strJSON = strJSON & vbCrLf & _
      mJ("pagador", "", 2) & "{" & vbCrLf & _
-    mJ("tipoInscricao", IIf(LCase(PgDadosCliente(PgDadosFinanceiroFatura(Id).IDSacado).Pessoa) = "juridica", 2, 1), 0) & "," & vbCrLf & _
-    mJ("numeroInscricao", PgDadosCliente(PgDadosFinanceiroFatura(Id).IDSacado).Doc, 1) & "," & vbCrLf & _
+    mJ("tipoInscricao", IIf(LCase(PgDadosCliente(PgDadosFinanceiroFatura(Id).IDSacado).Pessoa) = "fisica", 1, 2), 0) & "," & vbCrLf & _
+    mJ("numeroInscricao", cnpjPagador, 1) & "," & vbCrLf & _
     mJ("nome", PgDadosCliente(PgDadosFinanceiroFatura(Id).IDSacado).Nome, 1) & "," & vbCrLf & _
     mJ("endereco", PgDadosCliente(PgDadosFinanceiroFatura(Id).IDSacado).Lgr, 1) & "," & vbCrLf & _
     mJ("cep", PgDadosCliente(PgDadosFinanceiroFatura(Id).IDSacado).CEP, 1) & "," & vbCrLf & _
@@ -830,7 +852,7 @@ Public Sub API_BBCobranca(faturaId As Long)
     strJSON = strJSON & vbCrLf & _
     mJ("beneficiarioFinal", "", 2) & "{" & vbCrLf & _
     mJ("tipoInscricao", 2, 0) & "," & vbCrLf & _
-    mJ("numeroInscricao", PgDadosEmpresa(ID_Empresa).CNPJ, 0) & "," & vbCrLf & _
+    mJ("numeroInscricao", cnpjBeneficiario, 0) & "," & vbCrLf & _
     mJ("nome", PgDadosEmpresa(ID_Empresa).Nome, 1) & vbCrLf & _
     "}," & vbCrLf & _
     mJ("indicadorPix", "N", 1)

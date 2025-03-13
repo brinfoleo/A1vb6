@@ -590,7 +590,7 @@ API_CodigoBarras Id
      '   Else
      '       NN2 = Left(String(5, "0"), 5 - Len(Trim(Id))) & Trim(Id)
     'End If
-    NossoNumero = API_Calculo_NossoNumero(Id)
+    NossoNumero = Calculo_NossoNumero(Id)
     
     '########################################################################################################
     
@@ -819,7 +819,7 @@ Private Sub BoletoBancario_356(Id As Long)
     Dim dvLinhaDig      As String
     Dim dvCob           As Integer
                     
-    NossoNumero = API_Calculo_NossoNumero(IIf(Trim(PgDadosFinanceiroFatura(Id).NossoNumero) = "", RS(PgDadosFinanceiroFatura(Id).NumDuplicata), PgDadosFinanceiroFatura(Id).NossoNumero))
+    NossoNumero = Calculo_NossoNumero(IIf(Trim(PgDadosFinanceiroFatura(Id).NossoNumero) = "", RS(PgDadosFinanceiroFatura(Id).NumDuplicata), PgDadosFinanceiroFatura(Id).NossoNumero))
             
     Agencia = pgDadosConta(PgDadosFinanceiroFatura(Id).idConta).Agencia
     Agencia = Left("0000", 4 - Len(Agencia)) & Agencia
@@ -1427,5 +1427,44 @@ Private Function cnab240ArquivoTrailer(contaId As Integer, lote As String, tReg 
     
     
     cnab240ArquivoTrailer = line
+
+End Function
+
+
+Private Function Calculo_NossoNumero(Id As Long) As String
+
+'########################################################################################################
+    '### Montagem de NOSSO NUMERO
+    '### 28.02.25
+    '########################################################################################################
+    Dim Convenio As String
+    
+    Dim NN1, NN2 As String
+    Convenio = pgDadosConta(PgDadosFinanceiroFatura(Id).idConta).Convenio
+    NN1 = Convenio
+    Select Case Len(Trim(Convenio))
+        Case Is <= 6
+            'Dim NN1, NN2 As String
+            
+            If Len(Trim(Id)) > 5 Then
+                    NN2 = Right(Id, 5)
+                Else
+                    NN2 = Left(String(5, "0"), 5 - Len(Trim(Id))) & Trim(Id)
+            End If
+            Calculo_NossoNumero = NN1 & NN2 & Trim(calculo_dv11base9(NN1 & NN2))
+            
+    
+        Case 7
+            NN1 = Left(String(7, "0"), 7 - Len(Trim(NN1))) & Trim(NN1)
+            If Len(Trim(Id)) > 10 Then
+                    NN2 = Right(Id, 10)
+                Else
+                    NN2 = Left(String(10, "0"), 10 - Len(Trim(Id))) & Trim(Id)
+            End If
+            Calculo_NossoNumero = "000" & NN1 & NN2
+    End Select
+    
+ Debug.Print "Calculo_NossoNumero: " & Calculo_NossoNumero
+    
 
 End Function

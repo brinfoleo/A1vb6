@@ -148,6 +148,7 @@ Form=Form\formFaturamentoPVRelatorios.frm
 Designer=Rpt\rptListaPVPeriodo.Dsr
 Class=cZipArchive; Class\cZipArchive.cls
 Object={831FDD16-0C5C-11D2-A9FC-0000F8754DA1}#2.0#0; MSCOMCTL.OCX
+Module=Modulo_CobrancaBB; Modulo\Modulo_CobrancaBB.bas
 IconForm="MDIFormA1"
 Startup="Sub Main"
 HelpFile=""

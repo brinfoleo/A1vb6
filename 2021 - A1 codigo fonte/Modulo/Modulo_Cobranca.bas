@@ -143,10 +143,10 @@ Private Function cnab240LoteHeader(contaId As Integer, lote As String) As String
     
     line = line & "0" '09.1 - Tipo de inscricao
     line = line & F("n", 15, PgDadosEmpresa(ID_Empresa).CNPJ)
-    line = line & F("a", 20, pgDadosConta(contaId).convenio)
-    line = line & F("n", 5, pgDadosConta(contaId).agencia)
+    line = line & F("a", 20, pgDadosConta(contaId).Convenio)
+    line = line & F("n", 5, pgDadosConta(contaId).Agencia)
     line = line & F("n", 1, pgDadosConta(contaId).AgenciaDV)
-    line = line & F("n", 12, pgDadosConta(contaId).conta)
+    line = line & F("n", 12, pgDadosConta(contaId).Conta)
     line = line & F("n", 1, pgDadosConta(contaId).ContaDV)
     line = line & F("n", 1, dvAgCc)
     line = line & F("a", 30, PgDadosEmpresa(ID_Empresa).Nome) '17.1 - nome da empresa
@@ -297,29 +297,29 @@ trtErroF:
     
 End Function
 
-Public Function Monta_CodBarras(banco As String, _
+Public Function Monta_CodBarras(Banco As String, _
                                 Moeda As String, _
                                 Valor As Single, _
                                 Vencimento As Date, _
-                                agencia As String, _
-                                conta As String, _
+                                Agencia As String, _
+                                Conta As String, _
                                 NossoNumero As String, _
                                 dvLinhaDig As Integer)
 
     Dim codigo_sequencia As String
-    Dim database As Date
+    Dim DataBase As Date
     Dim fator As Integer
     Dim intDac As Integer
 
     'database para calculo do fator
-    database = CDate("03/07/2000")
-    fator = DateDiff("d", database, Format(Vencimento, "dd/mm/yyyy"))
+    DataBase = CDate("03/07/2000")
+    fator = DateDiff("d", DataBase, Format(Vencimento, "dd/mm/yyyy"))
     fator = fator + 1000
     Valor = Int(Valor * 100)
     'Livre = Format(Livre, "0000000000000000000000000")
 
     ' sequencia sem o DV
-    codigo_sequencia = banco & Moeda & fator & Format(Valor, "0000000000") & agencia & conta & dvLinhaDig & Left(String(13, "0"), 13 - Len(NossoNumero)) & NossoNumero
+    codigo_sequencia = Banco & Moeda & fator & Format(Valor, "0000000000") & Agencia & Conta & dvLinhaDig & Left(String(13, "0"), 13 - Len(NossoNumero)) & NossoNumero
 
     ' calculo do DV
     intDac = calcula_DV_CodBarras(codigo_sequencia)
@@ -360,53 +360,15 @@ Private Function calcula_DV_CodBarras(sequencia As String) As Integer
 End Function
 Private Function CalculoFator(Vencimento As Date) As Integer
     Dim fator As Integer
-    Dim database As Date
+    Dim DataBase As Date
     'database para calculo do fator
-    database = CDate("03/07/2000")
-    fator = DateDiff("d", database, Format(Vencimento, "dd/mm/yyyy"))
+    DataBase = CDate("03/07/2000")
+    fator = DateDiff("d", DataBase, Format(Vencimento, "dd/mm/yyyy"))
     fator = fator + 1000
     CalculoFator = fator
     'valor = Int(valor * 100)
     'Livre = Format(Livre, "0000000000000000000000000")
 End Function
-Function Calculo_NossoNumero(Id As Long) As String
-
-'########################################################################################################
-    '### Montagem de NOSSO NUMERO
-    '### 28.02.25
-    '########################################################################################################
-    Dim convenio As String
-    
-    Dim NN1, NN2 As String
-    convenio = pgDadosConta(PgDadosFinanceiroFatura(Id).idConta).convenio
-    NN1 = convenio
-    Select Case Len(Trim(convenio))
-        Case Is <= 6
-            'Dim NN1, NN2 As String
-            
-            If Len(Trim(Id)) > 5 Then
-                    NN2 = Right(Id, 5)
-                Else
-                    NN2 = Left(String(5, "0"), 5 - Len(Trim(Id))) & Trim(Id)
-            End If
-            Calculo_NossoNumero = NN1 & NN2 & Trim(calculo_dv11base9(NN1 & NN2))
-            
-    
-        Case 7
-            NN1 = Left(String(7, "0"), 7 - Len(Trim(NN1))) & Trim(NN1)
-            If Len(Trim(Id)) > 10 Then
-                    NN2 = Right(Id, 10)
-                Else
-                    NN2 = Left(String(10, "0"), 10 - Len(Trim(Id))) & Trim(Id)
-            End If
-            Calculo_NossoNumero = "000" & NN1 & NN2
-    End Select
-    
-
-    
-
-End Function
-
 Function Calculo_DV11(strNumero As String) As String
     'declara as variáveis
     Dim intContador As Integer
@@ -591,6 +553,7 @@ Public Sub BoletoBancario_001(Id As Long)
 
 'Incusao da API 26/02/25
 API_BBCobranca Id
+API_CodigoBarras Id
 '===========================
 
     '#######################################################################################
@@ -600,8 +563,8 @@ API_BBCobranca Id
     Dim LinhaDigitavel  As String
     Dim CodigoBarras    As String
     
-    Dim agencia         As String
-    Dim conta           As String
+    Dim Agencia         As String
+    Dim Conta           As String
     Dim fator           As Integer
     Dim Valor           As String
     
@@ -627,15 +590,15 @@ API_BBCobranca Id
      '   Else
      '       NN2 = Left(String(5, "0"), 5 - Len(Trim(Id))) & Trim(Id)
     'End If
-    NossoNumero = Calculo_NossoNumero(Id)
+    NossoNumero = API_Calculo_NossoNumero(Id)
     
     '########################################################################################################
     
-    agencia = pgDadosConta(PgDadosFinanceiroFatura(Id).idConta).agencia
-    agencia = Left("0000", 4 - Len(agencia)) & agencia
+    Agencia = pgDadosConta(PgDadosFinanceiroFatura(Id).idConta).Agencia
+    Agencia = Left("0000", 4 - Len(Agencia)) & Agencia
     
-    conta = pgDadosConta(PgDadosFinanceiroFatura(Id).idConta).conta
-    conta = Mid(String(8, "0"), 1, Len(Trim(conta))) & conta
+    Conta = pgDadosConta(PgDadosFinanceiroFatura(Id).idConta).Conta
+    Conta = Mid(String(8, "0"), 1, Len(Trim(Conta))) & Conta
     fator = CalculoFator(PgDadosFinanceiroFatura(Id).Vencimento)
     
     
@@ -651,9 +614,9 @@ API_BBCobranca Id
                    fator & _
                    Left(String(10, "0"), 10 - Len(Valor)) & Valor & _
                    NossoNumero & _
-                   agencia & _
-                   conta & _
-                   pgDadosConta(PgDadosFinanceiroFatura(Id).idConta).carteira
+                   Agencia & _
+                   Conta & _
+                   pgDadosConta(PgDadosFinanceiroFatura(Id).idConta).Carteira
     
     dvCB = Trim(calculo_dv11base9(CodigoBarras))
     Select Case dvCB
@@ -713,170 +676,6 @@ API_BBCobranca Id
     'ImprBoletoBancario Id ', NossoNumero, LinhaDigitavel, CodigoBarras
     
 End Sub
-Public Sub API_BBCobranca(faturaId As Long)
-    Dim Id As Long
-    Dim strJSON As String
-    Dim producao As Boolean
-   
-    
-    Dim convenio As String
-    Dim carteira As String
-    Dim carteiraVariacao As String
-    Dim tipoConta As String
-    Dim cnpjPagador As String
-    Dim cnpjBeneficiario As String
-    
-    
-    
-    
-     
-    Id = faturaId
-    producao = False
-    
-    '-------------------------------------------------DADOS PARA API --------------------
-     ' mJ(string , 0 = num // 1= str // 2= empty)
-     
-
-    strJSON = "{" & vbCrLf
-    
-    If producao = True Then
-            'Modulo Producao
-            convenio = pgDadosConta(PgDadosFinanceiroFatura(Id).idConta).convenio
-            carteira = pgDadosConta(PgDadosFinanceiroFatura(Id).idConta).carteira
-            carteiraVariacao = pgDadosConta(PgDadosFinanceiroFatura(Id).idConta).Variacao
-            tipoConta = pgDadosConta(PgDadosFinanceiroFatura(Id).idConta).Tipo
-            
-            cnpjPagador = PgDadosCliente(PgDadosFinanceiroFatura(Id).IDSacado).Doc
-            cnpjBeneficiario = PgDadosEmpresa(ID_Empresa).CNPJ
-            
-        Else
-            
-            'Modulo Homologacao
-            convenio = "3128557"
-            carteira = "17"
-            carteiraVariacao = "35"
-            tipoConta = "4"
-            cnpjPagador = "74910037000193"
-            cnpjBeneficiario = "98959112000179"
-            
-    
-    End If
-    
-    strJSON = strJSON & mJ("numeroConvenio", convenio, 0) & "," & vbCrLf
-    strJSON = strJSON & mJ("numeroCarteira", carteira, 0) & "," & vbCrLf
-    strJSON = strJSON & mJ("numeroVariacaoCarteira", CInt(carteiraVariacao), 0) & "," & vbCrLf
-    strJSON = strJSON & mJ("codigoModalidade", CInt(tipoConta), 0) & "," & vbCrLf
-    
-    
-    strJSON = strJSON & mJ("dataEmissao", Replace(PgDadosFinanceiroFatura(Id).emissao, "/", "."), 1) & "," & vbCrLf
-    strJSON = strJSON & mJ("dataVencimento", Replace(PgDadosFinanceiroFatura(Id).Vencimento, "/", "."), 1) & "," & vbCrLf
-    strJSON = strJSON & mJ("valorOriginal", PgDadosFinanceiroFatura(Id).vlCobrado, 0) & "," & vbCrLf
-    strJSON = strJSON & mJ("valorAbatimento", PgDadosFinanceiroFatura(Id).Deducoes, 0) & "," & vbCrLf
-    strJSON = strJSON & mJ("quantidadeDiasProtesto", PgDadosFinanceiroFatura(Id).DiasProtesto, 0) & "," & vbCrLf
-    strJSON = strJSON & mJ("quantidadeDiasNegativacao", "0", 0) & "," & vbCrLf
-    strJSON = strJSON & mJ("orgaoNegativador", "10", 0) & "," & vbCrLf
-    strJSON = strJSON & mJ("indicadorAceiteTituloVencido", "S", 1) & "," & vbCrLf
-    strJSON = strJSON & mJ("numeroDiasLimiteRecebimento", PgDadosFinanceiroFatura(Id).DiasProtesto, 0) & "," & vbCrLf
-    strJSON = strJSON & mJ("codigoAceite", "A", 1) & "," & vbCrLf
-    strJSON = strJSON & mJ("codigoTipoTitulo", "2", 0) & "," & vbCrLf
-    strJSON = strJSON & mJ("descricaoTipoTitulo", "DM", 1) & "," & vbCrLf
-    strJSON = strJSON & mJ("indicadorPermissaoRecebimentoParcial", "N", 1) & "," & vbCrLf
-    strJSON = strJSON & mJ("numeroTituloBeneficiario", PgDadosFinanceiroFatura(Id).NumFatura, 1) & "," & vbCrLf
-    strJSON = strJSON & mJ("campoUtilizacaoBeneficiario", PgDadosFinanceiroFatura(Id).NumDuplicata, 1) & "," & vbCrLf
-    strJSON = strJSON & mJ("numeroTituloCliente", Calculo_NossoNumero(Id), 1) & "," & vbCrLf
-    strJSON = strJSON & mJ("mensagemBloquetoOcorrencia", PgDadosFinanceiroFatura(Id).Obs, 1) & ","
-    
-    'DESCONTO
-    strJSON = strJSON & vbCrLf & _
-    mJ("desconto", "", 2) & "{" & vbCrLf & _
-    mJ("tipo", "0", 0) & "," & vbCrLf & _
-    mJ("dataExpiracao", Replace(PgDadosFinanceiroFatura(Id).Vencimento, "/", "."), 1) & "," & vbCrLf & _
-    mJ("porcentagem", "0", 0) & "," & vbCrLf & _
-    mJ("valor", PgDadosFinanceiroFatura(Id).Deducoes, 0) & _
-    vbCrLf & "},"
-    
-    strJSON = strJSON & vbCrLf & _
-     mJ("segundoDesconto", "", 2) & "{" & vbCrLf & _
-    mJ("dataExpiracao", "", 1) & "," & vbCrLf & _
-    mJ("porcentagem", "0", 0) & "," & vbCrLf & _
-    mJ("valor", "0", 0) & _
-    vbCrLf & "},"
-   
-    strJSON = strJSON & vbCrLf & _
-     mJ("terceiroDesconto", "", 2) & "{" & vbCrLf & _
-    mJ("dataExpiracao", "", 1) & "," & vbCrLf & _
-    mJ("porcentagem", "0", 0) & "," & vbCrLf & _
-    mJ("valor", "0", 0) & _
-    vbCrLf & "},"
-    
-    'Mora Diaria
-    Dim vMD As String
-    Dim vMulta As String
-    vMD = ConvMoeda(cobCalcMora(PgDadosFinanceiroFatura(Id).vlDuplicata, 1, PgDadosFinanceiroFatura(Id).Juros, "D"))
-    vMulta = PgDadosFinanceiroFatura(Id).Multa & "% ou " & ConvMoeda(cobCalcMulta(PgDadosFinanceiroFatura(Id).vlDuplicata, PgDadosFinanceiroFatura(Id).Multa, 1))
-            
-    
-    'JUROS MORA
-    strJSON = strJSON & vbCrLf & _
-    strJSON = strJSON & mJ("jurosMora", "", 2) & "{" & vbCrLf
-    strJSON = strJSON & mJ("tipo", "1", 0) & "," & vbCrLf
-    strJSON = strJSON & mJ("porcentagem", PgDadosFinanceiroFatura(Id).Juros, 0) & "," & vbCrLf
-    strJSON = strJSON & mJ("valor", vMD, 0) & vbCrLf
-    strJSON = strJSON & "},"
-    
-    'MULTA
-    strJSON = strJSON & vbCrLf & _
-    mJ("multa", "", 2) & "{" & vbCrLf & _
-    mJ("tipo", "1", 0) & "," & vbCrLf & _
-    mJ("data", Replace(PgDadosFinanceiroFatura(Id).Vencimento, "/", "."), 1) & "," & vbCrLf & _
-    mJ("porcentagem", PgDadosFinanceiroFatura(Id).Multa, 0) & "," & vbCrLf & _
-    mJ("valor", vMulta, 0) & _
-    vbCrLf & "},"
-        
-   'PAGADOR
-    strJSON = strJSON & vbCrLf & _
-     mJ("pagador", "", 2) & "{" & vbCrLf & _
-    mJ("tipoInscricao", IIf(LCase(PgDadosCliente(PgDadosFinanceiroFatura(Id).IDSacado).Pessoa) = "fisica", 1, 2), 0) & "," & vbCrLf & _
-    mJ("numeroInscricao", cnpjPagador, 1) & "," & vbCrLf & _
-    mJ("nome", PgDadosCliente(PgDadosFinanceiroFatura(Id).IDSacado).Nome, 1) & "," & vbCrLf & _
-    mJ("endereco", PgDadosCliente(PgDadosFinanceiroFatura(Id).IDSacado).Lgr, 1) & "," & vbCrLf & _
-    mJ("cep", PgDadosCliente(PgDadosFinanceiroFatura(Id).IDSacado).CEP, 1) & "," & vbCrLf & _
-    mJ("cidade", PgDadosCliente(PgDadosFinanceiroFatura(Id).IDSacado).Mun, 1) & "," & vbCrLf & _
-    mJ("bairro", PgDadosCliente(PgDadosFinanceiroFatura(Id).IDSacado).Bairro, 1) & "," & vbCrLf & _
-    mJ("uf", PgDadosCliente(PgDadosFinanceiroFatura(Id).IDSacado).uf, 1) & "," & vbCrLf & _
-    mJ("telefone", PgDadosCliente(PgDadosFinanceiroFatura(Id).IDSacado).Fone, 1) & "," & vbCrLf & _
-    mJ("email", PgDadosCliente(PgDadosFinanceiroFatura(Id).IDSacado).emailfin, 1) & vbCrLf & _
-    " },"
-    
-    'BENEFICIARIO
-    strJSON = strJSON & vbCrLf & _
-    mJ("beneficiarioFinal", "", 2) & "{" & vbCrLf & _
-    mJ("tipoInscricao", 2, 0) & "," & vbCrLf & _
-    mJ("numeroInscricao", cnpjBeneficiario, 0) & "," & vbCrLf & _
-    mJ("nome", PgDadosEmpresa(ID_Empresa).Nome, 1) & vbCrLf & _
-    "}," & vbCrLf & _
-    mJ("indicadorPix", "N", 1)
-    strJSON = strJSON & vbCrLf & "}"
-'----------------------------------------------------------------------
-End Sub
-Private Function mJ(sField As String, sData As Variant, iType As Integer) As String
-    'Monta uma linha para JSON
-    '
-    'iType
-    '0 = number
-    '1 = string
-    If iType = 0 Then
-            'Number
-            mJ = """" & sField & """: " & sData
-        ElseIf iType = 1 Then
-            'String
-            '
-            mJ = """" & sField & """" & ": " & """" & sData & """"
-            
-        Else
-            mJ = """" & sField & """" & ": "
-    End If
-End Function
 Public Sub BoletoBancario_237(Id As Long)
     '#######################################################################################
     '### Banco do Brasdesco - 237
@@ -886,11 +685,11 @@ Public Sub BoletoBancario_237(Id As Long)
     Dim LinhaDigitavel  As String
     Dim CodigoBarras    As String
     
-    Dim agencia         As String
-    Dim conta           As String
+    Dim Agencia         As String
+    Dim Conta           As String
     Dim fator           As Integer
     Dim Valor           As String
-    Dim carteira        As String
+    Dim Carteira        As String
     
     Dim seqI            As String
     Dim seqII           As String
@@ -907,8 +706,8 @@ Public Sub BoletoBancario_237(Id As Long)
     '### Montagem de NOSSO NUMERO
     '########################################################################################################
     Dim NN1, NN2 As String
-    NN1 = pgDadosConta(PgDadosFinanceiroFatura(Id).idConta).convenio
-    carteira = pgDadosConta(PgDadosFinanceiroFatura(Id).idConta).carteira
+    NN1 = pgDadosConta(PgDadosFinanceiroFatura(Id).idConta).Convenio
+    Carteira = pgDadosConta(PgDadosFinanceiroFatura(Id).idConta).Carteira
     If Len(Trim(Id)) > 5 Then
             NN2 = Right(Id, 5)
         Else
@@ -916,14 +715,14 @@ Public Sub BoletoBancario_237(Id As Long)
     End If
     NossoNumero = NN1 & NN2
     NossoNumero = Mid(String(11, "0"), 1, Len(Trim(NossoNumero)) + 1) & NossoNumero
-    dvNN = Trim(calculo_dv11base7(carteira & NossoNumero))
+    dvNN = Trim(calculo_dv11base7(Carteira & NossoNumero))
     '########################################################################################################
     
-    agencia = pgDadosConta(PgDadosFinanceiroFatura(Id).idConta).agencia
-    agencia = Left("0000", 4 - Len(agencia)) & agencia
+    Agencia = pgDadosConta(PgDadosFinanceiroFatura(Id).idConta).Agencia
+    Agencia = Left("0000", 4 - Len(Agencia)) & Agencia
     
-    conta = pgDadosConta(PgDadosFinanceiroFatura(Id).idConta).conta
-    conta = Mid(String(8, "0"), 1, Len(Trim(conta))) & conta
+    Conta = pgDadosConta(PgDadosFinanceiroFatura(Id).idConta).Conta
+    Conta = Mid(String(8, "0"), 1, Len(Trim(Conta))) & Conta
     fator = CalculoFator(PgDadosFinanceiroFatura(Id).Vencimento)
     
     
@@ -935,18 +734,18 @@ Public Sub BoletoBancario_237(Id As Long)
     '###  CODIGO DE BARRAS
     '########################################################################################################
     Dim cd1 As String
-    Dim campoLivre As String
+    Dim CampoLivre As String
     cd1 = pgDadosBanco(PgDadosFinanceiroFatura(Id).IdBanco).Numero & _
                    "9" & _
                    "" & _
                    fator & _
                    Left(String(10, "0"), 10 - Len(Valor)) & Valor
-    campoLivre = agencia & _
-                carteira & _
+    CampoLivre = Agencia & _
+                Carteira & _
                 NossoNumero & _
-                Right(conta, 7) & _
+                Right(Conta, 7) & _
                 "0"
-    CodigoBarras = cd1 & campoLivre
+    CodigoBarras = cd1 & CampoLivre
     dvCB = Trim(calculo_dv11base9(CodigoBarras))
     
     CodigoBarras = Left(CodigoBarras, 4) & dvCB & Mid(CodigoBarras, 5, Len(CodigoBarras))
@@ -960,17 +759,17 @@ Public Sub BoletoBancario_237(Id As Long)
                          
     seqI = pgDadosBanco(PgDadosFinanceiroFatura(Id).IdBanco).Numero & _
                         "9" & _
-                         Mid(campoLivre, 1, 5)
+                         Mid(CampoLivre, 1, 5)
     dv1 = Trim(Calculo_DV10(seqI))
     
     '******************************** Bloco II *************************************************************
     'seqII = Mid(NossoNumero, 6, Len(NossoNumero)) & _
             Agencia
-    seqII = Mid(campoLivre, 6, 10)
+    seqII = Mid(CampoLivre, 6, 10)
     dv2 = Trim(Calculo_DV10(seqII))
     '******************************** Bloco III *************************************************************
     'seqIII = Left(String(8, "0"), 8 - Len(Conta)) & Conta & pgDadosConta(PgDadosFinanceiroFatura(Id).IdConta).Carteira
-    seqIII = Mid(campoLivre, 16, 10)
+    seqIII = Mid(CampoLivre, 16, 10)
     
     dv3 = Trim(Calculo_DV10(seqIII))
     
@@ -1010,8 +809,8 @@ Private Sub BoletoBancario_356(Id As Long)
     Dim LinhaDigitavel  As String
     Dim CodigoBarras    As String
     
-    Dim agencia         As String
-    Dim conta           As String
+    Dim Agencia         As String
+    Dim Conta           As String
     
     Dim seqI            As String
     Dim seqII           As String
@@ -1020,20 +819,20 @@ Private Sub BoletoBancario_356(Id As Long)
     Dim dvLinhaDig      As String
     Dim dvCob           As Integer
                     
-    NossoNumero = Calculo_NossoNumero(IIf(Trim(PgDadosFinanceiroFatura(Id).NossoNumero) = "", RS(PgDadosFinanceiroFatura(Id).NumDuplicata), PgDadosFinanceiroFatura(Id).NossoNumero))
+    NossoNumero = API_Calculo_NossoNumero(IIf(Trim(PgDadosFinanceiroFatura(Id).NossoNumero) = "", RS(PgDadosFinanceiroFatura(Id).NumDuplicata), PgDadosFinanceiroFatura(Id).NossoNumero))
             
-    agencia = pgDadosConta(PgDadosFinanceiroFatura(Id).idConta).agencia
-    agencia = Left("0000", 4 - Len(agencia)) & agencia
-    conta = pgDadosConta(PgDadosFinanceiroFatura(Id).idConta).conta
-    conta = Left("0000000", 7 - Len(conta)) & conta
+    Agencia = pgDadosConta(PgDadosFinanceiroFatura(Id).idConta).Agencia
+    Agencia = Left("0000", 4 - Len(Agencia)) & Agencia
+    Conta = pgDadosConta(PgDadosFinanceiroFatura(Id).idConta).Conta
+    Conta = Left("0000000", 7 - Len(Conta)) & Conta
             
     seqI = pgDadosBanco(PgDadosFinanceiroFatura(Id).IdBanco).Numero & _
                         "9" & _
-                        agencia & _
-                        Left(conta, 1)
+                        Agencia & _
+                        Left(Conta, 1)
 
-    dvCob = Trim(Calculo_DV10(Left(NossoNumero, Len(NossoNumero) - 1) & pgDadosConta(PgDadosFinanceiroFatura(Id).idConta).agencia & pgDadosConta(PgDadosFinanceiroFatura(Id).idConta).conta))
-    seqII = Mid(conta, 2, Len(conta)) & _
+    dvCob = Trim(Calculo_DV10(Left(NossoNumero, Len(NossoNumero) - 1) & pgDadosConta(PgDadosFinanceiroFatura(Id).idConta).Agencia & pgDadosConta(PgDadosFinanceiroFatura(Id).idConta).Conta))
+    seqII = Mid(Conta, 2, Len(Conta)) & _
             dvCob & _
             Left(NossoNumero, 3)
         
@@ -1049,8 +848,8 @@ Private Sub BoletoBancario_356(Id As Long)
                                                                     "9", _
                                                                     CSng(PgDadosFinanceiroFatura(Id).vlDuplicata), _
                                                                     PgDadosFinanceiroFatura(Id).Vencimento, _
-                                                                    agencia, _
-                                                                    conta, _
+                                                                    Agencia, _
+                                                                    Conta, _
                                                                     Left(NossoNumero, Len(NossoNumero) - 1), _
                                                                     dvCob)
     
@@ -1436,7 +1235,7 @@ Private Function cnab240ArquivoHeader(contaId As Integer, lote As String) As Str
     '********* Registro Header de Arquivo              *********
     '***********************************************************
     line = ""
-    line = line & F("n", 3, pgDadosBanco(pgDadosConta(contaId).banco).Numero)
+    line = line & F("n", 3, pgDadosBanco(pgDadosConta(contaId).Banco).Numero)
     line = line & F("n", 4, lote) '02.0 - Lote
     line = line & "0"
     '----------------
@@ -1444,17 +1243,17 @@ Private Function cnab240ArquivoHeader(contaId As Integer, lote As String) As Str
     '----------------
     line = line & "0" '05.0 - Tipo de inscricao
     line = line & F("n", 14, PgDadosEmpresa(ID_Empresa).CNPJ) '06.0 - num insc empresa
-    line = line & F("a", 20, pgDadosConta(contaId).convenio) '07.0- convenio
-    line = line & F("n", 5, pgDadosConta(contaId).agencia)
+    line = line & F("a", 20, pgDadosConta(contaId).Convenio) '07.0- convenio
+    line = line & F("n", 5, pgDadosConta(contaId).Agencia)
     line = line & F("n", 1, pgDadosConta(contaId).AgenciaDV)
-    line = line & F("n", 12, pgDadosConta(contaId).conta)
+    line = line & F("n", 12, pgDadosConta(contaId).Conta)
     line = line & F("n", 1, pgDadosConta(contaId).ContaDV)
     Dim dvAgCc As String
-    dvAgCc = Calculo_DV11(pgDadosConta(contaId).agencia & _
-                          pgDadosConta(contaId).conta)
+    dvAgCc = Calculo_DV11(pgDadosConta(contaId).Agencia & _
+                          pgDadosConta(contaId).Conta)
     line = line & F("n", 1, dvAgCc)
     line = line & F("a", 30, PgDadosEmpresa(ID_Empresa).Nome) '13.0 - nome empresa
-    line = line & F("a", 30, pgDadosBanco(pgDadosConta(contaId).banco).Nome)
+    line = line & F("a", 30, pgDadosBanco(pgDadosConta(contaId).Banco).Nome)
     '----------------
     line = line & String(10, " ") '15.0 - cnab
     
@@ -1518,9 +1317,9 @@ Private Function cnab240P(faturaId As Long, lote As String) As String
     line = line & "P"
     line = line & F("a", 1, " ")
     line = line & F("n", 2, "0")
-    line = line & F("n", 5, pgDadosConta(PgDadosFinanceiroFatura(faturaId).idConta).agencia)
+    line = line & F("n", 5, pgDadosConta(PgDadosFinanceiroFatura(faturaId).idConta).Agencia)
     line = line & F("a", 1, pgDadosConta(PgDadosFinanceiroFatura(faturaId).idConta).AgenciaDV)
-    line = line & F("n", 12, pgDadosConta(PgDadosFinanceiroFatura(faturaId).idConta).conta)
+    line = line & F("n", 12, pgDadosConta(PgDadosFinanceiroFatura(faturaId).idConta).Conta)
     line = line & F("a", 1, pgDadosConta(PgDadosFinanceiroFatura(faturaId).idConta).ContaDV)
     line = line & F("a", 1, " ") '12.3P - Digito verificador agencia/conta
     
@@ -1533,13 +1332,13 @@ Private Function cnab240P(faturaId As Long, lote As String) As String
     
     
     'Se o banco for BB informar codigo de acordo com as particularidades do banco
-    Dim carteira As Integer
+    Dim Carteira As Integer
     If pgDadosBanco(PgDadosFinanceiroFatura(faturaId).IdBanco).Numero = "001" Then
-            carteira = 7
+            Carteira = 7
         Else
-            carteira = pgDadosConta(PgDadosFinanceiroFatura(faturaId).idConta).carteira
+            Carteira = pgDadosConta(PgDadosFinanceiroFatura(faturaId).idConta).Carteira
     End If
-    line = line & F("n", 1, carteira)
+    line = line & F("n", 1, Carteira)
     line = line & F("n", 1, "0") '15.3P - Cadastramento
     line = line & F("a", 1, " ") '16.3P - Tipo documento (DM)
     line = line & F("n", 1, "0") '17.3P - Emissao boleto de pagamento
@@ -1547,7 +1346,7 @@ Private Function cnab240P(faturaId As Long, lote As String) As String
     line = line & F("a", 15, PgDadosFinanceiroFatura(faturaId).NumDuplicata)
     line = line & F("d", 8, PgDadosFinanceiroFatura(faturaId).Vencimento)
     line = line & F("n", 15, ChkVal(PgDadosFinanceiroFatura(faturaId).vlCobrado, 0, 2)) '21.3P - vl tit
-    line = line & F("n", 5, pgDadosConta(PgDadosFinanceiroFatura(faturaId).idConta).agencia)
+    line = line & F("n", 5, pgDadosConta(PgDadosFinanceiroFatura(faturaId).idConta).Agencia)
     line = line & F("a", 1, pgDadosConta(PgDadosFinanceiroFatura(faturaId).idConta).AgenciaDV)
     line = line & F("n", 2, "0") '24.3P - Especie
     line = line & "N" '25.3 - aceite
@@ -1589,7 +1388,7 @@ Private Function cnab240LoteTrailer(contaId As Integer, lote As String, tReg As 
     Dim vTotal  As String
     
     line = ""
-    line = line & F("n", 3, pgDadosBanco(pgDadosConta(contaId).banco).Numero)
+    line = line & F("n", 3, pgDadosBanco(pgDadosConta(contaId).Banco).Numero)
     line = line & F("n", 4, lote) 'Lote
     line = line & "5" '03.5 - tipo de registro
     line = line & String(9, " ")
@@ -1613,7 +1412,7 @@ Private Function cnab240ArquivoTrailer(contaId As Integer, lote As String, tReg 
     Dim vTotal As String
     
     line = ""
-    line = line & F("n", 3, pgDadosBanco(pgDadosConta(contaId).banco).Numero)
+    line = line & F("n", 3, pgDadosBanco(pgDadosConta(contaId).Banco).Numero)
     line = line & F("n", 4, lote) 'Lote
     line = line & "9"
     line = line & String(9, " ") '04.9 - cnab

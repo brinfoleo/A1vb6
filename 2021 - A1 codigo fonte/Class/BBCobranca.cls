@@ -17,34 +17,34 @@ Public Sub mockLinhaDigitavel()
     
     LinhaDigitavel = GerarLinhaDigitavelBB( _
         banco:="001", _
-        Moeda:="9", _
-        Convenio:="3128557", _
+        moeda:="9", _
+        convenio:="3128557", _
         carteira:="17", _
         NossoNumero:="00031285570000043986", _
         Valor:="0000010000", _
-        FatorVencimento:=CalcularFatorVencimento("20/03/2025") _
+        Vencimento:="20/03/2025" _
     )
     
     Debug.Print LinhaDigitavel
 End Sub
 Public Sub mockGerarCodigoBarraBB()
-Dim CodigoBarras As String
+Dim codigoBarras As String
 
-CodigoBarras = GerarCodigoBarrasBB( _
+codigoBarras = GerarCodigoBarrasBB( _
     banco:="001", _
-    Moeda:="9", _
+    moeda:="9", _
     carteira:="17", _
     NossoNumero:="00031285570000043986", _
     Valor:="0000010000", _
-    FatorVencimento:=CalcularFatorVencimento("20/03/2025") _
+    Vencimento:="20/03/2025" _
 )
 
-Debug.Print CodigoBarras
+Debug.Print codigoBarras
 End Sub
 Public Sub mockTestBBCob()
   
     'Modulo Homologacao
-            Convenio = "3128557"
+            convenio = "3128557"
             carteira = "17"
             carteiraVariacao = "35"
             tipoConta = "4"
@@ -104,7 +104,7 @@ Public Sub mockTestBBCob()
 End Sub
 
 
-Public Function GerarBoletoBB(Convenio As String, _
+Public Function GerarBoletoBB(convenio As String, _
                         carteira As String, _
                         carteiraVariacao As String, _
                         tipoConta As String, _
@@ -117,11 +117,11 @@ Public Function GerarBoletoBB(Convenio As String, _
                         vMulta As String, _
                         vJuros As String, _
                         DiasProtesto As String, _
-                        idSacado As Integer, _
+                        IDSacado As Integer, _
                         cnpjBeneficiario As String, _
                         nomeBeneficiario As String, _
                         NossoNumero As String, _
-                        sMSG As String) As String
+                        smsg As String) As String
     'Dim Id As Long
     Dim strJSON As String
   
@@ -130,9 +130,9 @@ Public Function GerarBoletoBB(Convenio As String, _
  
             
             
-
     
-    strJSON = strJSON & mJ("numeroConvenio", Convenio, 0) & "," & vbCrLf
+    
+    strJSON = strJSON & mJ("numeroConvenio", convenio, 0) & "," & vbCrLf
     strJSON = strJSON & mJ("numeroCarteira", carteira, 0) & "," & vbCrLf
     strJSON = strJSON & mJ("numeroVariacaoCarteira", CInt(carteiraVariacao), 0) & "," & vbCrLf
     strJSON = strJSON & mJ("codigoModalidade", CInt(tipoConta), 0) & "," & vbCrLf
@@ -154,7 +154,7 @@ Public Function GerarBoletoBB(Convenio As String, _
     strJSON = strJSON & mJ("numeroTituloBeneficiario", nFatura, 1) & "," & vbCrLf
     strJSON = strJSON & mJ("campoUtilizacaoBeneficiario", Replace(nDuplicata, "/", "-"), 1) & "," & vbCrLf
     strJSON = strJSON & mJ("numeroTituloCliente", NossoNumero, 1) & "," & vbCrLf
-    strJSON = strJSON & mJ("mensagemBloquetoOcorrencia", sMSG, 1) & ","
+    strJSON = strJSON & mJ("mensagemBloquetoOcorrencia", smsg, 1) & ","
     
     'DESCONTO
     Dim tmpData As String
@@ -212,7 +212,7 @@ Public Function GerarBoletoBB(Convenio As String, _
         
    'PAGADOR
    Dim Sacado As String
-   Sacado = pgDadosSacado(idSacado)
+   Sacado = pgDadosSacado(IDSacado)
    strJSON = strJSON & vbCrLf & Sacado
     'strJSON = strJSON & vbCrLf & _
     ' mJ("pagador", "", 2) & "{" & vbCrLf & _
@@ -241,18 +241,18 @@ Public Function GerarBoletoBB(Convenio As String, _
     Debug.Print "Boleto JSON: " & strJSON
 End Function
 
-Private Function Calculo_NossoNumero(Id As Long) As String
+Public Function GerarNossoNumero(Id As Long) As String
 
 '########################################################################################################
     '### Montagem de NOSSO NUMERO 20 CARACTERES
     '### 28.02.25
     '########################################################################################################
-    Dim Convenio As String
+    Dim convenio As String
     
     Dim NN1, NN2 As String
-    Convenio = pgDadosConta(PgDadosFinanceiroFatura(Id).idConta).Convenio
-    NN1 = Convenio
-    Select Case Len(Trim(Convenio))
+    convenio = pgDadosConta(PgDadosFinanceiroFatura(Id).idConta).convenio
+    NN1 = convenio
+    Select Case Len(Trim(convenio))
         Case Is <= 6
             'Dim NN1, NN2 As String
             
@@ -261,7 +261,7 @@ Private Function Calculo_NossoNumero(Id As Long) As String
                 Else
                     NN2 = Left(String(5, "0"), 5 - Len(Trim(Id))) & Trim(Id)
             End If
-            Calculo_NossoNumero = NN1 & NN2 & Trim(calculo_dv11base9(NN1 & NN2))
+            GerarNossoNumero = NN1 & NN2 & Trim(calculo_dv11base9(NN1 & NN2))
             
     
         Case 7
@@ -271,10 +271,10 @@ Private Function Calculo_NossoNumero(Id As Long) As String
                 Else
                     NN2 = Left(String(10, "0"), 10 - Len(Trim(Id))) & Trim(Id)
             End If
-            Calculo_NossoNumero = "000" & NN1 & NN2
+            GerarNossoNumero = "000" & NN1 & NN2
     End Select
     
- Debug.Print "Calculo_NossoNumero: " & Calculo_NossoNumero
+ Debug.Print "GerarNossoNumero: " & GerarNossoNumero
     
 
 End Function
@@ -294,7 +294,7 @@ Private Function API_CodigoBarras(Id As Long) As String
     Dim TipoCarteira As String
     Dim fator As String
     Dim Valor As String
-    Dim CodigoBarras As String
+    Dim codigoBarras As String
     Dim dvCB As String
 
 
@@ -306,12 +306,12 @@ Private Function API_CodigoBarras(Id As Long) As String
     Valor = RS(ChkVal(Valor, 0, cDecMoeda))
     Valor = Left(String(10, "0"), 10 - Len(Valor)) & Valor
     
-    NossoNumero = Calculo_NossoNumero(Id)
+    NossoNumero = GerarNossoNumero(Id)
     TipoCarteira = pgDadosConta(PgDadosFinanceiroFatura(Id).idConta).Variacao
     '########################################################################################################
     '###  CODIGO DE BARRAS
     '########################################################################################################
-    CodigoBarras = pgDadosBanco(PgDadosFinanceiroFatura(Id).IdBanco).Numero & _
+    codigoBarras = pgDadosBanco(PgDadosFinanceiroFatura(Id).IdBanco).Numero & _
                    "9" & _
                    fator & _
                    Left(String(10, "0"), 10 - Len(Valor)) & Valor & _
@@ -320,7 +320,7 @@ Private Function API_CodigoBarras(Id As Long) As String
                    NossoNumero & _
                    TipoCarteira
     
-    dvCB = Trim(calculo_dv11base9(CodigoBarras))
+    dvCB = Trim(calculo_dv11base9(codigoBarras))
     Select Case dvCB
         Case 0
             dvCB = 1
@@ -332,11 +332,11 @@ Private Function API_CodigoBarras(Id As Long) As String
             dvCB = 1
     End Select
     
-    CodigoBarras = Left(CodigoBarras, 4) & dvCB & Mid(CodigoBarras, 5, Len(CodigoBarras))
+    codigoBarras = Left(codigoBarras, 4) & dvCB & Mid(codigoBarras, 5, Len(codigoBarras))
  
  Debug.Print "API_CodigoBarras: " & API_CodigoBarras
  
-    API_CodigoBarras = CodigoBarras
+    API_CodigoBarras = codigoBarras
 
 
 End Function
@@ -382,29 +382,33 @@ Private Function jsonSacado(scTpInsc As String, scCNPJ As String, scNome As Stri
 End Function
 
 
-Private Function GerarCodigoBarrasBB( _
+Public Function GerarCodigoBarrasBB( _
     ByVal banco As String, _
-    ByVal Moeda As String, _
+    ByVal moeda As String, _
     ByVal NossoNumero As String, _
     ByVal Valor As String, _
-    ByVal FatorVencimento As String, _
+    ByVal Vencimento As String, _
     ByVal carteira As String _
 ) As String
 
-    Dim CodigoBarras As String
+    Dim codigoBarras As String
+    Dim FatorVencimento As String
     Dim DV As Integer
+    
+    FatorVencimento = CalcularFatorVencimento(CDate(Vencimento))
+    Valor = Replace(Valor, ".", "")
 
     ' 1. Monta o código de barras (sem o dígito verificador)
-    CodigoBarras = banco & Moeda & FatorVencimento & Valor & "000" & NossoNumero & carteira
+    codigoBarras = banco & moeda & FatorVencimento & Valor & "000" & NossoNumero & carteira
 
     ' 2. Calcula o dígito verificador (Módulo 11)
-    DV = Modulo11(CodigoBarras)
+    DV = Modulo11(codigoBarras)
 
     ' 3. Insere o dígito verificador no código de barras
-    CodigoBarras = banco & Moeda & DV & FatorVencimento & Valor & "000" & NossoNumero & carteira
+    codigoBarras = banco & moeda & DV & FatorVencimento & Valor & "000" & NossoNumero & carteira
 
     ' 4. Retorna o resultado
-    GerarCodigoBarrasBB = CodigoBarras
+    GerarCodigoBarrasBB = codigoBarras
 
 End Function
 
@@ -421,17 +425,18 @@ Private Function CalcularFatorVencimento(DataVencimento As Date) As Long
     ' Retorna o fator de vencimento
     CalcularFatorVencimento = fator
 End Function
-Private Function GerarLinhaDigitavelBB( _
+Public Function GerarLinhaDigitavelBB( _
     ByVal banco As String, _
-    ByVal Moeda As String, _
-    ByVal Convenio As String, _
+    ByVal moeda As String, _
+    ByVal convenio As String, _
     ByVal carteira As String, _
     ByVal NossoNumero As String, _
     ByVal Valor As String, _
-    ByVal FatorVencimento As String _
+    ByVal Vencimento As String _
 ) As String
 
-    Dim CodigoBarras As String
+    Dim FatorVencimento As String
+    Dim codigoBarras As String
     Dim Campo1 As String
     Dim Campo2 As String
     Dim Campo3 As String
@@ -442,21 +447,24 @@ Private Function GerarLinhaDigitavelBB( _
     Dim DV2 As Integer
     Dim DV3 As Integer
     Dim DV4 As Integer
+    
+    FatorVencimento = CalcularFatorVencimento(CDate(Vencimento))
+    Valor = Replace(Valor, ".", "")
 
     ' 1. Monta o código de barras
-    CodigoBarras = GerarCodigoBarrasBB( _
+    codigoBarras = GerarCodigoBarrasBB( _
                                         banco:=banco, _
-                                        Moeda:=Moeda, _
+                                        moeda:=moeda, _
                                         carteira:=carteira, _
                                         NossoNumero:=NossoNumero, _
                                         Valor:=Valor, _
-                                        FatorVencimento:=FatorVencimento _
+                                        Vencimento:=Vencimento _
                                     )
                                     
     ' 4. Divide o código de barras em campos
-    Campo1 = banco & Moeda & Mid(CodigoBarras, 20, 5)
-    Campo2 = Mid(CodigoBarras, 25, 10)
-    Campo3 = Mid(CodigoBarras, 35, 10)
+    Campo1 = banco & moeda & Mid(codigoBarras, 20, 5)
+    Campo2 = Mid(codigoBarras, 25, 10)
+    Campo3 = Mid(codigoBarras, 35, 10)
     Campo4 = "" 'Mid(CodigoBarras, 4, 1) & Mid(CodigoBarras, 5, 1) & Mid(CodigoBarras, 6, 3) & Mid(CodigoBarras, 7, 1)
     Campo5 = FatorVencimento & Valor '(CodigoBarras, 8, 10)
 
@@ -540,18 +548,18 @@ End Function
     
 End Function
 
-Private Function pgDadosSacado(idSacado) As String
+Private Function pgDadosSacado(IDSacado As Integer) As String
     Dim s As String
-    s = jsonSacado(PgDadosCliente(idSacado).Pessoa, _
-                   PgDadosCliente(idSacado).Doc, _
-                   PgDadosCliente(idSacado).Nome, _
-                   PgDadosCliente(idSacado).Lgr, _
-                   PgDadosCliente(idSacado).CEP, _
-                   PgDadosCliente(idSacado).Mun, _
-                   PgDadosCliente(idSacado).Bairro, _
-                   PgDadosCliente(idSacado).uf, _
-                   PgDadosCliente(idSacado).Fone, _
-                   PgDadosCliente(idSacado).Mail)
+    s = jsonSacado(PgDadosCliente(IDSacado).Pessoa, _
+                   PgDadosCliente(IDSacado).Doc, _
+                   PgDadosCliente(IDSacado).Nome, _
+                   PgDadosCliente(IDSacado).Lgr, _
+                   PgDadosCliente(IDSacado).CEP, _
+                   PgDadosCliente(IDSacado).Mun, _
+                   PgDadosCliente(IDSacado).Bairro, _
+                   PgDadosCliente(IDSacado).uf, _
+                   PgDadosCliente(IDSacado).Fone, _
+                   PgDadosCliente(IDSacado).Mail)
  
 End Function
 

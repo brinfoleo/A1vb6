@@ -95,21 +95,21 @@ Function Calculo_DV10(strNumero As String) As String
     Next
 
     Dim DezenaSuperior As Integer
-    Dim dv As Integer
+    Dim DV As Integer
     If intTotalNumero < 10 Then
             DezenaSuperior = 10
         Else
             DezenaSuperior = 10 * (Val(Left(CStr(intTotalNumero), 1)) + 1)
     End If
     intResto = intTotalNumero Mod 10 'DezenaSuperior - intTotalNumero
-    dv = Right(DezenaSuperior - intResto, 1)
+    DV = Right(DezenaSuperior - intResto, 1)
     
     'verifica as exceções ( 0 -> DV=0 )
     Select Case intResto
         Case 0
             Calculo_DV10 = "0"
         Case Else
-            Calculo_DV10 = str(dv)
+            Calculo_DV10 = str(DV)
     End Select
 
 End Function
@@ -144,9 +144,9 @@ Private Function cnab240LoteHeader(contaId As Integer, lote As String) As String
     line = line & "0" '09.1 - Tipo de inscricao
     line = line & F("n", 15, PgDadosEmpresa(ID_Empresa).CNPJ)
     line = line & F("a", 20, pgDadosConta(contaId).Convenio)
-    line = line & F("n", 5, pgDadosConta(contaId).Agencia)
+    line = line & F("n", 5, pgDadosConta(contaId).agencia)
     line = line & F("n", 1, pgDadosConta(contaId).AgenciaDV)
-    line = line & F("n", 12, pgDadosConta(contaId).Conta)
+    line = line & F("n", 12, pgDadosConta(contaId).conta)
     line = line & F("n", 1, pgDadosConta(contaId).ContaDV)
     line = line & F("n", 1, dvAgCc)
     line = line & F("a", 30, PgDadosEmpresa(ID_Empresa).Nome) '17.1 - nome da empresa
@@ -192,14 +192,14 @@ Private Function cnab240Q(faturaId As Long, lote As String) As String
     line = line & "0" '08.3Q - tipo inscricao
     line = line & F("n", 15, "0") '09.3Q - numero inscricao
     line = line & F("a", 40, PgDadosFinanceiroFatura(faturaId).Sacado)
-    line = line & F("a", 40, PgDadosCliente(PgDadosFinanceiroFatura(faturaId).IDSacado).Lgr & _
-                    PgDadosCliente(PgDadosFinanceiroFatura(faturaId).IDSacado).Nro)
-    line = line & F("a", 15, PgDadosCliente(PgDadosFinanceiroFatura(faturaId).IDSacado).Bairro)
-    line = line & F("n", 5, Mid(PgDadosCliente(PgDadosFinanceiroFatura(faturaId).IDSacado).CEP, 1, 5))
-    line = line & F("n", 3, Mid(PgDadosCliente(PgDadosFinanceiroFatura(faturaId).IDSacado).CEP, 6, 3))
+    line = line & F("a", 40, PgDadosCliente(PgDadosFinanceiroFatura(faturaId).idSacado).Lgr & _
+                    PgDadosCliente(PgDadosFinanceiroFatura(faturaId).idSacado).Nro)
+    line = line & F("a", 15, PgDadosCliente(PgDadosFinanceiroFatura(faturaId).idSacado).Bairro)
+    line = line & F("n", 5, Mid(PgDadosCliente(PgDadosFinanceiroFatura(faturaId).idSacado).CEP, 1, 5))
+    line = line & F("n", 3, Mid(PgDadosCliente(PgDadosFinanceiroFatura(faturaId).idSacado).CEP, 6, 3))
     
-    line = line & F("a", 15, PgDadosCliente(PgDadosFinanceiroFatura(faturaId).IDSacado).Mun)
-    line = line & F("a", 2, PgDadosCliente(PgDadosFinanceiroFatura(faturaId).IDSacado).uf)
+    line = line & F("a", 15, PgDadosCliente(PgDadosFinanceiroFatura(faturaId).idSacado).Mun)
+    line = line & F("a", 2, PgDadosCliente(PgDadosFinanceiroFatura(faturaId).idSacado).uf)
     'Sac/Avalista
     line = line & "0"
     line = line & F("n", 15, "0")
@@ -297,12 +297,12 @@ trtErroF:
     
 End Function
 
-Public Function Monta_CodBarras(Banco As String, _
+Public Function Monta_CodBarras(banco As String, _
                                 Moeda As String, _
                                 Valor As Single, _
                                 Vencimento As Date, _
-                                Agencia As String, _
-                                Conta As String, _
+                                agencia As String, _
+                                conta As String, _
                                 NossoNumero As String, _
                                 dvLinhaDig As Integer)
 
@@ -319,7 +319,7 @@ Public Function Monta_CodBarras(Banco As String, _
     'Livre = Format(Livre, "0000000000000000000000000")
 
     ' sequencia sem o DV
-    codigo_sequencia = Banco & Moeda & fator & Format(Valor, "0000000000") & Agencia & Conta & dvLinhaDig & Left(String(13, "0"), 13 - Len(NossoNumero)) & NossoNumero
+    codigo_sequencia = banco & Moeda & fator & Format(Valor, "0000000000") & agencia & conta & dvLinhaDig & Left(String(13, "0"), 13 - Len(NossoNumero)) & NossoNumero
 
     ' calculo do DV
     intDac = calcula_DV_CodBarras(codigo_sequencia)
@@ -547,133 +547,135 @@ Public Sub BoletoBancario(Id As Long, Optional Visualizar = True)
     'Comando de impressao do boleto
     ImprBoletoBancario Id, Visualizar
 End Sub
-'
+
 Public Sub BoletoBancario_001(Id As Long)
-
-
-'Incusao da API 26/02/25
-API_BBCobranca Id
-API_CodigoBarras Id
-'===========================
-
-    '#######################################################################################
-    '### Banco do Brasil
-    '#######################################################################################
-    Dim NossoNumero     As String
-    Dim LinhaDigitavel  As String
-    Dim CodigoBarras    As String
+  
+    Dim bbCob As New BBCobranca
+    Dim boleto As String
+    boleto = bbCob.GerarBoletoBB( _
+                                Convenio:=pgDadosConta(PgDadosFinanceiroFatura(Id).idConta).Convenio, _
+                                carteira:=pgDadosConta(PgDadosFinanceiroFatura(Id).idConta).carteira, _
+                                tipoConta:=pgDadosConta(PgDadosFinanceiroFatura(Id).idConta).Tipo, _
+                                dataEmissao:=PgDadosFinanceiroFatura(Id).emissao, _
+                                DataVencimento:=PgDadosFinanceiroFatura(Id).Vencimento, _
+                                nFatura:=PgDadosFinanceiroFatura(Id).NumFatura, _
+                                nDuplicata:=PgDadosFinanceiroFatura(Id).NumDuplicata, _
+                                Valor:=PgDadosFinanceiroFatura(Id).vlCobrado, _
+                                vDeducao:=PgDadosFinanceiroFatura(Id).Deducoes, _
+                                vMulta:=PgDadosFinanceiroFatura(Id).Multa, _
+                                vJuros:=PgDadosFinanceiroFatura(Id).Juros, _
+                                DiasProtesto:=PgDadosFinanceiroFatura(Id).DiasProtesto, _
+                                tpPessoa:=PgDadosCliente(PgDadosFinanceiroFatura(Id).idSacado).Pessoa, _
+                                cnpjPagador:=PgDadosCliente(PgDadosFinanceiroFatura(Id).idSacado).Doc, _
+                                sMSG:=PgDadosFinanceiroFatura(Id).Obs _
+                                )
     
-    Dim Agencia         As String
-    Dim Conta           As String
-    Dim fator           As Integer
-    Dim Valor           As String
+  
+  
+  
+  
+' 14/03/2025 - Codigo descontinuado para dar lugar a Classe BBCobranca e o uso de API na comunicacao com o Banco do Brasil
+'
+'    '#######################################################################################
+'    '### Banco do Brasil
+'    '#######################################################################################
+'    Dim NossoNumero     As String
+'    Dim LinhaDigitavel  As String
+'    Dim CodigoBarras    As String
+'
+'    Dim agencia         As String
+'    Dim conta           As String
+'    Dim fator           As Integer
+'    Dim Valor           As String
+'
+'    Dim seqI            As String
+'    Dim seqII           As String
+'    Dim seqIII          As String
+'    Dim seqIV           As String
+'    Dim sequencia       As String
+'
+'    Dim dvLinhaDig      As String
+'    Dim dvCB            As String
+'    Dim dvNN            As String
+'
+'    Dim DV1, DV2, DV3   As Integer
+'    '########################################################################################################
+'    '### Montagem de NOSSO NUMERO
+'    '########################################################################################################
+'    NossoNumero = Calculo_NossoNumero(Id)
+'    '########################################################################################################
+'
+'    agencia = pgDadosConta(PgDadosFinanceiroFatura(Id).idConta).agencia
+'    agencia = Left("0000", 4 - Len(agencia)) & agencia
+'
+'    conta = pgDadosConta(PgDadosFinanceiroFatura(Id).idConta).conta
+'    conta = Mid(String(8, "0"), 1, Len(Trim(conta))) & conta
+'    fator = CalculoFator(PgDadosFinanceiroFatura(Id).Vencimento)
+'
+'
+'    Valor = IIf(Trim(PgDadosFinanceiroFatura(Id).vlCobrado) <> 0, PgDadosFinanceiroFatura(Id).vlCobrado, PgDadosFinanceiroFatura(Id).vlDuplicata)
+'    Valor = RS(ChkVal(Valor, 0, cDecMoeda))
+'    Valor = Left(String(10, "0"), 10 - Len(Valor)) & Valor
+'
+'    '########################################################################################################
+'    '###  CODIGO DE BARRAS
+'    '########################################################################################################
+'    CodigoBarras = pgDadosBanco(PgDadosFinanceiroFatura(Id).IdBanco).Numero & _
+'                   "9" & _
+'                   fator & _
+'                   Left(String(10, "0"), 10 - Len(Valor)) & Valor & _
+'                   NossoNumero & _
+'                   agencia & _
+'                   conta & _
+'                   pgDadosConta(PgDadosFinanceiroFatura(Id).idConta).carteira
+'
+'    dvCB = Trim(calculo_dv11base9(CodigoBarras))
+'    Select Case dvCB
+'        Case 0
+'            dvCB = 1
+'        Case 10
+'            dvCB = 1
+'        Case 11
+'            dvCB = 1
+'        Case "X"
+'            dvCB = 1
+'    End Select
+'
+'    CodigoBarras = Left(CodigoBarras, 4) & dvCB & Mid(CodigoBarras, 5, Len(CodigoBarras))
+'    '########################################################################################################
+'
+'
+'    '******************************** Bloco I *************************************************************
+'    seqI = pgDadosBanco(PgDadosFinanceiroFatura(Id).IdBanco).Numero & _
+'                        "9" & _
+'                         Mid(CodigoBarras, 20, 5)
+'    DV1 = Trim(Calculo_DV10(seqI))
+'
+'    '******************************** Bloco II *************************************************************
+'    seqII = Mid(CodigoBarras, 25, 10)
+'    DV2 = Trim(Calculo_DV10(seqII))
+'    '******************************** Bloco III *************************************************************
+'    seqIII = Mid(CodigoBarras, 35, 10)
+'
+'    DV3 = Trim(Calculo_DV10(seqIII))
+'
+'    '******************************** Bloco IV *************************************************************
+'    seqIV = fator & Left(String(10, "0"), 10 - Len(Valor)) & Valor
+'
+'    '*******************************************************************************************************
+'
+'    sequencia = seqI & seqII & seqIII
+'
+'
+'    sequencia = seqI & DV1 & seqII & DV2 & seqIII & DV3 & dvCB & seqIV
+'    LinhaDigitavel = sequencia 'Formatar_Linha_Digitavel(sequencia)
+'
+'
+'    NossoNumero = NossoNumero & dvNN
+'
+'    grvDadosBoleto Id, NossoNumero, LinhaDigitavel, CodigoBarras
+'
     
-    Dim seqI            As String
-    Dim seqII           As String
-    Dim seqIII          As String
-    Dim seqIV           As String
-    Dim sequencia       As String
-    
-    Dim dvLinhaDig      As String
-    Dim dvCB            As String
-    Dim dvNN            As String
-    
-    Dim dv1, dv2, dv3   As Integer
-    '########################################################################################################
-    '### Montagem de NOSSO NUMERO
-    '########################################################################################################
-    '# Multiplicador base 9
-    'Dim NN1, NN2 As String
-    'NN1 = pgDadosConta(PgDadosFinanceiroFatura(Id).idConta).convenio
-    'If Len(Trim(Id)) > 5 Then
-     '       NN2 = Right(Id, 5)
-     '   Else
-     '       NN2 = Left(String(5, "0"), 5 - Len(Trim(Id))) & Trim(Id)
-    'End If
-    NossoNumero = Calculo_NossoNumero(Id)
-    
-    '########################################################################################################
-    
-    Agencia = pgDadosConta(PgDadosFinanceiroFatura(Id).idConta).Agencia
-    Agencia = Left("0000", 4 - Len(Agencia)) & Agencia
-    
-    Conta = pgDadosConta(PgDadosFinanceiroFatura(Id).idConta).Conta
-    Conta = Mid(String(8, "0"), 1, Len(Trim(Conta))) & Conta
-    fator = CalculoFator(PgDadosFinanceiroFatura(Id).Vencimento)
-    
-    
-    Valor = IIf(Trim(PgDadosFinanceiroFatura(Id).vlCobrado) <> 0, PgDadosFinanceiroFatura(Id).vlCobrado, PgDadosFinanceiroFatura(Id).vlDuplicata)
-    Valor = RS(ChkVal(Valor, 0, cDecMoeda))
-    Valor = Left(String(10, "0"), 10 - Len(Valor)) & Valor
-    
-    '########################################################################################################
-    '###  CODIGO DE BARRAS
-    '########################################################################################################
-    CodigoBarras = pgDadosBanco(PgDadosFinanceiroFatura(Id).IdBanco).Numero & _
-                   "9" & _
-                   fator & _
-                   Left(String(10, "0"), 10 - Len(Valor)) & Valor & _
-                   NossoNumero & _
-                   Agencia & _
-                   Conta & _
-                   pgDadosConta(PgDadosFinanceiroFatura(Id).idConta).Carteira
-    
-    dvCB = Trim(calculo_dv11base9(CodigoBarras))
-    Select Case dvCB
-        Case 0
-            dvCB = 1
-        Case 10
-            dvCB = 1
-        Case 11
-            dvCB = 1
-        Case "X"
-            dvCB = 1
-    End Select
-    
-    CodigoBarras = Left(CodigoBarras, 4) & dvCB & Mid(CodigoBarras, 5, Len(CodigoBarras))
-    '########################################################################################################
-    
-    
-    '******************************** Bloco I *************************************************************
-    'seqI = pgDadosBanco(PgDadosFinanceiroFatura(Id).IdBanco).Numero & _
-                        "9" & _
-                         Mid(NossoNumero, 1, 5)
-                         
-    seqI = pgDadosBanco(PgDadosFinanceiroFatura(Id).IdBanco).Numero & _
-                        "9" & _
-                         Mid(CodigoBarras, 20, 5)
-    dv1 = Trim(Calculo_DV10(seqI))
-    
-    '******************************** Bloco II *************************************************************
-    'seqII = Mid(NossoNumero, 6, Len(NossoNumero)) & Agencia
-    seqII = Mid(CodigoBarras, 25, 10)
-    dv2 = Trim(Calculo_DV10(seqII))
-    '******************************** Bloco III *************************************************************
-    'seqIII = Left(String(8, "0"), 8 - Len(Conta)) & Conta & pgDadosConta(PgDadosFinanceiroFatura(Id).IdConta).Carteira
-    seqIII = Mid(CodigoBarras, 35, 10)
-    
-    dv3 = Trim(Calculo_DV10(seqIII))
-    
-    '******************************** Bloco IV *************************************************************
-    seqIV = fator & Left(String(10, "0"), 10 - Len(Valor)) & Valor
-    
-    '*******************************************************************************************************
-    
-    sequencia = seqI & seqII & seqIII
-            
-    
-    
-    
-    sequencia = seqI & dv1 & seqII & dv2 & seqIII & dv3 & dvCB & seqIV
-    LinhaDigitavel = sequencia 'Formatar_Linha_Digitavel(sequencia)
-    
-    
-    NossoNumero = NossoNumero & dvNN
-    
-    grvDadosBoleto Id, NossoNumero, LinhaDigitavel, CodigoBarras
-    
-    
-    'ImprBoletoBancario Id ', NossoNumero, LinhaDigitavel, CodigoBarras
     
 End Sub
 Public Sub BoletoBancario_237(Id As Long)
@@ -685,11 +687,11 @@ Public Sub BoletoBancario_237(Id As Long)
     Dim LinhaDigitavel  As String
     Dim CodigoBarras    As String
     
-    Dim Agencia         As String
-    Dim Conta           As String
+    Dim agencia         As String
+    Dim conta           As String
     Dim fator           As Integer
     Dim Valor           As String
-    Dim Carteira        As String
+    Dim carteira        As String
     
     Dim seqI            As String
     Dim seqII           As String
@@ -701,13 +703,13 @@ Public Sub BoletoBancario_237(Id As Long)
     Dim dvCB            As String
     Dim dvNN            As String
     
-    Dim dv1, dv2, dv3   As Integer
+    Dim DV1, DV2, DV3   As Integer
     '########################################################################################################
     '### Montagem de NOSSO NUMERO
     '########################################################################################################
     Dim NN1, NN2 As String
     NN1 = pgDadosConta(PgDadosFinanceiroFatura(Id).idConta).Convenio
-    Carteira = pgDadosConta(PgDadosFinanceiroFatura(Id).idConta).Carteira
+    carteira = pgDadosConta(PgDadosFinanceiroFatura(Id).idConta).carteira
     If Len(Trim(Id)) > 5 Then
             NN2 = Right(Id, 5)
         Else
@@ -715,14 +717,14 @@ Public Sub BoletoBancario_237(Id As Long)
     End If
     NossoNumero = NN1 & NN2
     NossoNumero = Mid(String(11, "0"), 1, Len(Trim(NossoNumero)) + 1) & NossoNumero
-    dvNN = Trim(calculo_dv11base7(Carteira & NossoNumero))
+    dvNN = Trim(calculo_dv11base7(carteira & NossoNumero))
     '########################################################################################################
     
-    Agencia = pgDadosConta(PgDadosFinanceiroFatura(Id).idConta).Agencia
-    Agencia = Left("0000", 4 - Len(Agencia)) & Agencia
+    agencia = pgDadosConta(PgDadosFinanceiroFatura(Id).idConta).agencia
+    agencia = Left("0000", 4 - Len(agencia)) & agencia
     
-    Conta = pgDadosConta(PgDadosFinanceiroFatura(Id).idConta).Conta
-    Conta = Mid(String(8, "0"), 1, Len(Trim(Conta))) & Conta
+    conta = pgDadosConta(PgDadosFinanceiroFatura(Id).idConta).conta
+    conta = Mid(String(8, "0"), 1, Len(Trim(conta))) & conta
     fator = CalculoFator(PgDadosFinanceiroFatura(Id).Vencimento)
     
     
@@ -740,10 +742,10 @@ Public Sub BoletoBancario_237(Id As Long)
                    "" & _
                    fator & _
                    Left(String(10, "0"), 10 - Len(Valor)) & Valor
-    CampoLivre = Agencia & _
-                Carteira & _
+    CampoLivre = agencia & _
+                carteira & _
                 NossoNumero & _
-                Right(Conta, 7) & _
+                Right(conta, 7) & _
                 "0"
     CodigoBarras = cd1 & CampoLivre
     dvCB = Trim(calculo_dv11base9(CodigoBarras))
@@ -760,18 +762,18 @@ Public Sub BoletoBancario_237(Id As Long)
     seqI = pgDadosBanco(PgDadosFinanceiroFatura(Id).IdBanco).Numero & _
                         "9" & _
                          Mid(CampoLivre, 1, 5)
-    dv1 = Trim(Calculo_DV10(seqI))
+    DV1 = Trim(Calculo_DV10(seqI))
     
     '******************************** Bloco II *************************************************************
     'seqII = Mid(NossoNumero, 6, Len(NossoNumero)) & _
             Agencia
     seqII = Mid(CampoLivre, 6, 10)
-    dv2 = Trim(Calculo_DV10(seqII))
+    DV2 = Trim(Calculo_DV10(seqII))
     '******************************** Bloco III *************************************************************
     'seqIII = Left(String(8, "0"), 8 - Len(Conta)) & Conta & pgDadosConta(PgDadosFinanceiroFatura(Id).IdConta).Carteira
     seqIII = Mid(CampoLivre, 16, 10)
     
-    dv3 = Trim(Calculo_DV10(seqIII))
+    DV3 = Trim(Calculo_DV10(seqIII))
     
     '******************************** Bloco IV *************************************************************
     seqIV = fator & Left(String(10, "0"), 10 - Len(Valor)) & Valor
@@ -783,7 +785,7 @@ Public Sub BoletoBancario_237(Id As Long)
     
     
     
-    sequencia = seqI & dv1 & seqII & dv2 & seqIII & dv3 & dvCB & seqIV
+    sequencia = seqI & DV1 & seqII & DV2 & seqIII & DV3 & dvCB & seqIV
     LinhaDigitavel = sequencia 'Formatar_Linha_Digitavel(sequencia)
     
     
@@ -809,8 +811,8 @@ Private Sub BoletoBancario_356(Id As Long)
     Dim LinhaDigitavel  As String
     Dim CodigoBarras    As String
     
-    Dim Agencia         As String
-    Dim Conta           As String
+    Dim agencia         As String
+    Dim conta           As String
     
     Dim seqI            As String
     Dim seqII           As String
@@ -821,18 +823,18 @@ Private Sub BoletoBancario_356(Id As Long)
                     
     NossoNumero = Calculo_NossoNumero(IIf(Trim(PgDadosFinanceiroFatura(Id).NossoNumero) = "", RS(PgDadosFinanceiroFatura(Id).NumDuplicata), PgDadosFinanceiroFatura(Id).NossoNumero))
             
-    Agencia = pgDadosConta(PgDadosFinanceiroFatura(Id).idConta).Agencia
-    Agencia = Left("0000", 4 - Len(Agencia)) & Agencia
-    Conta = pgDadosConta(PgDadosFinanceiroFatura(Id).idConta).Conta
-    Conta = Left("0000000", 7 - Len(Conta)) & Conta
+    agencia = pgDadosConta(PgDadosFinanceiroFatura(Id).idConta).agencia
+    agencia = Left("0000", 4 - Len(agencia)) & agencia
+    conta = pgDadosConta(PgDadosFinanceiroFatura(Id).idConta).conta
+    conta = Left("0000000", 7 - Len(conta)) & conta
             
     seqI = pgDadosBanco(PgDadosFinanceiroFatura(Id).IdBanco).Numero & _
                         "9" & _
-                        Agencia & _
-                        Left(Conta, 1)
+                        agencia & _
+                        Left(conta, 1)
 
-    dvCob = Trim(Calculo_DV10(Left(NossoNumero, Len(NossoNumero) - 1) & pgDadosConta(PgDadosFinanceiroFatura(Id).idConta).Agencia & pgDadosConta(PgDadosFinanceiroFatura(Id).idConta).Conta))
-    seqII = Mid(Conta, 2, Len(Conta)) & _
+    dvCob = Trim(Calculo_DV10(Left(NossoNumero, Len(NossoNumero) - 1) & pgDadosConta(PgDadosFinanceiroFatura(Id).idConta).agencia & pgDadosConta(PgDadosFinanceiroFatura(Id).idConta).conta))
+    seqII = Mid(conta, 2, Len(conta)) & _
             dvCob & _
             Left(NossoNumero, 3)
         
@@ -848,8 +850,8 @@ Private Sub BoletoBancario_356(Id As Long)
                                                                     "9", _
                                                                     CSng(PgDadosFinanceiroFatura(Id).vlDuplicata), _
                                                                     PgDadosFinanceiroFatura(Id).Vencimento, _
-                                                                    Agencia, _
-                                                                    Conta, _
+                                                                    agencia, _
+                                                                    conta, _
                                                                     Left(NossoNumero, Len(NossoNumero) - 1), _
                                                                     dvCob)
     
@@ -1235,7 +1237,7 @@ Private Function cnab240ArquivoHeader(contaId As Integer, lote As String) As Str
     '********* Registro Header de Arquivo              *********
     '***********************************************************
     line = ""
-    line = line & F("n", 3, pgDadosBanco(pgDadosConta(contaId).Banco).Numero)
+    line = line & F("n", 3, pgDadosBanco(pgDadosConta(contaId).banco).Numero)
     line = line & F("n", 4, lote) '02.0 - Lote
     line = line & "0"
     '----------------
@@ -1244,16 +1246,16 @@ Private Function cnab240ArquivoHeader(contaId As Integer, lote As String) As Str
     line = line & "0" '05.0 - Tipo de inscricao
     line = line & F("n", 14, PgDadosEmpresa(ID_Empresa).CNPJ) '06.0 - num insc empresa
     line = line & F("a", 20, pgDadosConta(contaId).Convenio) '07.0- convenio
-    line = line & F("n", 5, pgDadosConta(contaId).Agencia)
+    line = line & F("n", 5, pgDadosConta(contaId).agencia)
     line = line & F("n", 1, pgDadosConta(contaId).AgenciaDV)
-    line = line & F("n", 12, pgDadosConta(contaId).Conta)
+    line = line & F("n", 12, pgDadosConta(contaId).conta)
     line = line & F("n", 1, pgDadosConta(contaId).ContaDV)
     Dim dvAgCc As String
-    dvAgCc = Calculo_DV11(pgDadosConta(contaId).Agencia & _
-                          pgDadosConta(contaId).Conta)
+    dvAgCc = Calculo_DV11(pgDadosConta(contaId).agencia & _
+                          pgDadosConta(contaId).conta)
     line = line & F("n", 1, dvAgCc)
     line = line & F("a", 30, PgDadosEmpresa(ID_Empresa).Nome) '13.0 - nome empresa
-    line = line & F("a", 30, pgDadosBanco(pgDadosConta(contaId).Banco).Nome)
+    line = line & F("a", 30, pgDadosBanco(pgDadosConta(contaId).banco).Nome)
     '----------------
     line = line & String(10, " ") '15.0 - cnab
     
@@ -1317,9 +1319,9 @@ Private Function cnab240P(faturaId As Long, lote As String) As String
     line = line & "P"
     line = line & F("a", 1, " ")
     line = line & F("n", 2, "0")
-    line = line & F("n", 5, pgDadosConta(PgDadosFinanceiroFatura(faturaId).idConta).Agencia)
+    line = line & F("n", 5, pgDadosConta(PgDadosFinanceiroFatura(faturaId).idConta).agencia)
     line = line & F("a", 1, pgDadosConta(PgDadosFinanceiroFatura(faturaId).idConta).AgenciaDV)
-    line = line & F("n", 12, pgDadosConta(PgDadosFinanceiroFatura(faturaId).idConta).Conta)
+    line = line & F("n", 12, pgDadosConta(PgDadosFinanceiroFatura(faturaId).idConta).conta)
     line = line & F("a", 1, pgDadosConta(PgDadosFinanceiroFatura(faturaId).idConta).ContaDV)
     line = line & F("a", 1, " ") '12.3P - Digito verificador agencia/conta
     
@@ -1332,13 +1334,13 @@ Private Function cnab240P(faturaId As Long, lote As String) As String
     
     
     'Se o banco for BB informar codigo de acordo com as particularidades do banco
-    Dim Carteira As Integer
+    Dim carteira As Integer
     If pgDadosBanco(PgDadosFinanceiroFatura(faturaId).IdBanco).Numero = "001" Then
-            Carteira = 7
+            carteira = 7
         Else
-            Carteira = pgDadosConta(PgDadosFinanceiroFatura(faturaId).idConta).Carteira
+            carteira = pgDadosConta(PgDadosFinanceiroFatura(faturaId).idConta).carteira
     End If
-    line = line & F("n", 1, Carteira)
+    line = line & F("n", 1, carteira)
     line = line & F("n", 1, "0") '15.3P - Cadastramento
     line = line & F("a", 1, " ") '16.3P - Tipo documento (DM)
     line = line & F("n", 1, "0") '17.3P - Emissao boleto de pagamento
@@ -1346,7 +1348,7 @@ Private Function cnab240P(faturaId As Long, lote As String) As String
     line = line & F("a", 15, PgDadosFinanceiroFatura(faturaId).NumDuplicata)
     line = line & F("d", 8, PgDadosFinanceiroFatura(faturaId).Vencimento)
     line = line & F("n", 15, ChkVal(PgDadosFinanceiroFatura(faturaId).vlCobrado, 0, 2)) '21.3P - vl tit
-    line = line & F("n", 5, pgDadosConta(PgDadosFinanceiroFatura(faturaId).idConta).Agencia)
+    line = line & F("n", 5, pgDadosConta(PgDadosFinanceiroFatura(faturaId).idConta).agencia)
     line = line & F("a", 1, pgDadosConta(PgDadosFinanceiroFatura(faturaId).idConta).AgenciaDV)
     line = line & F("n", 2, "0") '24.3P - Especie
     line = line & "N" '25.3 - aceite
@@ -1388,7 +1390,7 @@ Private Function cnab240LoteTrailer(contaId As Integer, lote As String, tReg As 
     Dim vTotal  As String
     
     line = ""
-    line = line & F("n", 3, pgDadosBanco(pgDadosConta(contaId).Banco).Numero)
+    line = line & F("n", 3, pgDadosBanco(pgDadosConta(contaId).banco).Numero)
     line = line & F("n", 4, lote) 'Lote
     line = line & "5" '03.5 - tipo de registro
     line = line & String(9, " ")
@@ -1412,7 +1414,7 @@ Private Function cnab240ArquivoTrailer(contaId As Integer, lote As String, tReg 
     Dim vTotal As String
     
     line = ""
-    line = line & F("n", 3, pgDadosBanco(pgDadosConta(contaId).Banco).Numero)
+    line = line & F("n", 3, pgDadosBanco(pgDadosConta(contaId).banco).Numero)
     line = line & F("n", 4, lote) 'Lote
     line = line & "9"
     line = line & String(9, " ") '04.9 - cnab

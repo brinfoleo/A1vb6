@@ -1,4 +1,16 @@
-Attribute VB_Name = "Modulo_CobrancaBB"
+VERSION 1.0 CLASS
+BEGIN
+  MultiUse = -1  'True
+  Persistable = 0  'NotPersistable
+  DataBindingBehavior = 0  'vbNone
+  DataSourceBehavior  = 0  'vbNone
+  MTSTransactionMode  = 0  'NotAnMTSObject
+END
+Attribute VB_Name = "BBCobranca"
+Attribute VB_GlobalNameSpace = False
+Attribute VB_Creatable = True
+Attribute VB_PredeclaredId = False
+Attribute VB_Exposed = False
 
 Public Sub mockLinhaDigitavel()
     Dim LinhaDigitavel As String
@@ -81,7 +93,7 @@ Public Sub mockTestBBCob()
             Dim vMulta As String
             vMulta = cobCalcMulta("100", 0, 1)
             
-            Sacado = pgDadosSacado(2, "74910037000193", "187 CENTRAL CARIOCA DE PECAS LTDA-EPP", "RUA DE SANTANA", "20230260", "RIO DE JANEIRO", "CENTRO", "RJ", "22219755", "email@email.com")
+            Sacado = jsonSacado(2, "74910037000193", "187 CENTRAL CARIOCA DE PECAS LTDA-EPP", "RUA DE SANTANA", "20230260", "RIO DE JANEIRO", "CENTRO", "RJ", "22219755", "email@email.com")
  
             
             BBCobranca "3128557", "17", "35", "4", "13/03/2025", "20/03/2025", "FAT123", "DUP123", "100.00", "0.00", vMulta, vJurosMora, "5", "2", "74910037000193", "98959112000179", "LIVRARIA CUNHA DA CUNHA", "00031285570000043986", Sacado, "MENSAGEM"
@@ -92,7 +104,7 @@ Public Sub mockTestBBCob()
 End Sub
 
 
-Private Sub BBCobranca(Convenio As String, _
+Public Function GerarBoletoBB(Convenio As String, _
                         carteira As String, _
                         carteiraVariacao As String, _
                         tipoConta As String, _
@@ -105,13 +117,11 @@ Private Sub BBCobranca(Convenio As String, _
                         vMulta As String, _
                         vJuros As String, _
                         DiasProtesto As String, _
-                        tpPessoa As Integer, _
-                        cnpjPagador As String, _
+                        idSacado As Integer, _
                         cnpjBeneficiario As String, _
                         nomeBeneficiario As String, _
                         NossoNumero As String, _
-                        Sacado As String, _
-                        smsg As String)
+                        sMSG As String) As String
     'Dim Id As Long
     Dim strJSON As String
   
@@ -144,7 +154,7 @@ Private Sub BBCobranca(Convenio As String, _
     strJSON = strJSON & mJ("numeroTituloBeneficiario", nFatura, 1) & "," & vbCrLf
     strJSON = strJSON & mJ("campoUtilizacaoBeneficiario", Replace(nDuplicata, "/", "-"), 1) & "," & vbCrLf
     strJSON = strJSON & mJ("numeroTituloCliente", NossoNumero, 1) & "," & vbCrLf
-    strJSON = strJSON & mJ("mensagemBloquetoOcorrencia", smsg, 1) & ","
+    strJSON = strJSON & mJ("mensagemBloquetoOcorrencia", sMSG, 1) & ","
     
     'DESCONTO
     Dim tmpData As String
@@ -201,6 +211,8 @@ Private Sub BBCobranca(Convenio As String, _
     strJSON = strJSON & vbCrLf & "},"
         
    'PAGADOR
+   Dim Sacado As String
+   Sacado = pgDadosSacado(idSacado)
    strJSON = strJSON & vbCrLf & Sacado
     'strJSON = strJSON & vbCrLf & _
     ' mJ("pagador", "", 2) & "{" & vbCrLf & _
@@ -227,7 +239,7 @@ Private Sub BBCobranca(Convenio As String, _
     strJSON = strJSON & vbCrLf & "}"
 '----------------------------------------------------------------------
     Debug.Print "Boleto JSON: " & strJSON
-End Sub
+End Function
 
 Private Function Calculo_NossoNumero(Id As Long) As String
 
@@ -348,7 +360,7 @@ Private Function mJ(sField As String, sData As Variant, iType As Integer) As Str
 End Function
 
 
-Private Function pgDadosSacado(scTpInsc As String, scCNPJ As String, scNome As String, scLgr As String, scCEP As String, scMun As String, scBairro As String, scUF As String, scFone As String, scEmail As String) As String
+Private Function jsonSacado(scTpInsc As String, scCNPJ As String, scNome As String, scLgr As String, scCEP As String, scMun As String, scBairro As String, scUF As String, scFone As String, scEmail As String) As String
    
     Dim strPagador As String
    'PAGADOR
@@ -366,7 +378,7 @@ Private Function pgDadosSacado(scTpInsc As String, scCNPJ As String, scNome As S
     mJ("email", cemail, 1) & vbCrLf & _
     " },"
     
-    pgDadosSacado = strPagador
+    jsonSacado = strPagador
 End Function
 
 
@@ -484,7 +496,7 @@ End Function
 
 
 
- Function Modulo10(ByVal Numero As String) As Integer
+ Private Function Modulo10(ByVal Numero As String) As Integer
 
   Dim Multiplicador As Integer
     Dim Soma As Integer
@@ -526,5 +538,20 @@ End Function
     ' f) Retorna o dígito verificador
     Modulo10 = DigitoVerificador
     
+End Function
+
+Private Function pgDadosSacado(idSacado) As String
+    Dim s As String
+    s = jsonSacado(PgDadosCliente(idSacado).Pessoa, _
+                   PgDadosCliente(idSacado).Doc, _
+                   PgDadosCliente(idSacado).Nome, _
+                   PgDadosCliente(idSacado).Lgr, _
+                   PgDadosCliente(idSacado).CEP, _
+                   PgDadosCliente(idSacado).Mun, _
+                   PgDadosCliente(idSacado).Bairro, _
+                   PgDadosCliente(idSacado).uf, _
+                   PgDadosCliente(idSacado).Fone, _
+                   PgDadosCliente(idSacado).Mail)
+ 
 End Function
 

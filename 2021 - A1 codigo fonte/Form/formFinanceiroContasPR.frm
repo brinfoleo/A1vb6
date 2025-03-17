@@ -38,7 +38,7 @@ Begin VB.Form formFinanceiroContasPRGerenciador
             Italic          =   0   'False
             Strikethrough   =   0   'False
          EndProperty
-         Format          =   174063617
+         Format          =   173211649
          CurrentDate     =   40658
       End
       Begin MSFlexGridLib.MSFlexGrid msfgContas 

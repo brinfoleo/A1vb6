@@ -12,99 +12,8 @@ Attribute VB_Creatable = True
 Attribute VB_PredeclaredId = False
 Attribute VB_Exposed = False
 
-Public Sub mockLinhaDigitavel()
-    Dim LinhaDigitavel As String
-    
-    LinhaDigitavel = GerarLinhaDigitavelBB( _
-        banco:="001", _
-        moeda:="9", _
-        convenio:="3128557", _
-        carteira:="17", _
-        NossoNumero:="00031285570000043986", _
-        Valor:="0000010000", _
-        Vencimento:="20/03/2025" _
-    )
-    
-    Debug.Print LinhaDigitavel
-End Sub
-Public Sub mockGerarCodigoBarraBB()
-Dim codigoBarras As String
 
-codigoBarras = GerarCodigoBarrasBB( _
-    banco:="001", _
-    moeda:="9", _
-    carteira:="17", _
-    NossoNumero:="00031285570000043986", _
-    Valor:="0000010000", _
-    Vencimento:="20/03/2025" _
-)
-
-Debug.Print codigoBarras
-End Sub
-Public Sub mockTestBBCob()
-  
-    'Modulo Homologacao
-            convenio = "3128557"
-            carteira = "17"
-            carteiraVariacao = "35"
-            tipoConta = "4"
-            cnpjPagador = "74910037000193"
-            cnpjBeneficiario = "98959112000179"
-            nomeBeneficiario = "LIVRARIA CUNHA DA CUNHA"
-            
-            'Convenio = pgDadosConta(PgDadosFinanceiroFatura(Id).idConta).Convenio
-            'Carteira = pgDadosConta(PgDadosFinanceiroFatura(Id).idConta).Carteira
-            'carteiraVariacao = pgDadosConta(PgDadosFinanceiroFatura(Id).idConta).Variacao
-            'tipoConta = pgDadosConta(PgDadosFinanceiroFatura(Id).idConta).Tipo
-            
-            'cnpjPagador = PgDadosCliente(PgDadosFinanceiroFatura(Id).IDSacado).Doc
-            'cnpjBeneficiario = PgDadosEmpresa(ID_Empresa).CNPJ
-            'nomeBeneficiario = PgDadosEmpresa(ID_Empresa).Nome
-            'dataEmissao=PgDadosFinanceiroFatura(Id).emissao
-            'dataVencimento = PgDadosFinanceiroFatura(Id).Vencimento
-            'valor=PgDadosFinanceiroFatura(Id).vlCobrado
-            'vDeducoes=PgDadosFinanceiroFatura(Id).Deducoes
-            'diasProtesto=PgDadosFinanceiroFatura(Id).DiasProtesto
-            'numFatura=PgDadosFinanceiroFatura(Id).NumFatura
-            'numDuplicata= PgDadosFinanceiroFatura(Id).NumDuplicata
-            'sMsg = PgDadosFinanceiroFatura(Id).Obs
-            'pJuros=PgDadosFinanceiroFatura(Id).Juros
-            'vMulta=PgDadosFinanceiroFatura(Id).Multa,
-             
-               
-            '--MULTA
-             'Dim vMD As String
-            'Dim vMulta As String
-            'vMD = cobCalcMora(vDuplicata, 1, pJuros, "D")
-            'vMulta = cobCalcMulta(vDuplicata, vMulta, 1)
-                    
-            
-            
-            
-            'tpPessoa= IIf(LCase(PgDadosCliente(PgDadosFinanceiroFatura(Id).IDSacado).Pessoa) = "fisica", 1, 2)
-            
-            
-          
-            
-            Dim Sacado As String
-            Dim vJurosMora As String
-            vJurosMora = cobCalcMora("100", 1, 2, "D")
-            
-            Dim vMulta As String
-            vMulta = cobCalcMulta("100", 0, 1)
-            
-            Sacado = jsonSacado(2, "74910037000193", "187 CENTRAL CARIOCA DE PECAS LTDA-EPP", "RUA DE SANTANA", "20230260", "RIO DE JANEIRO", "CENTRO", "RJ", "22219755", "email@email.com")
- 
-            
-            BBCobranca "3128557", "17", "35", "4", "13/03/2025", "20/03/2025", "FAT123", "DUP123", "100.00", "0.00", vMulta, vJurosMora, "5", "2", "74910037000193", "98959112000179", "LIVRARIA CUNHA DA CUNHA", "00031285570000043986", Sacado, "MENSAGEM"
-            
-   
-            
-
-End Sub
-
-
-Public Function GerarBoletoBB(convenio As String, _
+Public Function GerarBoletoBB(Convenio As String, _
                         carteira As String, _
                         carteiraVariacao As String, _
                         tipoConta As String, _
@@ -117,7 +26,7 @@ Public Function GerarBoletoBB(convenio As String, _
                         vMulta As String, _
                         vJuros As String, _
                         DiasProtesto As String, _
-                        IDSacado As Integer, _
+                        Sacado As String, _
                         cnpjBeneficiario As String, _
                         nomeBeneficiario As String, _
                         NossoNumero As String, _
@@ -132,7 +41,7 @@ Public Function GerarBoletoBB(convenio As String, _
             
     
     
-    strJSON = strJSON & mJ("numeroConvenio", convenio, 0) & "," & vbCrLf
+    strJSON = strJSON & mJ("numeroConvenio", Convenio, 0) & "," & vbCrLf
     strJSON = strJSON & mJ("numeroCarteira", carteira, 0) & "," & vbCrLf
     strJSON = strJSON & mJ("numeroVariacaoCarteira", CInt(carteiraVariacao), 0) & "," & vbCrLf
     strJSON = strJSON & mJ("codigoModalidade", CInt(tipoConta), 0) & "," & vbCrLf
@@ -211,22 +120,9 @@ Public Function GerarBoletoBB(convenio As String, _
     strJSON = strJSON & vbCrLf & "},"
         
    'PAGADOR
-   Dim Sacado As String
-   Sacado = pgDadosSacado(IDSacado)
+   'Dim Sacado As String
+   'Sacado = pgDadosSacado(IDSacado)
    strJSON = strJSON & vbCrLf & Sacado
-    'strJSON = strJSON & vbCrLf & _
-    ' mJ("pagador", "", 2) & "{" & vbCrLf & _
-    'mJ("tipoInscricao", tpPessoa, 0) & "," & vbCrLf & _
-    'mJ("numeroInscricao", cnpjPagador, 1) & "," & vbCrLf & _
-    'mJ("nome", PgDadosCliente(PgDadosFinanceiroFatura(Id).IDSacado).Nome, 1) & "," & vbCrLf & _
-    'mJ("endereco", PgDadosCliente(PgDadosFinanceiroFatura(Id).IDSacado).Lgr, 1) & "," & vbCrLf & _
-    'mJ("cep", PgDadosCliente(PgDadosFinanceiroFatura(Id).IDSacado).CEP, 1) & "," & vbCrLf & _
-    'mJ("cidade", PgDadosCliente(PgDadosFinanceiroFatura(Id).IDSacado).Mun, 1) & "," & vbCrLf & _
-    'mJ("bairro", PgDadosCliente(PgDadosFinanceiroFatura(Id).IDSacado).Bairro, 1) & "," & vbCrLf & _
-    'mJ("uf", PgDadosCliente(PgDadosFinanceiroFatura(Id).IDSacado).uf, 1) & "," & vbCrLf & _
-    'mJ("telefone", PgDadosCliente(PgDadosFinanceiroFatura(Id).IDSacado).Fone, 1) & "," & vbCrLf & _
-    'mJ("email", PgDadosCliente(PgDadosFinanceiroFatura(Id).IDSacado).emailfin, 1) & vbCrLf & _
-    '" },"
     
     'BENEFICIARIO
     strJSON = strJSON & vbCrLf & _
@@ -237,22 +133,25 @@ Public Function GerarBoletoBB(convenio As String, _
     "}," & vbCrLf & _
     mJ("indicadorPix", "N", 1)
     strJSON = strJSON & vbCrLf & "}"
+    
+    GerarBoletoBB = strJSON
 '----------------------------------------------------------------------
-    Debug.Print "Boleto JSON: " & strJSON
+    'Debug.Print "Boleto JSON: " & strJSON
+    
 End Function
 
-Public Function GerarNossoNumero(Id As Long) As String
+Public Function GerarNossoNumero(Convenio As String, Id As Long) As String
 
 '########################################################################################################
     '### Montagem de NOSSO NUMERO 20 CARACTERES
     '### 28.02.25
     '########################################################################################################
-    Dim convenio As String
+    
     
     Dim NN1, NN2 As String
-    convenio = pgDadosConta(PgDadosFinanceiroFatura(Id).idConta).convenio
-    NN1 = convenio
-    Select Case Len(Trim(convenio))
+    'Convenio = pgDadosConta(PgDadosFinanceiroFatura(Id).idConta).Convenio
+    NN1 = Convenio
+    Select Case Len(Trim(Convenio))
         Case Is <= 6
             'Dim NN1, NN2 As String
             
@@ -274,72 +173,11 @@ Public Function GerarNossoNumero(Id As Long) As String
             GerarNossoNumero = "000" & NN1 & NN2
     End Select
     
- Debug.Print "GerarNossoNumero: " & GerarNossoNumero
+ 'Debug.Print "GerarNossoNumero: " & GerarNossoNumero
     
 
 End Function
-Private Function API_CodigoBarras(Id As Long) As String
-'pagina-4
-'01-03 - Código do Banco na Câmara de Compensação = '001'
-'04-04 - Código da Moeda = 9 (Real)
-'05-05 - Digito Verificador (DV) do código de Barras*
-'06-09 - Fator de Vencimento **
-'10-19 - Valor
-'20-25 - Zeros
-'26-42 - Nosso Numero sem DV
-'43-44 - Tipo de Carteira/Modalidade de Cobrança
-'
 
-    Dim NossoNumero As String
-    Dim TipoCarteira As String
-    Dim fator As String
-    Dim Valor As String
-    Dim codigoBarras As String
-    Dim dvCB As String
-
-
-    
-    fator = CalculoFator(PgDadosFinanceiroFatura(Id).Vencimento)
-    
-    
-    Valor = IIf(Trim(PgDadosFinanceiroFatura(Id).vlCobrado) <> 0, PgDadosFinanceiroFatura(Id).vlCobrado, PgDadosFinanceiroFatura(Id).vlDuplicata)
-    Valor = RS(ChkVal(Valor, 0, cDecMoeda))
-    Valor = Left(String(10, "0"), 10 - Len(Valor)) & Valor
-    
-    NossoNumero = GerarNossoNumero(Id)
-    TipoCarteira = pgDadosConta(PgDadosFinanceiroFatura(Id).idConta).Variacao
-    '########################################################################################################
-    '###  CODIGO DE BARRAS
-    '########################################################################################################
-    codigoBarras = pgDadosBanco(PgDadosFinanceiroFatura(Id).IdBanco).Numero & _
-                   "9" & _
-                   fator & _
-                   Left(String(10, "0"), 10 - Len(Valor)) & Valor & _
-                   Valor & _
-                   "000000" & _
-                   NossoNumero & _
-                   TipoCarteira
-    
-    dvCB = Trim(calculo_dv11base9(codigoBarras))
-    Select Case dvCB
-        Case 0
-            dvCB = 1
-        Case 10
-            dvCB = 1
-        Case 11
-            dvCB = 1
-        Case "X"
-            dvCB = 1
-    End Select
-    
-    codigoBarras = Left(codigoBarras, 4) & dvCB & Mid(codigoBarras, 5, Len(codigoBarras))
- 
- Debug.Print "API_CodigoBarras: " & API_CodigoBarras
- 
-    API_CodigoBarras = codigoBarras
-
-
-End Function
 Private Function mJ(sField As String, sData As Variant, iType As Integer) As String
     'Monta uma linha para JSON
     '
@@ -360,7 +198,7 @@ Private Function mJ(sField As String, sData As Variant, iType As Integer) As Str
 End Function
 
 
-Private Function jsonSacado(scTpInsc As String, scCNPJ As String, scNome As String, scLgr As String, scCEP As String, scMun As String, scBairro As String, scUF As String, scFone As String, scEmail As String) As String
+Public Function jsonSacado(scTpInsc As String, scCNPJ As String, scNome As String, scLgr As String, scCEP As String, scMun As String, scBairro As String, scUF As String, scFone As String, scEmail As String) As String
    
     Dim strPagador As String
    'PAGADOR
@@ -391,24 +229,25 @@ Public Function GerarCodigoBarrasBB( _
     ByVal carteira As String _
 ) As String
 
-    Dim codigoBarras As String
+    Dim CodigoBarras As String
     Dim FatorVencimento As String
     Dim DV As Integer
     
     FatorVencimento = CalcularFatorVencimento(CDate(Vencimento))
     Valor = Replace(Valor, ".", "")
+    Valor = Left(String(10, "0"), 10 - Len(Trim(Valor))) & Valor
 
     ' 1. Monta o código de barras (sem o dígito verificador)
-    codigoBarras = banco & moeda & FatorVencimento & Valor & "000" & NossoNumero & carteira
+    CodigoBarras = banco & moeda & FatorVencimento & Valor & "000" & NossoNumero & carteira
 
     ' 2. Calcula o dígito verificador (Módulo 11)
-    DV = Modulo11(codigoBarras)
+    DV = Modulo11(CodigoBarras)
 
     ' 3. Insere o dígito verificador no código de barras
-    codigoBarras = banco & moeda & DV & FatorVencimento & Valor & "000" & NossoNumero & carteira
+    CodigoBarras = banco & moeda & DV & FatorVencimento & Valor & "000" & NossoNumero & carteira
 
     ' 4. Retorna o resultado
-    GerarCodigoBarrasBB = codigoBarras
+    GerarCodigoBarrasBB = CodigoBarras
 
 End Function
 
@@ -428,7 +267,7 @@ End Function
 Public Function GerarLinhaDigitavelBB( _
     ByVal banco As String, _
     ByVal moeda As String, _
-    ByVal convenio As String, _
+    ByVal Convenio As String, _
     ByVal carteira As String, _
     ByVal NossoNumero As String, _
     ByVal Valor As String, _
@@ -436,7 +275,7 @@ Public Function GerarLinhaDigitavelBB( _
 ) As String
 
     Dim FatorVencimento As String
-    Dim codigoBarras As String
+    Dim CodigoBarras As String
     Dim Campo1 As String
     Dim Campo2 As String
     Dim Campo3 As String
@@ -450,9 +289,10 @@ Public Function GerarLinhaDigitavelBB( _
     
     FatorVencimento = CalcularFatorVencimento(CDate(Vencimento))
     Valor = Replace(Valor, ".", "")
+    Valor = Left(String(10, "0"), 10 - Len(Trim(Valor))) & Valor
 
     ' 1. Monta o código de barras
-    codigoBarras = GerarCodigoBarrasBB( _
+    CodigoBarras = GerarCodigoBarrasBB( _
                                         banco:=banco, _
                                         moeda:=moeda, _
                                         carteira:=carteira, _
@@ -462,20 +302,21 @@ Public Function GerarLinhaDigitavelBB( _
                                     )
                                     
     ' 4. Divide o código de barras em campos
-    Campo1 = banco & moeda & Mid(codigoBarras, 20, 5)
-    Campo2 = Mid(codigoBarras, 25, 10)
-    Campo3 = Mid(codigoBarras, 35, 10)
-    Campo4 = "" 'Mid(CodigoBarras, 4, 1) & Mid(CodigoBarras, 5, 1) & Mid(CodigoBarras, 6, 3) & Mid(CodigoBarras, 7, 1)
+    Campo1 = banco & moeda & Mid(CodigoBarras, 20, 5)
+    Campo2 = Mid(CodigoBarras, 25, 10)
+    Campo3 = Mid(CodigoBarras, 35, 10)
+    Campo4 = Mid(CodigoBarras, 1, 4) & Mid(CodigoBarras, 6, 44) ' & Mid(CodigoBarras, 6, 3) & Mid(CodigoBarras, 7, 1)
     Campo5 = FatorVencimento & Valor '(CodigoBarras, 8, 10)
 
     ' 5. Calcula os dígitos verificadores de cada campo
     DV1 = Modulo10(Campo1)
     DV2 = Modulo10(Campo2)
     DV3 = Modulo10(Campo3)
-    DV4 = Modulo10(Campo4)
+    DV4 = Modulo11(Campo4)
 
     ' 6. Monta a linha digitável
-    GerarLinhaDigitavelBB = Campo1 & DV1 & "" & Campo2 & DV2 & "" & Campo3 & DV3 & "" & Campo4 & DV4 & "" & Campo5
+    GerarLinhaDigitavelBB = Campo1 & DV1 & Campo2 & DV2 & Campo3 & DV3 & DV4 & Campo5
+    'GerarLinhaDigitavelBB = Campo1 & DV1 & "" & Campo2 & DV2 & "" & Campo3 & DV3 & "" & Campo4 & DV4 & "" & Campo5
 
 End Function
 Private Function Modulo11(ByVal Codigo As String) As Integer
@@ -547,19 +388,3 @@ End Function
     Modulo10 = DigitoVerificador
     
 End Function
-
-Private Function pgDadosSacado(IDSacado As Integer) As String
-    Dim s As String
-    s = jsonSacado(PgDadosCliente(IDSacado).Pessoa, _
-                   PgDadosCliente(IDSacado).Doc, _
-                   PgDadosCliente(IDSacado).Nome, _
-                   PgDadosCliente(IDSacado).Lgr, _
-                   PgDadosCliente(IDSacado).CEP, _
-                   PgDadosCliente(IDSacado).Mun, _
-                   PgDadosCliente(IDSacado).Bairro, _
-                   PgDadosCliente(IDSacado).uf, _
-                   PgDadosCliente(IDSacado).Fone, _
-                   PgDadosCliente(IDSacado).Mail)
- 
-End Function
-

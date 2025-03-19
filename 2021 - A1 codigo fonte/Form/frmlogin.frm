@@ -14,6 +14,14 @@ Begin VB.Form frmlogin
    ScaleHeight     =   3705
    ScaleWidth      =   8190
    StartUpPosition =   2  'CenterScreen
+   Begin VB.CommandButton Command1 
+      Caption         =   "Command1"
+      Height          =   375
+      Left            =   2160
+      TabIndex        =   10
+      Top             =   3000
+      Width           =   375
+   End
    Begin VB.CommandButton cmdSair 
       Appearance      =   0  'Flat
       Cancel          =   -1  'True
@@ -204,6 +212,10 @@ Private Sub cboEmpresa_Click()
 End Sub
 
 
+
+Private Sub Command1_Click()
+Shell App.Path & "\bbCobranca\BBConnectAPI.exe list", vbNormalFocus
+End Sub
 
 Private Sub Form_KeyDown(KeyCode As Integer, Shift As Integer)
     If KeyCode = vbKeyReturn Then SendKeys "{Tab}"

@@ -129,11 +129,11 @@ Attribute VB_PredeclaredId = True
 Attribute VB_Exposed = False
 
 Option Explicit
-Public Sub CarregarFormulario(msg As String)
+Public Sub CarregarFormulario(Msg As String)
     DoEvents
     lblVersao.Caption = App.Major & "." & App.Minor & "." & App.Revision
     'lblRevisao.Caption = "Revisão: " & cVersao
-    lblMensagem.Caption = msg
+    lblMensagem.Caption = Msg
     Sleep 250
     Me.Show
 End Sub

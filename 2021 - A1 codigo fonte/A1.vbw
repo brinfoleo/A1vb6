@@ -131,5 +131,5 @@ formFaturamentoPVRelatorios = 0, 0, 0, 0, C, 156, 156, 945, 598, C
 rptListaPVPeriodo = 0, 0, 0, 0, C, 52, 52, 996, 492, CZ
 cZipArchive = 130, 130, 780, 572, C
 Modulo_API = 78, 78, 1105, 724, C
-BBCobranca = 292, 82, 967, 524, 
+BBCobranca = 292, 82, 967, 524, C
 Modulo_Cobranca_Tst = 26, 26, 1053, 672, Z

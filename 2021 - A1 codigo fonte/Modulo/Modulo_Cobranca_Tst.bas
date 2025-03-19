@@ -16,15 +16,15 @@ Public Sub InicializarVariaveis()
     
     
     
-    tstIdFatura = 43764
+    tstIdFatura = 44070
     tstConvenio = "3741178"
     tstCarteira = "17"
     tstcarteiraVariacao = "27"
     tstTipoConta = "4"
-    tstValor = "1412.88"
+    tstValor = "3358.98"
     
-    tstEmissao = "17/02/2025"
-    tstVencimento = "17/03/2025"
+    tstEmissao = "11/03/2025"
+    tstVencimento = "10/05/2025"
     
     cnpjBeneficiario = "98959112000179"
     nomeBeneficiario = "LIVRARIA CUNHA DA CUNHA"

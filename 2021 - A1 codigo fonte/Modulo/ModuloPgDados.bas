@@ -162,7 +162,7 @@ Type Dados_Transportadora
 End Type
 
 Type Dados_EstoqueProduto
-    Id                  As Integer
+    id                  As Integer
     IdDeposito          As Integer
     Referencia          As String
     status              As String
@@ -210,7 +210,7 @@ End Type
 '    Descricao   As String
 'End Type
 Type Dados_Municipio
-    Id          As String
+    id          As String
     uf          As String
     codUF       As String
     codMun      As String
@@ -218,19 +218,19 @@ Type Dados_Municipio
 End Type
 
 Type Dados_MovEstoque
-    Id          As String
+    id          As String
     Descricao   As String
     Sigla       As String
     acao        As String
     AcaoDescr   As String
 End Type
 Type Dados_Banco
-    Id          As String
+    id          As String
     Nome        As String
     Numero      As String
 End Type
 Type Dados_Conta
-    Id              As String
+    id              As String
     banco           As String
     agencia         As String
     AgenciaDV       As String
@@ -249,12 +249,12 @@ Type Dados_Conta
     Saldo           As String
 End Type
 Type Dados_CentroCustos
-    Id          As String
+    id          As String
     Descricao   As String
     Sigla       As String
 End Type
 Type Dados_TipoDocumento
-    Id          As String
+    id          As String
     Tipo        As String
     Descricao   As String
     Sigla       As String
@@ -262,7 +262,7 @@ Type Dados_TipoDocumento
     formaPgto   As String
 End Type
 Type Dados_ICMS
-    Id          As String
+    id          As String
     Descricao   As String
     Sigla       As String
     ICMS        As String
@@ -392,7 +392,7 @@ Type Dados_Configuracoes
 End Type
 
 Type Dados_FinanceiroFatura
-    Id                      As Integer
+    id                      As Integer
     ContaPR                 As String
     TpConta                 As String
     emissao                 As Date
@@ -426,10 +426,11 @@ Type Dados_FinanceiroFatura
     ObsBol1                 As String
     ObsBol2                 As String
     ObsBol3                 As String
+    FixoVariavel            As String '20.03.25
 End Type
 
 Type Dados_Usuario
-    Id                      As Integer
+    id                      As Integer
     Nome                    As String
     Login                   As String
     senha                   As String
@@ -441,7 +442,7 @@ Type Dados_Usuario
     Menus                   As String
 End Type
 Type Dados_CST
-    Id                      As Integer
+    id                      As Integer
     Descricao               As String
     cst                     As String
     Tabela                  As String
@@ -466,7 +467,7 @@ Type Dados_NotaFiscal
     ImpFatura               As Integer
     '*********************************************************************************
     'NFe Autorizada
-     Id                     As Integer
+     id                     As Integer
      nProt                  As String
      dhProt                 As String
      lote                   As String
@@ -681,21 +682,21 @@ Type Dados_NotaFiscal
     
 End Type
 Type Dados_NCM
-    Id          As Integer
+    id          As Integer
     Descricao   As String
     pIPI        As String
     NCM         As String
     cest        As String
 End Type
 Type Dados_PlanoContas
-    Id          As Integer
+    id          As Integer
     Codigo      As String
     Descricao   As String
     cd          As String
     totalizador As Integer
 End Type
 Type Dados_CEST
-    Id          As Integer
+    id          As Integer
     Descricao   As String
     NCM         As String
     cest        As String
@@ -715,7 +716,7 @@ Public Function PgDadosNCM(sCampo As String, sBusca As String, SN As String) As 
             'MsgBox "Erro ao localizar dados NCM", vbInformation, "Aviso"
         Else
             Rst.MoveFirst
-            PgDadosNCM.Id = cNull(Rst.Fields("Id"))
+            PgDadosNCM.id = cNull(Rst.Fields("Id"))
             PgDadosNCM.Descricao = cNull(Rst.Fields("Descricao"))
             PgDadosNCM.NCM = cNull(Rst.Fields("NCM"))
             PgDadosNCM.pIPI = cNull(Rst.Fields("IPI"))
@@ -859,14 +860,14 @@ TrtErro:
     Resume Next
 End Function
 
-Public Function PgDadosEmpresa(Id As Integer) As Dados_Empresa
+Public Function PgDadosEmpresa(id As Integer) As Dados_Empresa
     On Error Resume Next
     Dim Rst     As Recordset
     Dim strSQL  As String
     '15.05.2017
     'strSQL = "SELECT * FROM Empresas WHERE ID_Empresa = " & ID_Empresa & " AND ID = " & Id
     
-    strSQL = "SELECT * FROM Empresas WHERE ID = " & Id
+    strSQL = "SELECT * FROM Empresas WHERE ID = " & id
     Set Rst = RegistroBuscar(strSQL)
     If Rst.BOF And Rst.EOF Then
             
@@ -929,11 +930,11 @@ Public Function PgDadosEmpresa(Id As Integer) As Dados_Empresa
     Rst.Close
     
 End Function
-Public Function PgDadosFornecedor(Id As Integer) As Dados_Fornecedor
+Public Function PgDadosFornecedor(id As Integer) As Dados_Fornecedor
     Dim Rst     As Recordset
     Dim strSQL  As String
     
-    strSQL = "SELECT * FROM Fornecedores WHERE ID_Empresa = " & ID_Empresa & " AND ID = " & Id
+    strSQL = "SELECT * FROM Fornecedores WHERE ID_Empresa = " & ID_Empresa & " AND ID = " & id
     Set Rst = RegistroBuscar(strSQL)
     If Rst.BOF And Rst.EOF Then
             
@@ -988,11 +989,11 @@ Public Function PgDadosFornecedor(Id As Integer) As Dados_Fornecedor
     Rst.Close
     
 End Function
-Public Function PgDadosRhFuncionario(Id As Integer) As Dados_RHFuncionario
+Public Function PgDadosRhFuncionario(id As Integer) As Dados_RHFuncionario
     Dim Rst     As Recordset
     Dim strSQL  As String
     
-    strSQL = "SELECT * FROM RhFuncionarioCadastro WHERE ID_Empresa = " & ID_Empresa & " AND ID = " & Id
+    strSQL = "SELECT * FROM RhFuncionarioCadastro WHERE ID_Empresa = " & ID_Empresa & " AND ID = " & id
     Set Rst = RegistroBuscar(strSQL)
     If Rst.BOF And Rst.EOF Then
             
@@ -1019,19 +1020,19 @@ Public Function PgDadosRhFuncionario(Id As Integer) As Dados_RHFuncionario
     Rst.Close
     
 End Function
-Public Function PgDadosUsuario(Id As Integer) As Dados_Usuario
+Public Function PgDadosUsuario(id As Integer) As Dados_Usuario
     On Error GoTo TrtErroUsu
     Dim Rst     As Recordset
     Dim strSQL  As String
     
-    strSQL = "SELECT * FROM UsuGerenciador WHERE ID_Empresa = " & ID_Empresa & " AND ID = " & Id
+    strSQL = "SELECT * FROM UsuGerenciador WHERE ID_Empresa = " & ID_Empresa & " AND ID = " & id
     Set Rst = RegistroBuscar(strSQL)
 
     If Rst.BOF And Rst.EOF Then
             
         Else
             Rst.MoveFirst
-            PgDadosUsuario.Id = IIf(IsNull(Rst.Fields("id")), "0", Rst.Fields("id"))
+            PgDadosUsuario.id = IIf(IsNull(Rst.Fields("id")), "0", Rst.Fields("id"))
             PgDadosUsuario.Login = IIf(IsNull(Rst.Fields("usu_Login")), "", Rst.Fields("usu_Login"))
             PgDadosUsuario.Nome = IIf(IsNull(Rst.Fields("usu_Nome")), "", Rst.Fields("usu_Nome"))
             PgDadosUsuario.senha = IIf(IsNull(Rst.Fields("usu_Senha")), "", Rst.Fields("usu_Senha"))
@@ -1053,12 +1054,12 @@ TrtErroUsu:
     Resume Next
 End Function
 
-Public Function PgDadosCliente(Id As Integer) As Dados_Cliente
+Public Function PgDadosCliente(id As Integer) As Dados_Cliente
     On Error GoTo TrtErroCli
     Dim Rst     As Recordset
     Dim strSQL  As String
     
-    strSQL = "SELECT * FROM Clientes WHERE ID_Empresa = " & ID_Empresa & " AND ID = " & Id
+    strSQL = "SELECT * FROM Clientes WHERE ID_Empresa = " & ID_Empresa & " AND ID = " & id
     Set Rst = RegistroBuscar(strSQL)
     If Rst.BOF And Rst.EOF Then
             
@@ -1138,7 +1139,7 @@ Public Function PgDadosMunicipio(sUF As String, sMun As String) As Dados_Municip
     If Rst.BOF And Rst.EOF Then
         Else
             Rst.MoveFirst
-            PgDadosMunicipio.Id = Rst.Fields("Id")
+            PgDadosMunicipio.id = Rst.Fields("Id")
             PgDadosMunicipio.uf = Rst.Fields("UF")
             PgDadosMunicipio.Descricao = Rst.Fields("Descricao")
             PgDadosMunicipio.codUF = Rst.Fields("coduf")
@@ -1295,7 +1296,7 @@ Public Function PgDadosCST(idCST As String, Tabela As String) As Dados_CST
             idCST = Left("00", 2 - Len(idCST)) & idCST
         Case Else
             'MsgBox "Erro ao localizar tabela CST"
-            PgDadosCST.Id = 0
+            PgDadosCST.id = 0
             PgDadosCST.Tabela = ""
             PgDadosCST.cst = ""
             PgDadosCST.Descricao = ""
@@ -1311,7 +1312,7 @@ Public Function PgDadosCST(idCST As String, Tabela As String) As Dados_CST
     If Rst.BOF And Rst.EOF Then
         Else
             Rst.MoveFirst
-            PgDadosCST.Id = Rst.Fields("id")
+            PgDadosCST.id = Rst.Fields("id")
             PgDadosCST.Tabela = Rst.Fields("Tabela")
             PgDadosCST.cst = Rst.Fields("CST")
             PgDadosCST.Descricao = Rst.Fields("Descricao")
@@ -1398,7 +1399,7 @@ Public Function pgMovEst(IdMov As Integer) As Dados_MovEstoque
         Else
             Rst.MoveFirst
             
-            pgMovEst.Id = IdMov
+            pgMovEst.id = IdMov
             pgMovEst.Descricao = Rst.Fields("Descricao")
             pgMovEst.Sigla = Rst.Fields("Sigla")
             Select Case Trim(Rst.Fields("Acao"))
@@ -1435,7 +1436,7 @@ Public Function pgDadosEstoqueProduto(IdEstoqueProduto As Long) As Dados_Estoque
         Else
             Rst.MoveFirst
             
-            pgDadosEstoqueProduto.Id = IdEstoqueProduto 'Left(String(3, "0"), 3 - Len(Trim(IdEstoqueProduto))) & IdEstoqueProduto
+            pgDadosEstoqueProduto.id = IdEstoqueProduto 'Left(String(3, "0"), 3 - Len(Trim(IdEstoqueProduto))) & IdEstoqueProduto
             
             pgDadosEstoqueProduto.IdDeposito = Rst.Fields("Deposito")
             pgDadosEstoqueProduto.Referencia = IIf(IsNull(Rst.Fields("Referencia")), "", Rst.Fields("Referencia"))
@@ -1480,7 +1481,7 @@ Public Function pgDadosBanco(IdBanco As String) As Dados_Banco '18.08.17
             Exit Function
         Else
             Rst.MoveFirst
-            pgDadosBanco.Id = Left(String(3, "0"), 3 - Len(Trim(IdBanco))) & IdBanco
+            pgDadosBanco.id = Left(String(3, "0"), 3 - Len(Trim(IdBanco))) & IdBanco
             pgDadosBanco.Nome = Rst.Fields("Nome")
             pgDadosBanco.Numero = IIf(IsNull(Rst.Fields("Numero")) = True, "0", Rst.Fields("Numero"))
             Rst.Close
@@ -1500,7 +1501,7 @@ Public Function pgDadosConta(idConta As Integer) As Dados_Conta
             Exit Function
         Else
             Rst.MoveFirst
-            pgDadosConta.Id = ZE(idConta, 3)
+            pgDadosConta.id = ZE(idConta, 3)
             pgDadosConta.banco = Rst.Fields("Banco")
             pgDadosConta.agencia = IIf(IsNull(Rst.Fields("Agencia")), "", Rst.Fields("Agencia"))
             pgDadosConta.AgenciaDV = IIf(IsNull(Rst.Fields("AgenciaDV")), "", Rst.Fields("AgenciaDV"))
@@ -1563,13 +1564,13 @@ Public Function pgDadosCentroCustos(idCentroCustos As Integer) As Dados_CentroCu
     Set Rst = RegistroBuscar("SELECT * FROM FinanceiroCentroCustos WHERE ID_Empresa = " & ID_Empresa & " AND Id = " & idCentroCustos)
     If Rst.BOF And Rst.EOF Then
             'pgMovEst.Descricao = "<< Movimento não encontrado >>"
-            pgDadosCentroCustos.Id = 0
+            pgDadosCentroCustos.id = 0
             MsgBox "Erro ao localizar Dados:pgDadosCentroCustos"
             Rst.Close
             Exit Function
         Else
             Rst.MoveFirst
-            pgDadosCentroCustos.Id = Left(String(3, "0"), 3 - Len(Trim(idCentroCustos))) & idCentroCustos
+            pgDadosCentroCustos.id = Left(String(3, "0"), 3 - Len(Trim(idCentroCustos))) & idCentroCustos
             pgDadosCentroCustos.Descricao = Rst.Fields("descricao")
             pgDadosCentroCustos.Sigla = IIf(IsNull(Rst.Fields("Sigla")), "", Rst.Fields("Sigla"))
             Rst.Close
@@ -1583,13 +1584,13 @@ Public Function pgDadosTipoDocumento(IdTipoDocumento As Integer) As Dados_TipoDo
     Set Rst = RegistroBuscar("SELECT * FROM FinanceiroTipoDocumento WHERE ID_Empresa = " & ID_Empresa & " AND Id = " & IdTipoDocumento)
     If Rst.BOF And Rst.EOF Then
             'pgMovEst.Descricao = "<< Movimento não encontrado >>"
-            pgDadosTipoDocumento.Id = 0
+            pgDadosTipoDocumento.id = 0
             MsgBox "Modulo: pgDadosTipoDocumento" & vbCrLf & " (IdTipoDocumento=" & IdTipoDocumento & ")"
             Rst.Close
             Exit Function
         Else
             Rst.MoveFirst
-            pgDadosTipoDocumento.Id = Left(String(3, "0"), 3 - Len(Trim(IdTipoDocumento))) & IdTipoDocumento
+            pgDadosTipoDocumento.id = Left(String(3, "0"), 3 - Len(Trim(IdTipoDocumento))) & IdTipoDocumento
             pgDadosTipoDocumento.Descricao = Rst.Fields("descricao")
             pgDadosTipoDocumento.Sigla = Rst.Fields("Sigla")
             pgDadosTipoDocumento.Impressao = Rst.Fields("Impressao")
@@ -1600,7 +1601,7 @@ Public Function pgDadosTipoDocumento(IdTipoDocumento As Integer) As Dados_TipoDo
     End If
     Exit Function
 TrtErro:
-pgDadosTipoDocumento.Id = 0
+pgDadosTipoDocumento.id = 0
     RegLogDataBase 0, "pgDadosTipoDocumento", "", Err.Number & " - " & Err.Description
 End Function
 
@@ -1622,7 +1623,7 @@ Public Function pgDadosICMS(sBusca As String, tpBusca As Integer) As Dados_ICMS
             MsgBox "Erro ao localizar Dados: pgDadosICMS"
         Else
             Rst.MoveFirst
-            pgDadosICMS.Id = Rst.Fields("id") 'Left(String(3, "0"), 3 - Len(Trim(IdICMS))) & IdICMS
+            pgDadosICMS.id = Rst.Fields("id") 'Left(String(3, "0"), 3 - Len(Trim(IdICMS))) & IdICMS
             pgDadosICMS.Descricao = IIf(IsNull(Rst.Fields("descricao")), "", Rst.Fields("descricao"))
             pgDadosICMS.Sigla = IIf(IsNull(Rst.Fields("Sigla")), "", Rst.Fields("Sigla"))
             pgDadosICMS.ICMS = IIf(IsNull(Rst.Fields("ICMS")), 0, Rst.Fields("ICMS"))
@@ -1658,18 +1659,18 @@ End Function
 'End Function
 
 
-Public Function PgDadosFinanceiroFatura(Id As Long) As Dados_FinanceiroFatura
+Public Function PgDadosFinanceiroFatura(id As Long) As Dados_FinanceiroFatura
     'Pega as fatura pertinentes a emissao de documento fiscal
     'Nao ha vinculo com FaturamentoNFE
     On Error GoTo regErro
     Dim Rst     As Recordset
     Dim sSQL    As String
     
-    sSQL = "SELECT * FROM FinanceiroContasPRCadastro WHERE ID_Empresa = " & ID_Empresa & " AND id = " & Id
+    sSQL = "SELECT * FROM FinanceiroContasPRCadastro WHERE ID_Empresa = " & ID_Empresa & " AND id = " & id
     
     Set Rst = RegistroBuscar(sSQL)
     If Rst.BOF And Rst.EOF Then
-            MsgBox "Erro ao localizar fatura n." & Id, vbInformation, "Aviso"
+            MsgBox "Erro ao localizar fatura n." & id, vbInformation, "Aviso"
             Rst.Close
             Exit Function
         Else
@@ -1677,7 +1678,7 @@ Public Function PgDadosFinanceiroFatura(Id As Long) As Dados_FinanceiroFatura
         
     End If
     
-    PgDadosFinanceiroFatura.Id = Rst.Fields("Id")
+    PgDadosFinanceiroFatura.id = Rst.Fields("Id")
     PgDadosFinanceiroFatura.ContaPR = IIf(IsNull(Rst.Fields("ContaPR")), "", Rst.Fields("ContaPR"))
     PgDadosFinanceiroFatura.TpConta = IIf(IsNull(Rst.Fields("TpDocumento")), "0", Rst.Fields("TpDocumento"))
     PgDadosFinanceiroFatura.emissao = IIf(IsNull(Rst.Fields("Emissao")), Empty, Rst.Fields("Emissao"))
@@ -1688,6 +1689,7 @@ Public Function PgDadosFinanceiroFatura(Id As Long) As Dados_FinanceiroFatura
     PgDadosFinanceiroFatura.idCentroCustos = IIf(IsNull(Rst.Fields("CentroCusto")), "0", Rst.Fields("CentroCusto"))
     PgDadosFinanceiroFatura.idPlanoContas = IIf(IsNull(Rst.Fields("PlanoContas")), "0", Rst.Fields("PlanoContas"))
     
+    PgDadosFinanceiroFatura.FixoVariavel = IIf(IsNull(Rst.Fields("FixoVariavel")), "", Rst.Fields("FixoVariavel"))
     
     PgDadosFinanceiroFatura.idTpDoc = IIf(IsNull(Rst.Fields("TpDocumento")), "0", Rst.Fields("TpDocumento"))
     PgDadosFinanceiroFatura.Tabela = IIf(IsNull(Rst.Fields("Tabela")), "", Rst.Fields("Tabela"))
@@ -1720,16 +1722,16 @@ Public Function PgDadosFinanceiroFatura(Id As Long) As Dados_FinanceiroFatura
     Rst.Close
     Exit Function
 regErro:
-    RegLogDataBase 0, "0", "0", "PgDadosFinanceiroFatura: " & Err.Number & "-" & Err.Description & "(" & Id & ")"
+    RegLogDataBase 0, "0", "0", "PgDadosFinanceiroFatura: " & Err.Number & "-" & Err.Description & "(" & id & ")"
     Resume Next
 End Function
-Public Function PgDadosTpNotaFiscal(Id As Integer) As Dados_TipoNotaFiscal
+Public Function PgDadosTpNotaFiscal(id As Integer) As Dados_TipoNotaFiscal
     'On Error GoTo TrtErroTpNF
     Dim Rst As Recordset
-    If Id = 0 Then Exit Function
-    Set Rst = RegistroBuscar("SELECT * FROM FaturamentoTipoNotaFiscal WHERE ID_Empresa = " & ID_Empresa & " AND ID = " & Id)
+    If id = 0 Then Exit Function
+    Set Rst = RegistroBuscar("SELECT * FROM FaturamentoTipoNotaFiscal WHERE ID_Empresa = " & ID_Empresa & " AND ID = " & id)
     If Rst.BOF And Rst.EOF Then
-            MsgBox "Erro ao localizar Tipo de NOTA Fiscal n. " & Id
+            MsgBox "Erro ao localizar Tipo de NOTA Fiscal n. " & id
         Else
             Rst.MoveFirst
             PgDadosTpNotaFiscal.Descricao = IIf(IsNull(Rst.Fields("Descricao")), "", Rst.Fields("Descricao"))
@@ -1844,8 +1846,8 @@ Public Function PgDadosCFOP(tpNF As Integer, cst As String, UFDest As String) As
     Rst.Close
 End Function
 
-Public Function PgDescrTipoEmissao(Id As Integer) As String
-    Select Case Id
+Public Function PgDescrTipoEmissao(id As Integer) As String
+    Select Case id
         Case 1
             PgDescrTipoEmissao = "Normal"
         Case 2
@@ -1860,8 +1862,8 @@ Public Function PgDescrTipoEmissao(Id As Integer) As String
             PgDescrTipoEmissao = ""
     End Select
 End Function
-Public Function PgDescrRegTrib(Id As Integer) As String
-    Select Case Id
+Public Function PgDescrRegTrib(id As Integer) As String
+    Select Case id
         Case 1
             PgDescrRegTrib = "Simples Nacional"
         Case 2
@@ -1962,7 +1964,7 @@ Public Function PgDadosNotaFiscal(chv As String) As Dados_NotaFiscal
             PgDadosNotaFiscal.ImpFatura = cNull(Rst.Fields("impfatura"))
             '********************************************************
             'Do Until Rst.EOF
-                PgDadosNotaFiscal.Id = cNull(Rst.Fields("id"))
+                PgDadosNotaFiscal.id = cNull(Rst.Fields("id"))
                 PgDadosNotaFiscal.nProt = cNull(Rst.Fields("nProt"))
                 PgDadosNotaFiscal.dhProt = cNull(Rst.Fields("dhProt"))
                 PgDadosNotaFiscal.lote = cNull(Rst.Fields("Lote"))
@@ -2190,7 +2192,7 @@ Public Function PgDadosPlanoContas(Campo As String, Busca As String) As Dados_Pl
     If Rst.BOF And Rst.EOF Then
         Else
             Rst.MoveFirst
-            PgDadosPlanoContas.Id = cNull(Rst.Fields("Id"))
+            PgDadosPlanoContas.id = cNull(Rst.Fields("Id"))
             PgDadosPlanoContas.Descricao = cNull(Rst.Fields("Descricao"))
             PgDadosPlanoContas.Codigo = cNull(Rst.Fields("codigo"))
             PgDadosPlanoContas.cd = cNull(Rst.Fields("CD"))
@@ -2217,7 +2219,7 @@ Public Function PgDadosCEST(sCampo As String, sBusca As String, SN As String) As
             'MsgBox "Erro ao localizar dados NCM", vbInformation, "Aviso"
         Else
             Rst.MoveFirst
-            PgDadosCEST.Id = cNull(Rst.Fields("Id"))
+            PgDadosCEST.id = cNull(Rst.Fields("Id"))
             PgDadosCEST.Descricao = cNull(Rst.Fields("Descricao"))
             PgDadosCEST.NCM = cNull(Rst.Fields("NCM"))
             'PgDadosCEST.pIPI = cNull(Rst.Fields("IPI"))

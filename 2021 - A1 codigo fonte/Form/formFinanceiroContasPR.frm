@@ -38,7 +38,7 @@ Begin VB.Form formFinanceiroContasPRGerenciador
             Italic          =   0   'False
             Strikethrough   =   0   'False
          EndProperty
-         Format          =   173211649
+         Format          =   171704321
          CurrentDate     =   40658
       End
       Begin MSFlexGridLib.MSFlexGrid msfgContas 
@@ -217,7 +217,7 @@ Begin VB.Form formFinanceiroContasPRGerenciador
             Style           =   3
          EndProperty
          BeginProperty Button6 {66833FEA-8583-11D1-B16A-00C0F0283628} 
-            Object.ToolTipText     =   "exportar cobrança"
+            Object.ToolTipText     =   "Registrar Fatura"
             ImageIndex      =   15
          EndProperty
       EndProperty
@@ -521,25 +521,150 @@ End Sub
 
 
 
+Private Sub registrarBoletoBBCobranca(idFatura As Long)
+    If IdReg = 0 Then Exit Sub
+    
+    'Verifica o valor da coluna
+    'If (Len(Trim(PgDadosFinanceiroFatura(idFatura).FixoVariavel)) > 0) Then
+    '    MsgBox "Fatura nao pode ser registrada!", vbExclamation, "A1 - Aviso"
+    '    Exit Sub
+    'End If
+    
+    If MsgBox("Confirma registrar boleto?", vbYesNo + vbQuestion, "Registro de boleto") = vbNo Then Exit Sub
+    '--------------------------------------------------------------------------------------
+    'Enviar dados para registrar Boleto
+    '--------------------------------------------------------------------------------------
+    
+    Dim bbCob As New BBCobranca
+    Dim jsonBoleto As String
+    
+    Dim cnpjBeneficiario As String
+    Dim nomeBeneficiario As String
+    
+    cnpjBeneficiario = PgDadosEmpresa(ID_Empresa).CNPJ
+    nomeBeneficiario = PgDadosEmpresa(ID_Empresa).Nome
+    
+    Dim Convenio As String
+    Dim carteira As String
+    'Dim convenio As String
+    'Dim idFatura As Long
+    Dim DiasProtesto As String
+    Dim carteiraVariacao As String
+    Dim tipoConta As String
+    Dim Valor As String
+    Dim vDeducao As String
+    Dim emissao As String
+    Dim Vencimento As String
+    Dim nFatura As String
+    Dim nDuplicata As String
+   
 
+    Convenio = pgDadosConta(PgDadosFinanceiroFatura(idFatura).idConta).Convenio
+    carteira = pgDadosConta(PgDadosFinanceiroFatura(idFatura).idConta).carteira
+    carteiraVariacao = pgDadosConta(PgDadosFinanceiroFatura(idFatura).idConta).Variacao
+    tipoConta = pgDadosConta(PgDadosFinanceiroFatura(idFatura).idConta).Tipo
+    Valor = PgDadosFinanceiroFatura(idFatura).vlCobrado
+    vDeducao = PgDadosFinanceiroFatura(idFatura).Deducoes
+    emissao = PgDadosFinanceiroFatura(idFatura).emissao
+    Vencimento = PgDadosFinanceiroFatura(idFatura).Vencimento
+    nFatura = PgDadosFinanceiroFatura(idFatura).NumFatura
+    nDuplicata = PgDadosFinanceiroFatura(idFatura).NumDuplicata
+    DiasProtesto = PgDadosFinanceiroFatura(idFatura).DiasProtesto
+    
+    
+    
+    Dim vJurosMora As String
+    vJurosMora = cobCalcMora(Valor, 1, 2, "D")
+     
+    Dim vMulta As String
+    vMulta = cobCalcMulta(Valor, 0, 1)
+    
+    Dim Sacado As String
+    Dim sacID As Integer
+    Dim sacTpInscricao As String
+    Dim sacCNPJ As String
+    Dim sacNome As String
+    Dim sacLgr As String
+    Dim sacCep As String
+    Dim sacBairro As String
+    Dim sacMun As String
+    Dim sacUF As String
+    Dim sacFone As String
+    Dim sacMail As String
+    
+    sacID = PgDadosFinanceiroFatura(idFatura).IDSacado
+    sacTpInscricao = "2"
+    sacNome = PgDadosCliente(sacID).Nome
+    sacCNPJ = PgDadosCliente(sacID).Doc
+    sacLgr = PgDadosCliente(sacID).Lgr & " " & PgDadosCliente(sacID).Nro
+    sacBairro = PgDadosCliente(sacID).Bairro
+    sacMun = PgDadosCliente(sacID).Mun
+    sacUF = PgDadosCliente(sacID).uf
+    sacFone = PgDadosCliente(sacID).Fone
+    sacMail = PgDadosCliente(sacID).Mail
+    
+    Sacado = bbCob.jsonSacado(sacTpInscricao, _
+                              sacCNPJ, _
+                              sacNome, _
+                              sacLgr, _
+                              sacCep, _
+                              sacMun, _
+                              sacBairro, _
+                              sacUF, _
+                              sacFone, _
+                              sacMail)
 
+     
+    jsonBoleto = bbCob.GerarBoletoBB(Convenio:=Convenio, _
+                                    carteira:=carteira, _
+                                    carteiraVariacao:=carteiraVariacao, _
+                                    tipoConta:=tipoConta, _
+                                    dataEmissao:=emissao, _
+                                    DataVencimento:=Vencimento, _
+                                    nFatura:=nFatura, _
+                                    nDuplicata:=nDuplicata, _
+                                    Valor:=Valor, _
+                                    vDeducao:=vDeducao, _
+                                    vMulta:=vMulta, _
+                                    vJuros:=vJurosMora, _
+                                    DiasProtesto:="5", _
+                                    Sacado:=Sacado, _
+                                    cnpjBeneficiario:=cnpjBeneficiario, _
+                                    nomeBeneficiario:=nomeBeneficiario, _
+                                    NossoNumero:=bbCob.GerarNossoNumero(Convenio, idFatura), _
+                                    smsg:="MENSAGEM")
+            
+    'Debug.Print jsonBoleto
 
+  
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+  'Gravar log tmp checagem
+    ExcluirFile App.Path & "\bbCobranca\boleto.txt"
+    'ExcluirFile PgDadosConfig.pFileArmazenamento & "\boleto-001.txt"
+    
+    grvFile App.Path & "\bbCobranca\boleto.txt", jsonBoleto
+    'grvFile PgDadosConfig.pFileArmazenamento & "\boleto-001.txt", "|Id:" & Id & vbCrLf & _
+                                "|NN:" & NossoNumero & vbCrLf & _
+                                "|LD:" & LinhaDigitavel & vbCrLf & _
+                                "|CB:" & CodigoBarras
+    Dim sStatus As String
+    sStatus = bbCobrancaEnviarBoletoAPI
+    '--------------------------------------------------------------------------------------
+    'Grava boleto como registrado
+    '--------------------------------------------------------------------------------------
+    Dim vDados(1)   As Variant
+    Dim cReg        As Integer
+    
+    Dim criterio As String
+    
+    cReg = 0
+    vDados(cReg) = Array("FixoVariavel", "R", "S"): cReg = cReg + 1
+    cReg = cReg - 1
+    criterio = "id=" & idFatura
+    RegistroAlterar "financeirocontasprcadastro", vDados, cReg, criterio
+   
+    AtualizarLista
+End Sub
 
 Private Sub Form_Activate()
     If chkAcesso(Me, "c") = False Then
@@ -637,8 +762,9 @@ Private Sub tbMenu_ButtonClick(ByVal Button As MSComctlLib.Button)
         Case "Imprimir Documento"
             ImprimirDocumento
             
-        Case "exportar cobrança"
-            mntArqCNAB240
+        Case "Registrar Fatura"
+            registrarBoletoBBCobranca (IdReg)
+            'mntArqCNAB240
 '
 '        Case "Imprimir Listagem Completa"
 '            ImprimirListagemCompleta

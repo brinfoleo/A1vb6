@@ -1,0 +1,1 @@
+{"erros":[{"codigo":"3646865","ocorrencia":"000000000000000000134610","mensagem":"Operação não permitida pois o boleto não pertence ao convênio do usuário.","versao":"1"}]}

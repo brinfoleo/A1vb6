@@ -192,14 +192,14 @@ Private Function cnab240Q(faturaId As Long, lote As String) As String
     line = line & "0" '08.3Q - tipo inscricao
     line = line & F("n", 15, "0") '09.3Q - numero inscricao
     line = line & F("a", 40, PgDadosFinanceiroFatura(faturaId).Sacado)
-    line = line & F("a", 40, PgDadosCliente(PgDadosFinanceiroFatura(faturaId).idSacado).Lgr & _
-                    PgDadosCliente(PgDadosFinanceiroFatura(faturaId).idSacado).Nro)
-    line = line & F("a", 15, PgDadosCliente(PgDadosFinanceiroFatura(faturaId).idSacado).Bairro)
-    line = line & F("n", 5, Mid(PgDadosCliente(PgDadosFinanceiroFatura(faturaId).idSacado).CEP, 1, 5))
-    line = line & F("n", 3, Mid(PgDadosCliente(PgDadosFinanceiroFatura(faturaId).idSacado).CEP, 6, 3))
+    line = line & F("a", 40, PgDadosCliente(PgDadosFinanceiroFatura(faturaId).IDSacado).Lgr & _
+                    PgDadosCliente(PgDadosFinanceiroFatura(faturaId).IDSacado).Nro)
+    line = line & F("a", 15, PgDadosCliente(PgDadosFinanceiroFatura(faturaId).IDSacado).Bairro)
+    line = line & F("n", 5, Mid(PgDadosCliente(PgDadosFinanceiroFatura(faturaId).IDSacado).CEP, 1, 5))
+    line = line & F("n", 3, Mid(PgDadosCliente(PgDadosFinanceiroFatura(faturaId).IDSacado).CEP, 6, 3))
     
-    line = line & F("a", 15, PgDadosCliente(PgDadosFinanceiroFatura(faturaId).idSacado).Mun)
-    line = line & F("a", 2, PgDadosCliente(PgDadosFinanceiroFatura(faturaId).idSacado).uf)
+    line = line & F("a", 15, PgDadosCliente(PgDadosFinanceiroFatura(faturaId).IDSacado).Mun)
+    line = line & F("a", 2, PgDadosCliente(PgDadosFinanceiroFatura(faturaId).IDSacado).uf)
     'Sac/Avalista
     line = line & "0"
     line = line & F("n", 15, "0")
@@ -550,7 +550,7 @@ End Sub
 
 Public Sub BoletoBancario_001(Id As Long)
   
-    Dim BBCob As New BBCobranca
+    Dim bbCob As New BBCobranca
     Dim boleto As String
     
     Dim moeda As String
@@ -563,7 +563,7 @@ Public Sub BoletoBancario_001(Id As Long)
     Dim CodigoBarras As String
     Dim LinhaDigitavel As String
     
-    Dim idSacado As Integer
+    Dim IDSacado As Integer
     Dim Sacado As String
     
     moeda = "9"
@@ -573,25 +573,25 @@ Public Sub BoletoBancario_001(Id As Long)
     carteiraVariacao = pgDadosConta(PgDadosFinanceiroFatura(Id).idConta).Variacao
     Convenio = pgDadosConta(PgDadosFinanceiroFatura(Id).idConta).Convenio
     
-    NossoNumero = BBCob.GerarNossoNumero(Convenio, Id)
+    NossoNumero = bbCob.GerarNossoNumero(Convenio, Id)
     
     
-    idSacado = PgDadosFinanceiroFatura(Id).idSacado
-    Sacado = BBCob.jsonSacado(PgDadosCliente(idSacado).Pessoa, _
-                   PgDadosCliente(idSacado).Doc, _
-                   PgDadosCliente(idSacado).Nome, _
-                   PgDadosCliente(idSacado).Lgr, _
-                   PgDadosCliente(idSacado).CEP, _
-                   PgDadosCliente(idSacado).Mun, _
-                   PgDadosCliente(idSacado).Bairro, _
-                   PgDadosCliente(idSacado).uf, _
-                   PgDadosCliente(idSacado).Fone, _
-                   PgDadosCliente(idSacado).Mail)
+    IDSacado = PgDadosFinanceiroFatura(Id).IDSacado
+    Sacado = bbCob.jsonSacado(PgDadosCliente(IDSacado).Pessoa, _
+                   PgDadosCliente(IDSacado).Doc, _
+                   PgDadosCliente(IDSacado).Nome, _
+                   PgDadosCliente(IDSacado).Lgr, _
+                   PgDadosCliente(IDSacado).CEP, _
+                   PgDadosCliente(IDSacado).Mun, _
+                   PgDadosCliente(IDSacado).Bairro, _
+                   PgDadosCliente(IDSacado).uf, _
+                   PgDadosCliente(IDSacado).Fone, _
+                   PgDadosCliente(IDSacado).Mail)
     
     
     
     
-    CodigoBarras = BBCob.GerarCodigoBarrasBB( _
+    CodigoBarras = bbCob.GerarCodigoBarrasBB( _
                                             banco:=banco, _
                                             moeda:=moeda, _
                                             NossoNumero:=NossoNumero, _
@@ -599,7 +599,7 @@ Public Sub BoletoBancario_001(Id As Long)
                                             Vencimento:=PgDadosFinanceiroFatura(Id).Vencimento, _
                                             carteira:=carteira)
                                             
-    LinhaDigitavel = BBCob.GerarLinhaDigitavelBB(banco:=banco, _
+    LinhaDigitavel = bbCob.GerarLinhaDigitavelBB(banco:=banco, _
                                              moeda:=moeda, _
                                              Convenio:=Convenio, _
                                              carteira:=carteira, _
@@ -608,7 +608,7 @@ Public Sub BoletoBancario_001(Id As Long)
                                              Valor:=PgDadosFinanceiroFatura(Id).vlCobrado)
     
     
-    boleto = BBCob.GerarBoletoBB( _
+    boleto = bbCob.GerarBoletoBB( _
                                 Convenio:=Convenio, _
                                 carteira:=carteira, _
                                 carteiraVariacao:=carteiraVariacao, _
@@ -634,11 +634,11 @@ Public Sub BoletoBancario_001(Id As Long)
     grvDadosBoleto Id, NossoNumero, LinhaDigitavel, CodigoBarras
   
     'Gravar log tmp checagem
-    ExcluirFile PgDadosConfig.pFileArmazenamento & "\boleto-000.txt"
-    ExcluirFile PgDadosConfig.pFileArmazenamento & "\boleto-001.txt"
+    'ExcluirFile App.Path & "\bbCobranca\boleto.txt"
+    'ExcluirFile PgDadosConfig.pFileArmazenamento & "\boleto-001.txt"
     
-    grvFile PgDadosConfig.pFileArmazenamento & "\boleto-000.txt", boleto
-    grvFile PgDadosConfig.pFileArmazenamento & "\boleto-001.txt", "|Id:" & Id & vbCrLf & _
+    'grvFile App.Path & "bbCobranca\boleto.txt", boleto
+    'grvFile PgDadosConfig.pFileArmazenamento & "\boleto-001.txt", "|Id:" & Id & vbCrLf & _
                                 "|NN:" & NossoNumero & vbCrLf & _
                                 "|LD:" & LinhaDigitavel & vbCrLf & _
                                 "|CB:" & CodigoBarras
@@ -1538,4 +1538,14 @@ Private Function Calculo_NossoNumero(Id As Long) As String
  Debug.Print "Calculo_NossoNumero: " & Calculo_NossoNumero
     
 
+End Function
+
+Public Function bbCobrancaEnviarBoletoAPI()
+    'Dim sReturn As String
+    'sReturn = Shell(App.Path & "\bbCobranca\BBConnectAPI.exe list", vbNormalFocus)
+    'bbCobrancaEnviarBoletoAPI = sReturn
+    Dim sCommand As String
+    sCommand = App.Path & "\bbCobranca\BBConnectAPI.exe -i " & """" & App.Path & "\bbCobranca\boleto.txt" & """"
+    ExecutarAplicacaoExterna sCommand
+    'C:\Caminho\Para\Sua\Aplicacao.
 End Function

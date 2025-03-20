@@ -40,24 +40,24 @@ End Sub
 
 Public Function mockGerarNossoNumero() As String
     InicializarVariaveis
-    Dim BBCob As New BBCobranca
+    Dim bbCob As New BBCobranca
     Dim NossoNumero As String
    
     
-    NossoNumero = BBCob.GerarNossoNumero(tstConvenio, tstIdFatura)
+    NossoNumero = bbCob.GerarNossoNumero(tstConvenio, tstIdFatura)
     mockGerarNossoNumero = NossoNumero
 End Function
 Public Sub mockLinhaDigitavel()
     InicializarVariaveis
-    Dim BBCob As New BBCobranca
+    Dim bbCob As New BBCobranca
     Dim LinhaDigitavel As String
     
-    LinhaDigitavel = BBCob.GerarLinhaDigitavelBB( _
+    LinhaDigitavel = bbCob.GerarLinhaDigitavelBB( _
         banco:="001", _
         moeda:="9", _
         Convenio:=tstConvenio, _
         carteira:=tstCarteira, _
-        NossoNumero:=BBCob.GerarNossoNumero(tstConvenio, tstIdFatura), _
+        NossoNumero:=bbCob.GerarNossoNumero(tstConvenio, tstIdFatura), _
         Valor:=tstValor, _
         Vencimento:=tstVencimento _
     )
@@ -66,14 +66,14 @@ Public Sub mockLinhaDigitavel()
 End Sub
     Public Sub mockGerarCodigoBarraBB()
     InicializarVariaveis
-    Dim BBCob As New BBCobranca
+    Dim bbCob As New BBCobranca
     Dim CodigoBarras As String
     
-    CodigoBarras = BBCob.GerarCodigoBarrasBB( _
+    CodigoBarras = bbCob.GerarCodigoBarrasBB( _
         banco:="001", _
         moeda:="9", _
         carteira:=tstCarteira, _
-        NossoNumero:=BBCob.GerarNossoNumero(tstConvenio, tstIdFatura), _
+        NossoNumero:=bbCob.GerarNossoNumero(tstConvenio, tstIdFatura), _
         Valor:=tstValor, _
         Vencimento:=tstVencimento _
     )
@@ -83,20 +83,21 @@ End Sub
 End Sub
 Public Function mockGerarBoleto()
     InicializarVariaveis
-    Dim BBCob As New BBCobranca
+    Dim bbCob As New BBCobranca
     'Modulo Homologacao
     Dim tstBoleto As String
-     Dim Sacado As String
-     Dim vJurosMora As String
+    
+    Dim vJurosMora As String
      vJurosMora = cobCalcMora(tstValor, 1, 2, "D")
      
      Dim vMulta As String
      vMulta = cobCalcMulta(tstValor, 0, 1)
-     
-     Sacado = BBCob.jsonSacado(2, "74910037000193", "187 CENTRAL CARIOCA DE PECAS LTDA-EPP", "RUA DE SANTANA", "20230260", "RIO DE JANEIRO", "CENTRO", "RJ", "22219755", "email@email.com")
+    
+        Dim Sacado As String
+     Sacado = bbCob.jsonSacado(2, "74910037000193", "187 CENTRAL CARIOCA DE PECAS LTDA-EPP", "RUA DE SANTANA", "20230260", "RIO DE JANEIRO", "CENTRO", "RJ", "22219755", "email@email.com")
 
      
-     tstBoleto = BBCob.GerarBoletoBB(Convenio:=tstConvenio, _
+     tstBoleto = bbCob.GerarBoletoBB(Convenio:=tstConvenio, _
                                     carteira:=tstCarteira, _
                                     carteiraVariacao:=tstcarteiraVariacao, _
                                     tipoConta:=tstTipoConta, _
@@ -112,7 +113,7 @@ Public Function mockGerarBoleto()
                                     Sacado:=Sacado, _
                                     cnpjBeneficiario:=cnpjBeneficiario, _
                                     nomeBeneficiario:=nomeBeneficiario, _
-                                    NossoNumero:=BBCob.GerarNossoNumero(tstConvenio, tstIdFatura), _
+                                    NossoNumero:=bbCob.GerarNossoNumero(tstConvenio, tstIdFatura), _
                                     smsg:="MENSAGEM")
             
     Debug.Print tstBoleto

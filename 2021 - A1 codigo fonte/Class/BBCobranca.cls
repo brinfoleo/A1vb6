@@ -40,7 +40,7 @@ Public Function GerarBoletoBB(Convenio As String, _
             
             
     
-    
+    strJSON = "{" & vbCrLf
     strJSON = strJSON & mJ("numeroConvenio", Convenio, 0) & "," & vbCrLf
     strJSON = strJSON & mJ("numeroCarteira", carteira, 0) & "," & vbCrLf
     strJSON = strJSON & mJ("numeroVariacaoCarteira", CInt(carteiraVariacao), 0) & "," & vbCrLf

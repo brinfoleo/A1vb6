@@ -1,0 +1,70 @@
+{
+"numeroConvenio": 3741178,
+"numeroCarteira": 17,
+"numeroVariacaoCarteira": 27,
+"codigoModalidade": 4,
+"dataEmissao": "20.03.2025",
+"dataVencimento": "30.03.2025",
+"valorOriginal": 100.00,
+"valorAbatimento": 0.00,
+"quantidadeDiasProtesto": 5,
+"quantidadeDiasNegativacao": 0,
+"orgaoNegativador": 10,
+"indicadorAceiteTituloVencido": "S",
+"numeroDiasLimiteRecebimento": 5,
+"codigoAceite": "A",
+"codigoTipoTitulo": 2,
+"descricaoTipoTitulo": "DM",
+"indicadorPermissaoRecebimentoParcial": "N",
+"numeroTituloBeneficiario": "FAT-2223",
+"campoUtilizacaoBeneficiario": "FAT-2223-1-1",
+"numeroTituloCliente": "00037411780000043985",
+"mensagemBloquetoOcorrencia": "MENSAGEM",
+"desconto": {
+"tipo": 0,
+"dataExpiracao": "",
+"porcentagem": 0,
+"valor": 0.00
+},
+"segundoDesconto": {
+"dataExpiracao": "",
+"porcentagem": 0,
+"valor": 0
+},
+"terceiroDesconto": {
+"dataExpiracao": "",
+"porcentagem": 0,
+"valor": 0
+},
+"jurosMora": {
+"tipo": 1,
+"porcentagem": 0,
+"valor": 2.00
+
+},
+"multa": {
+"tipo": 0,
+"data": "",
+"porcentagem": 0,
+"valor": 0.00
+},
+
+"pagador": {
+"tipoInscricao": 2,
+"numeroInscricao": "04853507000149",
+"nome": "187 CENTRAL CARIOCA DE PECAS LTDA-EPP",
+"endereco": "RUA DE SANTANA 187",
+"cep": "",
+"cidade": "RIO DE JANEIRO",
+"bairro": "CENTRO",
+"uf": "RJ",
+"telefone": "22219755",
+"email": ""
+ },
+"beneficiarioFinal": {
+"tipoInscricao": 2,
+"numeroInscricao": 40253676000101,
+"nome": "METAL CENTER AÇOS E METAIS LTDA"
+},
+"indicadorPix": "N"
+}

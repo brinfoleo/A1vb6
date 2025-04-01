@@ -454,7 +454,7 @@ Public Sub ImprBoletoBancario(Id As Long, Optional Visualizar = True) ', NossoNu
             
             
             NossoNum = Trim(PgDadosFinanceiroFatura(Id).NossoNumero)
-            NossoNum = Mid(NossoNum, 1, Len(NossoNum) - 1) & "-" & Right(NossoNum, 1)
+            'NossoNum = Mid(NossoNum, 1, Len(NossoNum) - 1) & "-" & Right(NossoNum, 1)
             
             AgenciaConta = pgDadosConta(PgDadosFinanceiroFatura(Id).idConta).agencia & IIf(pgDadosConta(PgDadosFinanceiroFatura(Id).idConta).AgenciaDV <> "", "-" & pgDadosConta(PgDadosFinanceiroFatura(Id).idConta).AgenciaDV, "") & " / " & pgDadosConta(PgDadosFinanceiroFatura(Id).idConta).conta & IIf(pgDadosConta(PgDadosFinanceiroFatura(Id).idConta).ContaDV <> "", "-" & pgDadosConta(PgDadosFinanceiroFatura(Id).idConta).ContaDV, "")
             

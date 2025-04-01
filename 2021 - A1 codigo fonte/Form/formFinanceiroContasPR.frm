@@ -8,11 +8,11 @@ Begin VB.Form formFinanceiroContasPRGerenciador
    ClientHeight    =   8430
    ClientLeft      =   60
    ClientTop       =   450
-   ClientWidth     =   15240
+   ClientWidth     =   11400
    LinkTopic       =   "Form1"
    MDIChild        =   -1  'True
    ScaleHeight     =   8430
-   ScaleWidth      =   15240
+   ScaleWidth      =   11400
    WindowState     =   2  'Maximized
    Begin VB.Frame frmContas 
       Height          =   5055
@@ -38,7 +38,7 @@ Begin VB.Form formFinanceiroContasPRGerenciador
             Italic          =   0   'False
             Strikethrough   =   0   'False
          EndProperty
-         Format          =   171704321
+         Format          =   165085185
          CurrentDate     =   40658
       End
       Begin MSFlexGridLib.MSFlexGrid msfgContas 
@@ -170,8 +170,8 @@ Begin VB.Form formFinanceiroContasPRGerenciador
       Left            =   0
       TabIndex        =   11
       Top             =   0
-      Width           =   15240
-      _ExtentX        =   26882
+      Width           =   11400
+      _ExtentX        =   20108
       _ExtentY        =   741
       ButtonWidth     =   609
       ButtonHeight    =   582
@@ -529,6 +529,11 @@ Private Sub registrarBoletoBBCobranca(idFatura As Long)
     '    MsgBox "Fatura nao pode ser registrada!", vbExclamation, "A1 - Aviso"
     '    Exit Sub
     'End If
+    'Verifica se e um boleto BB
+    If pgDadosConta(PgDadosFinanceiroFatura(idFatura).idConta).banco <> 1 Then
+        MsgBox "Fatura nao pode ser registrada! Somenta fatura do Banco do Brasil.", vbExclamation, "A1 - Aviso"
+        Exit Sub
+    End If
     
     If MsgBox("Confirma registrar boleto?", vbYesNo + vbQuestion, "Registro de boleto") = vbNo Then Exit Sub
     '--------------------------------------------------------------------------------------
@@ -652,17 +657,18 @@ Private Sub registrarBoletoBBCobranca(idFatura As Long)
     '--------------------------------------------------------------------------------------
     'Grava boleto como registrado
     '--------------------------------------------------------------------------------------
-    Dim vDados(1)   As Variant
-    Dim cReg        As Integer
-    
-    Dim criterio As String
-    
-    cReg = 0
-    vDados(cReg) = Array("FixoVariavel", "R", "S"): cReg = cReg + 1
-    cReg = cReg - 1
-    criterio = "id=" & idFatura
-    RegistroAlterar "financeirocontasprcadastro", vDados, cReg, criterio
-   
+  
+    If MsgBox("Confirma marcar esta cobranca como registrada junto ao banco?", vbQuestion + vbYesNo, "A1 - Aviso") = vbYes Then
+        Dim vDados(1)   As Variant
+        Dim cReg        As Integer
+        
+        Dim criterio As String
+        cReg = 0
+        vDados(cReg) = Array("FixoVariavel", "R", "S"): cReg = cReg + 1
+        cReg = cReg - 1
+        criterio = "id=" & idFatura
+        RegistroAlterar "financeirocontasprcadastro", vDados, cReg, criterio
+    End If
     AtualizarLista
 End Sub
 

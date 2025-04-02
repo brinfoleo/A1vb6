@@ -11,6 +11,7 @@ Private Const WAIT_TIMEOUT = &H102
 
 
 Public Function ExecutarAplicacaoExterna(CaminhoAplicacao As String) As Boolean
+On Error GoTo eaeError
     Dim Retorno As Long
     Dim ProcessoID As Long
 
@@ -38,6 +39,11 @@ Public Function ExecutarAplicacaoExterna(CaminhoAplicacao As String) As Boolean
         'MsgBox "Falha ao iniciar a aplicação externa."
         ExecutarAplicacaoExterna = False
     End If
+    Exit Function
+eaeError:
+    MsgBox Err.Description, vbCritical, Err.Number
+    Resume Next
+    
 End Function
 
 ' Função para verificar se um processo ainda está em execução

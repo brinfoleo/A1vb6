@@ -130,7 +130,7 @@ Private Function cnab240LoteHeader(contaId As Integer, lote As String) As String
     '***********************************************************
      
     line = ""
-    line = line & F("n", 3, pgDadosBanco(PgDadosFinanceiroFatura(faturaId).IdBanco).Numero)
+    line = line & F("n", 3, pgDadosBanco(PgDadosFinanceiroFatura(faturaId).IdBanco).numero)
     line = line & F("n", 4, lote) 'Lote
     line = line & "1"
      
@@ -182,7 +182,7 @@ Private Function cnab240Q(faturaId As Long, lote As String) As String
     '***********************************************************
     Dim line As String
     line = ""
-    line = line & F("n", 3, pgDadosBanco(PgDadosFinanceiroFatura(faturaId).IdBanco).Numero)
+    line = line & F("n", 3, pgDadosBanco(PgDadosFinanceiroFatura(faturaId).IdBanco).numero)
     line = line & F("n", 4, lote)
     line = line & "3"
     line = line & F("n", 5, "1")
@@ -205,7 +205,7 @@ Private Function cnab240Q(faturaId As Long, lote As String) As String
     line = line & F("n", 15, "0")
     line = line & F("n", 40, " ")
     '---
-    line = line & F("n", 3, pgDadosBanco(PgDadosFinanceiroFatura(faturaId).IdBanco).Numero)
+    line = line & F("n", 3, pgDadosBanco(PgDadosFinanceiroFatura(faturaId).IdBanco).numero)
     line = line & F("a", 20, PgDadosFinanceiroFatura(faturaId).NossoNumero)
     line = line & F("a", 8, " ")
     'grvFile fd, line
@@ -532,7 +532,7 @@ Function calculo_dv11base7(strNumero As String) As String
     End Function
 Public Sub BoletoBancario(Id As Long, Optional Visualizar = True)
     Dim cBanco As String
-    cBanco = pgDadosBanco(PgDadosFinanceiroFatura(Id).IdBanco).Numero
+    cBanco = pgDadosBanco(PgDadosFinanceiroFatura(Id).IdBanco).numero
     Select Case cBanco
         Case "001"
             BoletoBancario_001 (Id)
@@ -621,15 +621,15 @@ Public Sub BoletoBancario_001(Id As Long)
                                 vDeducao:=PgDadosFinanceiroFatura(Id).Deducoes, _
                                 vMulta:=PgDadosFinanceiroFatura(Id).Multa, _
                                 vJuros:=PgDadosFinanceiroFatura(Id).Juros, _
-                                DiasProtesto:=CStr(PgDadosFinanceiroFatura(Id).DiasProtesto), _
+                                DiasProtesto:="0", _
                                 Sacado:=Sacado, _
                                 cnpjBeneficiario:=PgDadosEmpresa(ID_Empresa).CNPJ, _
                                 nomeBeneficiario:=PgDadosEmpresa(ID_Empresa).Nome, _
                                 NossoNumero:=NossoNumero, _
                                 smsg:=PgDadosFinanceiroFatura(Id).Obs _
                                 )
-    
-  
+  'Informacao retirada pois e apenas um aviso no boleto
+  'DiasProtesto:=CStr(PgDadosFinanceiroFatura(Id).DiasProtesto),
   
     grvDadosBoleto Id, NossoNumero, LinhaDigitavel, CodigoBarras
   
@@ -806,7 +806,7 @@ Public Sub BoletoBancario_237(Id As Long)
     '########################################################################################################
     Dim cd1 As String
     Dim CampoLivre As String
-    cd1 = pgDadosBanco(PgDadosFinanceiroFatura(Id).IdBanco).Numero & _
+    cd1 = pgDadosBanco(PgDadosFinanceiroFatura(Id).IdBanco).numero & _
                    "9" & _
                    "" & _
                    fator & _
@@ -828,7 +828,7 @@ Public Sub BoletoBancario_237(Id As Long)
                         "9" & _
                          Mid(NossoNumero, 1, 5)
                          
-    seqI = pgDadosBanco(PgDadosFinanceiroFatura(Id).IdBanco).Numero & _
+    seqI = pgDadosBanco(PgDadosFinanceiroFatura(Id).IdBanco).numero & _
                         "9" & _
                          Mid(CampoLivre, 1, 5)
     DV1 = Trim(Calculo_DV10(seqI))
@@ -897,7 +897,7 @@ Private Sub BoletoBancario_356(Id As Long)
     conta = pgDadosConta(PgDadosFinanceiroFatura(Id).idConta).conta
     conta = Left("0000000", 7 - Len(conta)) & conta
             
-    seqI = pgDadosBanco(PgDadosFinanceiroFatura(Id).IdBanco).Numero & _
+    seqI = pgDadosBanco(PgDadosFinanceiroFatura(Id).IdBanco).numero & _
                         "9" & _
                         agencia & _
                         Left(conta, 1)
@@ -915,7 +915,7 @@ Private Sub BoletoBancario_356(Id As Long)
             
     'LinhaDigitavel = Formatar_Linha_Digitavel(sequencia, dvLinhaDig, CStr(PgDadosFinanceiroFatura(Id).Vencimento), CSng(PgDadosFinanceiroFatura(Id).vlDuplicata))
             
-    CodigoBarras = Monta_CodBarras(pgDadosBanco(PgDadosFinanceiroFatura(Id).IdBanco).Numero, _
+    CodigoBarras = Monta_CodBarras(pgDadosBanco(PgDadosFinanceiroFatura(Id).IdBanco).numero, _
                                                                     "9", _
                                                                     CSng(PgDadosFinanceiroFatura(Id).vlDuplicata), _
                                                                     PgDadosFinanceiroFatura(Id).Vencimento, _
@@ -1306,7 +1306,7 @@ Private Function cnab240ArquivoHeader(contaId As Integer, lote As String) As Str
     '********* Registro Header de Arquivo              *********
     '***********************************************************
     line = ""
-    line = line & F("n", 3, pgDadosBanco(pgDadosConta(contaId).banco).Numero)
+    line = line & F("n", 3, pgDadosBanco(pgDadosConta(contaId).banco).numero)
     line = line & F("n", 4, lote) '02.0 - Lote
     line = line & "0"
     '----------------
@@ -1381,7 +1381,7 @@ Private Function cnab240P(faturaId As Long, lote As String) As String
     '*** Registro Detalhe - Segmento P (Obrigatorio Remessa) ***
     '***********************************************************
     line = ""
-    line = line & F("n", 3, pgDadosBanco(PgDadosFinanceiroFatura(faturaId).IdBanco).Numero)
+    line = line & F("n", 3, pgDadosBanco(PgDadosFinanceiroFatura(faturaId).IdBanco).numero)
     line = line & F("n", 4, lote)
     line = line & "3"
     line = line & F("n", 5, "1")
@@ -1404,7 +1404,7 @@ Private Function cnab240P(faturaId As Long, lote As String) As String
     
     'Se o banco for BB informar codigo de acordo com as particularidades do banco
     Dim carteira As Integer
-    If pgDadosBanco(PgDadosFinanceiroFatura(faturaId).IdBanco).Numero = "001" Then
+    If pgDadosBanco(PgDadosFinanceiroFatura(faturaId).IdBanco).numero = "001" Then
             carteira = 7
         Else
             carteira = pgDadosConta(PgDadosFinanceiroFatura(faturaId).idConta).carteira
@@ -1459,7 +1459,7 @@ Private Function cnab240LoteTrailer(contaId As Integer, lote As String, tReg As 
     Dim vTotal  As String
     
     line = ""
-    line = line & F("n", 3, pgDadosBanco(pgDadosConta(contaId).banco).Numero)
+    line = line & F("n", 3, pgDadosBanco(pgDadosConta(contaId).banco).numero)
     line = line & F("n", 4, lote) 'Lote
     line = line & "5" '03.5 - tipo de registro
     line = line & String(9, " ")
@@ -1483,7 +1483,7 @@ Private Function cnab240ArquivoTrailer(contaId As Integer, lote As String, tReg 
     Dim vTotal As String
     
     line = ""
-    line = line & F("n", 3, pgDadosBanco(pgDadosConta(contaId).banco).Numero)
+    line = line & F("n", 3, pgDadosBanco(pgDadosConta(contaId).banco).numero)
     line = line & F("n", 4, lote) 'Lote
     line = line & "9"
     line = line & String(9, " ") '04.9 - cnab

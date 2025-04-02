@@ -38,7 +38,7 @@ Begin VB.Form formFinanceiroContasPRGerenciador
             Italic          =   0   'False
             Strikethrough   =   0   'False
          EndProperty
-         Format          =   165085185
+         Format          =   117637121
          CurrentDate     =   40658
       End
       Begin MSFlexGridLib.MSFlexGrid msfgContas 
@@ -579,10 +579,10 @@ Private Sub registrarBoletoBBCobranca(idFatura As Long)
     
     
     Dim vJurosMora As String
-    vJurosMora = cobCalcMora(Valor, 1, 2, "D")
+    vJurosMora = cobCalcMora(Valor, 1, PgDadosFinanceiroFatura(idFatura).Juros, "D")
      
     Dim vMulta As String
-    vMulta = cobCalcMulta(Valor, 0, 1)
+    vMulta = cobCalcMulta(Valor, PgDadosFinanceiroFatura(idFatura).Multa, 1)
     
     Dim Sacado As String
     Dim sacID As Integer
@@ -632,7 +632,7 @@ Private Sub registrarBoletoBBCobranca(idFatura As Long)
                                     vDeducao:=vDeducao, _
                                     vMulta:=vMulta, _
                                     vJuros:=vJurosMora, _
-                                    DiasProtesto:="5", _
+                                    DiasProtesto:="0", _
                                     Sacado:=Sacado, _
                                     cnpjBeneficiario:=cnpjBeneficiario, _
                                     nomeBeneficiario:=nomeBeneficiario, _

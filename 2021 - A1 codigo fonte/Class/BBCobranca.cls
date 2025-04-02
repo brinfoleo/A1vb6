@@ -55,12 +55,12 @@ Public Function GerarBoletoBB(Convenio As String, _
     strJSON = strJSON & mJ("quantidadeDiasNegativacao", "0", 0) & "," & vbCrLf
     strJSON = strJSON & mJ("orgaoNegativador", "10", 0) & "," & vbCrLf
     strJSON = strJSON & mJ("indicadorAceiteTituloVencido", "S", 1) & "," & vbCrLf
-    strJSON = strJSON & mJ("numeroDiasLimiteRecebimento", DiasProtesto, 0) & "," & vbCrLf
+    strJSON = strJSON & mJ("numeroDiasLimiteRecebimento", "365", 0) & "," & vbCrLf
     strJSON = strJSON & mJ("codigoAceite", "A", 1) & "," & vbCrLf
     strJSON = strJSON & mJ("codigoTipoTitulo", "2", 0) & "," & vbCrLf
     strJSON = strJSON & mJ("descricaoTipoTitulo", "DM", 1) & "," & vbCrLf
     strJSON = strJSON & mJ("indicadorPermissaoRecebimentoParcial", "N", 1) & "," & vbCrLf
-    strJSON = strJSON & mJ("numeroTituloBeneficiario", nFatura, 1) & "," & vbCrLf
+    strJSON = strJSON & mJ("numeroTituloBeneficiario", Replace(nDuplicata, "/", "-"), 1) & "," & vbCrLf
     strJSON = strJSON & mJ("campoUtilizacaoBeneficiario", Replace(nDuplicata, "/", "-"), 1) & "," & vbCrLf
     strJSON = strJSON & mJ("numeroTituloCliente", NossoNumero, 1) & "," & vbCrLf
     strJSON = strJSON & mJ("mensagemBloquetoOcorrencia", smsg, 1) & ","
@@ -97,7 +97,7 @@ Public Function GerarBoletoBB(Convenio As String, _
     'Mora Diaria
    
     
-    'JUROS MORA
+    'JUROS MORA DIARIA
     strJSON = strJSON & vbCrLf
     strJSON = strJSON & mJ("jurosMora", "", 2) & "{" & vbCrLf
     strJSON = strJSON & mJ("tipo", "1", 0) & "," & vbCrLf
@@ -221,30 +221,31 @@ End Function
 
 
 Public Function GerarCodigoBarrasBB( _
-    ByVal banco As String, _
-    ByVal moeda As String, _
-    ByVal NossoNumero As String, _
-    ByVal Valor As String, _
-    ByVal Vencimento As String, _
-    ByVal carteira As String _
-) As String
+                                    ByVal banco As String, _
+                                    ByVal moeda As String, _
+                                    ByVal NossoNumero As String, _
+                                    ByVal Valor As String, _
+                                    ByVal Vencimento As String, _
+                                    ByVal carteira As String _
+                                ) As String
 
     Dim CodigoBarras As String
     Dim FatorVencimento As String
+    Dim CampoLivre As String
     Dim DV As Integer
     
     FatorVencimento = CalcularFatorVencimento(CDate(Vencimento))
     Valor = Replace(Valor, ".", "")
     Valor = Left(String(10, "0"), 10 - Len(Trim(Valor))) & Valor
-
+    CampoLivre = "000"
     ' 1. Monta o código de barras (sem o dígito verificador)
-    CodigoBarras = banco & moeda & FatorVencimento & Valor & "000" & NossoNumero & carteira
+    CodigoBarras = banco & moeda & FatorVencimento & Valor & CampoLivre & NossoNumero & carteira
 
     ' 2. Calcula o dígito verificador (Módulo 11)
     DV = Modulo11(CodigoBarras)
 
     ' 3. Insere o dígito verificador no código de barras
-    CodigoBarras = banco & moeda & DV & FatorVencimento & Valor & "000" & NossoNumero & carteira
+    CodigoBarras = banco & moeda & DV & FatorVencimento & Valor & CampoLivre & NossoNumero & carteira
 
     ' 4. Retorna o resultado
     GerarCodigoBarrasBB = CodigoBarras
@@ -319,7 +320,7 @@ Public Function GerarLinhaDigitavelBB( _
     'GerarLinhaDigitavelBB = Campo1 & DV1 & "" & Campo2 & DV2 & "" & Campo3 & DV3 & "" & Campo4 & DV4 & "" & Campo5
 
 End Function
-Private Function Modulo11(ByVal Codigo As String) As Integer
+Public Function Modulo11(ByVal Codigo As String) As Integer
     Dim Soma As Integer
     Dim Peso As Integer
     Dim Digito As Integer
@@ -345,7 +346,7 @@ End Function
 
 
 
- Private Function Modulo10(ByVal Numero As String) As Integer
+ Private Function Modulo10(ByVal numero As String) As Integer
 
   Dim Multiplicador As Integer
     Dim Soma As Integer
@@ -357,9 +358,9 @@ End Function
     Soma = 0
 
     ' b) Multiplicadores começam com 2, alternando 1 e 2 (da direita para a esquerda)
-    For i = Len(Numero) To 1 Step -1
+    For i = Len(numero) To 1 Step -1
         ' c) Multiplicar cada algarismo pelo seu respectivo peso
-        Produto = Val(Mid(Numero, i, 1)) * Multiplicador
+        Produto = Val(Mid(numero, i, 1)) * Multiplicador
 
         ' d) Se o resultado for maior que 9, somar os algarismos do produto
         If Produto > 9 Then

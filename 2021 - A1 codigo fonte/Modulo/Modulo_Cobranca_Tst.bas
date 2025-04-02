@@ -16,15 +16,15 @@ Public Sub InicializarVariaveis()
     
     
     
-    tstIdFatura = 44070
+    tstIdFatura = 44320
     tstConvenio = "3741178"
     tstCarteira = "17"
     tstcarteiraVariacao = "27"
-    tstTipoConta = "4"
-    tstValor = "3358.98"
+    tstTipoConta = "1"
+    tstValor = "670.00"
     
-    tstEmissao = "11/03/2025"
-    tstVencimento = "10/05/2025"
+    tstEmissao = "01/04/2025"
+    tstVencimento = "12/04/2025"
     
     cnpjBeneficiario = "98959112000179"
     nomeBeneficiario = "LIVRARIA CUNHA DA CUNHA"
@@ -47,6 +47,19 @@ Public Function mockGerarNossoNumero() As String
     NossoNumero = bbCob.GerarNossoNumero(tstConvenio, tstIdFatura)
     mockGerarNossoNumero = NossoNumero
 End Function
+
+Public Function mockModulo11() As String
+    Dim numero As String
+    
+    Dim bbCob As New BBCobranca
+    numero = "00192104900000670000000003741178000004432017"
+    '00192104900000670000000003741178000004432017
+   Dim resultado As String
+    
+    resultado = bbCob.Modulo11(numero)
+    Debug.Print resultado
+End Function
+
 Public Sub mockLinhaDigitavel()
     InicializarVariaveis
     Dim bbCob As New BBCobranca

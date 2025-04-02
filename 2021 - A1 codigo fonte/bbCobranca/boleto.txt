@@ -2,29 +2,29 @@
 "numeroConvenio": 3741178,
 "numeroCarteira": 17,
 "numeroVariacaoCarteira": 27,
-"codigoModalidade": 4,
-"dataEmissao": "20.03.2025",
-"dataVencimento": "30.03.2025",
-"valorOriginal": 100.00,
-"valorAbatimento": 0.00,
-"quantidadeDiasProtesto": 5,
+"codigoModalidade": 1,
+"dataEmissao": "25.03.2025",
+"dataVencimento": "24.05.2025",
+"valorOriginal": 3399.63,
+"valorAbatimento": 0,
+"quantidadeDiasProtesto": 0,
 "quantidadeDiasNegativacao": 0,
 "orgaoNegativador": 10,
 "indicadorAceiteTituloVencido": "S",
-"numeroDiasLimiteRecebimento": 5,
+"numeroDiasLimiteRecebimento": 365,
 "codigoAceite": "A",
 "codigoTipoTitulo": 2,
 "descricaoTipoTitulo": "DM",
 "indicadorPermissaoRecebimentoParcial": "N",
-"numeroTituloBeneficiario": "FAT-2223",
-"campoUtilizacaoBeneficiario": "FAT-2223-1-1",
-"numeroTituloCliente": "00037411780000043985",
+"numeroTituloBeneficiario": "000021272-4-4",
+"campoUtilizacaoBeneficiario": "000021272-4-4",
+"numeroTituloCliente": "00037411780000044268",
 "mensagemBloquetoOcorrencia": "MENSAGEM",
 "desconto": {
 "tipo": 0,
 "dataExpiracao": "",
 "porcentagem": 0,
-"valor": 0.00
+"valor": 0
 },
 "segundoDesconto": {
 "dataExpiracao": "",
@@ -39,7 +39,7 @@
 "jurosMora": {
 "tipo": 1,
 "porcentagem": 0,
-"valor": 2.00
+"valor": 6.80
 
 },
 "multa": {
@@ -51,14 +51,14 @@
 
 "pagador": {
 "tipoInscricao": 2,
-"numeroInscricao": "04853507000149",
-"nome": "187 CENTRAL CARIOCA DE PECAS LTDA-EPP",
-"endereco": "RUA DE SANTANA 187",
+"numeroInscricao": "72423486000181",
+"nome": "TRELIMAXX BRASIL COMERCIO E SERVICOS LTDA",
+"endereco": "RUA URANOS 317",
 "cep": "",
 "cidade": "RIO DE JANEIRO",
-"bairro": "CENTRO",
+"bairro": "BONSUCESSO",
 "uf": "RJ",
-"telefone": "22219755",
+"telefone": "22708330",
 "email": ""
  },
 "beneficiarioFinal": {

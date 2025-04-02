@@ -1,1 +1,0 @@
-{"erros":[{"codigo":"3646865","ocorrencia":"000000000000000000023452","mensagem":"Solicitação não permitida. O convênio do registro do boleto deve estar vinculado a esse cliente.","versao":"1"}]}

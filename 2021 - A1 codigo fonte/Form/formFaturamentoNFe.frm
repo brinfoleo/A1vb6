@@ -1,6 +1,6 @@
 VERSION 5.00
 Object = "{86CF1D34-0C5F-11D2-A9FC-0000F8754DA1}#2.0#0"; "MSCOMCT2.OCX"
-Object = "{831FDD16-0C5C-11D2-A9FC-0000F8754DA1}#2.2#0"; "MSCOMCTL.OCX"
+Object = "{831FDD16-0C5C-11D2-A9FC-0000F8754DA1}#2.0#0"; "MSCOMCTL.OCX"
 Begin VB.Form formFaturamentoNFe 
    BorderStyle     =   1  'Fixed Single
    Caption         =   "Faturamento - Emissão de NF-e"
@@ -80,7 +80,7 @@ Begin VB.Form formFaturamentoNFe
          _ExtentX        =   2778
          _ExtentY        =   556
          _Version        =   393216
-         Format          =   110034945
+         Format          =   168427521
          CurrentDate     =   40561
       End
       Begin MSComCtl2.DTPicker dtpEmissao 
@@ -92,7 +92,7 @@ Begin VB.Form formFaturamentoNFe
          _ExtentX        =   2778
          _ExtentY        =   556
          _Version        =   393216
-         Format          =   110034945
+         Format          =   168427521
          CurrentDate     =   40561
       End
       Begin VB.TextBox txtNumNota 
@@ -698,6 +698,10 @@ Private Sub CalcPIS_Item()
 
     On Error GoTo TratarErroCalcPISCOFINS
     Dim i As Integer
+    
+    Dim numDecimaisCurrency As Integer
+    numDecimaisCurrency = 2
+    
     'CST|vBC|pPIS|vPIS
     '**********************************************************************************************************
     '**********************************************************************************************************
@@ -706,26 +710,26 @@ Private Sub CalcPIS_Item()
     For i = 0 To cItens
         Select Case aPIS(i)(0)
             Case "01"
-                aPIS(i)(3) = (Val(ChkVal(CStr(aPIS(i)(1)), 0, cDecMoeda)) * Val(ChkVal(CStr(aPIS(i)(2)), 0, 3))) / 100
-                aPIS(i)(3) = ChkVal(CStr(aPIS(i)(3)), 0, cDecMoeda)
+                aPIS(i)(3) = (Val(ChkVal(CStr(aPIS(i)(1)), 0, numDecimaisCurrency)) * Val(ChkVal(CStr(aPIS(i)(2)), 0, 3))) / 100
+                aPIS(i)(3) = ChkVal(CStr(aPIS(i)(3)), 0, numDecimaisCurrency)
              Case "02"
-                aPIS(i)(3) = (Val(ChkVal(CStr(aPIS(i)(1)), 0, cDecMoeda)) * Val(ChkVal(CStr(aPIS(i)(2)), 0, 3))) / 100
-                aPIS(i)(3) = ChkVal(CStr(aPIS(i)(3)), 0, cDecMoeda)
+                aPIS(i)(3) = (Val(ChkVal(CStr(aPIS(i)(1)), 0, numDecimaisCurrency)) * Val(ChkVal(CStr(aPIS(i)(2)), 0, 3))) / 100
+                aPIS(i)(3) = ChkVal(CStr(aPIS(i)(3)), 0, numDecimaisCurrency)
             Case "03"
                 MsgBox "CST - 03 incompleto"
             Case "04"
-                aPIS(i)(3) = ChkVal("0", 0, cDecMoeda)
+                aPIS(i)(3) = ChkVal("0", 0, numDecimaisCurrency)
             Case "06"
-                aPIS(i)(3) = ChkVal("0", 0, cDecMoeda)
+                aPIS(i)(3) = ChkVal("0", 0, numDecimaisCurrency)
             Case "07"
-                aPIS(i)(3) = ChkVal("0", 0, cDecMoeda)
+                aPIS(i)(3) = ChkVal("0", 0, numDecimaisCurrency)
             Case "08"
-                aPIS(i)(3) = ChkVal("0", 0, cDecMoeda)
+                aPIS(i)(3) = ChkVal("0", 0, numDecimaisCurrency)
             Case "09"
-                aPIS(i)(3) = ChkVal("0", 0, cDecMoeda)
+                aPIS(i)(3) = ChkVal("0", 0, numDecimaisCurrency)
             Case "99"
-                aPIS(i)(3) = (Val(ChkVal(CStr(aPIS(i)(1)), 0, cDecMoeda)) * Val(ChkVal(CStr(aPIS(i)(2)), 0, 3))) / 100
-                aPIS(i)(3) = ChkVal(CStr(aPIS(i)(3)), 0, cDecMoeda)
+                aPIS(i)(3) = (Val(ChkVal(CStr(aPIS(i)(1)), 0, numDecimaisCurrency)) * Val(ChkVal(CStr(aPIS(i)(2)), 0, 3))) / 100
+                aPIS(i)(3) = ChkVal(CStr(aPIS(i)(3)), 0, numDecimaisCurrency)
         End Select
     Next
     '**********************************************************************************************************
@@ -745,6 +749,9 @@ Private Sub CalcCOFINS_Item()
 
     On Error GoTo TratarErroCalcCOFINS
     Dim i As Integer
+    
+    Dim numDecimalCurrency As Integer
+    numDecimalCurrency = 2
     'CST|vBC|pCOFINS|vCOFINS
     '**********************************************************************************************************
     '**********************************************************************************************************
@@ -753,28 +760,28 @@ Private Sub CalcCOFINS_Item()
     For i = 0 To cItens
         Select Case aCOFINS(i)(0)
             Case "01" 'Tributacao Integral
-                aCOFINS(i)(3) = (Val(ChkVal(CStr(aCOFINS(i)(1)), 0, cDecMoeda)) * Val(ChkVal(CStr(aCOFINS(i)(2)), 0, 3))) / 100
-                aCOFINS(i)(3) = ChkVal(CStr(aCOFINS(i)(3)), 0, cDecMoeda)
+                aCOFINS(i)(3) = (Val(ChkVal(CStr(aCOFINS(i)(1)), 0, numDecimalCurrency)) * Val(ChkVal(CStr(aCOFINS(i)(2)), 0, 3))) / 100
+                aCOFINS(i)(3) = ChkVal(CStr(aCOFINS(i)(3)), 0, numDecimalCurrency)
                 
             Case "02"
-                aCOFINS(i)(3) = (Val(ChkVal(CStr(aCOFINS(i)(1)), 0, cDecMoeda)) * Val(ChkVal(CStr(aCOFINS(i)(2)), 0, 3))) / 100
-                aCOFINS(i)(3) = ChkVal(CStr(aCOFINS(i)(3)), 0, cDecMoeda)
+                aCOFINS(i)(3) = (Val(ChkVal(CStr(aCOFINS(i)(1)), 0, numDecimalCurrency)) * Val(ChkVal(CStr(aCOFINS(i)(2)), 0, 3))) / 100
+                aCOFINS(i)(3) = ChkVal(CStr(aCOFINS(i)(3)), 0, numDecimalCurrency)
             Case "03"
                 'MsgBox "CST - 03 incompleto"
-                aCOFINS(i)(3) = ChkVal("0", 0, cDecMoeda)
+                aCOFINS(i)(3) = ChkVal("0", 0, numDecimalCurrency)
             Case "04"
-                aCOFINS(i)(3) = ChkVal("0", 0, cDecMoeda)
+                aCOFINS(i)(3) = ChkVal("0", 0, numDecimalCurrency)
             Case "06"
-                aCOFINS(i)(3) = ChkVal("0", 0, cDecMoeda)
+                aCOFINS(i)(3) = ChkVal("0", 0, numDecimalCurrency)
             Case "07"
-                aCOFINS(i)(3) = ChkVal("0", 0, cDecMoeda)
+                aCOFINS(i)(3) = ChkVal("0", 0, numDecimalCurrency)
             Case "08"
-                aCOFINS(i)(3) = ChkVal("0", 0, cDecMoeda)
+                aCOFINS(i)(3) = ChkVal("0", 0, numDecimalCurrency)
             Case "09"
-                aCOFINS(i)(3) = ChkVal("0", 0, cDecMoeda)
+                aCOFINS(i)(3) = ChkVal("0", 0, numDecimalCurrency)
             Case "99"
                 'MsgBox "CST - 99 inconpleto"
-                aCOFINS(i)(3) = ChkVal("0", 0, cDecMoeda)
+                aCOFINS(i)(3) = ChkVal("0", 0, numDecimalCurrency)
         End Select
     Next
     '**********************************************************************************************************
@@ -864,6 +871,7 @@ End Function
 Private Function CalcCOFINS_Total(CampoArray As Integer) As String
     Dim Soma   As String
     Dim i      As Integer
+    
     
     For i = 0 To cItens
         Soma = Val(ChkVal(Soma, 0, 2)) + Val(ChkVal(CStr(aCOFINS(i)(CampoArray)), 0, 2))

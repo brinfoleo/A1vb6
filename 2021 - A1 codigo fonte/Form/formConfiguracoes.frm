@@ -51,22 +51,21 @@ Begin VB.Form formConfiguracoes
          _Version        =   393216
          Style           =   1
          Tabs            =   2
-         Tab             =   1
          TabHeight       =   520
          TabCaption(0)   =   "2.1 - Geral"
          TabPicture(0)   =   "formConfiguracoes.frx":0038
-         Tab(0).ControlEnabled=   0   'False
+         Tab(0).ControlEnabled=   -1  'True
          Tab(0).Control(0)=   "Frame12"
+         Tab(0).Control(0).Enabled=   0   'False
          Tab(0).ControlCount=   1
          TabCaption(1)   =   "2.2 - UniNFe"
          TabPicture(1)   =   "formConfiguracoes.frx":0054
-         Tab(1).ControlEnabled=   -1  'True
+         Tab(1).ControlEnabled=   0   'False
          Tab(1).Control(0)=   "sstNFeUnimaker"
-         Tab(1).Control(0).Enabled=   0   'False
          Tab(1).ControlCount=   1
          Begin VB.Frame Frame12 
             Height          =   5175
-            Left            =   -74820
+            Left            =   180
             TabIndex        =   70
             Top             =   420
             Width           =   10635
@@ -232,7 +231,7 @@ Begin VB.Form formConfiguracoes
          End
          Begin TabDlg.SSTab sstNFeUnimaker 
             Height          =   5295
-            Left            =   120
+            Left            =   -74880
             TabIndex        =   26
             Top             =   420
             Width           =   10755
@@ -493,7 +492,7 @@ Begin VB.Form formConfiguracoes
                      _ExtentX        =   2355
                      _ExtentY        =   556
                      _Version        =   393216
-                     Format          =   114360321
+                     Format          =   105709569
                      CurrentDate     =   41057
                   End
                   Begin MSComCtl2.DTPicker dtpHoraContigencia 
@@ -505,7 +504,7 @@ Begin VB.Form formConfiguracoes
                      _ExtentX        =   1826
                      _ExtentY        =   556
                      _Version        =   393216
-                     Format          =   114360322
+                     Format          =   105709570
                      CurrentDate     =   41057
                   End
                   Begin VB.Label Label41 
@@ -724,7 +723,7 @@ Begin VB.Form formConfiguracoes
          _Version        =   393216
          Style           =   1
          Tabs            =   7
-         Tab             =   5
+         Tab             =   2
          TabsPerRow      =   7
          TabHeight       =   520
          TabCaption(0)   =   "1.1 - Sistema"
@@ -745,8 +744,9 @@ Begin VB.Form formConfiguracoes
          Tab(1).ControlCount=   1
          TabCaption(2)   =   "1.3 - Cliente"
          TabPicture(2)   =   "formConfiguracoes.frx":1D4C
-         Tab(2).ControlEnabled=   0   'False
+         Tab(2).ControlEnabled=   -1  'True
          Tab(2).Control(0)=   "Frame14"
+         Tab(2).Control(0).Enabled=   0   'False
          Tab(2).ControlCount=   1
          TabCaption(3)   =   "1.4 - Fornecedor"
          TabPicture(3)   =   "formConfiguracoes.frx":1D68
@@ -763,11 +763,9 @@ Begin VB.Form formConfiguracoes
          Tab(4).ControlCount=   1
          TabCaption(5)   =   "1.6 - Email"
          TabPicture(5)   =   "formConfiguracoes.frx":1DA0
-         Tab(5).ControlEnabled=   -1  'True
-         Tab(5).Control(0)=   "Frame10"
-         Tab(5).Control(0).Enabled=   0   'False
-         Tab(5).Control(1)=   "btnTestarEmail"
-         Tab(5).Control(1).Enabled=   0   'False
+         Tab(5).ControlEnabled=   0   'False
+         Tab(5).Control(0)=   "btnTestarEmail"
+         Tab(5).Control(1)=   "Frame10"
          Tab(5).ControlCount=   2
          TabCaption(6)   =   "1.7 - Estoque"
          TabPicture(6)   =   "formConfiguracoes.frx":1DBC
@@ -795,7 +793,7 @@ Begin VB.Form formConfiguracoes
          Begin VB.CommandButton btnTestarEmail 
             Caption         =   "Testar"
             Height          =   375
-            Left            =   5520
+            Left            =   -69480
             TabIndex        =   132
             Top             =   840
             Width           =   1635
@@ -843,7 +841,7 @@ Begin VB.Form formConfiguracoes
                Strikethrough   =   0   'False
             EndProperty
             Height          =   2835
-            Left            =   240
+            Left            =   -74760
             TabIndex        =   105
             Top             =   540
             Width           =   4875
@@ -959,12 +957,12 @@ Begin VB.Form formConfiguracoes
             _ExtentX        =   2566
             _ExtentY        =   556
             _Version        =   393216
-            Format          =   114491393
+            Format          =   165806081
             CurrentDate     =   41001
          End
          Begin VB.Frame Frame14 
             Height          =   4935
-            Left            =   -74880
+            Left            =   120
             TabIndex        =   101
             Top             =   480
             Width           =   10695
@@ -1534,7 +1532,7 @@ Private Sub grvReg(nmArquivo As String, Dados As String)
     Dim fso As New FileSystemObject
     Dim Arquivo As File
     Dim arquivoLog As TextStream
-    Dim msg As String
+    Dim Msg As String
     'Dim caminho As String
 
 
@@ -1550,10 +1548,10 @@ Private Sub grvReg(nmArquivo As String, Dados As String)
     Set arquivoLog = Arquivo.OpenAsTextStream(ForAppending)
     
     'monta informações para gerar a linha da mensagem
-    msg = Dados
+    Msg = Dados
 
     'inclui linhas no arquivo texto
-    arquivoLog.WriteLine msg
+    arquivoLog.WriteLine Msg
     
     'escreve uma linha em branco no arquivo - se voce quiser
     'arquivoLog.WriteBlankLines (1)
@@ -1724,7 +1722,7 @@ Private Sub btoBusca_Click(Index As Integer)
     'Personaliza a procura
     szTitle = "Selecione a Pasta"
     With tBrowseInfo
-        .hWndOwner = Me.Hwnd
+        .hWndOwner = Me.hWnd
         .lpszTitle = lstrcat(szTitle, "")
         .ulFlags = BIF_RETURNONLYFSDIRS + BIF_DONTGOBELOWDOMAIN  ' + BIF_EDITBOX
     End With

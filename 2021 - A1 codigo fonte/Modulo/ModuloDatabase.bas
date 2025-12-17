@@ -425,7 +425,7 @@ Public Function RegistroIncluir(sTabela As String, vDados As Variant, nmReg As I
 
 TrataErro:
     RegLogDataBase 0, "", Err.Number, Err.Description & " - SQL:[" & sSQL & "]"
-  ' Debug.Print Err.Description
+   Debug.Print Err.Description
    ' RegLogDataBase 0,"", Err.Number, Err.Description
     'MsgBox "Erro ao INCLUIR registro.                                   " & _
            vbCrLf & vbCrLf & _

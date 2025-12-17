@@ -57,7 +57,7 @@ Begin VB.Form frmSplash
    End
    Begin VB.Label Label3 
       BackStyle       =   0  'Transparent
-      Caption         =   "NF-e 4.0"
+      Caption         =   "NF-e 4.0 RT"
       BeginProperty Font 
          Name            =   "Tahoma"
          Size            =   20.25
@@ -69,10 +69,10 @@ Begin VB.Form frmSplash
       EndProperty
       ForeColor       =   &H00FFFFFF&
       Height          =   555
-      Left            =   5340
+      Left            =   4620
       TabIndex        =   3
       Top             =   4740
-      Width           =   1815
+      Width           =   2535
    End
    Begin VB.Label Label2 
       Alignment       =   1  'Right Justify

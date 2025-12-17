@@ -2103,7 +2103,26 @@ Public Function Exportar_NFe_v400_TXT(chvNFe As String) As String
         Rst2.MoveNext
        
     Next
-
+    'CBS / IBS **********************************************************
+    'UB01 UB01|CSTIS|cClassTribIS|vBCIS|pIS|pISEspec|uTrib|qTrib|vIS|
+    'UB12 UB12|CST|cClassTrib|
+'UB15 UB15|vBC|vIBS|
+'UB17 UB17|pIBSUF|pDif|vDif|vDevTrib|pRedAliq|pAliqEfet|vIBSUF|
+'UB36 UB36|pIBSMun|pDif|vDif|vDevTrib|pRedAliq|pAliqEfet|vIBSMun|
+'UB55 UB55|pCBS|pDif|vDif|vDevTrib|pRedAliq|pAliqEfet|vCBS|
+'UB68 UB68|CSTReg|cClassTribReg|pAliqEfetRegIBSUF|vTribRegIBSUF|pAliqEfetRegIBSMun|vTribRegIBSMun|pAliqEfetRegCBS|vTribRe gCBS|
+'UB73 UB73|cCredPres|pCredPres|vCredPres|vCredPresCondSus|
+'UB78 UB78|cCredPres|pCredPres|vCredPres|vCredPresCondSus|
+'UB82 UB82|pAliqIBSUF|vTribIBSUF|pAliqIBSMun|vTribIBSMun|pAliqCBS|vTribCBS|
+'UB84 UB84|vTotIBSMonoItem|vTotCBSMonoItem|
+'UB85 UB85|qBCMono|adRemIBS|adRemCBS|vIBSMono|vCBSMono|
+'UB91 UB91|qBCMonoReten|adRemIBSReten|vIBSMonoReten|adRemCBSReten|vCBSMonoReten|
+'UB95 UB95|qBCMonoRet|adRemIBSRet|vIBSMonoRet|adRemCBSRet|vCBSMonoRet|
+'UB100 UB100|pDifIBS|vIBSMonoDif|pDifCBS|vCBSMonoDif|
+'UB106 UB106|vIBS|vCBS|
+'UB109 UB109|tpCredPresIBSZFM|vCredPresIBSZFM|
+    
+    
     '*********************************** TOTAIS DA NF-e *****************************************
     Dim w As String
     MountTXT "W|"
@@ -2244,4 +2263,746 @@ Public Function Exportar_NFe_v400_TXT(chvNFe As String) As String
     Rst3.Close
 End Function
 
+
+Public Function Exportar_NFe_v400_RT_TXT(chvNFe As String) As String
+    'Funcao atualizada com informacoes da Reforma Tributaria (RT)
+    Dim Rst1    As Recordset 'Cabecalho
+    Dim Rst2    As Recordset 'Produto
+    Dim Rst3    As Recordset 'Cobanca
+    Dim sSQL    As String
+    Dim nmArq   As String
+    Dim cItens  As Integer 'Conta os registros dos itens da Nota
+    Dim cCob    As Integer 'Conta os registros da cobranca da Nota
+    Dim numNFe  As String ' Numero da nfe
+    sSQL = "SELECT * FROM FaturamentoNFe WHERE ID_Empresa = " & ID_Empresa & " AND idNFe = '" & chvNFe & "'"
+    Set Rst1 = RegistroBuscar(sSQL)
+    If Rst1.BOF And Rst1.EOF Then
+            MsgBox "Etapa 1 - Erro ao localizar NF-e"
+            Exportar_NFe_v400_RT_TXT = ""
+            Exit Function
+        Else
+            Rst1.MoveFirst
+    End If
+    sSQL = "SELECT * FROM FaturamentoNFeItens WHERE ID_Empresa = " & ID_Empresa & " AND idNFe = '" & chvNFe & "'"
+    Set Rst2 = RegistroBuscar(sSQL)
+    If Rst2.BOF And Rst2.EOF Then
+            MsgBox "Etapa 2 - Erro ao localizar NF-e"
+            Exportar_NFe_v400_RT_TXT = ""
+            Exit Function
+        Else
+            Rst2.MoveFirst
+    End If
+    sSQL = "SELECT * FROM FaturamentoNFeCobranca WHERE ID_Empresa = " & ID_Empresa & " AND idNFe = '" & chvNFe & "'"
+    Set Rst3 = RegistroBuscar(sSQL)
+    If Rst3.BOF And Rst3.EOF Then
+            MsgBox "Etapa 3 - Erro ao localizar NF-e"
+            Exportar_NFe_v400_RT_TXT = ""
+            Exit Function
+        Else
+            Rst3.MoveFirst
+    End If
+    
+    numNFe = Rst1.Fields("ide_nNF")
+    nmArq = Rst1.Fields("ide_nNF") & "_" & Rst1.Fields("emit_CNPJ") & "_" & Format(Rst1.Fields("ide_dEmi"), "DD") & "_" & Format(Rst1.Fields("ide_dEmi"), "MM") & "_" & Format(Rst1.Fields("ide_dEmi"), "YYYY") & "-nfe.txt"
+     
+    ChecarArquivo (nmArq)
+'========================================================================
+    strMountTXT = ""
+    MountTXT "NOTAFISCAL|1"
+    'A
+    MountTXT "A|" & Rst1.Fields("Versao") & _
+                        "|NFe" & chvNFe & "|"
+    'B
+    ' Rst1.Fields("ide_indPag") & "|"
+    'Indice do intermediador
+    Dim indIntermed As String
+    indIntermed = 0
+    
+    MountTXT "B|" & _
+                    Rst1.Fields("ide_cUF") & "|" & _
+                    Rst1.Fields("ide_cNF") & "|" & _
+                    Rst1.Fields("ide_NatOP") & "|" & _
+                    Rst1.Fields("ide_Mod") & "|" & _
+                    Rst1.Fields("ide_serie") & "|" & _
+                    CInt(Rst1.Fields("ide_nNF")) & "|" & _
+                    Format(Rst1.Fields("ide_demi"), "YYYY-MM-DD") & "T" & Format(Rst1.Fields("ide_hemi"), "HH:MM:SS") & PgDadosConfig.fusoHorario & "|" & _
+                    IIf(IsNull(Rst1.Fields("ide_dSaiEnt")), "", Format(Rst1.Fields("ide_dSaiEnt"), "YYYY-MM-DD") & "T" & Format(Rst1.Fields("ide_hSaiEnt"), "HH:MM:SS") & PgDadosConfig.fusoHorario) & "|" & _
+                    Rst1.Fields("ide_tpNF") & "|" & _
+                    Rst1.Fields("ide_idDest") & "|" & _
+                    Rst1.Fields("ide_cMunFG") & "|" & _
+                    Rst1.Fields("ide_tpImp") & "|" & _
+                    Rst1.Fields("ide_tpEmis") & "|" & _
+                    Rst1.Fields("ide_cDV") & "|" & _
+                    Rst1.Fields("ide_tpAmb") & "|" & _
+                    Rst1.Fields("ide_finNFe") & "|" & _
+                    Rst1.Fields("ide_indFinal") & "|" & _
+                    "3" & "|" & indIntermed & "|" & _
+                    Rst1.Fields("ide_procEmi") & "|" & _
+                    Rst1.Fields("ide_VerProc") & "|" & _
+                    IIf(PgDadosConfig.ContingenciaDt <> "", Format(PgDadosConfig.ContingenciaDt, "YYYY-MM-DD") & "T" & PgDadosConfig.ContingenciaHr, "") & "|" & _
+                    PgDadosConfig.ContingenciaMotivo & "|"
+'                    "2012-05-28T11:39:30|" & _
+                    "ERRO NA SVRS AUTORIZADO PELO SITE DA NFE. 28/05/2012" & "|"
+                    
+    If Not IsNull(Rst1.Fields("ide_refNFe")) Then
+        MountTXT "B13|" & Rst1.Fields("ide_refNFe") & "|"
+    End If
+    
+    'C - dados EMITENTE
+    MountTXT "C|" & _
+                    Rst1.Fields("emit_xNome") & "|" & _
+                    Rst1.Fields("emit_xFant") & "|" & _
+                    Rst1.Fields("emit_IE") & "|" & _
+                    Rst1.Fields("emit_IEST") & "|" & _
+                    Rst1.Fields("emit_IM") & "|" & _
+                    IIf(Trim(Rst1.Fields("emit_IM")) <> "", Rst1.Fields("emit_CNAE"), "") & "|" & _
+                    Rst1.Fields("emit_CRT") & "|"
+                    
+    MountTXT "C02|" & _
+                    Rst1.Fields("emit_CNPJ") & "|"
+    MountTXT "C05|" & _
+                    Rst1.Fields("emit_xLgr") & "|" & _
+                    Rst1.Fields("emit_nro") & "|" & _
+                    Rst1.Fields("emit_xcpl") & "|" & _
+                    Rst1.Fields("emit_Bairro") & "|" & _
+                    Rst1.Fields("emit_cMun") & "|" & _
+                    Rst1.Fields("emit_xMun") & "|" & _
+                    Rst1.Fields("emit_UF") & "|" & _
+                    Rst1.Fields("emit_CEP") & "|" & _
+                    Rst1.Fields("emit_cPais") & "|" & _
+                    Rst1.Fields("emit_xPais") & "|" & _
+                    Rst1.Fields("emit_fone") & "|"
+    'E - dados DESTINATARIO
+                    
+    MountTXT "E|" & _
+                    Rst1.Fields("dest_xNome") & "|" & _
+                    Rst1.Fields("dest_indIEDest") & "|" & _
+                    IIf(IsNull(Rst1.Fields("dest_IE")), "", Rst1.Fields("dest_IE")) & "|" & _
+                    Rst1.Fields("dest_ISUF") & "|" & _
+                    "" & "|" & _
+                    Rst1.Fields("dest_email") & "|"
+                    
+    MountTXT "E" & IIf(UCase(Rst1.Fields("dest_Pessoa")) = "FISICA", "03", "02") & "|" & _
+                    Rst1.Fields("dest_CNPJ") & "|"
+                    
+    MountTXT "E05|" & _
+                    Rst1.Fields("dest_xLgr") & "|" & _
+                    Rst1.Fields("dest_nro") & "|" & _
+                    Rst1.Fields("dest_xCpl") & "|" & _
+                    Rst1.Fields("dest_Bairro") & "|" & _
+                    Rst1.Fields("dest_cMun") & "|" & _
+                    Rst1.Fields("dest_xMun") & "|" & _
+                    Rst1.Fields("dest_UF") & "|" & _
+                    Rst1.Fields("dest_CEP") & "|" & _
+                    Rst1.Fields("dest_cPais") & "|" & _
+                    Rst1.Fields("dest_xPais") & "|" & _
+                    Rst1.Fields("dest_fone") & "|"
+    
+    'G - dadosEntrega
+    If Trim(Rst1.Fields("dest_cnpj")) <> Trim(Rst1.Fields("entr_CNPJ")) Then
+        MountTXT "G|" & _
+                      Rst1.Fields("entr_xLgr") & "|" & _
+                      Rst1.Fields("entr_nro") & "|" & _
+                      Rst1.Fields("entr_xCpl") & "|" & _
+                      Rst1.Fields("entr_xBairro") & "|" & _
+                      Rst1.Fields("entr_cMun") & "|" & _
+                      Rst1.Fields("entr_xMun") & "|" & _
+                      Rst1.Fields("entr_UF") & "|"
+        MountTXT "G02|" & _
+                      Rst1.Fields("entr_CNPJ") & "|"
+    End If
+    'H/I - dados DESCRICAO DOS ITENS
+    Rst2.MoveFirst
+    For cItens = 0 To Rst2.RecordCount - 1
+        MountTXT "H|" & cItens + 1 & "|" & _
+                       IIf(Trim(Rst2.Fields("det_InfAdProd")) = "", "", Rst2.Fields("det_InfAdProd") & "|")
+                       
+                       '23.03.2015 - Campo vazio antes do EXTIPI ref NVE
+                       'NFe 4.0
+                       'I|cProd|cEAN|XProd|NCM|NVE|CEST|indEscala|CNPJFab|cBenef|
+                       'EXTIPI|CFOP|UCom|QCom|VUnCom|VProd|CEANTrib|UTrib|QTrib|
+                       'VUnTrib|VFrete|VSeg|VDesc|vOutro|indTot|xPed|nItemPed|nFCI|
+                        '
+        Dim i As String
+        Dim indEscala, CNPJFab, cBenef, nFCI, NVE As String
+        indEscala = ""
+        CNPJFab = ""
+        cBenef = ""
+        'dim  vTotTrib as string
+        'vTotTrib = ""
+        nFCI = ""
+        NVE = ""
+        
+        i = "I" & "|"
+        i = i & Rst2.Fields("det_cProd") & "|"
+        i = i & Rst2.Fields("det_cEAN") & "|"
+        i = i & Rst2.Fields("det_xProd") & "|"
+        i = i & Rst2.Fields("det_NCM") & "|" & NVE & "|"
+        i = i & Rst2.Fields("det_cest") & "|"
+        i = i & indEscala & "|" & CNPJFab & "|" & cBenef & "|"
+        i = i & Rst2.Fields("det_EXTIPI") & "|"
+        i = i & Rst2.Fields("det_CFOP") & "|"
+        i = i & Rst2.Fields("det_uCom") & "|"
+        i = i & Rst2.Fields("det_qCom") & "|"
+        i = i & Rst2.Fields("det_vUnCom") & "|"
+        i = i & Rst2.Fields("det_vprod") & "|"
+        i = i & Rst2.Fields("det_cEANTrib") & "|"
+        i = i & Rst2.Fields("det_uTrib") & "|"
+        i = i & Rst2.Fields("det_qTrib") & "|"
+        i = i & Rst2.Fields("det_vUnTrib") & "|"
+        i = i & Rst2.Fields("det_vFrete") & "|"
+        i = i & Rst2.Fields("det_vSeg") & "|"
+        i = i & Rst2.Fields("det_vDesc") & "|"
+        i = i & Rst2.Fields("det_vOutro") & "|"
+        i = i & Rst2.Fields("det_indTot") & "|"
+        i = i & Rst2.Fields("det_xPed") & "|"
+        i = i & Rst2.Fields("det_nItemPed") & "|"
+        i = i & nFCI & "|"
+        MountTXT i
+        
+        MountTXT "M|"
+        MountTXT "N|"
+        '*****************************************************************
+        'ICMS ************************************************************
+        Select Case Rst2.Fields("ICMS_CST")
+            Case "00" 'Tributacao Integral (N02)
+                MountTXT "N02|" & _
+                                Rst2.Fields("ICMS_Origem") & "|" & _
+                                Rst2.Fields("ICMS_CST") & "|" & _
+                                Rst2.Fields("ICMS_ModBC") & "|" & _
+                                Rst2.Fields("ICMS_vBC") & "|" & _
+                                Rst2.Fields("ICMS_pICMS") & "|" & _
+                                Rst2.Fields("ICMS_vICMS") & "|" & _
+                                Rst2.Fields("ICMS_pFCP") & "|" & _
+                                Rst2.Fields("ICMS_vFCP") & "|"
+                                
+                                
+                
+                
+                '22.12.17 - Inclusao da tag para DIFAL
+                If Rst2.Fields("ICMS_vBCUFDest") > 0 Then
+                '04/03/2024 - NA|0.00|0.00|2.00|18.00|12.00|100.00|0.00|0.00|0.00|
+                 MountTXT "NA|" & _
+                                Rst2.Fields("ICMS_vBCUFDest") & "|" & _
+                                Rst2.Fields("ICMS_vBCUFDest") & "|" & _
+                                Rst2.Fields("ICMS_pFCPUFDest") & "|" & _
+                                Rst2.Fields("ICMS_pICMSUFDest") & "|" & _
+                                Rst2.Fields("ICMS_pICMSInter") & "|" & _
+                                Rst2.Fields("ICMS_pICMSInterPart") & "|" & _
+                                Rst2.Fields("ICMS_vFCPUFDest") & "|" & _
+                                Rst2.Fields("ICMS_vICMSUFDest") & "|" & _
+                                Rst2.Fields("ICMS_vICMSUFRemet") & "|"
+                End If
+                
+            Case "10" 'Tributada com cobranca ICMS (N03)
+                MountTXT "N03|" & _
+                                Rst2.Fields("ICMS_Origem") & "|" & _
+                                Rst2.Fields("ICMS_CST") & "|" & _
+                                Rst2.Fields("ICMS_ModBC") & "|" & _
+                                Rst2.Fields("ICMS_vBC") & "|" & _
+                                Rst2.Fields("ICMS_pICMS") & "|" & _
+                                Rst2.Fields("ICMS_vICMS") & "|" & _
+                                Rst2.Fields("ICMS_ModBCST") & "|" & _
+                                Rst2.Fields("ICMS_pMVAST") & "|" & _
+                                Rst2.Fields("ICMS_pRedBCST") & "|" & _
+                                Rst2.Fields("ICMS_vBCST") & "|" & _
+                                Rst2.Fields("ICMS_pICMSST") & "|" & _
+                                Rst2.Fields("ICMS_vICMSST") & "|"
+            Case "20" 'Tributacao do ICMS com reducao da Base de Calculo (N04)
+                      'N04|orig|CST|modBC|pRedBC|vBC|pICMS|vICMS|vBCFCP|pFCP|vFCP|vICMSDeson|motDesICMS
+                 MountTXT "N04|" & _
+                                Rst2.Fields("ICMS_Origem") & "|" & _
+                                Rst2.Fields("ICMS_CST") & "|" & _
+                                Rst2.Fields("ICMS_ModBC") & "|" & _
+                                Rst2.Fields("ICMS_pRedBC") & "|" & _
+                                Rst2.Fields("ICMS_vBC") & "|" & _
+                                Rst2.Fields("ICMS_pICMS") & "|" & _
+                                Rst2.Fields("ICMS_vICMS") & "|" & _
+                                Rst2.Fields("ICMS_vBC") & "|" & _
+                                Rst2.Fields("ICMS_pFCP") & "|" & _
+                                Rst2.Fields("ICMS_vFCP") & "|||"
+                                
+            Case "30" 'Tributacao Isenta com cobranca de ICMS por ST (N05)
+                MountTXT "N05|" & _
+                                Rst2.Fields("ICMS_Origem") & "|" & _
+                                Rst2.Fields("ICMS_CST") & "|" & _
+                                Rst2.Fields("ICMS_ModBCST") & "|" & _
+                                Rst2.Fields("ICMS_pMVAST") & "|" & _
+                                Rst2.Fields("ICMS_pRedBCST") & "|" & _
+                                Rst2.Fields("ICMS_vBCST") & "|" & _
+                                Rst2.Fields("ICMS_pICMSST") & "|" & _
+                                Rst2.Fields("ICMS_vICMSST") & "|"
+                                
+            Case "40" 'Tributacao do ICMS ISENTA (N06)
+                MountTXT "N06|" & _
+                                Rst2.Fields("ICMS_Origem") & "|" & _
+                                Rst2.Fields("ICMS_CST") & "|" & _
+                                Rst2.Fields("ICMS_vICMS") & "|" & _
+                                Rst2.Fields("ICMS_MotDesICMS") & "|"
+                                
+            Case "41" 'Tributacao do ICMS NAO TRIBUTADA ()
+             MountTXT "N06|" & _
+                                Rst2.Fields("ICMS_Origem") & "|" & _
+                                Rst2.Fields("ICMS_CST") & "|" & _
+                                Rst2.Fields("ICMS_vICMS") & "|" & _
+                                Rst2.Fields("ICMS_MotDesICMS") & "|"
+            
+            Case "50" 'Tributacao do ICMS SUSPENSAO ()
+                MountTXT "N06|" & _
+                                Rst2.Fields("ICMS_Origem") & "|" & _
+                                Rst2.Fields("ICMS_CST") & "|"
+                '04/03/24 - Quando for venda para:
+                            'Operação Interestadual (tag: idDest = 2)
+                            'Consumidor Final (tag: indFinal = 1)
+                            'Não Contribuinte (tag: indIEDest = 9)
+                            'Inserir a tag NA no formato (NA|0.00|0.00|2.00|18.00|12.00|100.00|0.00|0.00|0.00|)
+                If Rst1.Fields("ide_idDest") = 2 And Rst1.Fields("ide_indFinal") = 1 And Rst1.Fields("dest_indIEDest") = 9 Then
+                    MountTXT "NA|0.00|0.00|2.00|18.00|12.00|100.00|0.00|0.00|0.00|"
+                End If
+            
+            Case "51" 'Tributacao do ICMS POR DIFERIMENTO (N07)
+                MountTXT "N07|" & _
+                                Rst2.Fields("ICMS_Origem") & "|" & _
+                                Rst2.Fields("ICMS_CST") & "|" & _
+                                Rst2.Fields("ICMS_ModBC") & "|" & _
+                                Rst2.Fields("ICMS_pRedBC") & "|" & _
+                                Rst2.Fields("ICMS_vBC") & "|" & _
+                                Rst2.Fields("ICMS_pICMS") & "|" & _
+                                Rst2.Fields("ICMS_vICMS") & "|"
+            
+            Case "60" 'ICMS cobrado anteriormente por ST (N08)
+                MountTXT "N08" & "|" & _
+                                Rst2.Fields("ICMS_Origem") & "|" & _
+                                Rst2.Fields("ICMS_CST") & "|" & _
+                                Rst2.Fields("ICMS_vBCST") & "|" & _
+                                Rst2.Fields("ICMS_vICMSST") & "|" & _
+                                "0.00|0.00|0.00|0.00|0.00|0.00|0.00|0.00|"
+            Case "70" 'Tributacao do com reducao da base de calculo do ICMS ST (N09)
+                MountTXT "N09" & "|" & _
+                                Rst2.Fields("ICMS_Origem") & "|" & _
+                                Rst2.Fields("ICMS_CST") & "|" & _
+                                Rst2.Fields("ICMS_ModBC") & "|" & _
+                                Rst2.Fields("ICMS_pRedBC") & "|" & _
+                                Rst2.Fields("ICMS_vBC") & "|" & _
+                                Rst2.Fields("ICMS_pICMS") & "|" & _
+                                Rst2.Fields("ICMS_vICMS") & "|" & _
+                                Rst2.Fields("ICMS_ModBCST") & "|" & _
+                                Rst2.Fields("ICMS_pMVAST") & "|" & _
+                                Rst2.Fields("ICMS_pRedBCST") & "|" & _
+                                Rst2.Fields("ICMS_vBCST") & "|" & _
+                                Rst2.Fields("ICMS_pICMSST") & "|" & _
+                                Rst2.Fields("ICMS_vICMSST") & "|"
+            Case "90" ' 'Tributacao OUTROS (N10)
+                MountTXT "N10" & "|" & _
+                                Rst2.Fields("ICMS_Origem") & "|" & _
+                                Rst2.Fields("ICMS_CST") & "|" & _
+                                Rst2.Fields("ICMS_ModBC") & "|" & _
+                                Rst2.Fields("ICMS_pRedBC") & "|" & _
+                                Rst2.Fields("ICMS_vBC") & "|" & _
+                                Rst2.Fields("ICMS_pICMS") & "|" & _
+                                Rst2.Fields("ICMS_vICMS") & "|" & _
+                                Rst2.Fields("ICMS_ModBCST") & "|" & _
+                                Rst2.Fields("ICMS_pMVAST") & "|" & _
+                                Rst2.Fields("ICMS_pRedBCST") & "|" & _
+                                Rst2.Fields("ICMS_vBCST") & "|" & _
+                                Rst2.Fields("ICMS_pICMSST") & "|" & _
+                                Rst2.Fields("ICMS_vICMSST") & "|"
+            Case "101" 'Tributado pelo SN com permicao de credito (N10c)
+             MountTXT "N10c" & "|" & _
+                                Rst2.Fields("ICMS_Origem") & "|" & _
+                                Rst2.Fields("ICMS_CST") & "|" & _
+                                Rst2.Fields("ICMS_pCredSN") & "|" & _
+                                Rst2.Fields("ICMS_vCredICMSSN") & "|"
+            Case "102", "103" 'Tributado pelo SN sem permicao de credito (N10d)
+             MountTXT "N10d" & "|" & _
+                                Rst2.Fields("ICMS_Origem") & "|" & _
+                                Rst2.Fields("ICMS_CST") & "|" & _
+                                "0.00" & "|" & _
+                                "0.00" & "|" & _
+                                "0.00" & "|"
+            
+            Case "300", "400" 'Nao Tributado pelo SN (N10d)
+             MountTXT "N10d" & "|" & _
+                                Rst2.Fields("ICMS_Origem") & "|" & _
+                                Rst2.Fields("ICMS_CST") & "|" & _
+                                "0.00" & "|" & _
+                                "0.00" & "|" & _
+                                "0.00" & "|"
+            
+            Case "500" 'Tributacao de ICMS pelo SIMPLES NACIONAL (N10g)
+                       'Formato valido em 01.06.21 'N10g|0|500|0|0.00|0.00|0|0.00|0.00|0.00|
+             MountTXT "N10g" & "|" & _
+                                Rst2.Fields("ICMS_Origem") & "|" & _
+                                Rst2.Fields("ICMS_CST") & "|" & _
+                                Rst2.Fields("ICMS_ModBC") & "|" & _
+                                "0.00|0.00|0|0.00|0.00|0.00" & "|"
+                                
+                                
+            Case "900" 'Outros
+                'orig|CSOSN|modBC|vBC|pRedBC|pICMS|vICMS|modBCST|pMVAST|pRedBCST|vBCST|pICMSST
+                'vICMSST|pCredSN|vCredICMSSN
+                MountTXT "N10h|" & _
+                                Rst2.Fields("ICMS_Origem") & "|" & _
+                                Rst2.Fields("ICMS_CST") & "|" & _
+                                Rst2.Fields("ICMS_ModBC") & "|" & _
+                                Rst2.Fields("ICMS_vBC") & "|" & _
+                                "|" & _
+                                Rst2.Fields("ICMS_pICMS") & "|" & _
+                                Rst2.Fields("ICMS_vICMS") & "|" & _
+                                "0|0|0" & "|" & _
+                                Rst2.Fields("ICMS_vBCST") & "|" & _
+                                Rst2.Fields("ICMS_pICMSST") & "|" & _
+                                Rst2.Fields("ICMS_vICMSST") & "|"
+                                
+                                
+                                
+
+        End Select
+        '************************************************************
+        'IPI ********************************************************
+        'O|CNPJProd|cSelo|qSelo|cEnq|
+        MountTXT "O||||" & _
+                        Rst2.Fields("IPI_cEnq") & "|"
+                        
+        MountTXT "O07|" & _
+                        Rst2.Fields("IPI_CST") & "|" & _
+                        Rst2.Fields("IPI_vIPI") & "|"
+        MountTXT "O10|" & _
+                        Rst2.Fields("IPI_vBC") & "|" & _
+                        Rst2.Fields("IPI_pIPI") & "|"
+                        
+                        
+                        
+        'PIS ************************************************************
+        MountTXT "Q|"
+        Select Case Rst2.Fields("PIS_CST")
+            Case "01", "02"  'Aliquota Normal/Aliquota Diferenciada (Q02)
+                MountTXT "Q02|" & _
+                                Rst2.Fields("PIS_CST") & "|" & _
+                                Rst2.Fields("PIS_vBC") & "|" & _
+                                Rst2.Fields("PIS_pPIS") & "|" & _
+                                Rst2.Fields("PIS_vPIS") & "|"
+            Case Else
+                MountTXT "Q04|" & Rst2.Fields("PIS_CST") & "|"
+                'MsgBox "Verificar o Codigo de exportacao do PIS da NFe - CODIGO DO CST DO PIS DESCONHECIDO"
+        End Select
+        
+        
+        
+        'COFINS ************************************************************
+        MountTXT "S|"
+        Select Case Rst2.Fields("COFINS_CST")
+            Case "01", "02"  'Aliquota Normal/Aliquota Diferenciada (Q02)
+                MountTXT "S02|" & _
+                                Rst2.Fields("COFINS_CST") & "|" & _
+                                Rst2.Fields("COFINS_vBC") & "|" & _
+                                Rst2.Fields("COFINS_pCOFINS") & "|" & _
+                                Rst2.Fields("COFINS_vCOFINS") & "|"
+            Case Else
+                'MsgBox "Verificar o Codigo de exportacao do COFINS da NFe - CODIGO DO CST DO COFINS DESCONHECIDO"
+                MountTXT "S04|" & Rst2.Fields("COFINS_CST") & "|"
+        End Select
+        
+        
+       
+    'Next
+    
+         '=============================================================================
+         'CBS / IBS **********************************************************
+         
+         Dim u As String
+         u = ""
+        
+         'UB01 UB01|CSTIS|cClassTribIS|vBCIS|pIS|pISEspec|uTrib|qTrib|vIS|
+         'UB12 UB12|CST|cClassTrib|
+         'UB15 UB15|vBC|vIBS|
+         'UB17 UB17|pIBSUF|pDif|vDif|vDevTrib|pRedAliq|pAliqEfet|vIBSUF|
+         'UB36 UB36|pIBSMun|pDif|vDif|vDevTrib|pRedAliq|pAliqEfet|vIBSMun|
+         'UB55 UB55|pCBS|pDif|vDif|vDevTrib|pRedAliq|pAliqEfet|vCBS|
+         'UB68 UB68|CSTReg|cClassTribReg|pAliqEfetRegIBSUF|vTribRegIBSUF|pAliqEfetRegIBSMun|vTribRegIBSMun|pAliqEfetRegCBS|vTribRe gCBS|
+         'UB73 UB73|cCredPres|pCredPres|vCredPres|vCredPresCondSus|
+         'UB78 UB78|cCredPres|pCredPres|vCredPres|vCredPresCondSus|
+         'UB82 UB82|pAliqIBSUF|vTribIBSUF|pAliqIBSMun|vTribIBSMun|pAliqCBS|vTribCBS|
+         'UB84 UB84|vTotIBSMonoItem|vTotCBSMonoItem|
+         'UB85 UB85|qBCMono|adRemIBS|adRemCBS|vIBSMono|vCBSMono|
+         'UB91 UB91|qBCMonoReten|adRemIBSReten|vIBSMonoReten|adRemCBSReten|vCBSMonoReten|
+         'UB95 UB95|qBCMonoRet|adRemIBSRet|vIBSMonoRet|adRemCBSRet|vCBSMonoRet|
+         'UB100 UB100|pDifIBS|vIBSMonoDif|pDifCBS|vCBSMonoDif|
+         'UB106 UB106|vIBS|vCBS|
+         'UB109 UB109|tpCredPresIBSZFM|vCredPresIBSZFM|
+         
+          
+          'IAIAIAAIAAIAI
+         'MountTXT "UB01|000|000000|1000.00|0.1||||105"
+         'IBC/CBS - campos no bd
+         'IBSCBS_CST|IBSCBS_cClassTrib | IBSCBS_vBC | IBSCBS_pIBSUF | IBSCBS_vIBSUF | IBSCBS_pIBSMun
+         '| IBSCBS_vIBSMun |IBSCBS_vIBS |IBSCBS_pCBS |IBSCBS_vCBS |
+         
+        
+         
+         'UB12 UB12|CST|cClassTrib|
+         u = u & "UB12" & "|"
+         u = u & Rst2.Fields("IBSCBS_CST") & "|"
+         u = u & Rst2.Fields("IBSCBS_cClassTrib") & "|"
+         MountTXT u
+         
+         'UB15 UB15|vBC|vIBS|
+         u = "UB15" & "|"
+         u = u & Rst2.Fields("IBSCBS_vBC") & "|"
+         u = u & Rst2.Fields("IBSCBS_vIBSUF") & "|"
+         MountTXT u
+         
+         'UB17 UB17|pIBSUF|pDif|vDif|vDevTrib|pRedAliq|pAliqEfet|vIBSUF|
+         u = "UB17" & "|"
+         u = u & Rst2.Fields("IBSCBS_pIBSUF") & "|"
+         u = u & "||||" & "|"
+         u = u & Rst2.Fields("IBSCBS_vIBSUF") & "|"
+         MountTXT u
+         'MountTXT "UB17|15.00||||||100.00"
+         
+         'UB36 UB36|pIBSMun|pDif|vDif|vDevTrib|pRedAliq|pAliqEfet|vIBSMun|
+         u = "UB36" & "|"
+         u = u & "0.00" & "|"
+         u = u & "||||" & "|"
+         u = u & "0.00" & "|"
+         MountTXT u
+         'MountTXT "UB36|10.00||||||100.00"
+         
+         'UB55 UB55|pCBS|pDif|vDif|vDevTrib|pRedAliq|pAliqEfet|vCBS|
+         u = "UB55" & "|"
+         u = u & Rst2.Fields("IBSCBS_pCBS") & "|"
+         u = u & "||||" & "|"
+         u = u & Rst2.Fields("IBSCBS_vCBS") & "|"
+         MountTXT u
+         'MountTXT "UB55|17.00||||||140.00"
+          
+        Rst2.MoveNext
+   Next
+      
+
+
+  
+  
+  
+    
+   '================================================================================
+    '*********************************** TOTAIS DA NF-e *****************************************
+    Dim w As String
+    MountTXT "W|"
+        w = "W02|"
+        w = w & Rst1.Fields("total_vBC") & "|"
+        w = w & Rst1.Fields("total_vICMS") & "|"
+        w = w & "0.00" & "|" 'vICMSDeson
+        w = w & Rst1.Fields("total_vFCP") & "|"
+        w = w & IIf(IsNull(Rst1.Fields("total_vFCPUFDest")), "0.00", Rst1.Fields("total_vFCPUFDest") & "|")
+        w = w & IIf(IsNull(Rst1.Fields("total_vICMSUFDest")), "0.00", Rst1.Fields("total_vICMSUFDest") & "|")
+        w = w & IIf(IsNull(Rst1.Fields("total_vICMSUFRemet")), "0.00", Rst1.Fields("total_vICMSUFRemet") & "|")
+        
+        w = w & Rst1.Fields("total_vBCST") & "|"
+        w = w & Rst1.Fields("total_vICMSST") & "|"
+        w = w & "0.00" & "|" 'vFCPST
+        w = w & "0.00" & "|" 'vFCPSTRet
+        w = w & Rst1.Fields("total_vProd") & "|"
+        w = w & Rst1.Fields("total_vFrete") & "|"
+        w = w & Rst1.Fields("total_vSeg") & "|"
+        w = w & Rst1.Fields("total_vDesc") & "|"
+        w = w & "0.00" & "|" 'vII
+        w = w & Rst1.Fields("total_vIPI") & "|"
+        w = w & "0.00" & "|" 'vIPIDevol
+        w = w & Rst1.Fields("total_vPIS") & "|"
+        w = w & Rst1.Fields("total_vCOFINS") & "|"
+        w = w & Rst1.Fields("total_vOutro") & "|"
+        w = w & Rst1.Fields("total_vNF") & "|"
+        w = w & Rst1.Fields("total_vTotTrib") & "|"
+    MountTXT w
+    
+    'TOTAL IBS CBS
+    
+    
+    
+   
+    
+    
+    'W34 W34|vBCIBSCBS|
+    MountTXT "W34|" & Rst1.Fields("total_vBCIBSCBS")
+    'W36 W36|vIBS|vCredPres|vCredPresCondSus|
+    MountTXT "W36|" & Rst1.Fields("total_IBSvIBS") & "|" & Rst1.Fields("total_IBSvCredPres") & "|" & Rst1.Fields("total_IBSvCredPresCondSus") & "|"
+    'W37 W37|vDif|vDevTrib|vIBSUF|
+    MountTXT "W37|" & Rst1.Fields("total_IBSUFvDif") & "|" & Rst1.Fields("total_IBSUFvDevTrib") & "|" & Rst1.Fields("total_IBSUFvIBSUF") & "|"
+    'W42 W42|vDif|vDevTrib|vIBSMun|
+    MountTXT "W42|" & Rst1.Fields("total_IBSMunvDif") & "|" & Rst1.Fields("total_IBSMunvDevTrib") & "|" & Rst1.Fields("total_IBSMunvIBSMun") & "|"
+    'W50 W50|vDif|vDevTrib|vCBS|vCredPres|vCredPresCondSus|
+    w = "W50|"
+    w = w & Rst1.Fields("total_CBSvDif") & "|"
+    w = w & Rst1.Fields("total_CBSvDevTrib") & "|"
+    w = w & Rst1.Fields("total_CBSvCBS") & "|"
+    w = w & Rst1.Fields("total_CBSvCredPres") & "|"
+    w = w & Rst1.Fields("total_CBSvCredPresCondSus") & "|"
+    MountTXT w
+     
+    'W60 W60|vNFTot|
+     MountTXT "W60|" & Rst1.Fields("total_vNF") & "|"
+     
+     
+    '*************************************** TRANSPORTE ********************************************
+    MountTXT "X|" & _
+                    Rst1.Fields("transp_ModFrete") & "|"
+    
+        MountTXT "X03|" & _
+                    Rst1.Fields("transp_xNome") & "|" & _
+                    Rst1.Fields("transp_IE") & "|" & _
+                    Rst1.Fields("transp_xEnder") & "|" & _
+                    Rst1.Fields("transp_xMun") & "|" & _
+                    Rst1.Fields("transp_UF") & "|"
+    
+    MountTXT "X" & IIf(UCase(Rst1.Fields("transp_Pessoa")) = "FISICA", "05", "04") & "|" & _
+                    Rst1.Fields("transp_CNPJ") & "|"
+    If cNull(Rst1.Fields("transp_VeicPlaca")) <> "" Then
+        MountTXT "X18|" & _
+                    cNull(Rst1.Fields("transp_VeicPlaca")) & "|" & _
+                    cNull(Rst1.Fields("transp_VeicUF")) & "|" & _
+                    "" & "|"
+    End If
+    MountTXT "X26|" & _
+                    Rst1.Fields("transp_qVol") & "|" & _
+                    Rst1.Fields("transp_esp") & "|" & _
+                    Rst1.Fields("transp_marca") & "|" & _
+                    Rst1.Fields("transp_nVol") & "|" & _
+                    Rst1.Fields("transp_PesoL") & "|" & _
+                    Rst1.Fields("transp_PesoB") & "|"
+
+    '***************************************** COBRANCA ********************************************
+    If PgDadosNotaFiscal(chvNFe).ImpFatura = 1 Then
+        'Fatura
+        Dim tpPag As String
+        
+        MountTXT "Y|"
+        
+        tpPag = Trim(Left(pgDadosTipoDocumento(Rst3.Fields("cobr_TpDoc")).formaPgto, 3))
+        
+        If Trim(tpPag) = "90" Then
+                'MountTXT "YA|" & tpPag
+                MountTXT "YA|1|" & tpPag + "|||||||"
+                         
+
+            Else
+        
+                If cNull(Rst3.Fields("cobr_nFat")) <> "" Then
+                    MountTXT "Y02|" & _
+                                Rst3.Fields("cobr_nFat") & "|" & _
+                                Rst3.Fields("cobr_vOrig") & "|" & _
+                                IIf(cNull(Rst3.Fields("cobr_vDesc")) = "", "0.00", Rst3.Fields("cobr_vDesc")) & "|" & _
+                                Rst3.Fields("cobr_vLiq") & "|"
+                End If
+                Rst3.MoveFirst
+                'Parcelas
+                Dim parcela As String
+                For cCob = 0 To Rst3.RecordCount - 1
+                    If cNull(Rst3.Fields("cobr_nDup")) <> "" Then
+                                       
+                        tpPag = Trim(Left(pgDadosTipoDocumento(Rst3.Fields("cobr_TpDoc")).formaPgto, 3))
+
+                        parcela = "Y07|"
+                        parcela = parcela & Left("000", 3 - Len(Trim(cCob + 1))) & cCob + 1 & "|"
+                        'parcela = parcela & Trim(Rst3.Fields("cobr_nDup")) & "|"
+                        parcela = parcela & Format(Rst3.Fields("cobr_dVenc"), "YYYY-MM-DD") & "|"
+                        parcela = parcela & Rst3.Fields("cobr_vDup") & "|"
+                        MountTXT parcela
+                        parcela = ""
+                
+                        '06.03.2024 - Layout UniNFE
+                        'YA|indPag|tPag|xPag|vPag|CNPJ|tBand|cAut|tpIntegra|
+                        'ex: YA|1|99|Outros|1200.00||||||
+                
+                        MountTXT "YA|" & _
+                                Trim(Rst1.Fields("ide_indPag")) & "|" & _
+                                tpPag & "|" & _
+                                "|" & _
+                                IIf(tpPag = "90", "0.00", Rst3.Fields("cobr_vDup")) & "|" & "||||"
+            
+                    End If
+                    Rst3.MoveNext
+                Next
+        End If
+    End If
+        
+'****************************************************************************************************
+    MountTXT "Z||" & _
+                    Rst1.Fields("InfAdic_InfCpl") & "|" ' & Trim(msgCredICMSSN) & "|"
+
+
+
+'========================================================================
+    grvReg nmArq, strMountTXT
+
+    'data lake included
+    dataLakeInputNFe numNFe, chvNFe, strMountTXT
+
+    Exportar_NFe_v400_RT_TXT = nmArq
+    Rst1.Close
+    Rst2.Close
+    Rst3.Close
+End Function
+
+
+
+
+'----------------------------------------------------------------
+Public Function GrupoInformacoesIBSCBS() As String
+
+    'UB01 UB01|CSTIS|cClassTribIS|vBCIS|pIS|pISEspec|uTrib|qTrib|vIS|
+    'UB12 UB12|CST|cClassTrib|
+    'UB15 UB15|vBC|vIBS|
+    'UB17 UB17|pIBSUF|pDif|vDif|vDevTrib|pRedAliq|pAliqEfet|vIBSUF|
+    'UB36 UB36|pIBSMun|pDif|vDif|vDevTrib|pRedAliq|pAliqEfet|vIBSMun|
+    'UB55 UB55|pCBS|pDif|vDif|vDevTrib|pRedAliq|pAliqEfet|vCBS|
+    'UB68 UB68|CSTReg|cClassTribReg|pAliqEfetRegIBSUF|vTribRegIBSUF|pAliqEfetRegIBSMun|vTribRegIBSMun|pAliqEfetRegCBS|vTribRe gCBS|
+    'UB73 UB73|cCredPres|pCredPres|vCredPres|vCredPresCondSus|
+    'UB78 UB78|cCredPres|pCredPres|vCredPres|vCredPresCondSus|
+    'UB82 UB82|pAliqIBSUF|vTribIBSUF|pAliqIBSMun|vTribIBSMun|pAliqCBS|vTribCBS|
+    'UB84 UB84|vTotIBSMonoItem|vTotCBSMonoItem|
+    'UB85 UB85|qBCMono|adRemIBS|adRemCBS|vIBSMono|vCBSMono|
+    'UB91 UB91|qBCMonoReten|adRemIBSReten|vIBSMonoReten|adRemCBSReten|vCBSMonoReten|
+    'UB95 UB95|qBCMonoRet|adRemIBSRet|vIBSMonoRet|adRemCBSRet|vCBSMonoRet|
+    'UB100 UB100|pDifIBS|vIBSMonoDif|pDifCBS|vCBSMonoDif|
+    'UB106 UB106|vIBS|vCBS|
+    'UB109 UB109|tpCredPresIBSZFM|vCredPresIBSZFM|
+    
+   ' U|VBC|VAliq|VISSQN|CMunFG|CListServ|vDeducao|vOutro|vDescIncond|vDescCond|vISSRet|indISS|cServico|cMun|cPais|nProcesso|indIncentivo|
+    
+    MountTXT "U|1234.56||||||||||||||||"
+    
+     'UB01|CSTIS|cClassTribIS|vBCIS|pIS|pISEspec|uTrib|qTrib|vIS|
+     MountTXT "UB01|000|000000|||||||"
+     
+    'UB15|vBC|vIBS|
+    MountTXT "UB15|1234.56|200.00"
+    
+    '<gIBSUF> UB17
+     'UB17|pIBSUF|pDif|vDif|vDevTrib|pRedAliq|pAliqEfet|vIBSUF|
+     MountTXT "UB17|15.00||||||100.00|"
+     
+    '<gIBSMun>'UB36
+    'UB36|pIBSMun|pDif|vDif|vDevTrib|pRedAliq|pAliqEfet|vIBSMun|
+    MountTXT "UB36|10.00||||||100.00|"
+       
+    
+    'UB15 UB15|vBC|vIBS|
+    '<vIBS>200.00</vIBS>
+    '<gCBS>'UB55
+    
+    'UB55|pCBS|pDif|vDif|vDevTrib|pRedAliq|pAliqEfet|vCBS|
+     MountTXT "UB55|17.00||||||140.00|"
+        
+      
+      
+
+
+    'https://flexdocs.net/guiaNFe/gerarNFe.detalhe.imp.IBSCBS.html
+
+    'GrupoInformacoesIBSCBS = cst & "|" & cClassTrib & "|" & indDoacao_Opc & "|" '& gTributo & "|" & gEstornoCred_Opc & "|" & gCredPresumido_Opc
+   ' MountTXT "UB12|" & cst & "|" & cClassTrib & "|" & indDoacao_Opc & "|" '& gTributo & "|" & gEstornoCred_Opc & "|" & gCredPresumido_Opc
+    
+
+End Function
 

@@ -80,7 +80,7 @@ Begin VB.Form formFaturamentoNFe
          _ExtentX        =   2778
          _ExtentY        =   556
          _Version        =   393216
-         Format          =   168427521
+         Format          =   166133761
          CurrentDate     =   40561
       End
       Begin MSComCtl2.DTPicker dtpEmissao 
@@ -92,7 +92,7 @@ Begin VB.Form formFaturamentoNFe
          _ExtentX        =   2778
          _ExtentY        =   556
          _Version        =   393216
-         Format          =   168427521
+         Format          =   166133761
          CurrentDate     =   40561
       End
       Begin VB.TextBox txtNumNota 
@@ -530,9 +530,11 @@ Dim aIcmsDifal(1000)     As Variant
 Dim aIPI(1000)      As Variant
 Dim aPIS(1000)      As Variant
 Dim aCOFINS(1000)   As Variant
+Dim aIBSCBS(1000)   As Variant
 Dim aEstoque(1000)  As Variant 'Variavel gerenciadora para estoque
 Dim aComissao(1000) As Variant 'Variavel gerenciado Comissao por item
 Dim cItens          As Integer 'Contador dos itens
+    
     'Cobranca
 Dim aCob(100)       As Variant
 Dim cCob            As Integer 'Contador das cobrancas
@@ -571,6 +573,25 @@ Dim total_vPIS      As String
 Dim total_vCOFINS   As String
 Dim total_vOutro    As String
 Dim total_vNF       As String
+
+' Variáveis da tabela faturamentonfe (Totais)
+'Dim total_vNF As String
+Dim total_vTotTrib As String
+Dim total_vBCIBSCBS As String
+Dim total_IBSUFvDif As String
+Dim total_IBSUFvDevTrib As String
+Dim total_IBSUFvIBSUF As String
+Dim total_IBSMunvDif As String
+Dim total_IBSMunvDevTrib As String
+Dim total_IBSMunvIBSMun As String
+Dim total_IBSvIBS As String
+Dim total_IBSvCredPres As String
+Dim total_IBSvCredPresCondSus As String
+Dim total_CBSvDif As String
+Dim total_CBSvDevTrib As String
+Dim total_CBSvCBS As String
+Dim total_CBSvCredPres As String
+Dim total_CBSvCredPresCondSus As String
 
 '22.12.17 - Totalizadores DIFAL
 Dim total_vFCPUFDest    As String
@@ -712,6 +733,7 @@ Private Sub CalcPIS_Item()
             Case "01"
                 aPIS(i)(3) = (Val(ChkVal(CStr(aPIS(i)(1)), 0, numDecimaisCurrency)) * Val(ChkVal(CStr(aPIS(i)(2)), 0, 3))) / 100
                 aPIS(i)(3) = ChkVal(CStr(aPIS(i)(3)), 0, numDecimaisCurrency)
+                'aPIS(i)(3) = ChkVal(CStr("83.27"), 0, numDecimaisCurrency) 'chumbar
              Case "02"
                 aPIS(i)(3) = (Val(ChkVal(CStr(aPIS(i)(1)), 0, numDecimaisCurrency)) * Val(ChkVal(CStr(aPIS(i)(2)), 0, 3))) / 100
                 aPIS(i)(3) = ChkVal(CStr(aPIS(i)(3)), 0, numDecimaisCurrency)
@@ -744,6 +766,73 @@ TratarErroCalcPISCOFINS:
     Resume Next
     
 End Sub
+Private Sub CalcIBSCBS_Itens()
+    Dim i As Integer
+    
+    total_vBCIBSCBS = 0
+    total_IBSUFvIBSUF = 0
+    total_IBSvIBS = 0
+    total_IBSUFvIBSUF = 0
+    total_CBSvCBS = 0
+
+    For i = 0 To cItens
+        'IBC/CBS
+        'IBSCBS_CST|IBSCBS_cClassTrib | IBSCBS_vBC | IBSCBS_pIBSUF |
+        ' IBSCBS_vIBSUF | IBSCBS_pIBSMun
+        '| IBSCBS_vIBSMun |IBSCBS_vIBS |IBSCBS_pCBS |IBSCBS_vCBS |
+        Dim IBSCBS_CST As String
+        Dim IBSCBS_cClassTrib As String
+        Dim IBSCBS_vBC As String
+        Dim IBSCBS_pIBSUF As String
+        Dim IBSCBS_vIBSUF As String
+        Dim IBSCBS_pIBSMun As String
+        Dim IBSCBS_vIBSMun As String
+        Dim IBSCBS_vIBS As String
+        Dim IBSCBS_pCBS As String
+        Dim IBSCBS_vCBS As String
+        
+        Dim item_vTotTrib As String
+        
+        item_vTotTrib = Val(ChkVal(CStr(aICMS(cItens)(6)), 0, 2)) + Val(ChkVal(CStr(aPIS(cItens)(3)), 0, 2)) + Val(ChkVal(CStr(aCOFINS(cItens)(3)), 0, 2)) '+ Val(ChkVal(CStr(aIPI(cItens)(4)), 0, 2))
+        item_vTotTrib = ChkVal(item_vTotTrib, 0, 2)
+        IBSCBS_CST = "000"
+        IBSCBS_cClassTrib = "000001"
+        
+        IBSCBS_vBC = Val(ChkVal(CStr(aItem(i)(10)), 0, 2)) - Val(ChkVal(item_vTotTrib, 0, 2))
+        
+        total_vBCIBSCBS = Val(ChkVal(total_vBCIBSCBS, 0, 2)) + Val(ChkVal(IBSCBS_vBC, 0, 2))
+        
+        IBSCBS_pIBSUF = "0.1"
+        IBSCBS_vIBSUF = ChkVal((Val(IBSCBS_vBC) * Val(IBSCBS_pIBSUF)) / 100, 0, 2) '4.58
+        
+        total_IBSUFvIBSUF = Val(ChkVal(total_IBSUFvIBSUF, 0, 2)) + Val(ChkVal(IBSCBS_vIBSUF, 0, 2))
+        
+        IBSCBS_pIBSMun = "0.00"
+        IBSCBS_vIBSMun = "0.00"
+        
+        IBSCBS_vIBS = IBSCBS_vIBSUF 'ChkVal((Val(IBSCBS_vBC) * Val(IBSCBS_pIBSUF)) / 100, 0, 2) '4.58
+        total_IBSvIBS = total_IBSUFvIBSUF
+        
+        IBSCBS_pCBS = "0.9"
+        IBSCBS_vCBS = ChkVal((Val(IBSCBS_vBC) * Val(IBSCBS_pCBS)) / 100, 0, 2) '"41.22"
+        
+        total_CBSvCBS = Val(ChkVal(total_CBSvCBS, 0, 2)) + Val(ChkVal(IBSCBS_vCBS, 0, 2))
+        
+        aIBSCBS(i)(0) = CStr(IBSCBS_CST)
+        aIBSCBS(i)(1) = CStr(IBSCBS_cClassTrib)
+        aIBSCBS(i)(2) = CStr(ChkVal(IBSCBS_vBC, 0, 2))
+        aIBSCBS(i)(3) = CStr(ChkVal(IBSCBS_pIBSUF, 0, 2))
+        aIBSCBS(i)(4) = CStr(ChkVal(IBSCBS_vIBSUF, 0, 2))
+        aIBSCBS(i)(5) = CStr(ChkVal(IBSCBS_pIBSMun, 0, 2))
+        aIBSCBS(i)(6) = CStr(ChkVal(IBSCBS_vIBSMun, 0, 2))
+        aIBSCBS(i)(7) = CStr(ChkVal(IBSCBS_vIBS, 0, 2))
+        aIBSCBS(i)(8) = CStr(ChkVal(IBSCBS_pCBS, 0, 2))
+        aIBSCBS(i)(9) = CStr(ChkVal(IBSCBS_vCBS, 0, 2))
+                            
+         
+    Next
+End Sub
+
 Private Sub CalcCOFINS_Item()
 
 
@@ -762,6 +851,8 @@ Private Sub CalcCOFINS_Item()
             Case "01" 'Tributacao Integral
                 aCOFINS(i)(3) = (Val(ChkVal(CStr(aCOFINS(i)(1)), 0, numDecimalCurrency)) * Val(ChkVal(CStr(aCOFINS(i)(2)), 0, 3))) / 100
                 aCOFINS(i)(3) = ChkVal(CStr(aCOFINS(i)(3)), 0, numDecimalCurrency)
+                'aCOFINS(i)(3) = ChkVal(CStr("383.54"), 0, numDecimalCurrency) 'chumbar
+                
                 
             Case "02"
                 aCOFINS(i)(3) = (Val(ChkVal(CStr(aCOFINS(i)(1)), 0, numDecimalCurrency)) * Val(ChkVal(CStr(aCOFINS(i)(2)), 0, 3))) / 100
@@ -858,6 +949,7 @@ Private Function CalcIPI_Total(CampoArray As Integer) As String
         End If
     Next
     CalcIPI_Total = Val(ChkVal(Soma, 0, 2))
+    'total_vBCIBSCBS
 End Function
 Private Function CalcPIS_Total(CampoArray As Integer) As String
     Dim Soma   As String
@@ -1113,6 +1205,7 @@ Private Function PgPxNumNota() As String
            " ORDER BY ide_nNF"
     sSQL = "SELECT * FROM FaturamentoNFe WHERE ID_Empresa = " & ID_Empresa & _
            " AND ide_serie = '" & ide_serie & "'" & _
+           " AND ide_tpAmb = '" & PgDadosConfig.Ambiente & "'" & _
            " ORDER BY ide_nNF"
     Set Rst = RegistroBuscar(sSQL)
     If Rst.BOF And Rst.EOF Then
@@ -1178,7 +1271,7 @@ Private Sub EnviarNFe()
                 If VersaoNFe = "3.10" Then
                         nArqNfe = Exportar_NFe_v310_TXT(strChaveAcesso)
                     ElseIf (VersaoNFe = "4.00") Then
-                        nArqNfe = Exportar_NFe_v400_TXT(strChaveAcesso)
+                        nArqNfe = Exportar_NFe_v400_RT_TXT(strChaveAcesso)
                     Else
                         MsgBox "Versão de nfe não encontrada", vbInformation, App.EXEName
                 End If
@@ -1741,9 +1834,50 @@ Private Function MontarVariaveis() As Boolean
                                             'Array(IIf(PgDadosTpNotaFiscal(idTpNF).MovComissao = 1, PgDadosRhFuncionario(ger_Vendedor).Comissao, 0), _
                                             ChkVal(Val(ChkVal(IIf(PgDadosTpNotaFiscal(idTpNF).MovComissao = 1, PgDadosRhFuncionario(ger_Vendedor).Comissao, 0), 0, 3)) * Val(ChkVal(CStr(aItem(cItens)(10)), 0, cDecMoeda)) / 100, 0, cDecMoeda))
                         
+                        'IBC/CBS
+                        'IBSCBS_CST|IBSCBS_cClassTrib | IBSCBS_vBC | IBSCBS_pIBSUF |
+                        ' IBSCBS_vIBSUF | IBSCBS_pIBSMun
+                        '| IBSCBS_vIBSMun |IBSCBS_vIBS |IBSCBS_pCBS |IBSCBS_vCBS |
+                        Dim IBSCBS_CST As String
+                        Dim IBSCBS_cClassTrib As String
+'                        Dim IBSCBS_vBC As String
+'                        Dim IBSCBS_pIBSUF As String
+'                        Dim IBSCBS_vIBSUF As String
+'                        Dim IBSCBS_pIBSMun As String
+'                        Dim IBSCBS_vIBSMun As String
+'                        Dim IBSCBS_vIBS As String
+'                        Dim IBSCBS_pCBS As String
+'                        Dim IBSCBS_vCBS As String
+'
+'                        Dim item_vTotTrib As String
+'                        item_vTotTrib = Val(ChkVal(CStr(aICMS(cItens)(6)), 0, 2)) + Val(ChkVal(CStr(aIPI(cItens)(4)), 0, 2)) + Val(ChkVal(CStr(aPIS(cItens)(3)), 0, 2)) + Val(ChkVal(CStr(aCOFINS(cItens)(3)), 0, 2))
+                        
+                        IBSCBS_CST = "000"
+                        IBSCBS_cClassTrib = "000001"
+'                        IBSCBS_vBC = Val(ChkVal(CStr(aItem(cItens)(10)), 0, 2)) - Val(ChkVal(item_vTotTrib, 0, 2))
+'                        IBSCBS_pIBSUF = 0.1
+'                        IBSCBS_vIBSUF = "0.00"
+'                        IBSCBS_pIBSMun = "0.00"
+'                        IBSCBS_vIBSMun = "0.00"
+'                        IBSCBS_vIBS = "4.58" '
+'                        IBSCBS_pCBS = "0.90"
+'                        IBSCBS_vCBS = "41.22"
+                        
+                        aIBSCBS(cItens) = Array(CStr(IBSCBS_CST), _
+                                            CStr(IBSCBS_cClassTrib), _
+                                            CStr("0.00"), _
+                                            CStr("0.00"), _
+                                            CStr("0.00"), _
+                                            CStr("0.00"), _
+                                            CStr("0.00"), _
+                                            CStr("0.00"), _
+                                            CStr("0.00"), _
+                                            CStr("0.00") _
+                                            )
+                        
                                 '*** Movimenta Comissao ***
                                 'aComissao(cItens) = Array(IIf(PgDadosTpNotaFiscal(idTpNF).MovComissao = 1, PgDadosRhFuncionario(ger_Vendedor).Comissao, 0), calcComissao(cItens))
-                                '30.10.2012 - Funcao para deduzir o IPI do valo total do produto
+                                '30.10.2012 - Funcao para deduzir o IPI do valor total do produto
                                 calcComissao cItens
                         
 
@@ -1759,6 +1893,7 @@ Private Function MontarVariaveis() As Boolean
             End If
             CalcPIS_Item
             CalcCOFINS_Item
+            CalcIBSCBS_Itens
             DistribuirValorFrete
             
             '*******************************************************
@@ -1911,6 +2046,30 @@ Private Function MontarVariaveis() As Boolean
     total_vCOFINS = ChkVal(CalcCOFINS_Total(3), 0, 2)
     total_vNF = (Val(total_vProd) + Val(total_vFrete) + Val(total_vIPI) + Val(total_vSeg) + Val(total_vOutro) + Val(total_vICMSST)) - Val(total_vDesc)
     total_vNF = ChkVal(total_vNF, 0, 2)
+    
+   
+    total_vTotTrib = Val(total_vICMS) + Val(total_vIPI) + Val(total_vPIS) + Val(total_vCOFINS)
+    total_vTotTrib = ChkVal(total_vTotTrib, 0, 2)
+    total_vBCIBSCBS = ChkVal(total_vBCIBSCBS, 0, 2)
+    total_IBSUFvDif = ChkVal(0, 0, 2)
+    total_IBSUFvDevTrib = ChkVal(0, 0, 2)
+    total_IBSUFvIBSUF = ChkVal(total_IBSUFvIBSUF, 0, 2)
+    total_IBSMunvDif = ChkVal(0, 0, 2)
+    total_IBSMunvDevTrib = ChkVal(0, 0, 2)
+    total_IBSMunvIBSMun = ChkVal(0, 0, 2)
+    total_IBSvIBS = ChkVal(total_IBSvIBS, 0, 2)
+    total_IBSvCredPres = ChkVal(0, 0, 2)
+    total_IBSvCredPresCondSus = ChkVal(0, 0, 2)
+    total_CBSvDif = ChkVal(0, 0, 2)
+    total_CBSvDevTrib = ChkVal(0, 0, 2)
+    total_CBSvCBS = ChkVal(total_CBSvCBS, 0, 2)
+    total_CBSvCredPres = ChkVal(0, 0, 2)
+    total_CBSvCredPresCondSus = ChkVal(0, 0, 2)
+    
+    
+    
+    
+    
     
     
     
@@ -2707,6 +2866,27 @@ Private Function grvRegistro() As Boolean
     vReg(cReg) = Array("total_vPIS", total_vPIS, "S"): cReg = cReg + 1
     vReg(cReg) = Array("total_vCOFINS", total_vCOFINS, "S"): cReg = cReg + 1
     vReg(cReg) = Array("total_vNF", total_vNF, "S"): cReg = cReg + 1
+    
+    '*****************************************************************************************************************
+    'Total IBS CBS
+    vReg(cReg) = Array("total_vTotTrib", total_vTotTrib, "S"): cReg = cReg + 1
+    vReg(cReg) = Array("total_vBCIBSCBS", total_vBCIBSCBS, "S"): cReg = cReg + 1
+    vReg(cReg) = Array("total_IBSUFvDif", total_IBSUFvDif, "S"): cReg = cReg + 1
+    vReg(cReg) = Array("total_IBSUFvDevTrib", total_IBSUFvDevTrib, "S"): cReg = cReg + 1
+    vReg(cReg) = Array("total_IBSUFvIBSUF", total_IBSUFvIBSUF, "S"): cReg = cReg + 1
+    vReg(cReg) = Array("total_IBSMunvDif", total_IBSMunvDif, "S"): cReg = cReg + 1
+    vReg(cReg) = Array("total_IBSMunvDevTrib", total_IBSMunvDevTrib, "S"): cReg = cReg + 1
+    vReg(cReg) = Array("total_IBSMunvIBSMun", total_IBSMunvIBSMun, "S"): cReg = cReg + 1
+    vReg(cReg) = Array("total_IBSvIBS", total_IBSvIBS, "S"): cReg = cReg + 1
+    vReg(cReg) = Array("total_IBSvCredPres", total_IBSvCredPres, "S"): cReg = cReg + 1
+    vReg(cReg) = Array("total_IBSvCredPresCondSus", total_IBSvCredPresCondSus, "S"): cReg = cReg + 1
+    vReg(cReg) = Array("total_CBSvDif", total_CBSvDif, "S"): cReg = cReg + 1
+    vReg(cReg) = Array("total_CBSvDevTrib", total_CBSvDevTrib, "S"): cReg = cReg + 1
+    vReg(cReg) = Array("total_CBSvCBS", total_CBSvCBS, "S"): cReg = cReg + 1
+    vReg(cReg) = Array("total_CBSvCredPres", total_CBSvCredPres, "S"): cReg = cReg + 1
+    vReg(cReg) = Array("total_CBSvCredPresCondSus", total_CBSvCredPresCondSus, "S"): cReg = cReg + 1
+        '--------------------------------------------------------
+
     vReg(cReg) = Array("ger_Vendedor", ger_Vendedor, "N"): cReg = cReg + 1
     vReg(cReg) = Array("ger_idPV", ger_idPV, "N") ': cReg = cReg + 1
 
@@ -2798,13 +2978,14 @@ Private Function grvRegistro() As Boolean
         vReg(cReg) = Array("ICMS_vICMSST", aICMS(i)(12), "S"): cReg = cReg + 1
         vReg(cReg) = Array("ICMS_pCredSN", aICMS(i)(13), "S"): cReg = cReg + 1
         vReg(cReg) = Array("ICMS_vCredICMSSN", aICMS(i)(14), "S"): cReg = cReg + 1
-        
+
+'*****************************************************************************************************************
         'FCP - 27/07/18
         vReg(cReg) = Array("ICMS_pFCP", aICMS(i)(15), "S"): cReg = cReg + 1
         vReg(cReg) = Array("ICMS_vFCP", aICMS(i)(16), "S"): cReg = cReg + 1
         
-        
-'       'DIFAL - 17.12.2017
+'*****************************************************************************************************************
+       'DIFAL - 17.12.2017
         vReg(cReg) = Array("ICMS_vBCUFDest", aIcmsDifal(i)(0), "S"): cReg = cReg + 1
         vReg(cReg) = Array("ICMS_pFCPUFDest", aIcmsDifal(i)(1), "S"): cReg = cReg + 1
         vReg(cReg) = Array("ICMS_pICMSUFDest", aIcmsDifal(i)(2), "S"): cReg = cReg + 1
@@ -2836,6 +3017,22 @@ Private Function grvRegistro() As Boolean
         vReg(cReg) = Array("COFINS_vBC", aCOFINS(i)(1), "S"): cReg = cReg + 1
         vReg(cReg) = Array("COFINS_pCOFINS", aCOFINS(i)(2), "S"): cReg = cReg + 1
         vReg(cReg) = Array("COFINS_vCOFINS", aCOFINS(i)(3), "S"): cReg = cReg + 1
+        
+'*****************************************************************************************************************
+        
+        'IBS CBS
+        
+        vReg(cReg) = Array("IBSCBS_CST", aIBSCBS(i)(0), "S"): cReg = cReg + 1
+        vReg(cReg) = Array("IBSCBS_cClassTrib", aIBSCBS(i)(1), "S"): cReg = cReg + 1
+        vReg(cReg) = Array("IBSCBS_vBC", aIBSCBS(i)(2), "S"): cReg = cReg + 1
+        vReg(cReg) = Array("IBSCBS_pIBSUF", aIBSCBS(i)(3), "S"): cReg = cReg + 1
+        vReg(cReg) = Array("IBSCBS_vIBSUF", aIBSCBS(i)(4), "S"): cReg = cReg + 1
+        vReg(cReg) = Array("IBSCBS_pIBSMun", aIBSCBS(i)(5), "S"): cReg = cReg + 1
+        vReg(cReg) = Array("IBSCBS_vIBSMun", aIBSCBS(i)(6), "S"): cReg = cReg + 1
+        vReg(cReg) = Array("IBSCBS_vIBS", aIBSCBS(i)(7), "S"): cReg = cReg + 1
+        vReg(cReg) = Array("IBSCBS_pCBS", aIBSCBS(i)(8), "S"): cReg = cReg + 1
+        vReg(cReg) = Array("IBSCBS_vCBS", aIBSCBS(i)(9), "S"): cReg = cReg + 1
+        
         
 '*****************************************************************************************************************
         'COMISSAO
@@ -3483,3 +3680,7 @@ Public Sub Calculo_ICMS_DIFAL(Item As Integer)
 
 
 End Sub
+
+
+
+

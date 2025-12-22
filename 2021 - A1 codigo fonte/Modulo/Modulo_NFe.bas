@@ -2460,7 +2460,7 @@ Public Function Exportar_NFe_v400_RT_TXT(chvNFe As String) As String
         i = i & nFCI & "|"
         MountTXT i
         
-        MountTXT "M|"
+        MountTXT "M|" & Rst2.Fields("vTotTrib")
         MountTXT "N|"
         '*****************************************************************
         'ICMS ************************************************************

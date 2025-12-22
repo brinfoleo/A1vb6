@@ -80,7 +80,7 @@ Begin VB.Form formFaturamentoNFe
          _ExtentX        =   2778
          _ExtentY        =   556
          _Version        =   393216
-         Format          =   166133761
+         Format          =   168165377
          CurrentDate     =   40561
       End
       Begin MSComCtl2.DTPicker dtpEmissao 
@@ -92,7 +92,7 @@ Begin VB.Form formFaturamentoNFe
          _ExtentX        =   2778
          _ExtentY        =   556
          _Version        =   393216
-         Format          =   166133761
+         Format          =   168165377
          CurrentDate     =   40561
       End
       Begin VB.TextBox txtNumNota 
@@ -733,7 +733,7 @@ Private Sub CalcPIS_Item()
             Case "01"
                 aPIS(i)(3) = (Val(ChkVal(CStr(aPIS(i)(1)), 0, numDecimaisCurrency)) * Val(ChkVal(CStr(aPIS(i)(2)), 0, 3))) / 100
                 aPIS(i)(3) = ChkVal(CStr(aPIS(i)(3)), 0, numDecimaisCurrency)
-                'aPIS(i)(3) = ChkVal(CStr("83.27"), 0, numDecimaisCurrency) 'chumbar
+                
              Case "02"
                 aPIS(i)(3) = (Val(ChkVal(CStr(aPIS(i)(1)), 0, numDecimaisCurrency)) * Val(ChkVal(CStr(aPIS(i)(2)), 0, 3))) / 100
                 aPIS(i)(3) = ChkVal(CStr(aPIS(i)(3)), 0, numDecimaisCurrency)
@@ -851,9 +851,7 @@ Private Sub CalcCOFINS_Item()
             Case "01" 'Tributacao Integral
                 aCOFINS(i)(3) = (Val(ChkVal(CStr(aCOFINS(i)(1)), 0, numDecimalCurrency)) * Val(ChkVal(CStr(aCOFINS(i)(2)), 0, 3))) / 100
                 aCOFINS(i)(3) = ChkVal(CStr(aCOFINS(i)(3)), 0, numDecimalCurrency)
-                'aCOFINS(i)(3) = ChkVal(CStr("383.54"), 0, numDecimalCurrency) 'chumbar
-                
-                
+                               
             Case "02"
                 aCOFINS(i)(3) = (Val(ChkVal(CStr(aCOFINS(i)(1)), 0, numDecimalCurrency)) * Val(ChkVal(CStr(aCOFINS(i)(2)), 0, 3))) / 100
                 aCOFINS(i)(3) = ChkVal(CStr(aCOFINS(i)(3)), 0, numDecimalCurrency)
@@ -1695,7 +1693,7 @@ Private Function MontarVariaveis() As Boolean
                                         'det_qTrib|det_vUnTrib|
                                         'det_vFrete|det_vSeg|det_vDesc|det_vOutro|
                                         'det_indTot|xPed|nItemPed|ComplDescrNFe|
-                                        'CodCEST
+                                        'CodCEST|vTotTrib
                         aItem(cItens) = Array(idProduto, _
                                             CStr(cProd), _
                                             "SEM GTIN", _
@@ -1717,7 +1715,8 @@ Private Function MontarVariaveis() As Boolean
                                             CStr(IIf(IsNull(Rst2.Fields("nPedido")), "", Rst2.Fields("nPedido"))), _
                                             CStr(IIf(IsNull(Rst2.Fields("iPedido")), "", Rst2.Fields("iPedido"))), _
                                             CStr(IIf(IsNull(Rst2.Fields("ComplDescricaoNFe")), "", Rst2.Fields("ComplDescricaoNFe"))), _
-                                            "")
+                                            "", _
+                                            "0.00")
                         
                         
                         
@@ -1834,6 +1833,8 @@ Private Function MontarVariaveis() As Boolean
                                             'Array(IIf(PgDadosTpNotaFiscal(idTpNF).MovComissao = 1, PgDadosRhFuncionario(ger_Vendedor).Comissao, 0), _
                                             ChkVal(Val(ChkVal(IIf(PgDadosTpNotaFiscal(idTpNF).MovComissao = 1, PgDadosRhFuncionario(ger_Vendedor).Comissao, 0), 0, 3)) * Val(ChkVal(CStr(aItem(cItens)(10)), 0, cDecMoeda)) / 100, 0, cDecMoeda))
                         
+                       
+                        
                         'IBC/CBS
                         'IBSCBS_CST|IBSCBS_cClassTrib | IBSCBS_vBC | IBSCBS_pIBSUF |
                         ' IBSCBS_vIBSUF | IBSCBS_pIBSMun
@@ -1895,6 +1896,10 @@ Private Function MontarVariaveis() As Boolean
             CalcCOFINS_Item
             CalcIBSCBS_Itens
             DistribuirValorFrete
+            
+            'Valor Total Tributado Item
+            aItem(cItens)(24) = Val(aICMS(cItens)(6)) + Val(aIPI(cItens)(4)) + Val(aPIS(cItens)(3)) + Val(aCOFINS(cItens)(3))
+            aItem(cItens)(24) = ChkVal(CStr(aItem(cItens)(24)), 0, 2)
             
             '*******************************************************
             '****** COBRANCA ***************************************
@@ -2955,6 +2960,7 @@ Private Function grvRegistro() As Boolean
         vReg(cReg) = Array("det_nItemPed", aItem(i)(21), "S"): cReg = cReg + 1
         vReg(cReg) = Array("det_InfAdProd", aItem(i)(22), "S"): cReg = cReg + 1
         vReg(cReg) = Array("det_CEST", aItem(i)(23), "S"): cReg = cReg + 1
+        vReg(cReg) = Array("vTotTrib", aItem(i)(24), "S"): cReg = cReg + 1 'aItem(cItens)(24)
 '*****************************************************************************************************************
         'Dados em conjunto com estoque
         vReg(cReg) = Array("estoque_Unid", aEstoque(i)(0), "S"): cReg = cReg + 1

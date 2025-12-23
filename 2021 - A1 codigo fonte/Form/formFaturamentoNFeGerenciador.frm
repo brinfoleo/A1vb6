@@ -233,7 +233,7 @@ Begin VB.Form formFaturamentoNFeGerenciador
             _ExtentX        =   2566
             _ExtentY        =   556
             _Version        =   393216
-            Format          =   116916225
+            Format          =   292225025
             CurrentDate     =   40557
          End
          Begin MSComCtl2.DTPicker dtpDtFinal 
@@ -245,7 +245,7 @@ Begin VB.Form formFaturamentoNFeGerenciador
             _ExtentX        =   2566
             _ExtentY        =   556
             _Version        =   393216
-            Format          =   116916225
+            Format          =   292225025
             CurrentDate     =   40557
          End
          Begin VB.Label Label1 
@@ -604,6 +604,8 @@ Private Sub LoadStatusEnvio(chvNFe As String, DtEmissao As String)
        Else
             'Pega o Numero do Lote do Envio
             nRecibo = pgTagXML("<nRec>", "</nRec>", ConteudoXML)
+            
+            If Trim(nRecibo) = "" Then nRecibo = nLote 'Gambiarra:versao 2026 pois nao registra NFe autenticada
     End If
     '*************************************************************
     '**** Carrega o NUMERO DE PROTOCOLO Status e Motivo da NFe

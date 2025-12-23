@@ -2712,34 +2712,7 @@ Public Function Exportar_NFe_v400_RT_TXT(chvNFe As String) As String
          
          Dim u As String
          u = ""
-        
-         'UB01 UB01|CSTIS|cClassTribIS|vBCIS|pIS|pISEspec|uTrib|qTrib|vIS|
-         'UB12 UB12|CST|cClassTrib|
-         'UB15 UB15|vBC|vIBS|
-         'UB17 UB17|pIBSUF|pDif|vDif|vDevTrib|pRedAliq|pAliqEfet|vIBSUF|
-         'UB36 UB36|pIBSMun|pDif|vDif|vDevTrib|pRedAliq|pAliqEfet|vIBSMun|
-         'UB55 UB55|pCBS|pDif|vDif|vDevTrib|pRedAliq|pAliqEfet|vCBS|
-         'UB68 UB68|CSTReg|cClassTribReg|pAliqEfetRegIBSUF|vTribRegIBSUF|pAliqEfetRegIBSMun|vTribRegIBSMun|pAliqEfetRegCBS|vTribRe gCBS|
-         'UB73 UB73|cCredPres|pCredPres|vCredPres|vCredPresCondSus|
-         'UB78 UB78|cCredPres|pCredPres|vCredPres|vCredPresCondSus|
-         'UB82 UB82|pAliqIBSUF|vTribIBSUF|pAliqIBSMun|vTribIBSMun|pAliqCBS|vTribCBS|
-         'UB84 UB84|vTotIBSMonoItem|vTotCBSMonoItem|
-         'UB85 UB85|qBCMono|adRemIBS|adRemCBS|vIBSMono|vCBSMono|
-         'UB91 UB91|qBCMonoReten|adRemIBSReten|vIBSMonoReten|adRemCBSReten|vCBSMonoReten|
-         'UB95 UB95|qBCMonoRet|adRemIBSRet|vIBSMonoRet|adRemCBSRet|vCBSMonoRet|
-         'UB100 UB100|pDifIBS|vIBSMonoDif|pDifCBS|vCBSMonoDif|
-         'UB106 UB106|vIBS|vCBS|
-         'UB109 UB109|tpCredPresIBSZFM|vCredPresIBSZFM|
-         
-          
-          'IAIAIAAIAAIAI
-         'MountTXT "UB01|000|000000|1000.00|0.1||||105"
-         'IBC/CBS - campos no bd
-         'IBSCBS_CST|IBSCBS_cClassTrib | IBSCBS_vBC | IBSCBS_pIBSUF | IBSCBS_vIBSUF | IBSCBS_pIBSMun
-         '| IBSCBS_vIBSMun |IBSCBS_vIBS |IBSCBS_pCBS |IBSCBS_vCBS |
-         
-        
-         
+                 
          'UB12 UB12|CST|cClassTrib|
          u = u & "UB12" & "|"
          u = u & Rst2.Fields("IBSCBS_CST") & "|"
@@ -2876,54 +2849,63 @@ Public Function Exportar_NFe_v400_RT_TXT(chvNFe As String) As String
         'Fatura
         Dim tpPag As String
         
-        MountTXT "Y|"
-        
         tpPag = Trim(Left(pgDadosTipoDocumento(Rst3.Fields("cobr_TpDoc")).formaPgto, 3))
         
-        If Trim(tpPag) = "90" Then
-                'MountTXT "YA|" & tpPag
-                MountTXT "YA|1|" & tpPag + "|||||||"
+        
+        MountTXT "Y|"
+               
+        Select Case tpPag
+        Case "01"
+            MountTXT "YA|" & _
+                Trim(Rst1.Fields("ide_indPag")) & "|" & _
+                tpPag & "|" & _
+                "|" & _
+                Rst3.Fields("cobr_vDup") & "|" & "||||"
+        Case "90"
+            'If Trim(tpPag) = "90" Then
+            'MountTXT "YA|" & tpPag
+            MountTXT "YA|1|" & tpPag + "|||||||"
                          
 
-            Else
+        Case Else
         
-                If cNull(Rst3.Fields("cobr_nFat")) <> "" Then
-                    MountTXT "Y02|" & _
-                                Rst3.Fields("cobr_nFat") & "|" & _
-                                Rst3.Fields("cobr_vOrig") & "|" & _
-                                IIf(cNull(Rst3.Fields("cobr_vDesc")) = "", "0.00", Rst3.Fields("cobr_vDesc")) & "|" & _
-                                Rst3.Fields("cobr_vLiq") & "|"
-                End If
-                Rst3.MoveFirst
-                'Parcelas
-                Dim parcela As String
-                For cCob = 0 To Rst3.RecordCount - 1
-                    If cNull(Rst3.Fields("cobr_nDup")) <> "" Then
-                                       
-                        tpPag = Trim(Left(pgDadosTipoDocumento(Rst3.Fields("cobr_TpDoc")).formaPgto, 3))
+            If cNull(Rst3.Fields("cobr_nFat")) <> "" Then
+                MountTXT "Y02|" & _
+                            Rst3.Fields("cobr_nFat") & "|" & _
+                            Rst3.Fields("cobr_vOrig") & "|" & _
+                            IIf(cNull(Rst3.Fields("cobr_vDesc")) = "", "0.00", Rst3.Fields("cobr_vDesc")) & "|" & _
+                            Rst3.Fields("cobr_vLiq") & "|"
+            End If
+            Rst3.MoveFirst
+            'Parcelas
+            Dim parcela As String
+            For cCob = 0 To Rst3.RecordCount - 1
+                If cNull(Rst3.Fields("cobr_nDup")) <> "" Then
+                                   
+                    tpPag = Trim(Left(pgDadosTipoDocumento(Rst3.Fields("cobr_TpDoc")).formaPgto, 3))
 
-                        parcela = "Y07|"
-                        parcela = parcela & Left("000", 3 - Len(Trim(cCob + 1))) & cCob + 1 & "|"
-                        'parcela = parcela & Trim(Rst3.Fields("cobr_nDup")) & "|"
-                        parcela = parcela & Format(Rst3.Fields("cobr_dVenc"), "YYYY-MM-DD") & "|"
-                        parcela = parcela & Rst3.Fields("cobr_vDup") & "|"
-                        MountTXT parcela
-                        parcela = ""
-                
-                        '06.03.2024 - Layout UniNFE
-                        'YA|indPag|tPag|xPag|vPag|CNPJ|tBand|cAut|tpIntegra|
-                        'ex: YA|1|99|Outros|1200.00||||||
-                
-                        MountTXT "YA|" & _
-                                Trim(Rst1.Fields("ide_indPag")) & "|" & _
-                                tpPag & "|" & _
-                                "|" & _
-                                IIf(tpPag = "90", "0.00", Rst3.Fields("cobr_vDup")) & "|" & "||||"
+                    parcela = "Y07|"
+                    parcela = parcela & Left("000", 3 - Len(Trim(cCob + 1))) & cCob + 1 & "|"
+                    'parcela = parcela & Trim(Rst3.Fields("cobr_nDup")) & "|"
+                    parcela = parcela & Format(Rst3.Fields("cobr_dVenc"), "YYYY-MM-DD") & "|"
+                    parcela = parcela & Rst3.Fields("cobr_vDup") & "|"
+                    MountTXT parcela
+                    parcela = ""
             
-                    End If
-                    Rst3.MoveNext
-                Next
-        End If
+                    '06.03.2024 - Layout UniNFE
+                    'YA|indPag|tPag|xPag|vPag|CNPJ|tBand|cAut|tpIntegra|
+                    'ex: YA|1|99|Outros|1200.00||||||
+            
+                    MountTXT "YA|" & _
+                            Trim(Rst1.Fields("ide_indPag")) & "|" & _
+                            tpPag & "|" & _
+                            "|" & _
+                            IIf(tpPag = "90", "0.00", Rst3.Fields("cobr_vDup")) & "|" & "||||"
+        
+                End If
+                Rst3.MoveNext
+            Next
+        End Select
     End If
         
 '****************************************************************************************************

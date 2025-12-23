@@ -603,6 +603,15 @@ Dim total_vICMSUFRemet  As String
 '01.08.2018 - Solucao encontrada para registrar o aproveitamento
 '           de credito de ICMS CST 101
 Dim pCredICMS   As String 'Armazena o valor do cred de icms
+Private Sub Calc_vTotTrib_Itens()
+    Dim i As Integer
+    For i = 0 To cItens
+'Valor Total Tributado Item
+        aItem(i)(24) = Val(aICMS(i)(6)) + Val(aIPI(i)(4)) + Val(aPIS(i)(3)) + Val(aCOFINS(i)(3))
+        aItem(i)(24) = ChkVal(CStr(aItem(i)(24)), 0, 2)
+    Next
+End Sub
+
 Private Function calcComissao(nItem As Integer) As String
     '29/10/2012 - Criado para desembutir o IPI da comissao
     Dim pIPI As String '% Comissao
@@ -829,10 +838,9 @@ Private Sub CalcIBSCBS_Itens()
         aIBSCBS(i)(8) = CStr(ChkVal(IBSCBS_pCBS, 0, 2))
         aIBSCBS(i)(9) = CStr(ChkVal(IBSCBS_vCBS, 0, 2))
                             
-         
+          
     Next
 End Sub
-
 Private Sub CalcCOFINS_Item()
 
 
@@ -1172,7 +1180,10 @@ Private Sub PesquisarTpNF(Optional idNF As Integer)
                     ide_cNF = ""
                 Else
                     txtNumNota.Enabled = True
+                    'Debug.Print Timer
+                    
                     txtNumNota.Text = PgPxNumNota
+                   ' Debug.Print Timer
             End If
             
             dtpSaida.Enabled = IIf(Rst.Fields("ImprDataSaida") = 1, True, False)
@@ -1198,13 +1209,18 @@ Private Function PgPxNumNota() As String
     Dim numIni  As String
     numIni = PgDadosTpNotaFiscal(idTpNF).NumInicial
     ide_serie = PgDadosTpNotaFiscal(idTpNF).Serie
+           
     'sSQL = "SELECT * FROM FaturamentoNFe WHERE ID_Empresa = " & ID_Empresa & _
-           " AND ide_Serie = " & PgDadosTpNotaFiscal(idTpNF).Serie & _
-           " ORDER BY ide_nNF"
-    sSQL = "SELECT * FROM FaturamentoNFe WHERE ID_Empresa = " & ID_Empresa & _
            " AND ide_serie = '" & ide_serie & "'" & _
            " AND ide_tpAmb = '" & PgDadosConfig.Ambiente & "'" & _
            " ORDER BY ide_nNF"
+     
+     sSQL = "SELECT ID_Empresa, ide_serie, ide_tpAmb, ide_nNF" & _
+            " FROM FaturamentoNFe WHERE ID_Empresa = " & ID_Empresa & _
+           " AND ide_serie = '" & ide_serie & "'" & _
+           " AND ide_tpAmb = '" & PgDadosConfig.Ambiente & "'" & _
+           " ORDER BY ide_nNF"
+           
     Set Rst = RegistroBuscar(sSQL)
     If Rst.BOF And Rst.EOF Then
             PgPxNumNota = Left(String(9, "0"), 9 - Len(numIni)) & numIni
@@ -1895,11 +1911,10 @@ Private Function MontarVariaveis() As Boolean
             CalcPIS_Item
             CalcCOFINS_Item
             CalcIBSCBS_Itens
+            Calc_vTotTrib_Itens
             DistribuirValorFrete
             
-            'Valor Total Tributado Item
-            aItem(cItens)(24) = Val(aICMS(cItens)(6)) + Val(aIPI(cItens)(4)) + Val(aPIS(cItens)(3)) + Val(aCOFINS(cItens)(3))
-            aItem(cItens)(24) = ChkVal(CStr(aItem(cItens)(24)), 0, 2)
+           
             
             '*******************************************************
             '****** COBRANCA ***************************************
